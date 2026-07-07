@@ -2297,132 +2297,105 @@ button:hover{
 body{
     overflow-x:hidden;
 }
-/* ==================================================
-   ADAPTACION TABLET 768px - 1200px
-   NO AFECTA PC
-================================================== */
+/* ================= TABLET 768-1200 ================= */
 
 @media (min-width:768px) and (max-width:1200px){
 
-    body{
-        overflow-x:hidden;
-    }
+  /* MENU LATERAL COMPACTO */
+  .sidebar{
+    width:120px;
+    min-width:120px;
+    padding:8px;
+  }
+
+  .menu-btn{
+    min-height:45px;
+    padding:8px 4px;
+    font-size:9px;
+    text-align:center;
+  }
+
+  .menu-btn span{
+    display:block;
+    white-space:normal;
+  }
 
 
-    /* SIDEBAR */
-    .sidebar{
-        width:80px;
-        min-width:80px;
-        padding:10px;
-    }
-
-    .sidebar-title,
-    .search-app{
-        display:none;
-    }
-
-    .menu-btn{
-
-        justify-content:center;
-        padding:10px 5px;
-
-        font-size:0;
-    }
-
-    .menu-btn span{
-        display:none;
-    }
+  /* CONTENIDO PRINCIPAL */
+  .main-content{
+    width:calc(100% - 120px);
+  }
 
 
-    /* CONTENIDO PRINCIPAL */
-    .main-content{
-        width:calc(100% - 80px);
-    }
+  /* QUITAR ESPACIO EXCESIVO */
+  .layout{
+    min-height:auto;
+  }
+
+  .dashboard-main{
+    display:block;
+    padding:8px;
+  }
 
 
-    /* DASHBOARD */
-
-    .dashboard-main{
-
-        grid-template-columns:
-        1fr;
-
-        padding:10px;
-
-    }
+  /* PANEL DE GRUAS */
+  .yard{
+    transform:none;
+    width:100%;
+    padding:10px;
+    overflow-x:auto;
+  }
 
 
-    /* YARD */
-
-    .yard{
-
-        transform:none;
-        width:100%;
-
-        padding:12px;
-
-    }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(11,110px);
+    gap:8px;
+    width:max-content;
+  }
 
 
-    /* GRID DE GRUAS */
-
-    .grid{
-
-        grid-template-columns:
-        repeat(6, minmax(95px,1fr));
-
-        gap:8px;
-
-    }
+  .card{
+    min-height:90px;
+  }
 
 
-    .card{
-
-        min-height:95px;
-
-    }
+  .code{
+    font-size:18px;
+  }
 
 
-    .code{
+  /* LEYENDA */
+  .leyenda-corner{
+    position:relative;
+    top:auto;
+    right:auto;
 
-        font-size:18px;
+    width:100%;
+    max-height:none;
 
-    }
+    margin-bottom:10px;
+  }
 
-
-    .small{
-
-        font-size:8px;
-
-    }
-
-
-    /* LEYENDA */
-
-    .leyenda-corner{
-
-        position:relative;
-
-        top:auto;
-        right:auto;
-
-        width:100%;
-        margin-bottom:10px;
-
-    }
+  .legend-mini{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+  }
 
 
-    /* PANEL DERECHO */
+  /* PANELES DERECHA */
+  .right-panel{
 
-    .events-panel{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-top:15px;
 
-        position:relative;
-        top:auto;
-
-    }
-
+  }
 
 }
+
+
 </style>
 
 </head>
