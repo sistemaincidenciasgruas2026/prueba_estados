@@ -237,12 +237,10 @@ img, iframe{
   z-index:10;
 }
 .yard{
-    position: relative;
-
-    transform: scale(.92);
-    transform-origin: top left;
-
-    width: 109%; /* compensa el scale */
+    position:relative;
+    width:100%;
+    max-width:100%;
+    overflow-x:auto;
 }
 .row{
 
@@ -276,31 +274,24 @@ margin-right: 15px;
 
 .grid{
   display:grid;
-  grid-template-columns: repeat(11, minmax(110px, 120px));
+  grid-template-columns:
+  repeat(auto-fit,minmax(95px,1fr));
+
   gap:10px;
+
+  width:100%;
 }
 
 /* ================= CARD ================= */
 
 .card{
+
   position:relative;
 
-  min-height:110px;
-  border-radius:14px;
+  min-height:100px;
 
-  cursor:pointer;
-  transition:.25s;
-
-  padding:10px 8px 8px;
-
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:flex-start;
-
-  overflow:visible; /* evita que se corte el texto */
+  width:100%;
 }
-
 .code{
   font-size:22px;
   font-weight:800;
@@ -1457,36 +1448,13 @@ color:#1f2933;
   margin-left:auto; /* 🔥 esto lo empuja a la derecha */
 }
 
-/* botón */
 .yard-btn,
 .btn-excel{
 
-  background:
-  linear-gradient(
-    90deg,
-    #0f4c81,
-    #1f6fb2
-  );
+min-width:140px;
 
-  border:none;
-  border-radius:10px;
+height:42px;
 
-  transition:.25s;
-
-  min-width:220px;
-  height:50px;
-
-  padding:0 24px;
-
-  font-size:15px;
-  font-weight:700;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  color:white;
-  cursor:pointer;
 }
 .yard-btn:hover,
 .btn-excel:hover,
@@ -1993,13 +1961,6 @@ button:hover{
   font-weight:700;
 }
 
-
-.tabla-reporte td{
-  padding:10px;
-  border-bottom:1px solid #e6e6e6;
-}
-
-
 .tabla-reporte tbody tr:hover{
   background:#e3f2fd;
   transition:.2s;
@@ -2146,12 +2107,6 @@ button:hover{
   top:0;
 }
 
-/* celdas */
-.tabla-reporte td{
-  padding:8px;
-  border-bottom:1px solid #eee;
-  white-space:nowrap;
-}
 
 /* hover */
 .tabla-reporte tbody tr:hover{
@@ -2185,12 +2140,15 @@ button:hover{
   text-transform:uppercase;
 }
 
-.tabla-reporte td{
-  padding:8px;
-  border-bottom:1px solid #e6e6e6;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+.tabla-reporte td,
+.tabla-reporte th{
+
+padding:8px;
+
+white-space:normal;
+
+word-break:break-word;
+
 }
 
 .tabla-reporte tbody tr:nth-child(even){
@@ -2216,19 +2174,22 @@ button:hover{
 
 .yard-panel{
 
-    position:absolute;
+    position:sticky;
 
-    right:30px;
-    bottom:30px;
+    bottom:20px;
+
+    margin-left:auto;
 
     width:180px;
 
     display:flex;
+
     flex-direction:column;
+
     align-items:center;
+
     gap:15px;
 
-    z-index:50;
 }
 
 .yard-panel .yard-title{
@@ -2297,105 +2258,246 @@ button:hover{
 body{
     overflow-x:hidden;
 }
-/* ================= TABLET 768-1200 ================= */
-
-@media (min-width:768px) and (max-width:1200px){
-
-  /* MENU LATERAL COMPACTO */
-  .sidebar{
-    width:120px;
-    min-width:120px;
-    padding:8px;
-  }
-
-  .menu-btn{
-    min-height:45px;
-    padding:8px 4px;
-    font-size:9px;
-    text-align:center;
-  }
-
-  .menu-btn span{
-    display:block;
-    white-space:normal;
-  }
-
-
-  /* CONTENIDO PRINCIPAL */
-  .main-content{
-    width:calc(100% - 120px);
-  }
-
-
-  /* QUITAR ESPACIO EXCESIVO */
-  .layout{
-    min-height:auto;
-  }
-
-  .dashboard-main{
-    display:block;
-    padding:8px;
-  }
-
-
-  /* PANEL DE GRUAS */
-  .yard{
-    transform:none;
-    width:100%;
-    padding:10px;
-    overflow-x:auto;
-  }
-
-
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(11,110px);
-    gap:8px;
-    width:max-content;
-  }
-
-
-  .card{
-    min-height:90px;
-  }
-
-
-  .code{
-    font-size:18px;
-  }
-
-
-  /* LEYENDA */
-  .leyenda-corner{
-    position:relative;
-    top:auto;
-    right:auto;
-
-    width:100%;
-    max-height:none;
-
-    margin-bottom:10px;
-  }
-
-  .legend-mini{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-  }
-
-
-  /* PANELES DERECHA */
-  .right-panel{
+.app{
 
     display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:10px;
-    margin-top:15px;
 
-  }
+    grid-template-columns:
+    minmax(180px,260px)
+    minmax(0,1fr)
+    minmax(260px,340px);
+
+    min-height:100vh;
+
+    gap:15px;
+
+}
+/* =====================================
+   RESPONSIVE FINAL
+===================================== */
+
+
+@media(max-width:1200px){
+
+.app{
+
+grid-template-columns:
+220px
+1fr;
 
 }
 
 
+.right-panel,
+.side{
+
+display:none;
+
+}
+
+
+.dashboard-main{
+
+grid-template-columns:1fr;
+
+}
+
+
+}
+
+
+@media(max-width:900px){
+
+
+.layout{
+
+flex-direction:column;
+
+}
+
+
+.sidebar{
+
+width:100%;
+max-width:none;
+
+height:auto;
+
+display:flex;
+flex-wrap:wrap;
+
+}
+
+
+.menu-btn{
+
+width:auto;
+flex:1 1 180px;
+
+}
+
+
+.dashboard-main{
+
+padding:10px;
+
+}
+
+
+.grid{
+  display:grid;
+  grid-template-columns:
+  repeat(auto-fit,95px);
+
+  gap:10px;
+
+  justify-content:start;
+}
+
+
+.yard-panel{
+
+position:relative;
+
+right:auto;
+bottom:auto;
+
+margin-top:20px;
+
+}
+
+
+}
+
+
+
+@media(max-width:600px){
+
+
+.header,
+.topbar{
+
+height:auto;
+
+padding:10px;
+
+flex-direction:column;
+
+gap:10px;
+
+}
+
+
+.title{
+
+font-size:15px;
+
+}
+
+
+
+.kpis{
+
+grid-template-columns:
+repeat(2,1fr);
+
+}
+
+
+
+.grid{
+
+grid-template-columns:
+repeat(2,1fr);
+
+}
+
+
+
+.card{
+
+min-height:85px;
+
+}
+
+
+.code{
+
+font-size:16px;
+
+}
+
+
+
+.leyenda-corner{
+
+position:relative;
+
+top:auto;
+right:auto;
+
+width:100%;
+
+margin-top:15px;
+
+}
+
+
+
+.messages-dashboard{
+
+grid-template-columns:1fr;
+
+}
+
+
+
+.msg-actions{
+
+flex-direction:column;
+
+}
+
+
+.msg-actions button{
+
+width:100%;
+
+}
+
+
+
+.reporte-page{
+
+flex-direction:column;
+
+}
+
+
+.reporte-sidebar{
+
+width:100%;
+
+}
+
+
+
+.tabla-container{
+
+overflow-x:auto;
+
+}
+
+
+
+.tabla-reporte{
+
+min-width:900px;
+
+}
+
+
+}
 </style>
 
 </head>
@@ -2853,7 +2955,11 @@ style="display:none;">
 <input type="datetime-local" id="fechaEntrega">
 
 <label>Tiempo Muerto</label>
-<input type="number" id="tiempoMuerto">
+
+<select id="tiempoMuerto">
+    <option value="">Seleccione...</option>
+</select>
+
 
 <label>Área</label>
 
@@ -2917,7 +3023,13 @@ id="descripcionFalla"
 placeholder="Describe la falla..."
 ></textarea>
 
+<label>Indique tipo de falla (TM/TI)</label>
 
+<select id="TMI">
+    <option value="">Seleccione tipo de falla...</option>
+    <option value="TIEMPO MUERTO">TIEMPO MUERTO</option>
+    <option value="TIEMPO INVERTIDO">TIEMPO INVERTIDO</option>
+</select>
 
 
 <button onclick="guardar()">
@@ -3636,6 +3748,7 @@ function abrir(id){
   document.getElementById('codigoFalla').value = g.codigo_falla || '';
   document.querySelector('#descripcionFalla').value = g.descripcion_falla || '';
 
+
   document.getElementById('opOperador').value = g.operador || '';
   document.getElementById('opTipoFalla').value = g.tipo_falla || '';
   document.getElementById('opActividad').value = g.actividad || '';
@@ -3654,6 +3767,7 @@ function abrir(id){
   actualizarUIEstado();        // 👈 primero campos dinámicos (quién reportó)
   controlarPrioridad();        // 👈 luego prioridad
   actualizarIndicadorEstado(); // 👈 indicador final
+  estadoAnterior = g.estado;
 }
 
 function abrirFormularioTransicion(){
@@ -3795,6 +3909,9 @@ function limpiarErroresDisponibilidad() {
 }
 async function guardar() {
 
+
+    console.log("ENTRÉ A GUARDAR");
+
   const estadoNuevo = document.getElementById('estado').value;
   const estado = estadoNuevo;
 
@@ -3808,6 +3925,7 @@ async function guardar() {
     }
   }
 
+
   const equipoActual = getEquipo(actual);
 
   if (!equipoActual) {
@@ -3815,173 +3933,348 @@ async function guardar() {
     return;
   }
 
+const estadoAnterior = equipoActual.estado;
 const entroAFalla = estadoNuevo === 'falla';
-const salioDeFalla = estadoAnterior === 'falla' && estadoNuevo !== 'falla';
+
+const salioDeFalla =
+estadoAnterior === 'falla' &&
+estadoNuevo !== 'falla';
+
+
 
   let prioridad =
     parseInt(document.getElementById("prioridad").value) || 0;
+
 
   let observacion_extra =
     prioridad > 0
       ? "GRÚA PRIORIDAD PARA OPERACIÓN"
       : null;
 
-  /* ================= CAMPOS ================= */
 
-  const grua = document.getElementById("gruaGeneral").value;
+
+  /* ================= CAMPOS CIERRE ================= */
+
+
+  const grua = equipoActual.id;
+
 
   const turno =
     parseInt(document.getElementById("turnoGeneral").value);
 
+
   const bloque_tramo =
     document.getElementById("bloqueTramo").value;
+
 
   const fecha_hora_falla =
     document.getElementById("fechaReporte").value;
 
+
   const fecha_hora_entrega =
     document.getElementById("fechaEntrega").value;
+
 
   const tiempo_muerto =
     document.getElementById("tiempoMuerto").value;
 
+const tmi =
+document.getElementById("TMI").value;
+
+  // DATOS DEL PRIMER FORMULARIO
   const quien_reporto =
-    document.getElementById("quienReporto").value;
+    equipoActual.quien_reporto || '';
+
 
   const actividad =
-    document.getElementById("actividad").value;
+    equipoActual.actividad || '';
+
+
+  const registro_falla =
+    equipoActual.registro_falla || '';
+
+
+
+  // DATOS DEL CIERRE
 
   const area_mantto =
     document.getElementById("areaMantto").value;
 
+
   const supervisor =
     document.getElementById("supervisor").value;
+
 
   const standby =
     document.getElementById("standby").value;
 
+
   const responsabilidad =
     document.getElementById("responsabilidad").value;
+
 
   const codigo_falla =
     document.getElementById("codigoFalla").value;
 
+
   const descripcion_falla =
     document.getElementById("descripcionFalla").value;
 
-  const registro_falla =
-    document.getElementById("registro_falla").value || "";
+
 
   /* ================= CONTROL FALLA ================= */
 
-  let falla_inicio = equipoActual.falla_inicio || null;
 
+let falla_inicio =
+equipoActual.falla_inicio ||
+equipoActual.contador_inicio ||
+null;
+console.log("INICIO FALLA LEIDO:", falla_inicio);
+console.log("FECHA ACTUAL:", new Date().toISOString());
   let tiempo_muerto_real = "00:00:00";
+
+
 
   // ENTRÓ A FALLA
   if (entroAFalla) {
 
     falla_inicio = new Date().toISOString();
 
-    equipoActual.falla_inicio = falla_inicio;
-
   }
 
-// SALIÓ DE FALLA
-if (salioDeFalla && falla_inicio) {
 
-    const inicio = new Date(falla_inicio).getTime();
-    const fin = Date.now();
+
+// SALIÓ DE FALLA
+
+if (salioDeFalla) {
+
+
+const fechaInicio =
+  falla_inicio || equipoActual.contador_inicio;
+
+const inicio =
+  new Date(fechaInicio + "Z").getTime();
+
+
+    const fin =
+new Date().getTime();
+
+
 
     if (!isNaN(inicio)) {
 
-        const segundos = Math.floor((fin - inicio) / 1000);
 
-        tiempo_muerto_real = formatearTiempo(segundos);
+        const segundos =
+        Math.floor((fin - inicio) / 1000);
+
+
+        tiempo_muerto_real =
+        formatearTiempo(segundos);
+console.log("SEGUNDOS FALLA:", segundos);
+console.log("TIEMPO MUERTO REAL CALCULADO:", tiempo_muerto_real);
     }
 
-    // INSERTAR EN reportes_mantenimiento
-    const { error: errorHistorial } = await db
-        .from("reportes_mantenimiento")
-        .insert([{
-            grua,
-            turno,
-            bloque_tramo,
-            fecha_hora_falla,
-            fecha_hora_entrega,
-            tiempo_muerto,
-            tiempo_muerto_real,
-            quien_reporto,
-            actividad,
-            area_mantto,
-            supervisor,
-            standby,
-            responsabilidad,
-            codigo_falla,
-            descripcion_falla
-        }]);
 
-    if (errorHistorial) {
-        alert(errorHistorial.message);
-        return;
-    }
 
-    // LIMPIAR VARIABLES
-    falla_inicio = null;
-    tiempo_muerto_real = "00:00:00";
+console.log("SALIO DE FALLA");
+
+
+
+const registro = {
+
+
+    grua,
+
+
+    turno,
+
+
+    bloque_tramo,
+
+
+    fecha_hora_falla,
+
+
+    fecha_hora_entrega,
+
+
+    tiempo_muerto,
+
+
+    tiempo_muerto_real,
+
+    
+    tmi,
+
+
+    quien_reporto,
+
+
+    actividad,
+
+
+    registro_falla,
+
+
+
+    area_mantto,
+
+
+    supervisor,
+
+
+    standby,
+
+
+    responsabilidad,
+
+
+    codigo_falla,
+
+
+    descripcion_falla
+
+
+};
+
+
+
+console.log("REGISTRO REPORTE:",registro);
+
+
+
+const { data,error } =
+await db
+.from("reportes_mantenimiento")
+.insert([registro])
+.select();
+
+
+
+console.log("DATA REPORTE:",data);
+
+console.log("ERROR REPORTE:",error);
+
+
+
+if(error){
+
+alert(error.message);
+
+return;
+
 }
+
+
+
+}
+
 
 
   /* ================= UPDATE GRÚA ================= */
 
-  const { error } =
-    await db
-      .from("gruas")
+
+const { error } =
+await db
+.from("gruas")
 .update({
+
+    // SOLO ESTADO ACTUAL
+
     estado: estadoNuevo,
-    prioridad,
-    observacion_extra,
 
-    registro_falla,
-    bloque_tramo,
-    fecha_hora_falla,
-    fecha_hora_entrega,
-    turno,
-    tiempo_muerto,
 
-    area_mantto,
-    supervisor,
-    standby,
-    responsabilidad,
-    codigo_falla,
-    descripcion_falla,
-    quien_reporto,
-    actividad,
+    prioridad:
+    estadoNuevo === "disponible"
+    ? 0
+    : prioridad,
 
-    // IMPORTANTE
-    falla_inicio: estadoNuevo === "falla"
-        ? falla_inicio
-        : null,
 
-    tiempo_falla: estadoNuevo === "falla"
-        ? equipoActual.tiempo_falla
-        : "00:00:00",
+    observacion_extra:
+    estadoNuevo === "disponible"
+    ? null
+    : observacion_extra,
 
-    updated_at: new Date().toISOString()
+
+
+    falla_inicio:
+    estadoNuevo === "falla"
+    ? falla_inicio
+    : null,
+
+
+
+    tiempo_falla:
+    estadoNuevo === "falla"
+    ? equipoActual.tiempo_falla
+    : "00:00:00",
+
+
+
+    // LIMPIAR INFORMACION TEMPORAL
+
+    quien_reporto:
+    estadoNuevo === "disponible"
+    ? null
+    : equipoActual.quien_reporto,
+
+
+    actividad:
+    estadoNuevo === "disponible"
+    ? null
+    : equipoActual.actividad,
+
+
+    registro_falla:
+    estadoNuevo === "disponible"
+    ? null
+    : equipoActual.registro_falla,
+
+
+
+    updated_at:
+    new Date().toISOString()
+
 })
-      .eq("id", actual);
+.eq("id",actual);
 
-  if (error) {
 
-    alert("Error grúas: " + error.message);
 
-    return;
+if(error){
 
-  }
+alert("Error grúas: " + error.message);
 
-  /* ================= UI ================= */
+return;
 
-  if (entroAFalla) {
+}
+
+equipoActual.estado = estadoNuevo;
+
+equipoActual.quien_reporto =
+estadoNuevo === "disponible"
+? null
+: quien_reporto;
+
+equipoActual.actividad =
+estadoNuevo === "disponible"
+? null
+: actividad;
+
+equipoActual.registro_falla =
+estadoNuevo === "disponible"
+? null
+: registro_falla;
+
+equipoActual.falla_inicio =
+estadoNuevo === "falla"
+? falla_inicio
+: null;
+
+
+/* ================= UI ================= */
+
+
+if (entroAFalla) {
 
     render();
 
@@ -3989,25 +4282,36 @@ if (salioDeFalla && falla_inicio) {
 
     renderKPIs();
 
-  }
+}
 
-  if (salioDeFalla) {
+
+
+if (salioDeFalla) {
+
 
     cerrarModal();
 
+
     cargar();
+
 
     alert("Falla cerrada correctamente");
 
+
     return;
 
-  }
+}
 
-  alert("Guardado correctamente");
 
-  cerrarModal();
 
-  cargar();
+alert("Guardado correctamente");
+
+
+cerrarModal();
+
+
+cargar();
+
 
 }
 if (estado === 'falla') {
@@ -4596,8 +4900,9 @@ async function cargarReporteGruas() {
               <th>ACTIVIDAD REALIZABA OPERADOR</th>
               <th>CODIGO DE FALLA</th>
               <th>DESCRIPCIÓN</th>
-              <th>TIEMPO MUERTO (REPORTE)</th>
-              <th>TIEMPO MUERTO(REAL DE FALLA)</th>
+              <th>TIPO DE FALLA(TM/TI)</th>
+              <th>TIEMPO MUERTO (Atencion de falla)</th>
+              <th>TIEMPO MUERTO(tiempo grua inactiva)</th>
             </tr>
           </thead>
 
@@ -4621,6 +4926,7 @@ async function cargarReporteGruas() {
           <td>${r.actividad || ''}</td>
           <td>${r.codigo_falla ?? ''}</td>
           <td>${r.descripcion_falla ?? ''}</td>
+          <td>${r.tmi || ''}</td>
           <td>${r.tiempo_muerto || ''}</td>
           <td>${r.tiempo_muerto_real || '00:00:00'}</td>
         </tr>
@@ -4704,7 +5010,7 @@ function actualizarIndicadorEstado(){
   indicador.className = 'estado-indicador ' + estado;
 }
 async function guardarEstadoRapido() {
-
+console.log("ENTRÉ A GUARDAR ESTADO RÁPIDO");
 try {
 
   const estado = document.getElementById('estado').value;
@@ -4753,7 +5059,15 @@ try {
     console.error("No se encontró la grúa:", actual);
     return;
   }
+// DATOS DEL PRIMER FORMULARIO DE FALLA
+const quien_reporto =
+  document.getElementById('quienReporto').value.trim();
 
+const actividad =
+  document.getElementById('actividad').value.trim();
+
+const registro_falla =
+  document.getElementById('registro_falla').value.trim();
   const estadoAnterior = g.estado;
   const estadoNuevo = estado;
 
@@ -4765,16 +5079,24 @@ try {
 
   let falla_inicio = g.falla_inicio;
 
-  // ================= FALLA =================
-  if (estado === 'falla') {
+// ================= FALLA =================
+if (estado === 'falla') {
 
-    if (contador_estado !== 'running') {
-      contador_estado = 'running';
-      contador_inicio = new Date().toISOString();
-      contador_segundos = 0;
-    }
+  if (contador_estado !== 'running') {
 
-  } else {
+    const inicioFalla = new Date().toISOString();
+
+    contador_estado = 'running';
+
+    contador_inicio = inicioFalla;
+
+    contador_segundos = 0;
+
+    falla_inicio = inicioFalla;
+console.log("GUARDANDO INICIO FALLA:", falla_inicio);
+  }
+
+} else {
     contador_estado = 'stopped';
     contador_inicio = null;
     contador_segundos = 0;
@@ -4928,28 +5250,62 @@ try {
     return;
   }
   //modificacion ///////////////////////
-  const { error } = await db
-  .from("gruas")
-  .update({
+const { error } = await db
+.from("gruas")
+.update({
 
+    // ESTADO ACTUAL DE LA GRÚA
     estado: estado,
 
+
+    // DATOS TEMPORALES DE LA FALLA
+    quien_reporto:
+      estado === "falla"
+      ? quien_reporto
+      : g.quien_reporto,
+
+
+    actividad:
+      estado === "falla"
+      ? actividad
+      : g.actividad,
+
+
+    registro_falla:
+      estado === "falla"
+      ? registro_falla
+      : g.registro_falla,
+
+
+    // CONTADOR FALLA
     contador_estado,
     contador_inicio,
     contador_segundos,
 
+
+    // CONTADOR BAÑO
     contador_bano_estado,
     contador_bano_inicio,
     contador_bano_segundos,
 
+
+    // CONTADOR SEÑAL
     contador_senal_estado,
     contador_senal_inicio,
     contador_senal_segundos,
 
-    updated_at: new Date().toISOString()
 
-  })
-  .eq("id", actual);
+falla_inicio:
+  estado === "falla"
+  ? new Date(falla_inicio).toISOString().replace("Z","")
+  : null,
+
+
+    updated_at:
+      new Date().toISOString()
+
+})
+.eq("id", actual);
 
 if (error) {
     console.error(error);
@@ -4960,6 +5316,24 @@ if (error) {
   g.estado = estado;
   g.prioridad = prioridad;
 
+  const select = document.getElementById("tiempoMuerto");
+
+if (select) {
+
+    for (let minutos = 10; minutos <= 600; minutos += 10) {
+
+        const horas = String(Math.floor(minutos / 60)).padStart(2, "0");
+        const mins = String(minutos % 60).padStart(2, "0");
+
+        const tiempo = `${horas}:${mins}:00`;
+
+        const opcion = document.createElement("option");
+        opcion.value = tiempo;
+        opcion.textContent = tiempo;
+
+        select.appendChild(opcion);
+    }
+}
   render();
   renderFallas();
   renderPrioridad();
