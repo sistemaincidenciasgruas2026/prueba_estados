@@ -2320,16 +2320,15 @@ body{
 
         z-index:100;
     }
-    .grid{
-        grid-template-columns:repeat(11, 95px);
+
+        .grid-tren{
+        grid-template-columns:repeat(4, 110px);
         gap:10px;
-        width:max-content;
     }
 
-    .card{
-        width:100%;
-        min-width:0;
-        min-height:100px;
+    .grid-tren .card{
+        width:110px;
+        min-height:105px;
     }
 }
 @media (max-width:1366px){
@@ -2475,6 +2474,17 @@ body{
         width:100%;
     }
 
+}
+/* ================= ZONA I TREN ================= */
+
+.grid-tren{
+    grid-template-columns:repeat(4, 120px);
+    gap:10px;
+}
+
+.grid-tren .card{
+    width:120px;
+    min-height:110px;
 }
 </style>
 
@@ -3167,7 +3177,8 @@ gruas:[
 },
 {
   zona:'I',
-  gruas:['K-08','K-07','K-06','K-05']
+  gruas:
+  ['K-08','K-07','K-06','K-05','','','']
 }
 
 
