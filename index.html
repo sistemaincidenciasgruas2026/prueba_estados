@@ -236,12 +236,6 @@ img, iframe{
   overflow:hidden;    /* 👈 evita que “se salga” */
   z-index:10;
 }
-.yard{
-    position:relative;
-    width:100%;
-    max-width:100%;
-    overflow-x:auto;
-}
 .row{
 
 display:flex;
@@ -2498,39 +2492,14 @@ min-width:900px;
 
 
 }
-@media (max-width:1024px){
 
-.sidebar{
-
-    width:100%;
-    height:auto;
-
-    display:flex;
-
-    flex-direction:row;
-
-    overflow-x:auto;
-
-}
-
-.menu-btn{
-
-    min-width:180px;
-
-    margin:6px;
-
-}
-
-}
 @media (max-width:1024px){
 
 .grid{
-
 grid-template-columns:
-repeat(auto-fit,minmax(90px,1fr));
+repeat(6,90px);
 
-gap:8px;
-
+justify-content:start;
 }
 
 .card{
@@ -2605,6 +2574,168 @@ font-size:16px;
 padding:10px 20px;
 
 border-radius:8px;
+
+}
+/* ===========================
+   TABLET DASHBOARD AJUSTE FINAL
+   =========================== */
+
+@media (min-width:768px) and (max-width:1300px){
+
+body{
+    overflow-x:hidden;
+}
+
+
+/* estructura principal */
+.app{
+    grid-template-columns:
+    180px
+    minmax(0,1fr)
+    250px;
+
+    gap:10px;
+}
+
+
+/* menú */
+.sidebar{
+    width:180px;
+    min-width:180px;
+    padding:10px;
+}
+
+
+.menu-btn{
+
+    min-height:38px;
+    padding:8px;
+
+    font-size:11px;
+
+    margin-bottom:6px;
+}
+
+
+/* contenido */
+.dashboard-main{
+
+    grid-template-columns:
+    minmax(0,1fr)
+    250px;
+
+    gap:10px;
+    padding:0 10px;
+
+}
+
+
+/* tarjetas de grúas */
+
+.grid{
+
+    grid-template-columns:
+    repeat(6,minmax(70px,1fr));
+
+    gap:6px;
+
+}
+
+
+.card{
+
+    min-height:75px;
+
+}
+
+
+.code{
+
+    font-size:16px;
+
+}
+
+
+/* panel derecho */
+
+.side{
+
+    width:250px;
+
+}
+
+
+.panel-title,
+.panel-header{
+
+    padding:8px;
+
+    font-size:12px;
+
+}
+
+
+.item{
+
+    padding:8px;
+
+    font-size:11px;
+
+}
+
+
+/* leyenda */
+
+.leyenda-corner{
+
+    width:140px;
+
+    font-size:10px;
+
+}
+
+
+.legend-row{
+
+    font-size:10px;
+
+}
+
+
+.color-box{
+
+    width:10px;
+    height:10px;
+
+}
+
+
+/* KPIs */
+
+.kpis{
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:5px;
+
+}
+
+
+.kpi{
+
+    min-height:35px;
+
+    padding:5px;
+
+}
+
+
+.kpi-value{
+
+    font-size:14px;
+
+}
 
 }
 </style>
