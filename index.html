@@ -2308,40 +2308,45 @@ body{
         position:absolute;
         top:10px;
         right:10px;
-
         width:150px;
         padding:8px;
-
         border-radius:8px;
         box-shadow:0 4px 10px rgba(0,0,0,.12);
-
         max-height:220px;
         overflow:auto;
-
         z-index:100;
     }
 
 
-.grid{
-    grid-template-columns:repeat(11,90px);
-    column-gap:14px;
-    row-gap:10px;
-    width:max-content;
-}
+    .grid{
 
+        grid-template-columns:repeat(11,90px) !important;
+        column-gap:18px !important;
+        row-gap:20px !important;
+        width:max-content !important;
 
-    .card{
-        width:90px;
-        min-width:90px;
-        min-height:100px;
     }
 
 
-    /* ZONA I igual que las demás */
-.grid-tren{
-    grid-template-columns:repeat(4,90px);
-    column-gap:14px;
-}
+    .grid-tren{
+
+        grid-template-columns:repeat(4,90px) !important;
+        column-gap:18px !important;
+        row-gap:20px !important;
+
+        /* evita que ZONA I se recorra */
+        margin-left:0 !important;
+
+    }
+
+
+    .card{
+
+        width:90px !important;
+        min-width:90px !important;
+        height:100px !important;
+
+    }
 
 }
 @media (max-width:1366px){
