@@ -237,12 +237,17 @@ img, iframe{
   z-index:10;
 }
 .yard{
-    position: relative;
+    position:relative;
+    width:100%;
+}
+@media (min-width: 1600px){
 
-    transform: scale(.92);
-    transform-origin: top left;
+    .yard{
+        transform:scale(.92);
+        transform-origin:top left;
+        width:109%;
+    }
 
-    width: 109%; /* compensa el scale */
 }
 .row{
 
