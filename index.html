@@ -240,15 +240,7 @@ img, iframe{
     position:relative;
     width:100%;
 }
-@media (min-width: 1600px){
 
-    .yard{
-        transform:scale(.92);
-        transform-origin:top left;
-        width:109%;
-    }
-
-}
 .row{
 
 display:flex;
@@ -2420,6 +2412,57 @@ body{
     .card{
 
         min-width:0;
+
+    }
+
+}
+/* ================= TABLET: PANEL DERECHO ABAJO ================= */
+
+@media (max-width:1400px){
+
+    .dashboard-main{
+
+        display:flex;
+        flex-direction:column;
+
+        width:100%;
+        padding:0 10px 16px;
+
+    }
+
+
+    .yard-container{
+
+        width:100%;
+        min-width:0;
+
+    }
+
+
+    .yard{
+
+        width:100%;
+        transform:none;
+
+    }
+
+
+    .events-panel{
+
+        width:100%;
+        position:static;
+
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+
+        gap:12px;
+
+    }
+
+
+    .events-panel > *{
+
+        width:100%;
 
     }
 
