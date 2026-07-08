@@ -240,7 +240,15 @@ img, iframe{
     position:relative;
     width:100%;
 }
+@media (min-width: 1600px){
 
+    .yard{
+        transform:scale(.92);
+        transform-origin:top left;
+        width:109%;
+    }
+
+}
 .row{
 
 display:flex;
@@ -2421,49 +2429,33 @@ body{
 @media (max-width:1400px){
 
     .dashboard-main{
-
         display:flex;
         flex-direction:column;
-
-        width:100%;
-        padding:0 10px 16px;
-
+        gap:16px;
     }
 
-
+    /* Patio ocupa primero */
     .yard-container{
-
         width:100%;
-        min-width:0;
-
+        order:1;
     }
 
-
-    .yard{
-
-        width:100%;
-        transform:none;
-
-    }
-
-
+    /* Paneles abajo */
     .events-panel{
+        order:2;
 
         width:100%;
         position:static;
 
-        display:grid;
-        grid-template-columns:repeat(3,1fr);
+        display:flex;
+        flex-direction:column;
+        gap:16px;
 
-        gap:12px;
-
+        margin-top:20px;
     }
 
-
-    .events-panel > *{
-
+    .events-panel .panel{
         width:100%;
-
     }
 
 }
