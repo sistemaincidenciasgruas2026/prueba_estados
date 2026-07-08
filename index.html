@@ -2349,7 +2349,73 @@ body{
 }
 
 }
+/* ================= AJUSTE TABLET LATERAL ================= */
 
+@media (max-width:1400px){
+
+    .dashboard-main{
+
+        display:grid;
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            300px;
+
+        gap:12px;
+
+        overflow:hidden;
+
+    }
+
+
+    .yard-container{
+
+        min-width:0;
+        width:100%;
+        overflow:hidden;
+
+    }
+
+
+    .yard{
+
+        width:100%;
+        transform:none;
+
+        overflow:hidden;
+
+    }
+
+
+    .events-panel{
+
+        width:300px;
+        min-width:300px;
+
+        position:relative;
+
+        top:auto;
+
+    }
+
+
+    .grid{
+
+        grid-template-columns:
+        repeat(11, minmax(70px,1fr));
+
+        gap:8px;
+
+    }
+
+
+    .card{
+
+        min-width:0;
+
+    }
+
+}
 /* ================= TABLET: PANEL DERECHO ABAJO ================= */
 
 @media (max-width:1400px){
