@@ -3187,98 +3187,140 @@ body{
     opacity:.85;
 
 }
-/* =========================================
-   RESPONSIVE FINAL MOBILE
-   SOBRESCRIBE REGLAS ANTERIORES
-========================================= */
+/* =====================================
+   GRUAS RESPONSIVAS COMPACTAS
+===================================== */
 
 @media(max-width:768px){
 
-.layout{
-    flex-direction:column !important;
+    .yard{
+        padding:8px !important;
+    }
+
+
+    .row{
+        gap:4px;
+        margin-bottom:6px;
+    }
+
+
+    .zona{
+        width:35px !important;
+        font-size:8px;
+    }
+
+
+    .grid{
+
+        grid-template-columns:
+        repeat(11, 1fr) !important;
+
+        gap:3px !important;
+
+        width:100% !important;
+
+    }
+
+
+    .card{
+
+        width:auto !important;
+        min-width:0 !important;
+
+        height:55px !important;
+        min-height:55px !important;
+
+        padding:4px !important;
+
+        border-radius:5px;
+
+    }
+
+
+    .code{
+
+        font-size:11px !important;
+
+        margin-top:3px;
+
+        margin-bottom:2px;
+
+    }
+
+
+    .small{
+
+        font-size:6px !important;
+
+    }
+
+
+    .timer-card{
+
+        font-size:7px;
+
+        padding:1px;
+
+    }
+
+
+    .estado-label,
+    .corner-badge{
+
+        font-size:6px;
+
+        padding:1px 3px;
+
+    }
+
 }
 
-.sidebar{
-    width:100% !important;
-    max-width:none !important;
-    min-width:0 !important;
-    height:auto;
-}
-
-.main-content{
-    width:100%;
-}
-
-.dashboard-main{
-    display:flex !important;
-    flex-direction:column !important;
-    padding:10px;
-}
 
 
-.yard-container{
-    width:100%;
-    overflow-x:auto;
-}
+/* CELULARES PEQUEÑOS */
+
+@media(max-width:480px){
+
+    .grid{
+
+        grid-template-columns:
+        repeat(11, 1fr) !important;
+
+        gap:2px !important;
+
+    }
 
 
-.yard{
-    width:max-content !important;
-    min-width:max-content;
-}
+    .card{
+
+        height:45px !important;
+
+        border-radius:4px;
+
+    }
 
 
-.grid{
-    grid-template-columns:repeat(11,90px) !important;
-    width:max-content !important;
-}
+    .code{
+
+        font-size:9px !important;
+
+    }
 
 
-.card{
-    width:90px !important;
-    height:95px !important;
-}
+    .small{
+
+        display:none;
+
+    }
 
 
-.events-panel{
-    display:flex !important;
-}
+    .zona{
 
+        width:25px !important;
 
-.kpis{
-    grid-template-columns:repeat(2,1fr);
-}
+        font-size:7px;
 
-
-.tabla-container{
-    overflow-x:auto;
-}
-
-
-.tabla-reporte{
-    min-width:900px;
-}
-
-
-.modal-content{
-    width:calc(100% - 30px);
-}
-
-
-.barra-reportes{
-    flex-direction:column;
-}
-
-
-.btn-reporte{
-    width:100%;
-}
-
-
-.messages-dashboard{
-    grid-template-columns:1fr;
-}
-
+    }
 
 }
 </style>
