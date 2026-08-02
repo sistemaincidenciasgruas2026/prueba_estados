@@ -3187,21 +3187,19 @@ body{
     opacity:.85;
 
 }
-/* ===================================================
-   RESPONSIVE PARA CELULARES
-   Agregar al FINAL del CSS existente
-=================================================== */
-
-/* ===================================================
-   CORRECCION MOVIL FINAL
-=================================================== */
-
-/* ======================================
-   MENU MOVIL COMPACTO
-====================================== */
+/* =========================================
+   CORRECCION MOBILE FINAL
+   NO TOCAR ESTRUCTURA ORIGINAL
+========================================= */
 
 @media(max-width:768px){
 
+    body{
+        overflow-x:hidden;
+    }
+
+
+    /* MENU LATERAL COMO MENU VERTICAL */
     .sidebar{
 
         width:180px !important;
@@ -3210,20 +3208,14 @@ body{
 
         height:100vh !important;
 
-        display:flex !important;
-        flex-direction:column !important;
-
         overflow-y:auto !important;
         overflow-x:hidden !important;
 
+        display:block !important;
+
+        position:relative !important;
+
         padding:10px !important;
-
-        position:fixed !important;
-        left:0;
-        top:40px;
-
-        z-index:1000;
-
     }
 
 
@@ -3235,27 +3227,65 @@ body{
 
         height:auto !important;
 
-        min-height:45px !important;
+        margin-bottom:10px !important;
 
-        margin-bottom:8px !important;
+    }
 
-        justify-content:center !important;
 
-        text-align:center;
+    /* AREA PRINCIPAL */
+    .layout{
 
-        font-size:11px !important;
+        display:flex !important;
+
+        flex-direction:row !important;
+
+        align-items:flex-start;
 
     }
 
 
     .main-content{
 
-        margin-left:180px !important;
-
         width:calc(100% - 180px) !important;
+
+        min-width:0;
 
     }
 
+
+
+    /* PATIO DE GRUAS */
+    .yard{
+
+        overflow:auto !important;
+
+        padding:10px !important;
+
+    }
+
+
+    .grid{
+
+        display:grid !important;
+
+        grid-template-columns:repeat(4,85px) !important;
+
+        gap:10px !important;
+
+        width:max-content !important;
+
+    }
+
+
+    .card{
+
+        width:85px !important;
+
+        min-width:85px !important;
+
+        height:90px !important;
+
+    }
 
 }
 </style>
