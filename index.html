@@ -17,7 +17,14 @@ CONTROL OPERATIVO GRÚAS
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<link 
+rel="stylesheet" 
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
 
 /* ================= RESET ================= */
@@ -142,10 +149,10 @@ font-weight:700;
 /* ================= KPIS ================= */
 
 .kpis{
-  display:grid;
-  grid-template-columns:repeat(4, minmax(120px,1fr));
-  gap:6px;
-  padding:4px 10px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
+    margin-bottom:6px;
 }
 
 .kpi{
@@ -187,24 +194,46 @@ img, iframe{
   overflow-x: auto;
 }
 
-.tabla-reporte {
-  width: 100%;
-  table-layout: fixed;
-  border-collapse: collapse;
+.tabla-reporte{
+    width:auto;
+    min-width:100%;
+    border-collapse:collapse;
+    table-layout:auto;
 }
 
+.tabla-reporte th{
+    padding:6px 8px;
+    font-size:11px;
+    white-space:nowrap;
+    text-align:center;
+}
 
+.tabla-reporte td{
+    padding:4px 8px;
+    white-space:nowrap;
+    vertical-align:middle;
+}
 
 .tabla-reporte th,
-.tabla-reporte td {
-  padding: 6px 8px;
-  font-size: 12px;
-
-  white-space: normal;   /* 👈 CAMBIO IMPORTANTE */
-  word-break: break-word;
-  overflow-wrap: break-word;
+.tabla-reporte td{
+    padding:4px 6px;
+    white-space:nowrap;
+    width:auto;
 }
+.tabla-reporte th,
+.tabla-reporte td{
+    min-width:0 !important;
+}
+.tabla-reporte td:nth-child(11),
+.tabla-reporte td:nth-child(12),
+.tabla-reporte td:nth-child(13){
 
+    max-width:250px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+
+}
 /* ================= YARD ================= */
 
 .yard{
@@ -255,25 +284,19 @@ display:flex;
 
 align-items:flex-start;
 
-margin-bottom:16px;
+margin-bottom:8px;
 
 }
 
 .zona{
 
-width:90px;
+    width:80px;
 
-padding-top:18px;
+    font-size:11px;
 
-font-size:12px;
+    font-weight:700;
 
-font-weight:700;
-
-color:var(--muted);
-
-
-margin-right: 15px;
-
+    color:#64748b;
 
 }
 
@@ -284,14 +307,21 @@ margin-right: 15px;
   grid-template-columns: repeat(11, minmax(110px, 120px));
   gap:10px;
 }
-
+.grid-side{
+  grid-template-columns: repeat(13, minmax(95px, 1fr));
+  gap:10px;
+}
+.grid-sts{
+  grid-template-columns: repeat(13, minmax(95px, 1fr));
+  gap:10px;
+}
 /* ================= CARD ================= */
 
 .card{
   position:relative;
 
-  min-height:110px;
-  border-radius:14px;
+  min-height: 90px;
+  border-radius: 6px;
 
   cursor:pointer;
   transition:.25s;
@@ -349,6 +379,11 @@ margin-right: 15px;
   background:#141212;
   color:white;
 }
+.percance{
+  background:#8C2CC7;
+  color:white;
+}
+
 .fmenor{
   background:#ED7158;
   color:white;
@@ -358,7 +393,8 @@ margin-right: 15px;
   color:white;
 }
 .falla{
- animation:blinkFail 1s infinite;
+ background:#c62828;
+ color:white;
 }
 .baño{
   background:#F5B427;
@@ -369,21 +405,7 @@ margin-right: 15px;
   background:#806237;
   color:white;
 }
-@keyframes blinkFail{
 
- 0%{
-   box-shadow:0 0 0px red;
- }
-
- 50%{
-   box-shadow:0 0 15px red;
- }
-
- 100%{
-   box-shadow:0 0 0px red;
- }
-
-}
 
 .sinsenal{
   background:#8e73a8;
@@ -610,17 +632,7 @@ background:#8f2f2f;
   font-size:12px;
   font-weight:700;
 }
-/* ================= LIST ================= */
 
-.list{
-
-display:flex;
-
-flex-direction:column;
-
-gap:8px;
-
-}
 
 /* ================= ITEM ================= */
 
@@ -633,7 +645,7 @@ gap:8px;
     border-radius:6px;
 
     padding:12px;
-border-left:5px solid #d32f2f;
+    border-left:5px solid #d32f2f;
 }
 
 .item strong{
@@ -806,10 +818,13 @@ overflow-y:auto;
 .modal-title{
 
 font-size:20px;
-
 font-weight:700;
-
 margin-bottom:16px;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+width:100%;
 
 }
 
@@ -978,11 +993,8 @@ color:#1f2933;
 .menu-title{
 
     font-size:18px;
-
     font-weight:700;
-
     margin-bottom:20px;
-
     color:#6da544;
 
 }
@@ -990,14 +1002,14 @@ color:#1f2933;
 /* ================= SIDEBAR MODERNA ================= */
 
 .sidebar{
-  width:220px;
-  min-width:220px;
-  max-width:220px;
+  width:170px;
+  min-width:170px;
+  max-width:170px;
 
   background:linear-gradient(180deg,#0f172a,#1e293b);
   color:white;
 
-  padding:16px;
+  padding:12px;
 
   overflow-y:auto;
   overflow-x:hidden;
@@ -1336,17 +1348,24 @@ color:#1f2933;
     position:sticky;
     top:80px;
 }
-.dashboard-panel{
-    max-height:400px;
-    overflow:hidden;
-}
 
-.list{
-    max-height:340px;
-    overflow-y:auto;
-    padding:10px;
+#mensajeActivo .item{
+    display:block !important;
+    color:#111 !important;
+    background:white !important;
+    height:auto !important;
+    min-height:80px !important;
+    overflow:visible !important;
+    visibility:visible !important;
+    opacity:1 !important;
 }
-
+#mensajeActivo p,
+#mensajeActivo div,
+#mensajeActivo span{
+    color:#111 !important;
+    display:block !important;
+    visibility:visible !important;
+}
 .panel-header{
 
  background:#455a64;
@@ -1376,8 +1395,8 @@ color:#1f2933;
 }
 
 .panel-body{
-  max-height:90px;
-  overflow-y:auto;
+    max-height: none;
+    overflow-y: visible;
 }
 .stats{
   display:grid;
@@ -1462,7 +1481,7 @@ color:#1f2933;
   margin-left:auto; /* 🔥 esto lo empuja a la derecha */
 }
 
-/* botón */
+/* botón barra superior */
 .yard-btn,
 .btn-excel{
 
@@ -1474,17 +1493,17 @@ color:#1f2933;
   );
 
   border:none;
-  border-radius:10px;
+  border-radius:6px;
 
   transition:.25s;
 
-  min-width:220px;
-  height:50px;
+  min-width:140px;
+  height:30px;
 
-  padding:0 24px;
+  padding:0 12px;
 
-  font-size:15px;
-  font-weight:700;
+  font-size:12px;
+  font-weight:600;
 
   display:flex;
   align-items:center;
@@ -1493,14 +1512,16 @@ color:#1f2933;
   color:white;
   cursor:pointer;
 }
+
+
 .yard-btn:hover,
 .btn-excel:hover,
 button:hover{
 
-  transform:translateY(-2px);
+  transform:translateY(-1px);
 
   box-shadow:
-  0 8px 20px rgba(15,76,129,.35);
+  0 4px 10px rgba(15,76,129,.25);
 }
 .color{
   width:16px;
@@ -1527,6 +1548,10 @@ button:hover{
 .dayli-color{
   background:#8d6e63; /* Café */
 }
+.percance-color{
+  background:#8C2CC7; /* Café */
+}
+
 .fmenor-color{
   background:#ED7158; /* Café */
 }
@@ -1618,8 +1643,6 @@ button:hover{
 
   background:white;
 
-  border:none;
-
   border-left:4px solid #76a845;
 
   border-radius:10px;
@@ -1628,8 +1651,6 @@ button:hover{
 
   padding:14px;
 
-  box-shadow:
-    0 2px 8px rgba(0,0,0,.05);
 }
 .messages-header{
 
@@ -1677,19 +1698,26 @@ button:hover{
 }
 
 .compose-card,
-.live-message,
 .history-card{
 
     background:#fff;
+    border-radius:20px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
 
-    border-radius:18px;
+    display:flex;
+    flex-direction:column;
 
-    box-shadow:
-    0 10px 25px rgba(0,0,0,.08);
-
-    border:1px solid #dce4ec;
+    min-height:720px;
 }
+.msg-actions{
 
+    margin-top:auto;
+
+    display:flex;
+    justify-content:center;
+
+    padding-top:20px;
+}
 .compose-card{
 
     padding:25px;
@@ -1943,10 +1971,6 @@ button:hover{
   box-shadow:0 4px 10px rgba(0,0,0,.25);
 }
 
-
-
-
-
 .topbar{
   background: linear-gradient(90deg,#0b3a66,#145a96);
   box-shadow: 0 4px 12px rgba(0,0,0,.25);
@@ -1993,9 +2017,7 @@ button:hover{
 }
 
 .tabla-reporte th{
-  padding:10px;
-  text-align:left;
-  font-weight:700;
+    font-size:12px;
 }
 
 
@@ -2051,6 +2073,7 @@ button:hover{
 .color-box.baño{ background:#F5B427; }
 .color-box.fmenor{ background:#ED7158; }
 .color-box.fseñal{ background:#969696; }
+.color-box.percance{ background:#8C2CC7; }
 
 .estado-indicador{
   width:100%;
@@ -2086,6 +2109,10 @@ button:hover{
 .estado-indicador.anclada{
   background:#806237;
 }
+.estado-indicador.percance{
+  background:#8C2CC7;
+}
+
 .reporte-container{
     width:100%;
     max-width:none;
@@ -2176,10 +2203,7 @@ button:hover{
 }
 
 .tabla-container{
-    width:100vw;
-    max-width:100%;
     overflow-x:auto;
-    box-sizing:border-box;
 }
 
 .tabla-reporte thead th{
@@ -2249,14 +2273,28 @@ button:hover{
     width:170px;
 }
 .mensaje-activo{
-  margin-top:10px;
-  padding:10px 12px;
-  border-radius:10px;
-  background:#fff3cd;
-  color:#856404;
-  font-weight:600;
-  font-size:13px;
-  border:1px solid #ffeeba;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    padding:10px;
+    overflow:visible;
+}
+
+
+.mensaje-activo .item{
+
+    background:white;
+    color:#111;
+
+    border-radius:10px;
+    padding:10px;
+
+    border-left:5px solid #0b5aa2;
+
+    box-shadow:
+    0 2px 8px rgba(0,0,0,.10);
+
+    display:block;
 }
 .msg-badge{
   position: absolute;
@@ -2550,28 +2588,688 @@ body{
     }
 
 }
+/* CORRECCION MENSAJE ACTIVO */
 
+.live-message{
+    overflow:visible !important;
+    min-height:auto;
+}
+
+
+#mensajeActivo{
+    margin-top:15px;
+    width:100%;
+    display:block !important;
+    overflow:visible !important;
+}
+
+
+#mensajeActivo .item{
+
+    width:100%;
+
+    background:#fff !important;
+
+    color:#111 !important;
+
+    padding:10px;
+
+    border-radius:10px;
+
+    border-left:5px solid #0b5aa2;
+
+    min-height:auto;
+
+    display:block !important;
+
+    visibility:visible !important;
+
+    opacity:1 !important;
+
+}
+
+
+#mensajeActivo p{
+
+    color:#111 !important;
+
+    font-size:15px;
+
+    line-height:1.3;
+    margin:6px 0;
+
+}
+.operador-grua{
+    background:#eef6ff;
+    border:1px solid #c9defa;
+    border-radius:6px;
+    padding:8px;
+    margin:8px 0;
+    font-weight:bold;
+    text-align:center;
+}
+/* LIMITAR LISTAS PARA MANTENER MENSAJE ACTIVO VISIBLE */
+
+#listaFallas,
+#listaPrioridad {
+    max-height: 300px;
+    overflow-y: auto;
+}
+.operador-box{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    width:100%;
+}
+
+.operador-label{
+    font-weight:600;
+    color:#1f2937;
+    white-space:nowrap;
+}
+
+.operador-nombre{
+    flex:1;
+    min-width:0;
+    color:#0056a6;
+    font-weight:600;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.editor-operador{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:8px;
+}
+
+#operadorManual{
+    flex:1;
+    height:34px;
+    padding:0 10px;
+    border:1px solid #cbd5e1;
+    border-radius:5px;
+    box-sizing:border-box;
+}
+
+.btn-editar{
+    width:30px;
+    height:30px;
+    border:none;
+    border-radius:4px;
+    background:transparent;
+    color:#6b7280;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:all .2s ease;
+}
+
+.btn-editar:hover{
+    background:#e5e7eb;
+    color:#0056a6;
+}
+
+.btn-operador{
+    width:34px;
+    height:34px;
+    border:none;
+    border-radius:5px;
+    background:#0068b7;
+    color:#fff;
+    cursor:pointer;
+}
+
+.btn-operador:hover{
+    background:#00529b;
+}
+
+.btn-cancelar{
+    width:34px;
+    height:34px;
+    border:none;
+    border-radius:5px;
+    background:#dc2626;
+    color:#fff;
+    cursor:pointer;
+}
+
+.btn-cancelar:hover{
+    background:#b91c1c;
+}
+.messages-dashboard{
+
+    display:grid;
+    grid-template-columns:420px 1fr;
+    gap:24px;
+    align-items:stretch;   /* importante */
+}
+.history-card{
+
+    display:flex;
+
+    flex-direction:column;
+
+    max-height:680px;
+
+}
+
+#historialMensajes{
+    flex:1;
+    overflow-y:auto;
+}
+
+.compose-card{
+    position:sticky;
+    top:20px;
+}
+
+.falla-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.badge-prioridad{
+    background:#b91c1c;
+    color:white;
+    font-weight:bold;
+    padding:4px 12px;
+    border-radius:12px;
+    font-size:12px;
+}
+.barra-reportes{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+    margin:15px 0;
+    flex-wrap:wrap;
+}
+
+.btn-reporte{
+    min-width:200px;
+}
+
+.cerrar-modal{
+
+    width:32px !important;
+    height:32px !important;
+
+    min-width:32px !important;
+    padding:0 !important;
+
+    margin:0 0 0 auto !important;
+
+    background:#ef4444 !important;
+    color:white !important;
+
+    border:none !important;
+    border-radius:50% !important;
+
+    font-size:18px !important;
+    font-weight:700 !important;
+
+    cursor:pointer;
+
+    display:flex !important;
+    align-items:center;
+    justify-content:center;
+
+    line-height:1;
+
+    transition:all .2s ease;
+
+    box-shadow:
+    0 2px 6px rgba(0,0,0,.25);
+
+    flex-shrink:0;
+
+}
+
+
+.cerrar-modal:hover{
+
+    background:#b91c1c !important;
+
+    transform:scale(1.08);
+
+    box-shadow:
+    0 4px 10px rgba(0,0,0,.35);
+
+}
+
+
+.cerrar-modal:active{
+
+    transform:scale(.95);
+
+}
+/* CONTENEDOR */
+.tabla-container{
+    width:100%;
+    overflow-x:auto;
+    background:#ffffff;
+    border-radius:10px;
+    padding:10px;
+}
+
+
+/* TABLA */
+.tabla-reporte{
+
+    width:100%;
+    border-collapse:separate;
+    border-spacing:0;
+
+    table-layout:auto;
+
+    font-family:Arial, sans-serif;
+    font-size:13px;
+
+}
+
+
+/* ENCABEZADO */
+.tabla-reporte thead th{
+
+    background:#155b96;
+    color:white;
+
+    padding:10px 8px;
+
+    text-align:center;
+
+    font-size:12px;
+    font-weight:bold;
+
+    text-transform:uppercase;
+
+    border-right:1px solid rgba(255,255,255,.25);
+
+    white-space:nowrap;
+
+}
+
+
+/* PRIMERA COLUMNA REDONDEADA */
+.tabla-reporte thead th:first-child{
+    border-radius:8px 0 0 0;
+}
+
+
+/* ULTIMA COLUMNA */
+.tabla-reporte thead th:last-child{
+    border-radius:0 8px 0 0;
+}
+
+
+
+/* CELDAS */
+.tabla-reporte tbody td{
+
+    padding:8px 10px;
+
+    color:#243447;
+
+    border-bottom:1px solid #d9e2ec;
+
+    white-space:nowrap;
+
+}
+
+
+/* FILAS ALTERNADAS */
+.tabla-reporte tbody tr:nth-child(even){
+
+    background:#f5f9fc;
+
+}
+
+
+/* EFECTO AL PASAR MOUSE */
+.tabla-reporte tbody tr:hover{
+
+    background:#dceeff;
+
+    transition:.2s;
+
+}
+
+
+/* AJUSTE AUTOMATICO */
+.tabla-reporte th,
+.tabla-reporte td{
+
+    width:auto;
+    min-width:0;
+
+}
+
+
+/* COLUMNAS DE TEXTO LARGO */
+.tabla-reporte td:nth-child(8),
+.tabla-reporte td:nth-child(9),
+.tabla-reporte td:nth-child(11),
+.tabla-reporte td:nth-child(12){
+
+    max-width:250px;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+}
+
+
+/* TEXTO COMPLETO AL PASAR MOUSE */
+.tabla-reporte td:hover{
+
+    white-space:normal;
+
+    background:white;
+
+    position:relative;
+
+    z-index:5;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
+
+}
+
+.badge-prioridad,
+.priority-badge,
+.p1 {
+    color: white !important;
+    background: #c00000 !important;
+    font-weight: 900 !important;
+    font-size: 16px !important;
+    text-align: center;
+}
+
+/* PANEL FALLAS */
+.events-panel .dashboard-panel{
+    height:520px;
+    max-height:520px;
+    overflow:hidden;
+}
+
+#listaFallas{
+    height:460px;
+    max-height:460px;
+    overflow-y:auto;
+    padding:10px;
+}
+
+.filtros-reporte{
+    display:flex;
+    align-items:end;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+
+.campo-filtro{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+}
+
+
+.campo-filtro label{
+    font-size:11px;
+    font-weight:700;
+    color:#475569;
+}
+
+
+.campo-filtro input{
+    height:36px;
+    padding:0 10px;
+    border:1px solid #cbd5e1;
+    border-radius:6px;
+    background:white;
+}
+
+
+/* BOTÓN FILTRAR */
+.btn-filtrar{
+
+    width:100px;
+    height:36px;
+
+    background:#1f6fb2;
+    color:white;
+
+    border:none;
+    border-radius:6px;
+
+    font-weight:700;
+    font-size:12px;
+
+    cursor:pointer;
+}
+
+
+.btn-filtrar:hover{
+    background:#0f4c81;
+}
+
+
+/* BOTÓN EXCEL */
+.btn-descargar{
+
+    width:150px;
+    height:36px;
+
+    background:#76a845;
+    color:white;
+
+    border:none;
+    border-radius:6px;
+
+    font-weight:700;
+    font-size:12px;
+
+    cursor:pointer;
+}
+
+
+.btn-descargar:hover{
+    background:#5f8e34;
+}
+
+/* SELECT ORDENAMIENTO */
+#ordenReporte{
+
+    height:36px;
+
+    min-width:190px;
+
+    padding:0 12px;
+
+    border:1px solid #cbd5e1;
+
+    border-radius:6px;
+
+    background:#ffffff;
+
+    color:#334155;
+
+    font-size:12px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    outline:none;
+
+    transition:.2s;
+
+}
+
+
+#ordenReporte:hover{
+
+    border-color:#1f6fb2;
+
+}
+
+
+#ordenReporte:focus{
+
+    border-color:#1f6fb2;
+
+    box-shadow:
+    0 0 0 3px rgba(31,111,178,.15);
+
+}.barra-acciones{
+
+    position:static;
+
+    display:flex;
+
+    justify-content:flex-start;  /* mueve a la izquierda */
+
+    gap:5px;
+
+    padding:4px 6px;
+
+    background:#ffffff;
+
+    border-radius:8px;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
+
+    margin-bottom:10px;
+
+}
+
+/* BOTONES MÁS COMPACTOS */
+.btn-accion{
+
+    width:200px;     /* reduce el largo */
+
+    height:30px;     /* conserva el alto */
+
+    padding:0 5px;
+
+    font-size:9px;
+
+    border-radius:4px;
+
+    white-space:nowrap;
+
+}
+
+
+.btn-importar{
+
+    background:#1565c0;
+    color:white;
+
+}
+
+
+.btn-captura{
+
+    background:#2e7d32;
+    color:white;
+
+}
+
+
+.btn-accion:hover{
+
+    opacity:.85;
+
+}
+/* ===================================================
+   RESPONSIVE PARA CELULARES
+   Agregar al FINAL del CSS existente
+=================================================== */
+
+/* ===================================================
+   CORRECCION MOVIL FINAL
+=================================================== */
+
+/* ======================================
+   MENU MOVIL COMPACTO
+====================================== */
+
+@media(max-width:768px){
+
+    .sidebar{
+
+        width:180px !important;
+        min-width:180px !important;
+        max-width:180px !important;
+
+        height:100vh !important;
+
+        display:flex !important;
+        flex-direction:column !important;
+
+        overflow-y:auto !important;
+        overflow-x:hidden !important;
+
+        padding:10px !important;
+
+        position:fixed !important;
+        left:0;
+        top:40px;
+
+        z-index:1000;
+
+    }
+
+
+    .menu-btn{
+
+        width:100% !important;
+
+        min-width:0 !important;
+
+        height:auto !important;
+
+        min-height:45px !important;
+
+        margin-bottom:8px !important;
+
+        justify-content:center !important;
+
+        text-align:center;
+
+        font-size:11px !important;
+
+    }
+
+
+    .main-content{
+
+        margin-left:180px !important;
+
+        width:calc(100% - 180px) !important;
+
+    }
+
+
+}
 </style>
-
 </head>
-
 <body>
 
-
-
 <div class="topbar">
-
     <div class="logo">
         CONTROL OPERATIVO DE GRÚAS
     </div>
-
 </div>
 
 <div class="layout">
-
 <div class="sidebar">
-
-
 
   <div class="sidebar-title">
     APLICACIONES 
@@ -2619,22 +3317,30 @@ body{
   <div class="contenido">
 
 <div class="menu-reportes">
+<div class="barra-reportes">
+<button class="btn-reporte activo"
+    onclick="cambiarReporte('gruas', this)">
+    DT REPORTE MTTO GRÚAS
+</button>
 
-    <button 
-      class="btn-reporte activo"
-      onclick="cambiarReporte('gruas')">
-      REPORTE GRÚAS
-    </button>
+<button class="btn-reporte"
+    onclick="cambiarReporte('operadores', this)">
+    REPORTE TIEMPO OPERADORES BAÑO
+</button>
 
-    <button 
-      class="btn-reporte"
-      onclick="cambiarReporte('operadores')">
-      REPORTE OPERADORES
-    </button>
+<button class="btn-reporte"
+    onclick="cambiarReporte('senal', this)">
+    REPORTE MI JACK SIN SEÑAL
+</button>
 
-    <button class="btn-reporte" onclick="cambiarReporte('senal')">
-      REPORTE GRÚA SIN SEÑAL
-    </button>
+<button class="btn-reporte"
+    onclick="generarReporteDT(this)">
+    REPORTE FALLAS OPERACIONES
+</button>
+
+
+</div>
+
 </div>
 
 
@@ -2642,6 +3348,9 @@ body{
 
 </div>
 
+<div id="contenedorReporteDT" style="display:none;">
+
+</div>
 
 <div id="contenedorReporteOperadores"
 style="display:none;">
@@ -2666,71 +3375,73 @@ style="display:none;">
     ">
   </iframe>
 </div>
-<!-- ================= HEADER ================= -->
 <div id="vistaMensajes" class="vista">
 
-  <div class="messages-container">
+    <div class="messages-container">
 
-    <div class="messages-header">
+        <div class="messages-header">
 
-      <h2>Mensajes Operativos OPERACIONES - GRUAS RTG</h2>
+            <h2>Mensajes Operativos OPERACIONES - GRÚAS RTG</h2>
 
-      <span>
-        Información en tiempo real para Operaciones y Mantenimiento
-      </span>
-
-    </div>
-
-    <div class="messages-dashboard">
-
-      <!-- IZQUIERDA -->
-
-      <div class="compose-card">
-
-        <div class="card-title">
-          NUEVO MENSAJE
-        </div>
-
-        <textarea
-          class="msg"
-          id="mensajeInput"
-          placeholder="Informe acerca de la grua..."
-        ></textarea>
-
-        <div class="msg-actions">
-
-          <button
-            class="publish-btn"
-            onclick="guardarMensaje()">
-
-            PUBLICAR MENSAJE
-
-          </button>
+            <span>
+                Información en tiempo real para Operaciones y Mantenimiento
+            </span>
 
         </div>
 
-      </div>
+        <!-- LAS DOS COLUMNAS -->
+        <div class="messages-dashboard">
 
+            <!-- IZQUIERDA -->
+            <div class="compose-card">
 
+                <div class="card-title">
+                    NUEVO MENSAJE
+                </div>
+
+                <label><strong>Quién envía</strong></label>
+                <select id="autorMensaje" class="input">
+                    <option value="">Seleccione...</option>
+                    <option value="OPERACIONES">OPERACIONES</option>
+                    <option value="MTTO GRÚAS">MTTO GRÚAS</option>
+                    <option value="Supervisor">Supervisor</option>
+                    <option value="Monitor AB">Monitor AB</option>
+                    <option value="Monitor CD">Monitor CD</option>
+                    <option value="Monitor EF">Monitor EF</option>
+                    <option value="Monitor SDS">Monitor SDS</option>
+                    <option value="Monitor VSL">Monitor VSL</option>
+                    <option value="Rail Monitor ">Rail Monitor </option>
+                </select>
+                <textarea
+                    class="msg"
+                    id="mensajeInput"
+                    placeholder="Informe acerca de la grúa..."
+                ></textarea>
+
+                <div class="msg-actions">
+                    <button
+                        class="publish-btn"
+                        onclick="guardarMensaje()">
+                        PUBLICAR MENSAJE
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- DERECHA -->
+            <div class="history-card">
+
+                <div class="history-header">
+                    HISTORIAL OPERATIVO
+                </div>
+
+                <div id="historialMensajes"></div>
+
+            </div>
+
+        </div>
 
     </div>
-
-    <div class="history-card">
-
-      <div class="history-header">
-
-        HISTORIAL OPERATIVO
-
-      </div>
-
-      <div
-        id="historialMensajes">
-
-      </div>
-
-    </div>
-
-  </div>
 
 </div>
 <div id="vistaOperativo" class="vista activa">
@@ -2758,8 +3469,6 @@ style="display:none;">
             <div class="kpi-value" id="k4">0</div>
         </div>
 
-
-
     </div>
   
 <input
@@ -2769,7 +3478,25 @@ style="display:none;">
   style="display:none"
   onchange="cargarExcel(event)"
 >
+<div class="barra-acciones">
 
+    <button 
+        class="btn-accion btn-importar"
+        onclick="document.getElementById('excelFile').click()">
+
+        <i class="fa-solid fa-file-import"></i>
+        Importar Estados de Hoja de Equipo
+
+    </button>
+    <button 
+        class="btn-accion btn-captura"
+        onclick="capturarTablero()">
+
+        <i class="fa-solid fa-camera"></i>
+        Capturar Yard Estado de Gruas
+    </button>
+
+</div>
 
 <div class="dashboard-main">
 
@@ -2821,24 +3548,20 @@ style="display:none;">
     <div class="legend-row">
       <span class="color-box fseñal"></span>
       <span>Falla de señal</span>
+
+    </div>
+        <div class="legend-row">
+        <span class="color-box percance"></span>
+        <span>Percance</span>
     </div>
 
   </div>
 
 </div>
 <div class="yard-panel">
-
-    <div class="yard-title">
-      CARGAR ESTADOS DE HOJA DE EQUIPO
-    </div>
-
-    <button
-        class="yard-btn"
-        onclick="document.getElementById('excelFile').click()">
-        Cargar Excel
-    </button>
-
 </div>
+
+
   <div id="yard"></div>
 
 </div>
@@ -2856,23 +3579,15 @@ style="display:none;">
             <div class="list" id="listaFallas"></div>
         </div>
 
-        <div class="panel dashboard-panel">
-            <div class="panel-header">
-                PRIORIDAD OPERATIVA
-            </div>
-
-            <div class="list" id="listaPrioridad"></div>
-
-            
 <div class="panel dashboard-panel">
 
     <div class="panel-header">
         MENSAJE ACTIVO
     </div>
 
-    <div class="list" id="mensajeActivo">
-        Cargando mensaje...
-    </div>
+<div id="mensajeActivo" class="mensaje-activo">
+    Cargando mensaje...
+</div>
 <span id="msgBadge" class="msg-badge" style="display:none;">1</span>
 </div>
         </div>
@@ -2896,9 +3611,88 @@ style="display:none;">
 <div class="modal" id="modal">
 
 <div class="modal-content">
-  <div class="modal-title" id="modalTitle">
-  REGISTRO DE EVENTO
+
+    <button 
+        type="button"
+        class="cerrar-modal"
+        onclick="cerrarModal()">
+        ✕
+    </button>
+
+<div class="modal-title" id="modalTitle">
+
+    <span>REGISTRO DE EVENTO</span>
+
+    <button 
+        type="button"
+        class="cerrar-modal"
+        onclick="cerrarModal()">
+        ✕
+    </button>
+
 </div>
+
+
+<div class="operador-box">
+
+    <span class="operador-label">OPERADOR:</span>
+
+    <span id="operadorActual" class="operador-nombre">
+        SIN ASIGNAR
+    </span>
+
+    <button
+        type="button"
+        class="btn-editar"
+        onclick="mostrarEditorOperador()"
+        title="Editar operador">
+        <i class="fas fa-pen"></i>
+    </button>
+
+</div>
+
+<div id="editorOperador" class="editor-operador" style="display:none;">
+
+    <input
+        id="operadorManual"
+        type="text"
+        placeholder="Nuevo operador">
+
+    <button
+        type="button"
+        class="btn-operador"
+        onclick="guardarOperadorManual()"
+        title="Guardar">
+        <i class="fas fa-check"></i>
+    </button>
+
+    <button
+        type="button"
+        class="btn-cancelar"
+        onclick="ocultarEditorOperador()"
+        title="Cancelar">
+        <i class="fas fa-times"></i>
+    </button>
+
+</div>
+
+<div id="editorOperador" class="editor-operador" style="display:none;">
+
+    <input
+        id="operadorManual"
+        type="text"
+        placeholder="Nuevo operador">
+
+    <button class="btn-operador" onclick="guardarOperadorManual()">
+        ✔
+    </button>
+
+    <button class="btn-cancelar" onclick="ocultarEditorOperador()">
+        ✖
+    </button>
+
+</div>
+
 <div class="estado-panel">
 
   <div id="panelEstado">
@@ -2915,22 +3709,69 @@ style="display:none;">
   <option value="anclada">ANCLADA</option>
   <option value="fmenor">FALLA MENOR</option>
   <option value="fseñal">FALLA DE SEÑAL</option>
+  <option value="percance">PERCANCE</option>
 </select>
 <div id="bloqueOperaciones">
 
+<div id="grupoFechaOpRepo" style="display:none;">
+<label>Fecha/Hora Grua Reportada</label>
+<input type="datetime-local" id="fechaOpRepo"readonly>
+</div>
+
+
 <div id="grupoQuienReporto" style="display:none;">
 
-  <label for="quienReporto">
-    Quién reportó
-  </label>
+    <label for="quienReporto">Quién reportó</label>
 
-  <textarea id="quienReporto"></textarea>
+    <input
+        type="text"
+        id="quienReporto"
+        list="listaReportantes"
+        placeholder="Escriba un apellido o nombre">
+
+    <datalist id="listaReportantes">
+        <option value="AGUILAR SANCHEZ">
+        <option value="ALVARADO CRUZ">
+        <option value="ANAYA ORTIZ">
+        <option value="ARENAS PÉREZ">
+        <option value="ARROYO LOPEZ">
+        <option value="ARUMIR BLANCAS">
+        <option value="AVILA ARROYO">
+        <option value="BARRAGAN MOLINA">
+        <option value="BLANDO CORONA">
+        <option value="CALDERON FIGUEROA">
+        <option value="CARRILLO MORALES">
+        <option value="CLAVELLINA LORA">
+        <option value="CORTES GONZALEZ">
+        <option value="CRUZ ARRIAGA">
+        <option value="CRUZ HERNÁNDEZ">
+        <option value="CUETO MENDOZA">
+        <option value="CUEVAS MARTINEZ">
+        <option value="DE JESÚS ALBERDIN">
+        <option value="DEHESA VEYRA">
+        <option value="ESCORCIA GARCÍA">
+        <option value="ESPINOSA CORTES">
+        <option value="ESPINOSA DURAN">
+        <option value="FERNANDEZ LOPEZ">
+        <option value="FERNÁNDEZ VILLALOBOS">
+        <option value="FLORES BLANCAS">
+        <option value="FRAGOSO CARREÓN">
+        <option value="GARCIA MALDONADO">
+        <option value="GARCÍA MARTÍNEZ">
+        <option value="GARCIA PAREDES">
+        <option value="ZAVALA REYES">
+        <option value="GOMEZ GUERRA">
+        <option value="HERNANDEZ CORIA">
+        <option value="HERNANDEZ GARDUÑO">
+        <option value="HERNANDEZ SERENA">
+
+          </option>
+    </datalist>
 
 </div>
 
 <div id="grupoActividad" style="display:none;">
   <label for="actividad">Actividad que realizaba</label>
-
   <select id="actividad">
     <option value="Buque-(Descarga/Carga)">Buque-(Descarga/Carga)</option>
     <option value="CFS-(Programacion/Retirada)">CFS-(Programacion/Retirada)</option>
@@ -2942,18 +3783,29 @@ style="display:none;">
     <option value="Traslados(Entrega/Recepcion)">Traslados(Entrega/Recepcion)</option>
     <option value="Tren-(Carga/Descarga)">Tren-(Carga/Descarga)</option>
   </select>
-
-
 </div>
 
-<label id="labelRegistroFalla" style="display:none;">
-    ¿Que falla reporta?
-</label>
 
-<textarea
-    id="registro_falla"
-    style="display:none;">
-</textarea>
+<div id="labelRegistroFalla" style="display:none;">
+  <label for="registro_falla">¿Qué falla reporta?</label>
+
+  <select id="registro_falla">
+    <option value="">Seleccione una opción</option>
+    <option value="Spreader">Spreader</option>
+    <option value="Falla Gantry">Falla Gantry</option>
+    <option value="Falla Hoist">Falla Hoist</option>
+    <option value="Falla Winche (Cable)">Falla Winche (Cable)</option>
+    <option value="Falla Aire Acondicionado">Falla Aire Acondicionado</option>
+    <option value="Falla Alumbrado">Falla Alumbrado</option>
+    <option value="Falla Control">Falla Control</option>
+    <option value="Falla en Trolley">Falla en Trolley</option>
+    <option value="Falla Neumática (Llanta)">Falla Neumática (Llanta)</option>
+    <option value="Percance">Percance</option>
+    <option value="Preventivo">Preventivo</option>
+    <option value="Falla Eléctrica">Falla Eléctrica</option>
+    <option value="Falla Sistema">Falla Sistema</option>
+  </select>
+</div>
 
 <div id="grupoPrioridad" style="display:none">
 
@@ -2966,18 +3818,25 @@ style="display:none;">
     <option value="1">1</option>
     <option value="2">2</option>
     <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
   </select>
 
 </div>
 </select>
-
 
 </div>
 
 <div id="estadoIndicador" class="estado-indicador">
   Estado actual: —
 </div>
-
+<button 
+ id="btnAtenderFalla"
+ onclick="activarAtencionFalla()">
+    STANDBY GRÚA ATENDIENDO FALLA
+</button>
   <button type="button" class="btn-estado" onclick="guardarEstadoRapido()">
     ACTUALIZAR ESTADO
   </button>
@@ -2988,24 +3847,32 @@ style="display:none;">
   <center>
   <h3>Formulario para Downtime</h3>
   </center>
-<label>Grúa</label>
-<input type="text" id="gruaGeneral" readonly>
+<div class="form-group" style="display:none;">
+    <label>Grúa</label>
+    <input type="text" id="gruaGeneral" readonly>
+</div>
 
-<label>Turno</label>
-<select id="turnoGeneral">
-  <option value="1">1er Turno</option>
-  <option value="2">2do Turno</option>
-  <option value="3">3er Turno</option>
-</select>
 
-<label>Bloque / Tramo</label>
-<input type="text" id="bloqueTramo">
+<div style="display:none;">
+  <label>Turno</label>
+  <select id="turnoGeneral">
+    <option value="1">1er Turno</option>
+    <option value="2">2do Turno</option>
+    <option value="3">3er Turno</option>
+  </select>
+</div>
 
-<label>Fecha / Hora Reporte Falla</label>
-<input type="datetime-local" id="fechaReporte">
 
-<label>Fecha / Hora Entrega Turno</label>
-<input type="datetime-local" id="fechaEntrega">
+<div style="display:none;">
+  <label>Bloque / Tramo</label>
+  <input type="text" id="bloqueTramo">
+</div>
+
+
+<div style="display:none;">
+  <label>Fecha/Hora de grua entregada</label>
+  <input type="datetime-local" id="fechaReporte">
+</div>
 
 <label>Tiempo Muerto</label>
 
@@ -3014,15 +3881,15 @@ style="display:none;">
 </select>
 
 
-<label>Área</label>
+<div style="display:none;">
+  <label>Área</label>
 
-<select id="areaMantto">
+  <select id="areaMantto">
+    <option value="RTG">RTG</option>
+    <option value="TREN">TREN</option>
+  </select>
+</div>
 
-
-<option value="RTG">RTG</option>
-<option value="TREN">TREN</option>
-
-</select>
 
 <label>Supervisor</label>
 <select id="supervisor" onchange="cargarStandby()">
@@ -3051,23 +3918,13 @@ Seleccione supervisor
 
 <label>Responsabilidad</label>
 
-<select id="responsabilidad">
-
-<option value="AA">AA</option>
-<option value="CELDAS DE CARGA">Celdas de carga</option>
-<option value="CABLE REEL">Cable reel</option>
-<option value="FALLAS DE GANTRY">Fallas de gantry</option>
-<option value="SPREADER">Fallas de spreader</option>
-<option value="TROLLEY">Fallas de trolley</option>
-
+<select id="responsabilidad"
+        onchange="cargarCodigos()">
 </select>
 
 <label>Código Falla</label>
-<input
-type="text"
-id="codigoFalla"
-placeholder="Ej: STS-101"
->
+<select id="codigoFalla">
+</select>
 
 <label>Descripción de falla</label>
 
@@ -3209,7 +4066,7 @@ gruas:[
 {
 zona:'B',
 gruas:[
-'Z-32','Z-28','N-58','Z-44','Z-43','Z-42','N-53','N-54','K-22','',''
+'Z-28','Z-32','N-58','Z-44','Z-43','Z-42','N-53','N-54','K-22','',''
 ]
 },
 
@@ -3237,18 +4094,18 @@ gruas:[
 {
 zona:'F',
 gruas:[
-'K-11','K-16','K-34','Z-40','Z-41','Z-39'
+'K-11','K-34','Z-40','Z-41','Z-39','','K-08','K-07','K-06','K-05'
 ]
 },
-{
-zona:'I',
-  gruas:
-  ['K-08','K-07','K-06','K-05','','','']
-}
 
-
-
-
+    {
+        zona: "SIDE LOADER",
+        gruas: ["SD310","SD311","SD312","SD314","SD315","SD316","SD317","SD318","SD320","SD321","SD323","SD325","SD326"]
+    },
+    {
+        zona: "STS",
+        gruas: ["STS10","STS11","STS12","STS13","STS16","STS17","STS18","STS19","STS20","STS21","STS22","STS23"]
+    }
 
 ];
 
@@ -3309,7 +4166,11 @@ function abrirIFS() {
 /* ================= GET ================= */
 
 function getEquipo(id){
-  return equipos.find(e => e.id === id) || null;
+
+  return equipos.find(
+    g => g.id === id
+  );
+
 }
 /* ================= TIEMPO FALLA ================= */
 
@@ -3449,7 +4310,7 @@ filtroEstado=v;
 render();
 
 }
-
+let fallasAtendiendo = [];
 function render(){
   
   let html = '';
@@ -3459,11 +4320,15 @@ function render(){
     html += `
       <div class="row">
 
-        <div class="zona">
-          ZONA ${row.zona}
-        </div>
+<div class="zona">
+  ${
+    row.zona === 'SIDE LOADER' || row.zona === 'STS'
+    ? row.zona
+    : 'ZONA ' + row.zona
+  }
+</div>
 
-        <div class="grid ${row.zona === 'I' ? 'grid-tren' : ''}">
+        <div class="grid ${row.zona === 'I' ? 'grid-tren' : ''} ${row.zona === 'SIDE LOADER' ? 'grid-side' : ''}${row.zona === 'STS' ? 'grid-sts' : ''}">
     `;
 
     row.gruas.forEach(id => {
@@ -3478,20 +4343,18 @@ function render(){
         return;
       }
 
-      const g = getEquipo(id);
+const g = getEquipo(id);
 
-if (!g) return;
+if(!g){
+
+  html += `
+    <div class="card invisible-slot"></div>
+  `;
+
+  return;
+}
 
 estadoAnterior = g.estado;
-      // si no existe en BD
-      if(!g){
-
-        html += `
-          <div class="card invisible-slot"></div>
-        `;
-
-        return;
-      }
 
       // filtro estado
       if(
@@ -3525,11 +4388,15 @@ estadoAnterior = g.estado;
 
 
 
-      html += `
-        <div
-          class="card ${g.estado}"
-          onclick="abrir('${g.id}')"
-        >
+html += `
+<div
+ class="card ${g.estado} ${
+(g.estado === 'falla' && fallasAtendiendo.includes(g.id))
+    ? 'priority-blink'
+    : ''
+ }"
+ onclick="abrir('${g.id}')"
+>
 
           <div class="code">
             ${g.id}
@@ -3605,7 +4472,27 @@ function renderKPIs(){
     equipos.filter(g => parseInt(g.prioridad || 0) > 0).length;
 
 }
+function obtenerTiempoContador(g){
 
+  let segundos = g.contador_segundos || 0;
+
+  if(
+    g.contador_estado === 'running' &&
+    g.contador_inicio
+  ){
+
+    const inicio = new Date(g.contador_inicio);
+    const ahora = new Date();
+
+    segundos += Math.floor(
+      (ahora - inicio) / 1000
+    );
+
+  }
+
+  return formatearTiempo(segundos);
+
+}
 function renderFallas(){
 
   const cont = document.getElementById('listaFallas');
@@ -3614,6 +4501,19 @@ function renderFallas(){
   const fallas = equipos.filter(g =>
     (g.estado || '').toLowerCase().trim() === 'falla'
   );
+
+
+  // ORDENAR PRIORIDAD P1 → P7
+  // SIN PRIORIDAD AL FINAL
+  fallas.sort((a,b)=>{
+
+    const prioridadA = Number(a.prioridad) || 999;
+    const prioridadB = Number(b.prioridad) || 999;
+
+    return prioridadA - prioridadB;
+
+  });
+
 
   if(fallas.length === 0){
     cont.innerHTML = "Sin fallas";
@@ -3624,37 +4524,40 @@ function renderFallas(){
 
   fallas.forEach(g => {
 
-    let tiempo = "00:00:00";
-
-    if (g.contador_inicio) {
-
-      const inicio = new Date(g.contador_inicio);
-      const segActivos = Math.floor((Date.now() - inicio) / 1000);
-
-      const total = segActivos + (g.contador_segundos || 0);
-
-      tiempo = formatearTiempo(total);
-    }
-
     html += `
       <div class="item">
-        <strong>${g.id}</strong>
+
+        <div class="falla-header">
+
+          <strong>${g.id}</strong>
+
+          ${
+            g.prioridad > 0
+            ? `<span class="badge-prioridad">
+                 P${g.prioridad}
+               </span>`
+            : ''
+          }
+
+        </div>
+
 
         <span>
-  ${g.registro_falla || 'Sin detalle'}
-</span>
-
-        <span>
-          ${g.codigo_falla || ''} - ${g.descripcion_falla || ''}
+          ${g.registro_falla || 'Sin detalle'}
         </span>
 
-        <div>${tiempo}</div>
+
+        <div>
+          ${obtenerTiempoContador(g)}
+        </div>
+
       </div>
     `;
   });
 
   cont.innerHTML = html;
 }
+
 /* ================= TIMER VISUAL ================= */
 
 setInterval(() => {
@@ -3712,7 +4615,7 @@ setInterval(() => {
       }
 
     });
-
+renderFallas();
 }, 1000);
 /* ================= PRIORIDAD ================= */
 
@@ -3726,29 +4629,39 @@ function renderPrioridad(){
 const list = equipos
   .filter(g =>
     (g.prioridad || 0) > 0 &&
-    !['disponible','operacion'].includes((g.estado || '').toLowerCase().trim())
+    g.estado === 'falla'
   )
-    .sort((a,b) => a.prioridad - b.prioridad);
+  .sort((a,b) => a.prioridad - b.prioridad);
 
   if(list.length === 0){
     cont.innerHTML = 'Sin prioridades operativas';
     return;
   }
 
-  cont.innerHTML = list.map(g => `
+cont.innerHTML = list.map(g => `
     <div class="item">
-      <strong>${g.id}</strong>
-      <span>${g.estado}</span>
-      <span>Prioridad: ${g.prioridad}</span>
+        <div class="item-header">
+            <strong>${g.id}</strong>
+            ${g.prioridad > 0
+              ? `<span class="badge-prioridad">P${g.prioridad}</span>`
+              : ""
+            }
+        </div>
+
+        <div>${g.estado}</div>
     </div>
-  `).join('');
+`).join('');
 }
 /* ================= MODAL ================= */
 
 function abrir(id){
   
   actual = id;
-  
+  // Limpiar formulario anterior
+document.getElementById("estado").value = "disponible";
+document.getElementById("registro_falla").value = "";
+document.getElementById("quienReporto").value = "";
+document.getElementById("actividad").value = "";
   setTimeout(() => {
   const area = detectarArea(id);
 
@@ -3771,13 +4684,28 @@ function abrir(id){
 
   mostrarPanelEstado();
 
-  document.getElementById('modalTitle').innerText = `GRÚA ${id}`;
+  document.getElementById("estado").value = "disponible";
+actualizarUIEstado();
+
+  document.getElementById('operadorActual').innerText =
+  g.nombre_operador || "SIN ASIGNAR";
+  document.getElementById('operadorManual').value =
+g.nombre_operador || "";
+document.getElementById('modalTitle').innerText = id;
   document.getElementById('modal').style.display = 'flex';
 
+  // Siempre poner la fecha y hora actual
+ponerFechaGruaReportada();
+ponerFechaFallaActual();
+
+
   document.getElementById('gruaGeneral').value = id;
-  document.getElementById('bloqueTramo').value = g.bloque_tramo || '';
-  document.getElementById('fechaReporte').value = g.fecha_hora_falla || '';
-  document.getElementById('fechaEntrega').value = g.fecha_hora_entrega || '';
+const bloque = document.getElementById('bloqueTramo');
+
+if (bloque) {
+  bloque.value = obtenerZonaGrua(id);
+}
+
   document.getElementById('tiempoMuerto').value = g.tiempo_muerto || '';
   document.getElementById('turnoGeneral').value = g.turno_operacion || '1';
   document.getElementById('tipoRegistro').value = 'operaciones';
@@ -3817,13 +4745,27 @@ function abrir(id){
     indicador.className = 'estado-indicador ' + g.estado;
   }
 
+document.getElementById("fechaOpRepo").value = "";
+ponerFechaGruaReportada();
+
+
   // ================= UI STATE (IMPORTANTE ORDEN) =================
   actualizarUIEstado();        // 👈 primero campos dinámicos (quién reportó)
   controlarPrioridad();        // 👈 luego prioridad
   actualizarIndicadorEstado(); // 👈 indicador final
   estadoAnterior = g.estado;
 }
+function nombreEquipoModal(id){
 
+  const equiposEspeciales = {
+    "SD310": "SIDE LOADER SD310",
+    "SD311": "SIDE LOADER SD311",
+    "SD312": "SIDE LOADER SD312"
+  };
+
+  return equiposEspeciales[id] || id;
+
+}
 function abrirFormularioTransicion(){
   const el = document.getElementById('accionesCierreFalla');
 
@@ -3831,10 +4773,26 @@ function abrirFormularioTransicion(){
 
   el.style.display = 'flex'; // mejor que block en botones
 }
+
 function controlarPrioridad() {
 
   const estado = document.getElementById('estado').value;
   const esFalla = estado === 'falla';
+
+  const g = getEquipo(actual);
+
+  const id = (g?.id || "")
+    .toUpperCase()
+    .replace(/[-\s]/g,'');
+
+  const esSideLoaderSTS =
+    id.startsWith("SD") ||
+    id.startsWith("STS");
+
+
+  const ocultarCampos =
+    esFalla && esSideLoaderSTS;
+
 
   const grupoPrioridad = document.getElementById('grupoPrioridad');
 
@@ -3847,22 +4805,53 @@ function controlarPrioridad() {
   const grupo = document.getElementById('grupoQuienReporto');
   const grupoAct = document.getElementById('grupoActividad');
 
+
+
   if (grupo) {
-  grupo.style.display = esFalla ? 'block' : 'none';
+    grupo.style.display =
+      ocultarCampos ? 'none' : (esFalla ? 'block' : 'none');
   }
+
+
   if (grupoPrioridad) {
-    grupoPrioridad.style.display = esFalla ? 'block' : 'none';
+    grupoPrioridad.style.display =
+      ocultarCampos ? 'none' : (esFalla ? 'block' : 'none');
   }
 
-  if (labelRegistro) labelRegistro.style.display = esFalla ? 'block' : 'none';
-  if (txtRegistro) txtRegistro.style.display = esFalla ? 'block' : 'none';
 
-  if (labelQuien) labelQuien.style.display = esFalla ? 'block' : 'none';
-  if (txtQuien) txtQuien.style.display = esFalla ? 'block' : 'none';
+  if (labelRegistro)
+    labelRegistro.style.display =
+      ocultarCampos ? 'none' : (esFalla ? 'block' : 'none');
+
+
+  if (txtRegistro)
+    txtRegistro.style.display =
+      ocultarCampos ? 'none' : (esFalla ? 'block' : 'none');
+
+
+  if (labelQuien)
+    labelQuien.style.display =
+      ocultarCampos ? 'none' : (esFalla ? 'block' : 'none');
+
+
+  if (txtQuien)
+    txtQuien.style.display =
+      ocultarCampos ? 'none' : (esFalla ? 'block' : 'none');
+
 
   if (grupoAct) {
-  grupoAct.style.display = esFalla ? 'block' : 'none';
-}
+    grupoAct.style.display =
+      ocultarCampos ? 'none' : (esFalla ? 'block' : 'none');
+  }
+
+
+  const btn = document.getElementById('btnAtenderFalla');
+
+  if(btn){
+    btn.style.display =
+      ocultarCampos ? 'none' : (esFalla ? 'block' : 'none');
+  }
+
 }
 
 function ocultarCierreFalla(){
@@ -3907,9 +4896,6 @@ function validarCamposDisponibilidad() {
   const campos = [
     'gruaGeneral',
     'turnoGeneral',
-    'bloqueTramo',
-    'fechaReporte',
-    'fechaEntrega',
     'tiempoMuerto',
     'areaMantto',
     'supervisor',
@@ -3943,9 +4929,7 @@ function limpiarErroresDisponibilidad() {
   [
     'gruaGeneral',
     'turnoGeneral',
-    'bloqueTramo',
     'fechaReporte',
-    'fechaEntrega',
     'tiempoMuerto',
     'areaMantto',
     'supervisor',
@@ -3968,16 +4952,23 @@ async function guardar() {
 
   const estadoNuevo = document.getElementById('estado').value;
   const estado = estadoNuevo;
-
-  if (estado === 'disponible') {
+  
+if (estado === 'disponible') {
 
     const errores = validarCamposDisponibilidad();
 
     if (errores.length > 0) {
-      alert("Faltan campos obligatorios para DISPONIBLE");
-      return;
+
+        console.log("Campos faltantes:", errores);
+
+        alert(
+            "Faltan estos campos:\n\n" +
+            errores.join("\n")
+        );
+
+        return;
     }
-  }
+}
 
 
   const equipoActual = getEquipo(actual);
@@ -4017,16 +5008,16 @@ estadoNuevo !== 'falla';
     parseInt(document.getElementById("turnoGeneral").value);
 
 
-  const bloque_tramo =
-    document.getElementById("bloqueTramo").value;
+const bloque_tramo =
+    obtenerZonaGrua(grua);
 
 
   const fecha_hora_falla =
     document.getElementById("fechaReporte").value;
 
+ const fecha_op_repo =
+equipoActual.fecha_op_repo || null;
 
-  const fecha_hora_entrega =
-    document.getElementById("fechaEntrega").value;
 
 
   const tiempo_muerto =
@@ -4149,8 +5140,6 @@ const registro = {
     fecha_hora_falla,
 
 
-    fecha_hora_entrega,
-
 
     tiempo_muerto,
 
@@ -4186,7 +5175,10 @@ const registro = {
     codigo_falla,
 
 
-    descripcion_falla
+    descripcion_falla,
+
+fecha_op_repo
+
 
 
 };
@@ -4194,6 +5186,8 @@ const registro = {
 
 
 console.log("REGISTRO REPORTE:",registro);
+console.log("FECHA OP REPORTE:", registro.fecha_op_repo);
+console.log("FECHA QUE VA AL REPORTE:", fecha_op_repo);
 
 
 
@@ -4414,9 +5408,20 @@ function cargarStandby(){
 
 async function guardarMensaje(){
 
-let mensaje =
-document.getElementById('mensajeInput')
-.value.trim();
+let mensaje = document.getElementById('mensajeInput').value.trim();
+const autor = document.getElementById('autorMensaje').value;
+
+
+if(!autor){
+    alert("Seleccione quién envía el mensaje");
+    return;
+}
+
+if(!mensaje){
+    alert("Escribe un mensaje");
+    return;
+}
+
 
 if(!mensaje){
 
@@ -4433,6 +5438,7 @@ await db
 
 .insert([
 {
+autor: autor,
 mensaje:mensaje
 }
 ]);
@@ -4447,11 +5453,9 @@ return;
 
 }
 
-document.getElementById('mensajeInput')
-.value='';
-
+document.getElementById('mensajeInput').value = "";
+document.getElementById('autorMensaje').value = "";
 cargarMensajeActual();
-
 cargarHistorial();
 
 }
@@ -4476,16 +5480,13 @@ async function cargarMensajeActual() {
   const cont = document.getElementById('mensajeActivo');
   const badge = document.getElementById('msgBadge');
 
-  if (!cont) return;
-
-  if (!data || !data.length) {
-    cont.innerHTML = 'Sin mensajes operativos.';
-    if (badge) badge.style.display = 'none';
-    return;
-  }
+if (!cont) {
+  console.log("NO EXISTE mensajeActivo");
+  return;
+}
 
   const m = data[0];
-
+console.log("MENSAJE ACTUAL:", m);
   // ================= BADGE (CORRECTO) =================
   if (badge) {
     if (ultimoIdGuardado != m.id) {
@@ -4495,35 +5496,46 @@ async function cargarMensajeActual() {
     }
   }
 
-  localStorage.setItem('ultimoMensajeId', m.id);
+  
 
-  // ================= FECHA =================
-  const fecha = new Date(m.created_at + 'Z');
-
-  const fechaFormateada = fecha.toLocaleString('es-MX', {
-    timeZone: 'America/Mexico_City',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false
-  });
+const fechaFormateada = formatearFechaMX(m.created_at);
 
   // ================= RENDER =================
-  cont.innerHTML = `
-    <div class="item">
+cont.innerHTML = `
+<div class="item">
 
-      <div style="font-size:12px; color:#64748b; margin-bottom:8px; font-weight:700;">
-        ${fechaFormateada}
-      </div>
+<div style="font-weight:bold;color:#0b5aa2;">
+${m.autor || "SIN REMITENTE"}
+</div>
 
-      <div style="font-size:14px; line-height:1.5; font-weight:600; color:#1f2937;">
-        ${m.mensaje}
-      </div>
+<div style="
+margin-top:10px;
+color:#111;
+font-size:16px;
+display:block;
+">
+${m.mensaje}
+</div>
 
-    </div>
-  `;
+<div style="
+margin-top:10px;
+font-size:12px;
+color:#64748b;
+">
+${fechaFormateada}
+</div>
+
+</div>
+`;
+console.log("CONTENIDO PINTADO:", cont.innerHTML);
+if (vista === 'mensajes') {
+
+    cargarMensajeActual();
+
+    const badge = document.getElementById('msgBadge');
+    if (badge) badge.style.display = 'none';
+
+}
 }
 
 /* ================= HISTORIAL ================= */
@@ -4560,24 +5572,39 @@ async function cargarHistorial(){
       hour12: false
     });
 
-    html += `
-      <div class="history-item">
+html += `
+<div class="history-item">
 
-          <div class="history-date">
-              ${fechaFormateada}
-          </div>
+    <div class="history-date">
+        ${fechaFormateada}
+    </div>
 
-          <div class="history-text">
-              ${m.mensaje}
-          </div>
+    <div style="
+        font-weight:bold;
+        color:#0b5aa2;
+        margin-bottom:6px;
+    ">
+        ${m.autor || "SIN REMITENTE"}
+    </div>
 
-      </div>
-    `;
+    <div class="history-text">
+        ${m.mensaje}
+    </div>
+
+</div>
+`;
 
   });
 
-  document.getElementById('historialMensajes').innerHTML =
+const contenedor =
+document.getElementById('historialMensajes');
+
+if(contenedor){
+
+    contenedor.innerHTML =
     html || 'Sin historial';
+
+}
 }
 
 
@@ -4609,31 +5636,53 @@ reloadTimeout = setTimeout(() => {
 .subscribe(status => {
   console.log('Realtime:', status);
 });
+/* ================= REALTIME MENSAJES ================= */
+
+db
+.channel('mensajes-operativos-changes')
+.on(
+  'postgres_changes',
+  {
+    event: 'INSERT',
+    schema: 'public',
+    table: 'mensajes_operativos'
+  },
+  (payload) => {
+
+    console.log("🚨 EVENTO MENSAJE:", payload);
+
+    setTimeout(async () => {
+
+      await cargarMensajeActual();
+      await cargarHistorial();
+
+    }, 300);
+
+  }
+)
+.subscribe(status => {
+
+  console.log("ESTADO REALTIME MENSAJES:", status);
+
+});
 /* ================= CERRAR CLICK AFUERA ================= */
 
 window.onclick = function(e){
 
-const modal =
-document.getElementById('modal');
-
 const modalTipo =
 document.getElementById('modalTipo');
 
-if(e.target === modal){
-
-cerrarModal();
-
-}
 
 if(e.target === modalTipo){
 
-cerrarTipo();
+    cerrarTipo();
 
 }
 
 }
+
 /* ================= INIT ================= */
-function mostrarVista(vista) {
+async function mostrarVista(vista) {
 
   document.querySelectorAll('.vista').forEach(v => {
     v.classList.remove('activa');
@@ -4649,30 +5698,45 @@ function mostrarVista(vista) {
     vistaSeleccionada.classList.add('activa');
 
     if (vista === 'mensajes') {
+
       vistaSeleccionada.style.display = 'flex';
+
+      // Actualizar mensajes al entrar
+      await cargarMensajeActual();
+      await cargarHistorial();
+
+      // Quitar aviso de mensaje nuevo
+      const badge = document.getElementById('msgBadge');
+
+      if (badge) {
+        badge.style.display = 'none';
+      }
+
     } else {
+
       vistaSeleccionada.style.display = 'block';
+
     }
   }
+
 
   // marcar botón activo
   document.querySelectorAll('.menu-btn').forEach(btn => {
     btn.classList.remove('active');
   });
 
+
   const botonActivo = document.querySelector(
     `[onclick="mostrarVista('${vista}')"]`
   );
 
+
   if (botonActivo) {
     botonActivo.classList.add('active');
   }
+
 }
-cargar();
 
-cargarMensajeActual();
-
-cargarHistorial();
 async function cargarExcel(event){
 
   const file = event.target.files[0];
@@ -4732,6 +5796,68 @@ function colorAEstado(rgb){
   }
 
 }
+let fallasPendientesExcel = [];
+let indiceFallaExcel = 0;
+function iniciarFallaPendienteExcel(){
+
+  if(indiceFallaExcel >= fallasPendientesExcel.length){
+
+    console.log("Todas las fallas Excel fueron completadas");
+
+    fallasPendientesExcel = [];
+    indiceFallaExcel = 0;
+
+    return;
+  }
+
+
+  const id = fallasPendientesExcel[indiceFallaExcel];
+
+
+  abrir(id);
+
+
+// Seleccionar automáticamente FALLA EN TURNO
+const estado = document.getElementById('estado');
+
+if(estado){
+
+  estado.value = "falla";
+
+  // disparar eventos para que actualice todo
+  estado.dispatchEvent(new Event('change'));
+
+}
+
+
+  const equipo = getEquipo(id);
+
+
+  if(equipo){
+
+    abrir(id);
+
+
+    // FORZAR FORMULARIO FALLA EN TURNO
+    const selectEstado = document.getElementById('estado');
+
+    if(selectEstado){
+
+      selectEstado.value = "falla";
+
+      actualizarUIEstado();
+      actualizarIndicadorEstado();
+
+    }
+
+
+    alert(
+      "Complete la información de FALLA EN TURNO para la grúa: " + id
+    );
+
+  }
+
+}
 async function procesarHoja(sheet){
 
   const rango = XLSX.utils.decode_range(sheet['!ref']);
@@ -4747,131 +5873,316 @@ async function procesarHoja(sheet){
     const celdaEquipo = sheet['A' + (fila + 1)];
     if(!celdaEquipo) continue;
 
-    const id = normalizarGrua(String(celdaEquipo.v));
-    if(!id) continue;
 
-    // ================= OBSERVACIÓN =================
-    const observacion = sheet['F' + (fila + 1)]?.v || '';
-    const texto = String(observacion).toUpperCase().trim();
+const id = normalizarGrua(String(celdaEquipo.v));
+console.log("EXCEL LEIDO:", celdaEquipo.v, "ID GENERADO:", id);
+if (!id) continue;
 
-    // ================= MARCA OPERACIÓN (COLUMNA B) =================
-    const marca = sheet['B' + (fila + 1)]?.v;
-    const esOperacion = String(marca || '').trim() === '*';
+// ================= DATOS EXCEL =================
 
-    let estado = 'disponible';
+const empleado = String(
+  sheet['C' + (fila + 1)]?.v || ''
+).trim();
+
+const operador = String(
+  sheet['D' + (fila + 1)]?.v || ''
+).trim();
+
+console.log("GRÚA:", id, "OPERADOR EXCEL:", operador);
+    // ================= GRÚA ACTUAL EN SISTEMA =================
+
+    const g = getEquipo(id);
+
+    if(!g){
+      console.log("No existe:", id);
+      continue;
+    }
+
+
+
+    // ================= OBSERVACIÓN EXCEL =================
+
+    const observacion =
+      sheet['F' + (fila + 1)]?.v || '';
+
+
+    const texto =
+      String(observacion)
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g,"")
+      .toUpperCase()
+      .trim();
+
+
+
+    // ================= OPERACION =================
+
+    const marca =
+      sheet['B' + (fila + 1)]?.v;
+
+
+    const esOperacion =
+      String(marca || '').trim() === '*';
+
+
+
+    let estadoExcel = "disponible";
+
     let prioridad = 0;
 
-    // ================= OPERACIÓN (PRIORIDAD MÁXIMA) =================
-    if (esOperacion) {
-      estado = 'operacion';
-    }
 
-    // ================= FALLA =================
-    else if (texto.includes('FALLA')) {
-      estado = 'falla';
-    }
 
-    // ================= MANTENIMIENTO =================
-    else if (
-      texto.includes('DAILY') ||
-      texto.includes('DAYLI') ||
-      texto.includes('MANTTO') ||
-      texto.includes('MANTENIMIENTO')
+    // ================= DETECCION ESTADOS EXCEL =================
+
+
+    // FALLA DE SEÑAL
+    if(
+      texto.includes("FALLA DE SENAL") ||
+      texto.includes("SIN SENAL") ||
+      texto.includes("SENAL")
     ){
-      estado = 'dayli';
+
+      estadoExcel = "fseñal";
+
     }
 
-    // ================= FUERA DE SERVICIO =================
-    else if (texto.includes('FUERA')) {
-      estado = 'anclada';
-    }
 
-    // ================= DISPONIBLE =================
-    else if (
-      texto.includes('DISPONI') ||
-      texto.includes('OPERADOR')
+    // FALLA
+   // else if(
+   //   texto.includes("FALLA")
+   // ){
+
+    //  estadoExcel = "falla";
+
+  //  }
+
+
+    // BAÑO
+    else if(
+      texto.includes("BANO") ||
+      texto.includes("OPERADOR EN BANO")
     ){
-      estado = 'disponible';
+
+      estadoExcel = "baño";
+
     }
 
-    // ================= PRIORIDAD =================
-    if (
-      texto.includes('PRIORID') ||
-      texto.includes('PRIORIDAD')
+
+    // DAYLI
+    else if(
+      texto.includes("DAYLI") ||
+      texto.includes("DAILY") ||
+      texto.includes("DAYLY") ||
+      texto.includes("DIALY") ||
+      texto.includes("DALI") ||
+      texto.includes("MTTO") ||
+      texto.includes("MANTTO") ||
+      texto.includes("MANTENIMIENTO")
     ){
-      prioridad = 1;
-      observacion_extra = 'GRÚA PRIORIDAD PARA OPERACIÓN';
+
+      estadoExcel = "dayli";
+
     }
 
-    console.log(id, estado, prioridad, observacion_extra);
 
-    const { error } = await db
-      .from('gruas')
-      .update({
-        estado,
-        prioridad,
-        observacion_extra,
-        updated_at: new Date().toISOString()
-      })
-      .eq('id', id);
+    // FUERA
+    else if(
+      texto.includes("FUERA")
+    ){
 
-    if(error){
-      console.log(error);
+      estadoExcel = "anclada";
+
     }
-  }
 
-  await cargar();
-  alert('Estados actualizados correctamente');
+
+    // DISPONIBLE
+    else if(
+      texto.includes("DISPONI") ||
+      texto.includes("OPERADOR")
+    ){
+
+      estadoExcel = "disponible";
+
+    }
+
+
+    // OPERACION
+   else if (esOperacion) {
+
+     estadoExcel = "disponible";
+
+    }
+
+
+
+
+    // ==================================================
+    // CONSERVAR ESTADOS ACTIVOS DEL SISTEMA
+    // ==================================================
+
+    let estado = estadoExcel;
+
+
+if(
+  g.estado === "falla" ||
+  g.estado === "baño" ||
+  g.estado === "fseñal" ||
+  g.estado === "dayli"
+){
+
+  estado = g.estado;
+
+
+  console.log(
+    "SE CONSERVA ESTADO ACTIVO DEL SISTEMA:",
+    id,
+    g.estado
+  );
+
 }
 
 
+
+    // ================= PRIORIDAD =================
+
+
+    if(
+      texto.includes("PRIORIDAD") ||
+      texto.includes("PRIORID")
+    ){
+
+      prioridad = 1;
+
+      observacion_extra =
+      "GRÚA PRIORIDAD PARA OPERACIÓN";
+
+    }
+
+
+
+
+    console.log(
+      "GRUA:",
+      id,
+      "EXCEL:",
+      estadoExcel,
+      "SISTEMA:",
+      g.estado,
+      "FINAL:",
+      estado
+    );
+
+
+
+    const {error} = await db
+      .from('gruas')
+.update({
+
+  estado,
+
+  prioridad,
+
+  observacion_extra,
+
+  nombre_operador: operador,
+
+  updated_at:
+  new Date().toISOString()
+
+})
+      .eq('id',id);
+
+
+
+    if(error){
+
+      console.log(error);
+
+    }
+
+
+  }
+
+
+  await cargar();
+
+
+  alert(
+    "Estados actualizados correctamente"
+  );
+
+}
 document.addEventListener('DOMContentLoaded', () => {
-
+  ponerFechasFallaAutomaticas();
+  controlarBotonStandby();
   mostrarVista('operativo');
-
+  cargarOpcionesTiempoMuerto();
   cargar();
   cargarMensajeActual();
   cargarHistorial();
+  cargarResponsabilidades();
 
-  document.getElementById('estado').addEventListener(
-    'change',
-    controlarPrioridad
-  );
-    document.getElementById('estado')
-    .addEventListener('change', actualizarIndicadorEstado);
+  const estado = document.getElementById('estado');
 
-      document.getElementById('estado')
-    .addEventListener('change', actualizarUIEstado);
+  if (estado) {
 
-    document.getElementById('areaMantto').addEventListener('change', function () {
-  actualizarGruaPorArea(this.value);
-});
+    estado.addEventListener(
+      'change',
+      controlarPrioridad
+    );
+
+    estado.addEventListener(
+      'change',
+      actualizarIndicadorEstado
+    );
+
+    estado.addEventListener(
+      'change',
+      actualizarUIEstado
+    );
+
+  }
+
+
+  const area = document.getElementById('areaMantto');
+
+  if (area) {
+
+    area.addEventListener('change', function () {
+      actualizarGruaPorArea(this.value);
+    });
+
+  }
+
 });
 function obtenerTextoEstado(g){
 
-  if(g.estado === 'operacion')
-    return 'OPERACIÓN';
+ // if(g.estado === 'operacion')
+ //   return 'OPERACIÓN';
 
-  if(g.estado === 'disponible')
-    return 'DISPONIBLE';
+ // if(g.estado === 'disponible')
+ //   return 'DISPONIBLE';
 
-  if(g.estado === 'falla')
-    return 'FALLA EN TURNO';
+ // if(g.estado === 'falla')
+ //   return 'FALLA EN TURNO';
 
-  if(g.estado === 'dayli')
-    return 'DAYLI';
+ // if(g.estado === 'dayli')
+ //   return 'DAYLI';
   
-  if(g.estado === 'baño')
-    return 'BAÑO';  
+ // if(g.estado === 'baño')
+ //   return 'BAÑO';  
   
-  if(g.estado === 'anclada')
-    return 'ANCLADA';
+ // if(g.estado === 'anclada')
+ //   return 'ANCLADA';
 
-  if(g.estado === 'fmenor')
-    return 'FALLA MENOR';
+ // if(g.estado === 'fmenor')
+ //   return 'FALLA MENOR';
 
-  if(g.estado === 'fseñal')
-    return 'FALLA DE SEÑAL';
+ // if(g.estado === 'fseñal')
+ //   return 'FALLA DE SEÑAL';
+
+ // if(g.estado === 'percance')
+ //   return 'PERCANCE';
 
   return '';
 }
@@ -4922,16 +6233,49 @@ async function cargarReporteGruas() {
     console.log(error);
     return;
   }
+  reporteGruasData = data || [];
+  llenarFiltrosReporte();
 
   let html = `
   <div class="reporte-container">
 
     <div class="reporte-header">
 
-      <h2 class="reporte-title">REPORTE GRÚAS</h2>
-              <button onclick="descargarExcel()" class="btn-excel">
-    Descargar Excel
-  </button>
+<h2 class="reporte-title">REPORTE GRÚAS</h2>
+
+<div class="filtros-reporte">
+
+    <div class="campo-filtro">
+        <label>Desde</label>
+        <input type="date" id="fechaInicio">
+    </div>
+
+    <div class="campo-filtro">
+        <label>Hasta</label>
+        <input type="date" id="fechaFin">
+    </div>
+
+
+    <div class="campo-filtro">
+        <label>Ordenar</label>
+        <select id="ordenReporte" onchange="filtrarReporteGruas()">
+            <option value="normal">Normal</option>
+            <option value="az">Grúa A-Z / Código A-Z</option>
+        </select>
+    </div>
+
+    <button onclick="filtrarReporteGruas()" class="btn-filtrar">
+        Filtrar
+    </button>
+
+    <button onclick="descargarExcel()" class="btn-descargar">
+        Descargar Excel
+    </button>
+
+</div>
+
+
+
     </div>
 
     <div class="tabla-container">
@@ -4941,60 +6285,29 @@ async function cargarReporteGruas() {
 
           <thead>
             <tr>
-              <th>FECHA/HORA REPORTE</th>
-              <th>FECHA/HORA ENTREGA</th>
+               <!-- <th>FECHA/HORA GRÚA REPORTADA</th> -->
+              <th>FECHA/HORA DE REPORTE</th>
               <th>TURNO</th>
               <th>SUPERVISOR</th>
               <th>STANDBY</th>
-              <th>GRÚA</th>
-              <th>ÁREA</th>
+              <th>EQUIPO</th>
               <th>RESPONSABILIDAD</th>
-              <th>BLOQUE</th>
-              <th>QUIÉN REPORTÓ</th>
-              <th>ACTIVIDAD REALIZABA OPERADOR</th>
               <th>CODIGO DE FALLA</th>
               <th>DESCRIPCIÓN</th>
-              <th>TIPO DE FALLA(TM/TI)</th>
-              <th>TIEMPO MUERTO (Atencion de falla)</th>
-              <th>TIEMPO MUERTO(tiempo grua inactiva)</th>
+              <th>TM</th>
+              <th>Grua inactiva</th>
+              <!-- <th>ACTIVIDAD REALIZABA OPERADOR</th>-->
+              <!-- <th>ÁREA</th>-->
+              <!-- <th>BLOQUE</th>-->
+              <!-- <th>QUIÉN REPORTÓ</th>-->
+              <!-- <th>ACTIVIDAD REALIZABA OPERADOR</th>-->
             </tr>
           </thead>
 
-          <tbody>
-  `;
+          <tbody id="tbodyReporteGruas">
+</tbody>
 
-  if (data && data.length > 0) {
-    data.forEach(r => {
-      html += `
-        <tr>
-          <td>${r.fecha_hora_falla ?? ''}</td>
-          <td>${r.fecha_hora_entrega ?? ''}</td>
-          <td>${r.turno ?? ''}</td>
-          <td>${r.supervisor ?? ''}</td>
-          <td>${r.standby ?? ''}</td>
-          <td>${r.grua ?? ''}</td>
-          <td>${r.area_mantto ?? ''}</td>
-          <td>${r.responsabilidad ?? ''}</td>
-          <td>${r.bloque_tramo ?? ''}</td>
-          <td>${r.quien_reporto || ''}</td>
-          <td>${r.actividad || ''}</td>
-          <td>${r.codigo_falla ?? ''}</td>
-          <td>${r.descripcion_falla ?? ''}</td>
-          <td>${r.tmi || ''}</td>
-          <td>${r.tiempo_muerto || ''}</td>
-          <td>${r.tiempo_muerto_real || '00:00:00'}</td>
-        </tr>
-      `;
-    });
-  } else {
-    html += `
-      <tr>
-        <td colspan="12" style="text-align:center;padding:20px;">
-          Sin registros
-        </td>
-      </tr>
-    `;
-  }
+  `;
 
   html += `
           </tbody>
@@ -5008,6 +6321,248 @@ async function cargarReporteGruas() {
   `;
 
   document.getElementById('tab-gruas').innerHTML = html;
+  pintarTablaReporteGruas(reporteGruasData);
+}
+function llenarFiltrosReporte(){
+
+    const equipo = document.getElementById('filtroEquipo');
+    const codigo = document.getElementById('filtroCodigo');
+
+    if(!equipo || !codigo) return;
+
+
+    let equipos = [...new Set(
+        reporteGruasData.map(r => r.grua)
+        .filter(Boolean)
+    )];
+
+
+    let codigos = [...new Set(
+        reporteGruasData.map(r => r.codigo_falla)
+        .filter(Boolean)
+    )];
+
+
+    equipo.innerHTML = `
+        <option value="">Todos</option>
+        ${
+            equipos.map(e =>
+            `<option value="${e}">${e}</option>`
+            ).join('')
+        }
+    `;
+
+
+    codigo.innerHTML = `
+        <option value="">Todos</option>
+        ${
+            codigos.map(c =>
+            `<option value="${c}">${c}</option>`
+            ).join('')
+        }
+    `;
+
+}
+
+function filtrarReporteGruas(){
+ const orden = document.getElementById('ordenReporte').value;
+ const inicio = document.getElementById('fechaInicio').value;
+ const fin = document.getElementById('fechaFin').value;
+
+
+let datos = [...reporteGruasData];
+
+
+ if(inicio){
+
+   datos = datos.filter(r =>
+     new Date(r.fecha_hora_falla) >= new Date(inicio)
+   );
+
+ }
+
+
+ if(fin){
+
+   const fechaFin = new Date(fin);
+   fechaFin.setHours(23,59,59);
+
+   datos = datos.filter(r =>
+     new Date(r.fecha_hora_falla) <= fechaFin
+   );
+
+ }
+
+
+if(orden === "az"){
+
+    datos.sort((a,b)=>{
+
+        let gruaA = (a.grua || '').toString();
+        let gruaB = (b.grua || '').toString();
+
+        let compararGrua = gruaA.localeCompare(gruaB);
+
+        if(compararGrua !== 0){
+            return compararGrua;
+        }
+
+
+        let codigoA = (a.codigo_falla || '').toString();
+        let codigoB = (b.codigo_falla || '').toString();
+
+        return codigoA.localeCompare(codigoB);
+
+    });
+
+}
+
+ pintarTablaReporteGruas(datos);
+
+}
+
+
+function pintarTablaReporteGruas(data){
+
+  let html = '';
+
+  if(data && data.length > 0){
+
+    data.forEach(r => {
+
+      html += `
+      <tr>
+
+        <td>${formatearFechaMX(r.fecha_hora_falla)}</td>
+
+        <td>${r.turno ?? ''}</td>
+
+        <td>${r.supervisor ?? ''}</td>
+
+        <td>${r.standby ?? ''}</td>
+
+        <td>${r.grua ?? ''}</td>
+
+        <td>${r.responsabilidad ?? ''}</td>
+
+        <td>${r.codigo_falla ?? ''}</td>
+
+        <td>${r.descripcion_falla ?? ''}</td>
+
+        <td>${r.tiempo_muerto || ''}</td>
+
+        <td>${r.tiempo_muerto_real || '00:00:00'}</td>
+      </tr>
+      `;
+
+    });
+
+  }else{
+
+    html = `
+    <tr>
+      <td colspan="8" style="text-align:center;padding:20px;">
+        Sin registros
+      </td>
+    </tr>
+    `;
+
+  }
+
+
+  const tbody = document.getElementById('tbodyReporteGruas');
+
+  if(tbody){
+    tbody.innerHTML = html;
+  }
+
+}
+let reporteDTData = [];
+async function cargarReporteDT() {
+  const { data, error } = await db
+    .from('reportes_mantenimiento')
+    .select('*')
+    .order('id', { ascending: false });
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+reporteDTData = data || [];
+  let html = `
+  <div class="reporte-container">
+
+    <div class="reporte-header">
+
+      <h2 class="reporte-title">DT OPERACIONES</h2>
+      <div class="filtros-reporte">
+
+    <div class="campo-filtro">
+        <label>Desde</label>
+        <input type="date" id="dtFechaInicio">
+    </div>
+
+    <div class="campo-filtro">
+        <label>Hasta</label>
+        <input type="date" id="dtFechaFin">
+    </div>
+
+    <button
+        class="btn-filtrar"
+        onclick="filtrarReporteDT()">
+        Filtrar
+    </button>
+              <button onclick="descargarExcel()" class="btn-excel">
+    Descargar Excel
+  </button>
+    </div>
+
+    <div class="tabla-container">
+      <div class="tabla-scroll">
+
+        <table class="tabla-reporte">
+
+<thead>
+<tr>
+    <th>GRÚA</th>
+    <th>FECHA REPORTADA</th>
+    <th>FECHA ENTREGADA</th>
+    <th>TIEMPO MUERTO</th>
+    <th>BLOQUE</th>
+    <th>Tipo de Falla</th>
+    <th>ACTIVIDAD</th>
+    <th>QUIÉN REPORTÓ</th>
+    <th>TURNO</th>
+    <th>ÁREA</th>
+   <!-- <th>DESCRIPCIÓN</th>-->
+</tr>
+</thead>
+
+<tbody id="tbodyReporteDT">
+</tbody>
+
+</table>
+
+</div>
+</div>
+
+</div>
+`;
+
+  html += `
+          </tbody>
+
+        </table>
+
+      </div>
+    </div>
+
+  </div>
+  `;
+
+ document.getElementById('contenedorReporteDT').innerHTML = html;
+
+pintarReporteDT(reporteDTData);
 }
 function abrirDowntimeMTTO(){
 
@@ -5059,11 +6614,55 @@ function actualizarIndicadorEstado(){
   if(estado === 'anclada') texto = 'Estado actual: ANCLADA';
   if(estado === 'fmenor') texto = 'Estado actual: FALLA MENOR';
   if(estado === 'fseñal') texto = 'Estado actual: FALLA DE SEÑAL';
-  indicador.innerText = texto;
+  if(estado === 'percance') texto = 'Estado actual: PERCANCE EN GRUA';
 
+  indicador.innerText = texto;
   indicador.className = 'estado-indicador ' + estado;
 }
+function ponerFechaFallaActual(){
+
+    const fecha = document.getElementById('fechaReporte');
+
+    if(!fecha) return;
+
+    const ahora = new Date();
+
+    const año = ahora.getFullYear();
+    const mes = String(ahora.getMonth()+1).padStart(2,'0');
+    const dia = String(ahora.getDate()).padStart(2,'0');
+
+    const hora = String(ahora.getHours()).padStart(2,'0');
+    const minuto = String(ahora.getMinutes()).padStart(2,'0');
+
+    fecha.value = `${año}-${mes}-${dia}T${hora}:${minuto}`;
+
+    console.log("FECHA PUESTA:", fecha.value);
+}
+function ponerFechaGruaReportada(){
+
+    const fecha = document.getElementById('fechaOpRepo');
+
+    if(!fecha) return;
+
+    const ahora = new Date();
+
+    const año = ahora.getFullYear();
+    const mes = String(ahora.getMonth()+1).padStart(2,'0');
+    const dia = String(ahora.getDate()).padStart(2,'0');
+
+    const hora = String(ahora.getHours()).padStart(2,'0');
+    const minuto = String(ahora.getMinutes()).padStart(2,'0');
+
+    fecha.value = `${año}-${mes}-${dia}T${hora}:${minuto}`;
+}
+
 async function guardarEstadoRapido() {
+  const tipoGrua = actual.substring(0,3);
+
+const esSDSTS =
+  tipoGrua === "SD-" ||
+  tipoGrua === "STS";
+
 console.log("ENTRÉ A GUARDAR ESTADO RÁPIDO");
 try {
 
@@ -5081,6 +6680,8 @@ try {
 
     let errores = [];
 
+if (!esSDSTS) {
+
     if (!quien) {
       errores.push("Quién reportó");
       document.getElementById('quienReporto').style.border = "2px solid red";
@@ -5096,6 +6697,16 @@ try {
       document.getElementById('registro_falla').style.border = "2px solid red";
     }
 
+}
+    const fechaRepo =
+document.getElementById('fechaOpRepo').value;
+
+
+if(!fechaRepo){
+
+ errores.push("Fecha/Hora Grúa Reportada");
+
+}
     if (errores.length > 0) {
       alert("Faltan campos obligatorios:\n\n- " + errores.join("\n- "));
       return;
@@ -5122,9 +6733,19 @@ const actividad =
 
 const registro_falla =
   document.getElementById('registro_falla').value.trim();
+
+const fecha_op_repo =
+  document.getElementById('fechaOpRepo')?.value || null;
+
   const estadoAnterior = g.estado;
   const estadoNuevo = estado;
 
+//const fecha_op_repo =
+ // document.getElementById('fechaOpRepo').value;
+
+const entroAFalla =
+  estadoAnterior !== 'falla' &&
+  estadoNuevo === 'falla';
   let contador_estado = g.contador_estado || 'stopped';
   let contador_inicio = g.contador_inicio || null;
   let contador_segundos = g.contador_segundos || 0;
@@ -5135,26 +6756,40 @@ const registro_falla =
 
 // ================= FALLA =================
 if (estado === 'falla') {
+const esSDSTS =
+  actual.startsWith("SD") || actual.startsWith("STS");
+  if (estadoAnterior !== 'falla') {
 
-  if (contador_estado !== 'running') {
+    ponerFechaFallaActual();
+    ponerFechaGruaReportada();
 
-    const inicioFalla = new Date().toISOString();
+    // ================= UI =================
+actualizarUIEstado();
+controlarPrioridad();
+actualizarIndicadorEstado();
+
+    const fechaInput =
+      document.getElementById('fechaReporte').value;
+
+    const inicioFalla =
+      new Date(fechaInput).toISOString();
 
     contador_estado = 'running';
-
     contador_inicio = inicioFalla;
-
     contador_segundos = 0;
 
     falla_inicio = inicioFalla;
-console.log("GUARDANDO INICIO FALLA:", falla_inicio);
+
+    g.fecha_hora_falla = inicioFalla;
+
   }
 
 } else {
-    contador_estado = 'stopped';
-    contador_inicio = null;
-    contador_segundos = 0;
-  }
+
+  contador_estado = 'stopped';
+  contador_inicio = null;
+
+}
 
   // ================= BAÑO =================
   let contador_bano_estado = g.contador_bano_estado || 'stopped';
@@ -5282,15 +6917,20 @@ console.log("GUARDANDO INICIO FALLA:", falla_inicio);
 
     const finBano = new Date();
 
-    const { error: errorBano } = await db
-      .from('reportes_operadores_bano')
-      .insert([{
-        grua: g.id,
-        operador: document.getElementById('opOperador')?.value || g.operador || '',
-        fecha_inicio: g.contador_bano_inicio,
-        fecha_fin: finBano.toISOString(),
-        tiempo_bano: tiempo_bano_real
-      }]);
+const { error: errorBano } = await db
+  .from('reportes_operadores_bano')
+  .insert([{
+    grua: g.id,
+
+    // operador que viene del Excel
+    operador: g.nombre_operador || 'SIN ASIGNAR',
+
+    fecha_inicio: g.contador_bano_inicio,
+
+    fecha_fin: finBano.toISOString(),
+
+    tiempo_bano: tiempo_bano_real
+  }]);
 
     if (errorBano) console.log("ERROR BAÑO:", errorBano);
   }
@@ -5310,7 +6950,16 @@ const { error } = await db
 
     // ESTADO ACTUAL DE LA GRÚA
     estado: estado,
+    prioridad: prioridad,
+fecha_hora_falla:
+  entroAFalla
+  ? falla_inicio
+  : g.fecha_hora_falla,
 
+  fecha_op_repo:
+  estado === "falla"
+  ? fecha_op_repo
+  : g.fecha_op_repo,
 
     // DATOS TEMPORALES DE LA FALLA
     quien_reporto:
@@ -5360,7 +7009,7 @@ falla_inicio:
 
 })
 .eq("id", actual);
-
+g.prioridad = prioridad;
 if (error) {
     console.error(error);
     alert(error.message);
@@ -5468,16 +7117,20 @@ function abrirModalCierreFalla(g){
 
   console.log("Abriendo modal cierre", g);
 
-  // 🔵 helper para datetime-local
   const formatDateTime = (dt) => {
     if (!dt) return '';
     return new Date(dt).toISOString().slice(0,16);
   };
 
   document.getElementById('c_grua').value = g.id || '';
-  document.getElementById('c_bloque').value = g.bloque_tramo || '';
+
+  // 🔥 ZONA AUTOMÁTICA
+  const zona = obtenerZonaGrua(g.id);
+
+  console.log("GRÚA:", g.id, "ZONA:", zona);
+  document.getElementById('c_bloque').value = zona;
   document.getElementById('c_fechaFalla').value = formatDateTime(g.fecha_hora_falla);
-  document.getElementById('c_fechaEntrega').value = new Date().toISOString().slice(0,16);
+  document.getElementById('c_fechaRepo').value = formatDateTime(g.fecha_op_repo);
   document.getElementById('c_tm').value = g.tiempo_muerto || '';
   document.getElementById('c_operador').value = g.operador || '';
   document.getElementById('c_tipoFalla').value = g.tipo_falla || '';
@@ -5494,10 +7147,10 @@ async function guardarCierreFalla(){
     .from('reportes_operacion')
     .insert([{
       grua,
-      turno: document.getElementById('c_turno').value,
-      bloque_tramo: document.getElementById('c_bloque').value,
+      turno: obtenerTurnoActual(),
+      bloque_tramo: obtenerZonaGrua(grua),
       fecha_hora_falla: document.getElementById('c_fechaFalla').value,
-      fecha_hora_entrega: document.getElementById('c_fechaEntrega').value,
+      fecha_op_repo: document.getElementById('c_fechaRepo').value,
       tiempo_muerto: document.getElementById('c_tm').value,
       operador: document.getElementById('c_operador').value,
       tipo_falla: document.getElementById('c_tipoFalla').value,
@@ -5524,6 +7177,7 @@ async function guardarCierreFalla(){
     contador_estado: "stopped",
     contador_inicio: null,
     contador_segundos: 0,
+    contador_estado: "stopped",
 
     updated_at: new Date().toISOString()
 })
@@ -5588,24 +7242,34 @@ function manejarCambioEstado() {
 function abrirFormularioCierreFalla(equipo) {
 
   ocultarControlesEstado();
-  const form =
-  document.getElementById('formularioCierreFalla');
+
+  const form = document.getElementById('formularioCierreFalla');
+
+  document.getElementById('c_turno').value =
+    obtenerTurnoActual();
 
   if (!form) return;
 
   form.style.display = 'block';
 
+
   document.getElementById('c_grua').value =
     equipo.id || '';
 
-  document.getElementById('c_bloque').value =
-    equipo.bloque_tramo || '';
+
+  // ZONA AUTOMÁTICA
+  const zona = obtenerZonaGrua(equipo.id);
+
+  console.log("GRÚA:", equipo.id);
+  console.log("ZONA:", zona);
+
+
+  document.getElementById('bloqueTramo').value = zona;
+
 
   document.getElementById('c_fechaFalla').value =
     equipo.falla_inicio || '';
 
-  document.getElementById('c_fechaEntrega').value =
-    new Date().toISOString().slice(0,16);
 }
 function iniciarContadorNuevo(g) {
   if (!g) return;
@@ -5637,24 +7301,20 @@ function getDescripcionActividad(g) {
     ''
   );
 }
-function formatearFechaMX(fecha) {
+function formatearFechaMX(fechaBD){
 
-  if (!fecha) return '';
+    if(!fechaBD) return '';
 
-  const f = new Date(fecha);
+    const fecha = new Date(fechaBD);
 
-  return f.toLocaleString('es-MX', {
-    timeZone: 'America/Mexico_City',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false
-  });
+    return fecha.toLocaleDateString('es-MX', {
+        day:'2-digit',
+        month:'2-digit',
+        year:'numeric'
+    });
 
 }
+
 function ocultarControlesEstado() {
 
   document.getElementById('grupoEstado').style.display = 'none';
@@ -5675,11 +7335,176 @@ function descargarExcel() {
 
   const tabla = document.querySelector("table");
 
-  const wb = XLSX.utils.table_to_book(tabla, {
-    sheet: "REPORTE GRÚAS"
+  if(!tabla){
+    alert("No hay tabla para exportar");
+    return;
+  }
+
+
+  const wb = XLSX.utils.book_new();
+
+
+  // Convertir tabla HTML a datos
+  const datos = XLSX.utils
+    .table_to_sheet(tabla);
+
+
+  const filas = XLSX.utils.sheet_to_json(
+    datos,
+    {
+      header:1
+    }
+  );
+
+
+  // Crear nueva hoja limpia
+  const ws = XLSX.utils.aoa_to_sheet([]);
+
+
+
+  // TÍTULO
+  XLSX.utils.sheet_add_aoa(ws,[
+
+    ["REPORTE DE GRÚAS"],
+
+    [
+      "Fecha generación: " +
+      new Date().toLocaleString('es-MX')
+    ],
+
+    []
+
+
+  ],{
+    origin:"A1"
   });
 
-  XLSX.writeFile(wb, "reporte_gruas.xlsx");
+
+
+  // INSERTAR TABLA ORIGINAL DESDE FILA 4
+  XLSX.utils.sheet_add_aoa(
+    ws,
+    filas,
+    {
+      origin:"A4"
+    }
+  );
+
+
+
+  // Combinar título
+  const totalColumnas =
+    filas[0].length;
+
+
+  ws["!merges"] = [
+
+    {
+      s:{
+        r:0,
+        c:0
+      },
+
+      e:{
+        r:0,
+        c:totalColumnas-1
+      }
+    }
+
+  ];
+
+
+
+  // Ajustar ancho columnas
+  const anchos=[];
+
+
+  for(let c=0;c<totalColumnas;c++){
+
+    let max=10;
+
+
+    filas.forEach(f=>{
+
+      if(f[c]){
+
+        max=Math.max(
+          max,
+          String(f[c]).length
+        );
+
+      }
+
+    });
+
+
+    anchos.push({
+
+      wch:
+      Math.min(max+3,40)
+
+    });
+
+  }
+
+
+  ws["!cols"]=anchos;
+
+
+
+  // Filtro solo en encabezados reales
+  ws["!autofilter"]={
+
+    ref:
+    XLSX.utils.encode_range({
+
+      s:{
+        r:3,
+        c:0
+      },
+
+      e:{
+        r:filas.length+3,
+        c:totalColumnas-1
+      }
+
+    })
+
+  };
+
+
+
+  // Congelar encabezados
+  ws["!freeze"]={
+
+    xSplit:0,
+    ySplit:4
+
+  };
+
+
+
+  XLSX.utils.book_append_sheet(
+
+    wb,
+
+    ws,
+
+    "REPORTE GRÚAS"
+
+  );
+
+
+
+  XLSX.writeFile(
+
+    wb,
+
+    "Reporte_Gruas.xlsx"
+
+  );
+
+
 }
 function mostrarFormularioCierre(){
 
@@ -5696,8 +7521,72 @@ function mostrarPanelEstado(){
 
 }
 function actualizarUIEstado() {
+
   controlarPrioridad();
   actualizarIndicadorEstado();
+  controlarBotonStandby();
+
+  const estado =
+    document.getElementById('estado').value;
+
+  const grupo =
+    document.getElementById('grupoRegistroFalla');
+
+  if(grupo){
+
+    if(estado === 'falla'){
+      grupo.style.display = 'block';
+    }else{
+      grupo.style.display = 'none';
+    }
+
+  }
+if(estado === 'falla'){
+
+    ponerFechasFallaAutomaticas();
+
+}else{
+
+    const fechaOpRepo =
+    document.getElementById('fechaOpRepo');
+
+    if(fechaOpRepo){
+        fechaOpRepo.value = '';
+    }
+
+}
+const grupoFechaOpRepo =
+document.getElementById('grupoFechaOpRepo');
+
+
+if(grupoFechaOpRepo){
+
+    grupoFechaOpRepo.style.display =
+    estado === 'falla'
+    ? 'block'
+    : 'none';
+
+}
+// CONTROL SD / STS
+const esSDSTS =
+    actual.startsWith("SD") || actual.startsWith("STS");
+
+const fechaRepo = document.getElementById("grupoFechaOpRepo");
+const btnStandby = document.getElementById("btnAtenderFalla");
+
+if (esSDSTS) {
+
+    // Ocultar Fecha/Hora Grúa Reportada
+    if (fechaRepo) {
+        fechaRepo.style.display = "none";
+    }
+
+    // Ocultar botón STANDBY
+    if (btnStandby) {
+        btnStandby.style.display = "none";
+    }
+
+}
 }
 function detectarArea(id){
 
@@ -5720,7 +7609,7 @@ function actualizarGruaPorArea(area) {
     console.log('Área TREN seleccionada:', grupoTREN);
 
     // EJEMPLO: si tienes un input de grúa
-    // document.getElementById('gruaGeneral').value = grupoTREN[0];
+     document.getElementById('gruaGeneral').value = grupoTREN[0];
 
   } else if (area === 'RTG') {
 
@@ -5764,7 +7653,8 @@ cargarReporteOperadores();
 
 }
 async function cargarReporteOperadores(){
-
+  
+  let reporteOperadoresData = [];
   const { data, error } = await db
     .from('reportes_operadores_bano')
     .select('*')
@@ -5881,42 +7771,67 @@ async function cargarReporteOperadores(){
 
 
 }
-function cambiarReporte(tipo){
+function cambiarReporte(tipo, boton){
+const dt = document.getElementById('contenedorReporteDT');
+
+if(dt){
+    dt.style.display='none';
+}
 
   const gruas = document.getElementById('tab-gruas');
   const operadores = document.getElementById('tab-operadores');
   const senal = document.getElementById('tab-senal');
 
-  // ocultar todo
+
+  // ocultar reportes
   if(gruas) gruas.style.display = 'none';
   if(operadores) operadores.style.display = 'none';
   if(senal) senal.style.display = 'none';
 
+
+  // quitar activo
   document.querySelectorAll('.btn-reporte')
     .forEach(btn => btn.classList.remove('activo'));
 
-  if(tipo === 'gruas'){
-    gruas.style.display = 'block';
-    document.querySelector(".btn-reporte:nth-child(1)").classList.add('activo');
-    cargarReporteGruas();
+
+  // poner activo al botón presionado
+  if(boton){
+    boton.classList.add('activo');
   }
+
+
+  if(tipo === 'gruas'){
+
+    if(gruas)
+      gruas.style.display='block';
+
+    cargarReporteGruas();
+
+  }
+
 
   if(tipo === 'operadores'){
-    operadores.style.display = 'block';
-    document.querySelector(".btn-reporte:nth-child(2)").classList.add('activo');
+
+    if(operadores)
+      operadores.style.display='block';
+
     cargarReporteOperadores();
+
   }
 
-  // 🔥 NUEVO: SEÑAL
-  if(tipo === 'senal'){
-    senal.style.display = 'block';
 
-    document.querySelector(".btn-reporte:nth-child(3)")
-      ?.classList.add('activo');
+  if(tipo === 'senal'){
+
+    if(senal)
+      senal.style.display='block';
 
     cargarReporteSenal();
+
   }
+
 }
+
+
 async function cargarReporteSenal(){
 
   const { data, error } = await db
@@ -5984,6 +7899,493 @@ async function cargarReporteSenal(){
 
   document.getElementById('tab-senal').innerHTML = html;
 }
+function activarAtencionFalla(){
+
+  if(!actual){
+    alert("Seleccione una grúa");
+    return;
+  }
+
+  const g = getEquipo(actual);
+
+  if(!g){
+    alert("No se encontró la grúa");
+    return;
+  }
+
+  // SOLO FALLA PUEDE SER ATENDIDA
+  if(g.estado !== 'falla'){
+
+    alert("La grúa debe estar en estado FALLA para iniciar atención");
+
+    return;
+  }
+
+
+  if(!fallasAtendiendo.includes(actual)){
+    fallasAtendiendo.push(actual);
+  }
+
+  render();
+
+}
+function cargarOpcionesTiempoMuerto() {
+
+    const select = document.getElementById("tiempoMuerto");
+
+    if (!select) return;
+
+    // Limpiar
+    select.innerHTML = '<option value="">Seleccione...</option>';
+
+    for (let minutos = 10; minutos <= 600; minutos += 10) {
+
+        const horas = String(Math.floor(minutos / 60)).padStart(2, "0");
+        const mins = String(minutos % 60).padStart(2, "0");
+
+        const tiempo = `${horas}:${mins}:00`;
+
+        select.add(new Option(tiempo, tiempo));
+    }
+}
+async function guardarOperadorManual(){
+
+  if(!actual){
+    alert("No hay grúa seleccionada");
+    return;
+  }
+
+
+  const operador =
+    document.getElementById('operadorManual')
+    .value.trim();
+
+
+  if(!operador){
+    alert("Escriba un nombre");
+    return;
+  }
+
+
+  const {error} = await db
+  .from('gruas')
+  .update({
+
+    nombre_operador: operador,
+
+    updated_at:
+    new Date().toISOString()
+
+  })
+  .eq('id',actual);
+
+
+  if(error){
+
+    console.log(error);
+    alert(error.message);
+    return;
+
+  }
+
+
+  document.getElementById('operadorActual')
+  .innerText = operador;
+
+
+  const g = getEquipo(actual);
+
+  if(g){
+    g.nombre_operador = operador;
+  }
+
+
+  alert("Operador actualizado");
+
+}
+let columnasCodigos = [];
+
+async function cargarResponsabilidades(){
+
+  const { data, error } = await db
+    .from("Codigo_fallas")
+    .select("*")
+    .limit(1);
+
+  if(error){
+    console.log(error);
+    return;
+  }
+
+  if(!data || data.length === 0) return;
+
+  columnasCodigos = Object.keys(data[0]);
+
+  const select =
+    document.getElementById("responsabilidad");
+
+  select.innerHTML =
+    '<option value="">Seleccione...</option>';
+
+columnasCodigos.forEach(col =>{
+
+  const option = document.createElement("option");
+
+  // Valor real para consultar Supabase
+  option.value = col;
+
+  // Texto mostrado al usuario
+  option.textContent = col
+    .replace(/_/g, ' ')
+    .toUpperCase();
+
+  select.appendChild(option);
+
+});
+
+}
+async function cargarCodigos(){
+
+  const responsabilidad = document.getElementById("responsabilidad").value;
+  const codigo = document.getElementById("codigoFalla");
+
+
+  codigo.innerHTML =
+    '<option value="">Seleccione...</option>';
+
+
+  if(!responsabilidad){
+    return;
+  }
+
+
+  const { data, error } = await db
+    .from("Codigo_fallas")
+    .select(responsabilidad);
+
+
+  if(error){
+
+    console.log("ERROR CODIGOS:", error);
+    return;
+
+  }
+
+
+  console.log("Datos recibidos:", data);
+
+
+  data.forEach(fila => {
+
+
+    const valor = fila[responsabilidad];
+
+
+    if(valor){
+
+
+      const option =
+        document.createElement("option");
+
+
+      option.value = valor;
+
+      option.textContent = valor;
+
+
+      codigo.appendChild(option);
+
+    }
+
+
+  });
+
+}
+function obtenerTurnoActual(){
+
+  const hora = new Date().getHours();
+
+  if(hora >= 6 && hora < 14){
+    return "1er Turno";
+  }
+
+  if(hora >= 14 && hora < 22){
+    return "2do Turno";
+  }
+
+  return "3er Turno";
+
+}
+function controlarBotonStandby(){
+
+  const estado = document.getElementById('estado').value;
+  const boton = document.getElementById('btnAtenderFalla');
+
+  if(!boton) return;
+  if(estado === 'falla'){
+    boton.style.display = 'block';
+  }else{
+    boton.style.display = 'none';
+  }
+}
+function mostrarEditorOperador() {
+    document.getElementById("editorOperador").style.display = "flex";
+    const nombre = document.getElementById("operadorActual").textContent.trim();
+    document.getElementById("operadorManual").value = nombre;
+    document.getElementById("operadorManual").focus();
+}
+
+function ocultarEditorOperador() {
+    document.getElementById("editorOperador").style.display = "none";
+}
+
+function obtenerZonaGrua(idGrua){
+
+  if(!idGrua) return '';
+
+  const id = idGrua
+    .toUpperCase()
+    .replace('-','')
+    .trim();
+
+
+  for(const z of layout){
+
+    const existe = z.gruas.some(g => 
+      g &&
+      g.toUpperCase()
+       .replace('-','')
+       .trim() === id
+    );
+
+
+    if(existe){
+      return `ZONA ${z.zona}`;
+    }
+
+  }
+
+  return '';
+
+}
+function notificarFallaExcel(id){
+
+  const aviso = document.createElement('div');
+
+  aviso.innerHTML = `
+    <strong>⚠️ FALLA DETECTADA</strong><br>
+    Grúa: ${id}<br>
+    Complete los datos obligatorios
+  `;
+
+  aviso.style.position = "fixed";
+  aviso.style.top = "20px";
+  aviso.style.right = "20px";
+  aviso.style.background = "#dc2626";
+  aviso.style.color = "white";
+  aviso.style.padding = "15px 25px";
+  aviso.style.borderRadius = "8px";
+  aviso.style.fontSize = "16px";
+  aviso.style.fontWeight = "bold";
+  aviso.style.zIndex = "99999";
+  aviso.style.boxShadow = "0 4px 12px rgba(0,0,0,.3)";
+
+
+  document.body.appendChild(aviso);
+
+
+  setTimeout(()=>{
+
+    aviso.remove();
+
+  },4000);
+
+}
+function generarReporteDT(){
+
+    // OCULTAR TODOS LOS REPORTES
+    const vistas = [
+        'tab-gruas',
+        'tab-operadores',
+        'tab-senal',
+        'contenedorReporteGruas',
+        'contenedorReporteOperadores',
+        'contenedorReporteDT'
+    ];
+
+    vistas.forEach(id=>{
+        const el = document.getElementById(id);
+        if(el){
+            el.style.display = "none";
+        }
+    });
+
+
+    // ACTIVAR DT
+    const contenedorDT =
+        document.getElementById("contenedorReporteDT");
+
+    if(contenedorDT){
+        contenedorDT.style.display = "block";
+    }
+
+
+    // QUITAR ACTIVO DE BOTONES
+    document.querySelectorAll('.btn-reporte')
+    .forEach(btn=>{
+        btn.classList.remove('activo');
+    });
+
+
+    // ACTIVAR BOTON DT
+    const botones =
+        document.querySelectorAll('.btn-reporte');
+
+    if(botones[3]){
+        botones[3].classList.add('activo');
+    }
+
+
+    cargarReporteDT();
+
+}
+function ponerFechasFallaAutomaticas(){
+
+    const ahora = new Date();
+
+    const año = ahora.getFullYear();
+    const mes = String(ahora.getMonth()+1).padStart(2,'0');
+    const dia = String(ahora.getDate()).padStart(2,'0');
+
+    const hora = String(ahora.getHours()).padStart(2,'0');
+    const minuto = String(ahora.getMinutes()).padStart(2,'0');
+
+    const fechaActual = `${año}-${mes}-${dia}T${hora}:${minuto}`;
+
+    const fechaRepo = document.getElementById("fechaOpRepo");
+    if(fechaRepo){
+        fechaRepo.value = fechaActual;
+    }
+
+    const fechaEntrega = document.getElementById("fechaReporte");
+    if(fechaEntrega){
+        fechaEntrega.value = fechaActual;
+    }
+}
+
+function capturarTablero(){
+
+    const tablero = document.getElementById("yard");
+
+
+    if(!tablero){
+
+        alert("No se encontró el tablero");
+
+        return;
+
+    }
+
+
+    html2canvas(tablero,{
+
+        scale:2,
+
+        backgroundColor:"#ffffff"
+
+    })
+    .then(canvas=>{
+
+
+        const enlace =
+        document.createElement("a");
+
+
+        enlace.download =
+        "Estado_Grúas_"+new Date()
+        .toLocaleDateString("es-MX")
+        +".png";
+
+
+        enlace.href =
+        canvas.toDataURL("image/png");
+
+
+        enlace.click();
+
+
+    });
+
+
+}
+function pintarReporteDT(data){
+
+    let html = '';
+
+    if(data && data.length){
+
+        data.forEach(r => {
+
+            html += `
+            <tr>
+                <td>${r.grua ?? ''}</td>
+                <td>${formatearFechaMX(r.fecha_op_repo)}</td>
+                <td>${formatearFechaMX(r.fecha_hora_falla)}</td>
+                <td>${r.tiempo_muerto_real ?? ''}</td>
+                <td>${r.bloque_tramo ?? ''}</td>
+                <td>${r.registro_falla ?? ''}</td>
+                <td>${r.actividad ?? ''}</td>
+                <td>${r.quien_reporto ?? ''}</td>
+                <td>${r.turno ?? ''}</td>
+                <td>${r.area_mantto ?? ''}</td>
+            </tr>
+            `;
+        });
+
+    }else{
+
+        html = `
+        <tr>
+            <td colspan="10" style="text-align:center">
+                Sin registros
+            </td>
+        </tr>
+        `;
+    }
+
+    document.getElementById("tbodyReporteDT").innerHTML = html;
+
+}
+function filtrarReporteDT(){
+
+    const inicio = document.getElementById("dtFechaInicio").value;
+    const fin = document.getElementById("dtFechaFin").value;
+
+    let datos = [...reporteDTData];
+
+    if(inicio){
+
+        datos = datos.filter(r =>
+            new Date(r.fecha_op_repo) >= new Date(inicio)
+        );
+
+    }
+
+    if(fin){
+
+        const fechaFin = new Date(fin);
+        fechaFin.setHours(23,59,59,999);
+
+        datos = datos.filter(r =>
+            new Date(r.fecha_op_repo) <= fechaFin
+        );
+
+    }
+
+    pintarReporteDT(datos);
+
+}
+
 </script>
 
 </div>
@@ -5995,5 +8397,4 @@ async function cargarReporteSenal(){
 </body>
 
 </html>
-
 
