@@ -3188,104 +3188,97 @@ body{
 
 }
 /* =========================================
-   CORRECCION MOBILE FINAL
-   NO TOCAR ESTRUCTURA ORIGINAL
+   RESPONSIVE FINAL MOBILE
+   SOBRESCRIBE REGLAS ANTERIORES
 ========================================= */
 
 @media(max-width:768px){
 
-    body{
-        overflow-x:hidden;
-    }
+.layout{
+    flex-direction:column !important;
+}
+
+.sidebar{
+    width:100% !important;
+    max-width:none !important;
+    min-width:0 !important;
+    height:auto;
+}
+
+.main-content{
+    width:100%;
+}
+
+.dashboard-main{
+    display:flex !important;
+    flex-direction:column !important;
+    padding:10px;
+}
 
 
-    /* MENU LATERAL COMO MENU VERTICAL */
-    .sidebar{
-
-        width:180px !important;
-        min-width:180px !important;
-        max-width:180px !important;
-
-        height:100vh !important;
-
-        overflow-y:auto !important;
-        overflow-x:hidden !important;
-
-        display:block !important;
-
-        position:relative !important;
-
-        padding:10px !important;
-    }
+.yard-container{
+    width:100%;
+    overflow-x:auto;
+}
 
 
-    .menu-btn{
-
-        width:100% !important;
-
-        min-width:0 !important;
-
-        height:auto !important;
-
-        margin-bottom:10px !important;
-
-    }
+.yard{
+    width:max-content !important;
+    min-width:max-content;
+}
 
 
-    /* AREA PRINCIPAL */
-    .layout{
-
-        display:flex !important;
-
-        flex-direction:row !important;
-
-        align-items:flex-start;
-
-    }
+.grid{
+    grid-template-columns:repeat(11,90px) !important;
+    width:max-content !important;
+}
 
 
-    .main-content{
-
-        width:calc(100% - 180px) !important;
-
-        min-width:0;
-
-    }
+.card{
+    width:90px !important;
+    height:95px !important;
+}
 
 
-
-    /* PATIO DE GRUAS */
-    .yard{
-
-        overflow:auto !important;
-
-        padding:10px !important;
-
-    }
+.events-panel{
+    display:flex !important;
+}
 
 
-    .grid{
-
-        display:grid !important;
-
-        grid-template-columns:repeat(4,85px) !important;
-
-        gap:10px !important;
-
-        width:max-content !important;
-
-    }
+.kpis{
+    grid-template-columns:repeat(2,1fr);
+}
 
 
-    .card{
+.tabla-container{
+    overflow-x:auto;
+}
 
-        width:85px !important;
 
-        min-width:85px !important;
+.tabla-reporte{
+    min-width:900px;
+}
 
-        height:90px !important;
 
-    }
+.modal-content{
+    width:calc(100% - 30px);
+}
+
+
+.barra-reportes{
+    flex-direction:column;
+}
+
+
+.btn-reporte{
+    width:100%;
+}
+
+
+.messages-dashboard{
+    grid-template-columns:1fr;
+}
+
 
 }
 </style>
