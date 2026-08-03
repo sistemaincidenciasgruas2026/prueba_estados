@@ -3275,30 +3275,14 @@ body{
 
 }
 /* =====================================
-   GRUAS MAS PEQUEÑAS MOBILE
+   GRUAS PEQUEÑAS DEFINITIVO
+   (NO AFECTA MENU NI LEYENDA)
 ===================================== */
 
 @media(max-width:768px){
 
     .yard{
         padding:4px !important;
-    }
-
-
-    .row{
-
-        margin-bottom:2px !important;
-        gap:2px !important;
-
-    }
-
-
-    .zona{
-
-        width:18px !important;
-
-        font-size:6px !important;
-
     }
 
 
@@ -3313,6 +3297,10 @@ body{
 
 
     .card{
+
+        width:auto !important;
+
+        min-width:0 !important;
 
         height:32px !important;
 
@@ -3329,9 +3317,9 @@ body{
 
         font-size:7px !important;
 
-        margin:0 !important;
+        line-height:1 !important;
 
-        line-height:1;
+        margin:0 !important;
 
     }
 
@@ -3340,7 +3328,7 @@ body{
 
         font-size:5px !important;
 
-        margin:0;
+        line-height:1 !important;
 
     }
 
@@ -3351,7 +3339,7 @@ body{
 
         padding:0 !important;
 
-        margin-top:0;
+        margin:0 !important;
 
     }
 
@@ -3365,10 +3353,19 @@ body{
 
     }
 
+
+    .zona{
+
+        width:18px !important;
+
+        font-size:6px !important;
+
+    }
+
 }
 
 
-/* CELULARES MUY PEQUEÑOS */
+/* CELULARES PEQUEÑOS */
 
 @media(max-width:480px){
 
@@ -3394,6 +3391,93 @@ body{
 
     }
 
+}
+/* =====================================
+   LEYENDA PEQUEÑA MOBILE
+===================================== */
+
+@media(max-width:768px){
+
+    .leyenda-corner{
+
+        top:5px !important;
+        right:5px !important;
+
+        width:90px !important;
+
+        padding:5px !important;
+
+        border-radius:5px !important;
+
+        max-height:110px !important;
+
+        overflow:hidden !important;
+
+    }
+
+
+    .legend-mini{
+
+        gap:2px !important;
+
+        font-size:7px !important;
+
+    }
+
+
+    .legend-row{
+
+        gap:3px !important;
+
+        line-height:1 !important;
+
+    }
+
+
+    .color-box{
+
+        width:7px !important;
+
+        height:7px !important;
+
+        border-radius:2px !important;
+
+    }
+
+}
+
+
+/* CELULARES PEQUEÑOS */
+
+@media(max-width:480px){
+
+    .leyenda-corner{
+
+        width:75px !important;
+
+        padding:3px !important;
+
+        max-height:90px !important;
+
+    }
+
+
+    .legend-mini{
+
+        font-size:6px !important;
+
+        gap:1px !important;
+
+    }
+
+
+    .color-box{
+
+        width:6px !important;
+
+        height:6px !important;
+
+    }
 
 }
 </style>
