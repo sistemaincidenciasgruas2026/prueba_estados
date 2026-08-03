@@ -3186,8 +3186,7 @@ body{
 
     opacity:.85;
 
-}
-/* =====================================
+}/* =====================================
    MENU LATERAL COMPACTO MOBILE AJUSTADO
 ===================================== */
 
@@ -3206,11 +3205,11 @@ body{
 
     .sidebar{
 
-        width:85px !important;
+        width:100px !important;
 
-        min-width:85px !important;
+        min-width:100px !important;
 
-        max-width:85px !important;
+        max-width:100px !important;
 
         height:100vh;
 
@@ -3237,8 +3236,6 @@ body{
 
         margin:2px 0 5px !important;
 
-        height:auto !important;
-
     }
 
 
@@ -3246,15 +3243,17 @@ body{
 
         width:100% !important;
 
-        height:36px !important;
+        height:auto !important;
 
-        min-height:36px !important;
+        min-height:42px !important;
 
-        padding:0 !important;
+        padding:4px !important;
 
         margin:0 !important;
 
         display:flex !important;
+
+        flex-direction:column !important;
 
         align-items:center !important;
 
@@ -3262,23 +3261,72 @@ body{
 
         flex:none !important;
 
+        text-align:center;
+
     }
 
 
+    /* MOSTRAR TEXTO */
     .menu-btn span{
 
-        display:none !important;
+        display:block !important;
+
+        font-size:7px !important;
+
+        line-height:1.1 !important;
+
+        white-space:normal !important;
+
+        word-break:break-word !important;
+
+        width:100% !important;
 
     }
 
 
     .menu-btn i{
 
-        font-size:15px !important;
+        font-size:14px !important;
 
-        margin:0 !important;
+        margin-bottom:2px !important;
 
     }
+
+}
+/* =====================================
+   BADGE NOTIFICACION ULTRA COMPACTO
+===================================== */
+
+.msg-badge{
+
+    position:absolute !important;
+
+    width:10px !important;
+    min-width:10px !important;
+    max-width:10px !important;
+
+    height:10px !important;
+    min-height:10px !important;
+
+    padding:0 !important;
+
+    margin:0 !important;
+
+    border-radius:50% !important;
+
+    font-size:7px !important;
+
+    line-height:10px !important;
+
+    text-align:center !important;
+
+    display:flex !important;
+
+    align-items:center !important;
+
+    justify-content:center !important;
+
+    box-sizing:border-box !important;
 
 }
 /* =====================================
