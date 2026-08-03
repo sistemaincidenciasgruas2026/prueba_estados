@@ -3500,63 +3500,61 @@ body{
 
 }
 /* =====================================
-   IGUALAR GRUAS - SIDE LOADER - STS
+   GRUAS + SIDE LOADER + STS
+   TAMAÑO COMPACTO AJUSTADO
 ===================================== */
 
 @media(max-width:768px){
 
-    /* TODOS LOS GRID MISMO TAMAÑO */
     .grid,
     .grid-side,
     .grid-sts{
 
         display:grid !important;
 
-        grid-template-columns:repeat(11, 32px) !important;
+        grid-template-columns:repeat(11, 45px) !important;
 
-        gap:2px !important;
+        gap:3px !important;
 
         width:max-content !important;
 
     }
 
 
-    /* TARJETA MISMO TAMAÑO */
     .grid .card,
     .grid-side .card,
     .grid-sts .card{
 
-        width:32px !important;
+        width:45px !important;
 
-        min-width:32px !important;
+        min-width:45px !important;
 
-        max-width:32px !important;
-
-
-        height:32px !important;
-
-        min-height:32px !important;
-
-        max-height:32px !important;
+        max-width:45px !important;
 
 
-        padding:1px !important;
+        height:45px !important;
 
-        border-radius:3px !important;
+        min-height:45px !important;
+
+        max-height:45px !important;
+
+
+        padding:3px !important;
+
+        border-radius:5px !important;
 
     }
 
 
-    /* TEXTO IGUAL */
     .grid .code,
     .grid-side .code,
     .grid-sts .code{
 
-        font-size:7px !important;
-
-        margin:0 !important;
+        font-size:9px !important;
 
         line-height:1 !important;
+
+        margin:2px 0 !important;
 
     }
 
@@ -3565,14 +3563,23 @@ body{
     .grid-side .small,
     .grid-sts .small{
 
-        font-size:5px !important;
+        font-size:6px !important;
+
+    }
+
+
+    .grid .timer-card,
+    .grid-side .timer-card,
+    .grid-sts .timer-card{
+
+        font-size:6px !important;
 
     }
 
 }
 
 
-/* CELULAR PEQUEÑO */
+/* CELULARES PEQUEÑOS */
 
 @media(max-width:480px){
 
@@ -3580,7 +3587,9 @@ body{
     .grid-side,
     .grid-sts{
 
-        grid-template-columns:repeat(11, 28px) !important;
+        grid-template-columns:repeat(11, 40px) !important;
+
+        gap:2px !important;
 
     }
 
@@ -3589,13 +3598,13 @@ body{
     .grid-side .card,
     .grid-sts .card{
 
-        width:28px !important;
+        width:40px !important;
 
-        min-width:28px !important;
+        min-width:40px !important;
 
-        height:28px !important;
+        height:40px !important;
 
-        min-height:28px !important;
+        min-height:40px !important;
 
     }
 
@@ -3604,7 +3613,7 @@ body{
     .grid-side .code,
     .grid-sts .code{
 
-        font-size:6px !important;
+        font-size:8px !important;
 
     }
 
