@@ -3188,7 +3188,7 @@ body{
 
 }
 /* =====================================
-   MENU LATERAL COMPACTO MOBILE
+   MENU LATERAL COMPACTO MOBILE AJUSTADO
 ===================================== */
 
 @media(max-width:768px){
@@ -3199,7 +3199,7 @@ body{
 
         flex-direction:row !important;
 
-        align-items:stretch;
+        align-items:flex-start !important;
 
     }
 
@@ -3212,18 +3212,19 @@ body{
 
         max-width:85px !important;
 
-        padding:6px !important;
+        height:100vh;
 
-        overflow-x:hidden;
+        padding:5px !important;
 
-    }
+        display:flex !important;
 
+        flex-direction:column !important;
 
-    .main-content{
+        justify-content:flex-start !important;
 
-        flex:1 !important;
+        gap:4px !important;
 
-        min-width:0 !important;
+        overflow:hidden !important;
 
     }
 
@@ -3234,7 +3235,9 @@ body{
 
         text-align:center;
 
-        letter-spacing:0;
+        margin:2px 0 5px !important;
+
+        height:auto !important;
 
     }
 
@@ -3243,33 +3246,37 @@ body{
 
         width:100% !important;
 
-        min-width:0 !important;
+        height:36px !important;
 
-        height:38px !important;
+        min-height:36px !important;
 
-        min-height:38px !important;
+        padding:0 !important;
 
-        padding:5px !important;
+        margin:0 !important;
 
-        justify-content:center;
+        display:flex !important;
 
-        margin-bottom:5px !important;
+        align-items:center !important;
+
+        justify-content:center !important;
+
+        flex:none !important;
 
     }
 
 
     .menu-btn span{
 
-        font-size:0 !important;
+        display:none !important;
 
     }
 
 
     .menu-btn i{
 
-        font-size:16px;
+        font-size:15px !important;
 
-        margin:auto;
+        margin:0 !important;
 
     }
 
