@@ -4040,31 +4040,177 @@ body{
    PIE
 ===================================================== */
 
+/* ================================
+   FOOTER LOGIN
+================================ */
+
 #login .login-footer {
-
     margin-top: 25px;
-
     padding-top: 18px;
-
     border-top: 1px solid #e2e8f0;
-
     text-align: center;
-
     color: #94a3b8;
-
     font-size: 11px;
 }
+
+
+/* ================================
+   BARRA SUPERIOR
+================================ */
+
 .topbar {
     display: flex;
     align-items: center;
+    width: 100%;
+    min-height: 40px;
+    height: 40px;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+.logo {
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: 0.4px;
+
+    /* IMPORTANTE */
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
-.usuario-activo {
+/* ================================
+   USUARIO ACTIVO
+================================ */
+
+.usuario-topbar {
     margin-left: auto;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
     color: white;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 0 20px;
+    font-size: 13px;
+    font-weight: 500;
+
+    padding-left: 15px;
+
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+
+/* TEXTO "Usuario:" */
+
+.usuario-topbar span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    white-space: nowrap;
+}
+
+
+/* NOMBRE DEL USUARIO */
+
+.usuario-topbar strong {
+    color: #ffffff;
+    font-weight: 800;
+}
+
+
+/* ================================
+   BOTÓN SALIR
+================================ */
+
+.btn-cerrar-sesion {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+
+    padding: 2px 5px;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.btn-cerrar-sesion i {
+    font-size: 10px;
+}
+
+.btn-cerrar-sesion i {
+    font-size: 11px;
+}
+
+.btn-cerrar-sesion:hover {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+
+/* ICONO */
+
+.btn-cerrar-sesion i {
+    font-size: 13px;
+}
+
+
+/* AL PASAR EL MOUSE */
+
+.btn-cerrar-sesion:hover {
+    background: #dc2626;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 4px 8px rgba(0,0,0,0.20);
+}
+
+
+/* AL PRESIONAR */
+
+.btn-cerrar-sesion:active {
+    transform: translateY(0);
+
+    box-shadow:
+        0 2px 4px rgba(0,0,0,0.15);
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 700px) {
+
+    .topbar {
+        padding: 0 12px;
+    }
+
+    .logo {
+        font-size: 14px;
+    }
+
+    .usuario-topbar {
+        gap: 8px;
+        padding-left: 10px;
+        font-size: 11px;
+    }
+
+    .btn-cerrar-sesion {
+        padding: 7px 9px;
+    }
+
+    .btn-cerrar-sesion span {
+        display: none;
+    }
 }
 </style>
 </head>
@@ -4154,9 +4300,26 @@ body{
         CONTROL OPERATIVO DE GRÚAS
     </div>
 
-    <div id="usuarioActivo" class="usuario-activo">
-        👤 -
+<div class="topbar">
+
+    <div class="usuario-topbar">
+
+        <span>
+            Usuario:
+            <strong id="usuarioActivo"></strong>
+        </span>
+
+        <button
+            type="button"
+            class="btn-cerrar-sesion"
+            onclick="cerrarSesion()">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Salir
+        </button>
+
     </div>
+
+</div>
 
 </div>
 
@@ -9427,6 +9590,15 @@ function iniciarSesion() {
     rol: datos.rol,
     puedeEditar: datos.rol === "editar"
   };
+
+const usuarioActivo =
+    document.getElementById("usuarioActivo");
+
+if (usuarioActivo) {
+    usuarioActivo.innerText = usuario;
+}
+
+
 localStorage.setItem("usuarioSistema", usuario);
 localStorage.setItem("rolSistema", datos.rol);
 document.getElementById("usuarioActivo").innerText =
@@ -9536,6 +9708,33 @@ function controlarPasswordLogin() {
         contenedor.style.display = "block";
 
     }
+}
+function cerrarSesion() {
+
+    // Limpiar sesión
+    localStorage.removeItem("usuarioSistema");
+    localStorage.removeItem("rolSistema");
+
+    // Ocultar aplicación
+    document.getElementById("app").style.display = "none";
+
+    // Mostrar login
+    document.getElementById("login").style.display = "flex";
+
+    // Limpiar contraseña
+    const password = document.getElementById("loginPassword");
+
+    if (password) {
+        password.value = "";
+    }
+
+    // Limpiar error
+    const error = document.getElementById("loginError");
+
+    if (error) {
+        error.innerText = "";
+    }
+
 }
 </script>
 
