@@ -4212,7 +4212,1674 @@ body{
         display: none;
     }
 }
+
+/* VISUALIZACION: ocultar completamente la barra lateral de aplicaciones */
+body.modo-visualizacion .sidebar{
+  display:none !important;
+}
+body.modo-visualizacion .layout{
+  width:100%;
+}
+body.modo-visualizacion .main-content{
+  width:100%;
+  flex:1 1 100%;
+}
+
+/* =========================================================
+   RESPONSIVE UNIVERSAL - PC / LAPTOP / TABLET / TELEFONO
+   ========================================================= */
+html, body {
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
+  box-sizing:border-box;
+}
+*, *::before, *::after { box-sizing:border-box; }
+img, iframe, video, canvas { max-width:100%; }
+button, input, select, textarea { max-width:100%; font:inherit; }
+
+#app, .layout, .main-content, .dashboard-main, .contenido, .yard {
+  width:100%;
+  min-width:0;
+  max-width:100%;
+}
+
+.layout {
+  display:flex;
+  align-items:stretch;
+  min-height:calc(100vh - 40px);
+}
+
+.main-content { overflow-x:hidden; }
+.dashboard-main { min-width:0; }
+
+/* El patio puede desplazarse horizontalmente solo si una grilla
+   realmente necesita más espacio; evita romper toda la página. */
+.yard {
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+}
+.grid, .grid-side, .grid-sts {
+  width:max-content;
+  max-width:none;
+}
+
+/* Tablets y laptops pequeñas */
+@media (max-width:1100px) {
+  .layout { flex-direction:column; }
+  .sidebar {
+    width:100%;
+    min-width:0;
+    max-width:none;
+    flex-direction:row;
+    align-items:stretch;
+    overflow-x:auto;
+    overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;
+  }
+  .sidebar-search { min-width:180px; }
+  .sidebar .menu-btn { min-width:170px; }
+  .dashboard-main { grid-template-columns:1fr; }
+}
+
+/* Tablets verticales */
+@media (max-width:768px) {
+  .topbar {
+    min-height:52px;
+    height:auto;
+    padding:8px 10px;
+    gap:8px;
+  }
+  .logo {
+    white-space:normal;
+    line-height:1.15;
+    font-size:14px;
+  }
+  .usuario-topbar {
+    margin-left:auto;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+  }
+  .sidebar {
+    padding:8px;
+    gap:8px;
+  }
+  .sidebar-search {
+    min-width:160px;
+    margin-bottom:0;
+  }
+  .sidebar .menu-btn {
+    min-width:155px;
+    min-height:44px;
+    margin-bottom:0;
+    padding:9px 11px;
+  }
+  .dashboard-main, .contenido { padding-left:8px !important; padding-right:8px !important; }
+  .kpis { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .events-panel { width:100%; min-width:0; }
+  .leyenda-corner {
+    position:sticky;
+    top:4px;
+    right:auto;
+    margin-left:auto;
+  }
+}
+
+/* Telefonos */
+@media (max-width:480px) {
+  .topbar { align-items:flex-start; }
+  .logo { font-size:12px; max-width:52%; }
+  .usuario-topbar { font-size:10px; gap:5px; max-width:48%; }
+  .btn-cerrar-sesion { padding:6px 8px; }
+  .kpis { grid-template-columns:1fr; }
+  .dashboard-main { padding:0 6px !important; }
+  .card { min-height:76px; padding:7px; }
+  .grid { gap:6px; }
+  .sidebar { gap:6px; }
+  .sidebar-search { min-width:145px; }
+  .sidebar .menu-btn { min-width:140px; font-size:11px; }
+  .leyenda-corner { width:145px; max-height:190px; font-size:10px; }
+}
+
+/* Pantallas muy anchas */
+@media (min-width:1600px) {
+  .main-content { max-width:none; }
+}
+
+/* Visualización sigue sin barra lateral en todos los tamaños */
+body.modo-visualizacion .sidebar { display:none !important; }
+body.modo-visualizacion .layout { display:flex; width:100%; }
+body.modo-visualizacion .main-content { width:100%; flex:1 1 100%; min-width:0; }
+
+/* =========================================================
+   RESPONSIVE REAL - OVERRIDE FINAL
+   La grilla y el menú NUNCA fuerzan el ancho del viewport.
+========================================================= */
+html, body { width:100%; max-width:100%; overflow-x:hidden !important; }
+*, *::before, *::after { box-sizing:border-box; }
+.layout, .main-content, .dashboard, .dashboard-main, .yard-container, .yard, .row, .grid, .grid-side, .grid-sts { min-width:0 !important; max-width:100% !important; }
+.main-content { flex:1 1 auto !important; width:auto !important; overflow-x:hidden !important; }
+.dashboard-main { grid-template-columns:minmax(0,1fr) minmax(250px,clamp(250px,22vw,360px)) !important; }
+.yard { width:100% !important; max-width:100% !important; padding:clamp(8px,1.3vw,20px) !important; overflow:hidden !important; }
+
+/* Cada fila usa solamente el ancho que realmente existe. */
+.row {
+  display:grid !important;
+  grid-template-columns:clamp(42px,6vw,82px) minmax(0,1fr) !important;
+  column-gap:clamp(4px,0.8vw,10px) !important;
+  width:100% !important;
+  max-width:100% !important;
+  margin-bottom:clamp(5px,1vw,10px) !important;
+}
+.zona {
+  width:auto !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  overflow-wrap:anywhere !important;
+  white-space:normal !important;
+}
+
+/* TODAS las grúas: auto-fit real. No repeat(11px), no width:max-content. */
+.grid, .grid-side, .grid-sts {
+  display:grid !important;
+  width:100% !important;
+  max-width:100% !important;
+  min-width:0 !important;
+  grid-template-columns:repeat(auto-fit,minmax(clamp(58px,7vw,95px),1fr)) !important;
+  gap:clamp(4px,0.7vw,10px) !important;
+  overflow:visible !important;
+  align-items:stretch !important;
+}
+.grid .card, .grid-side .card, .grid-sts .card {
+  width:100% !important;
+  min-width:0 !important;
+  max-width:none !important;
+  height:auto !important;
+  min-height:clamp(58px,8vw,90px) !important;
+  padding:clamp(4px,0.7vw,10px) !important;
+  overflow:hidden !important;
+}
+.grid .code, .grid-side .code, .grid-sts .code {
+  max-width:100% !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  white-space:nowrap !important;
+  font-size:clamp(9px,1.45vw,20px) !important;
+}
+.grid .small, .grid-side .small, .grid-sts .small { font-size:clamp(6px,0.8vw,11px) !important; }
+.grid .timer-card, .grid-side .timer-card, .grid-sts .timer-card { max-width:100% !important; overflow:hidden !important; font-size:clamp(6px,0.75vw,10px) !important; }
+
+/* SIDE LOADER / STS usan exactamente el mismo sistema fluido. */
+.grid-side, .grid-sts { grid-template-columns:repeat(auto-fit,minmax(clamp(58px,6.7vw,88px),1fr)) !important; }
+
+/* Menú: escritorio vertical; pantallas medianas en 2-3 columnas; móvil en filas fluidas. */
+.sidebar {
+  min-width:0 !important;
+  max-width:100% !important;
+  overflow:visible !important;
+}
+.sidebar .menu-btn {
+  box-sizing:border-box !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  width:100% !important;
+  white-space:normal !important;
+  overflow-wrap:anywhere !important;
+}
+@media (min-width:1201px) {
+  .layout { display:flex !important; flex-direction:row !important; width:100% !important; }
+  .sidebar { flex:0 0 clamp(175px,13vw,230px) !important; width:clamp(175px,13vw,230px) !important; }
+  .main-content { flex:1 1 auto !important; width:auto !important; }
+}
+@media (max-width:1200px) {
+  .layout { display:flex !important; flex-direction:column !important; width:100% !important; }
+  .sidebar {
+    width:100% !important;
+    flex:0 0 auto !important;
+    display:grid !important;
+    grid-template-columns:repeat(auto-fit,minmax(130px,1fr)) !important;
+    gap:7px !important;
+    padding:7px !important;
+    overflow:visible !important;
+  }
+  .sidebar-title { grid-column:1/-1 !important; }
+  .main-content { width:100% !important; }
+  .dashboard-main { display:block !important; width:100% !important; }
+  .right-panel, .events-panel { width:100% !important; max-width:100% !important; position:static !important; margin-top:10px !important; }
+}
+@media (max-width:700px) {
+  .topbar { width:100% !important; flex-wrap:wrap !important; }
+  .sidebar { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+  .sidebar-title { font-size:10px !important; }
+  .sidebar .menu-btn { min-height:42px !important; font-size:10px !important; padding:6px !important; }
+  .row { grid-template-columns:36px minmax(0,1fr) !important; column-gap:4px !important; }
+  .grid, .grid-side, .grid-sts { grid-template-columns:repeat(auto-fit,minmax(62px,1fr)) !important; gap:4px !important; }
+  .grid .card, .grid-side .card, .grid-sts .card { min-height:62px !important; }
+  .grid .code, .grid-side .code, .grid-sts .code { font-size:clamp(9px,3.5vw,14px) !important; }
+}
+@media (max-width:420px) {
+  .sidebar { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+  .sidebar .menu-btn { font-size:9px !important; min-height:40px !important; }
+  .row { grid-template-columns:32px minmax(0,1fr) !important; }
+  .grid, .grid-side, .grid-sts { grid-template-columns:repeat(auto-fit,minmax(58px,1fr)) !important; gap:3px !important; }
+  .grid .card, .grid-side .card, .grid-sts .card { min-height:56px !important; padding:4px 2px !important; }
+  .grid .code, .grid-side .code, .grid-sts .code { font-size:clamp(8px,3.6vw,12px) !important; }
+  .leyenda-corner { position:relative !important; top:auto !important; right:auto !important; width:100% !important; max-width:100% !important; margin:5px 0 !important; }
+}
+@media (max-width:340px) {
+  .sidebar { grid-template-columns:1fr !important; }
+  .grid, .grid-side, .grid-sts { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+}
+
+/* Visualización: no muestra absolutamente ningún menú lateral. */
+body.modo-visualizacion .sidebar { display:none !important; }
+body.modo-visualizacion .layout { display:block !important; width:100% !important; }
+body.modo-visualizacion .main-content { width:100% !important; max-width:100% !important; }
+
 </style>
+<style>
+
+/* =========================================================
+   RESPONSIVE DEFINITIVO - PC / LAPTOP / TABLET / TELEFONO
+   Se coloca al final para ganar a reglas anteriores.
+========================================================= */
+*{box-sizing:border-box;}
+html,body{width:100%;min-width:0;max-width:100%;overflow-x:hidden;}
+body{margin:0;padding:0;}
+button,input,select,textarea{max-width:100%;}
+
+.topbar{width:100%;min-width:0;overflow:hidden;}
+.topbar .logo{min-width:0;overflow:hidden;text-overflow:ellipsis;}
+.usuario-topbar{min-width:0;max-width:55%;overflow:hidden;text-overflow:ellipsis;}
+.usuario-topbar span{min-width:0;overflow:hidden;text-overflow:ellipsis;}
+
+.layout{width:100%;max-width:100%;min-width:0;display:flex;align-items:stretch;}
+.main-content{width:0;min-width:0;max-width:100%;overflow-x:hidden;}
+.vista{width:100%;max-width:100%;min-width:0;}
+.dashboard-main{width:100%;max-width:100%;min-width:0;}
+.dashboard-main>*{min-width:0;max-width:100%;}
+
+/* Escritorio grande */
+@media (min-width:1401px){
+  .sidebar{flex:0 0 220px;width:220px;}
+  .dashboard-main{grid-template-columns:minmax(0,1fr) 340px;}
+  .grid{grid-template-columns:repeat(11,minmax(70px,1fr));}
+  .grid-side,.grid-sts{grid-template-columns:repeat(13,minmax(60px,1fr));}
+}
+
+/* Laptop / PC */
+@media (max-width:1400px){
+  .sidebar{flex:0 0 190px;width:190px;padding:10px;}
+  .dashboard-main{grid-template-columns:minmax(0,1fr) 300px;gap:10px;padding:0 10px 10px;}
+  .yard{padding:12px;border-radius:10px;overflow-x:auto;overflow-y:visible;}
+  .grid{grid-template-columns:repeat(11,minmax(62px,1fr));gap:6px;min-width:0;}
+  .grid-side,.grid-sts{grid-template-columns:repeat(13,minmax(54px,1fr));gap:6px;min-width:0;}
+  .card{min-width:0;}
+  .action-bar{margin:0 10px 10px;padding:10px 12px;}
+}
+
+/* Tablet horizontal / tablet vertical */
+@media (max-width:1100px){
+  .layout{flex-direction:column;}
+  .sidebar{width:100%;max-width:none;min-width:0;flex:0 0 auto;height:auto;max-height:none;overflow-x:auto;overflow-y:hidden;padding:8px;display:flex;align-items:center;gap:6px;}
+  .sidebar-search,.sidebar-title,.sidebar .btn-excel{display:none;}
+  .sidebar .menu-btn{flex:0 0 auto;width:auto;min-width:145px;margin:0;padding:9px 12px;min-height:42px;white-space:nowrap;}
+  .main-content{width:100%;max-width:100%;}
+  .dashboard-main{grid-template-columns:minmax(0,1fr);padding:0 10px 10px;}
+  .right-panel,.events-panel{width:100%;max-width:100%;position:static;}
+  .status-panels{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .kpis{grid-template-columns:repeat(4,minmax(0,1fr));}
+  .yard{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .grid{grid-template-columns:repeat(11,minmax(68px,1fr));min-width:820px;}
+  .grid-side,.grid-sts{grid-template-columns:repeat(13,minmax(58px,1fr));min-width:820px;}
+}
+
+/* Tablet pequeña / teléfonos grandes */
+@media (max-width:768px){
+  .topbar{height:auto;min-height:44px;padding:6px 8px;gap:6px;}
+  .topbar .logo{font-size:14px;}
+  .usuario-topbar{font-size:10px;max-width:60%;padding-left:4px;gap:4px;}
+  .btn-cerrar-sesion{font-size:9px;padding:3px 5px;}
+
+  .sidebar{padding:6px;gap:5px;scrollbar-width:thin;}
+  .sidebar .menu-btn{min-width:128px;min-height:40px;font-size:10px;padding:7px 8px;}
+  .sidebar .menu-btn span{font-size:10px!important;white-space:normal!important;line-height:1.1!important;}
+
+  .dashboard-main{padding:0 6px 8px;gap:8px;}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;}
+  .kpi{min-width:0;padding:5px 6px;}
+  .kpi-title{font-size:8px;}
+  .kpi-value{font-size:14px;}
+  .status-panels{grid-template-columns:1fr;gap:8px;}
+  .action-bar{margin:0 6px 8px;padding:8px;}
+  .action-title{font-size:12px;}
+  .action-buttons{flex-wrap:wrap;}
+  .btn-excel{min-width:0;width:100%;}
+
+  .yard{padding:7px!important;overflow-x:auto!important;overflow-y:visible!important;}
+  .yard-toolbar{flex-wrap:wrap;gap:6px;}
+  .yard-title{font-size:13px;}
+  .yard-actions{flex-wrap:wrap;max-width:100%;}
+  .leyenda-corner{max-width:120px;}
+
+  /* Mantener las grúas legibles: desplazamiento horizontal dentro del patio,
+     nunca sobre toda la página. */
+  .grid{grid-template-columns:repeat(11,minmax(64px,64px))!important;min-width:704px!important;gap:4px!important;}
+  .grid-side,.grid-sts{grid-template-columns:repeat(13,minmax(58px,58px))!important;min-width:754px!important;gap:4px!important;}
+  .grid .card,.grid-side .card,.grid-sts .card{width:100%!important;min-width:0!important;height:auto!important;min-height:54px!important;padding:4px!important;}
+  .grid .code,.grid-side .code,.grid-sts .code{font-size:10px!important;}
+  .grid .small,.grid-side .small,.grid-sts .small{font-size:7px!important;}
+  .grid .timer-card,.grid-side .timer-card,.grid-sts .timer-card{font-size:7px!important;}
+  .zona{width:30px!important;min-width:30px!important;font-size:7px!important;}
+
+  /* Tablas e iframes */
+  .tabla-container,.table-responsive,.messages-container,.history-container{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  table{max-width:none;}
+  iframe{width:100%!important;max-width:100%!important;}
+  .modal-content{width:min(94vw,700px)!important;max-width:94vw!important;}
+}
+
+/* Teléfonos */
+@media (max-width:480px){
+  .topbar{min-height:42px;padding:5px 6px;}
+  .topbar .logo{font-size:12px;max-width:48%;}
+  .usuario-topbar{font-size:9px;max-width:52%;}
+  .usuario-topbar strong{max-width:90px;overflow:hidden;text-overflow:ellipsis;}
+  .btn-cerrar-sesion{font-size:8px;padding:2px 4px;}
+
+  .sidebar{gap:4px;padding:5px;}
+  .sidebar .menu-btn{min-width:108px;min-height:38px;padding:5px 6px;font-size:9px;}
+  .sidebar .menu-btn span{font-size:9px!important;}
+
+  .dashboard-main{padding:0 4px 6px;}
+  .kpis{grid-template-columns:1fr 1fr;gap:4px;}
+  .kpi-title{font-size:7px;}
+  .kpi-value{font-size:12px;}
+  .panel-header{font-size:11px;}
+  .panel-body{font-size:10px;}
+  .action-bar{margin:0 4px 6px;padding:7px;}
+  .action-title{font-size:11px;}
+
+  .grid{grid-template-columns:repeat(11,minmax(58px,58px))!important;min-width:638px!important;}
+  .grid-side,.grid-sts{grid-template-columns:repeat(13,minmax(52px,52px))!important;min-width:676px!important;}
+  .grid .card,.grid-side .card,.grid-sts .card{min-height:48px!important;}
+  .grid .code,.grid-side .code,.grid-sts .code{font-size:9px!important;}
+  .grid .small,.grid-side .small,.grid-sts .small{font-size:6px!important;}
+  .grid .timer-card,.grid-side .timer-card,.grid-sts .timer-card{font-size:6px!important;}
+
+  .leyenda-corner{width:90px!important;max-height:100px!important;}
+  .menu-reportes{max-width:100%;overflow-x:auto;}
+  .barra-reportes{min-width:max-content;}
+  .messages-dashboard{grid-template-columns:1fr!important;}
+}
+
+/* Evitar elementos con ancho fijo que rompan el viewport */
+@media (max-width:1100px){
+  .main-content [style*="width: 420px"],
+  .main-content [style*="width:420px"]{width:100%!important;max-width:100%!important;}
+  .main-content [style*="width: 340px"],
+  .main-content [style*="width:340px"]{width:100%!important;max-width:100%!important;}
+}
+</style>
+
+<style id="responsive-real-final">
+/* ===== RESPONSIVE REAL: SIN DESBORDAMIENTO ===== */
+html,body{width:100%;max-width:100%;min-width:0;overflow-x:hidden!important}
+*,*::before,*::after{box-sizing:border-box}
+img,iframe,video,canvas{max-width:100%}
+.layout{width:100%;max-width:100%;min-width:0;display:flex}
+.main-content{flex:1 1 auto;width:auto;min-width:0;max-width:none;overflow-x:hidden}
+.dashboard-main{width:100%;min-width:0;max-width:none;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;padding:0 16px 16px}
+.yard-container,.yard{width:100%;min-width:0;max-width:100%;overflow:visible!important;transform:none!important}
+.row{width:100%;min-width:0;display:grid;grid-template-columns:64px minmax(0,1fr);align-items:start;column-gap:8px}
+.zona{width:auto!important;min-width:0!important;padding-top:10px;white-space:normal;overflow-wrap:anywhere}
+.grid{width:100%!important;min-width:0!important;max-width:100%!important;display:grid;grid-template-columns:repeat(11,minmax(0,1fr))!important;gap:8px!important}
+.grid-side,.grid-sts{width:100%!important;min-width:0!important;max-width:100%!important;display:grid;grid-template-columns:repeat(13,minmax(0,1fr))!important;gap:8px!important}
+.grid .card,.grid-side .card,.grid-sts .card{width:100%!important;min-width:0!important;height:auto!important;min-height:88px!important;padding:8px 5px!important;overflow:hidden!important}
+.grid .code,.grid-side .code,.grid-sts .code{max-width:100%;font-size:clamp(11px,1.35vw,22px)!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.grid .small,.grid-side .small,.grid-sts .small{max-width:100%;font-size:clamp(6px,.65vw,11px)!important;white-space:normal;overflow:hidden;text-align:center}
+.grid .timer-card,.grid-side .timer-card,.grid-sts .timer-card{max-width:100%;font-size:clamp(6px,.65vw,10px)!important}
+.status-panels{min-width:0}
+.right-panel,.events-panel{width:100%;min-width:0;max-width:100%}
+.leyenda-corner{max-width:min(170px,28vw);overflow:hidden}
+
+/* PCs y laptops: todo cabe en el viewport */
+@media (max-width:1400px){
+  .sidebar{flex:0 0 190px;width:190px;min-width:190px}
+  .dashboard-main{grid-template-columns:minmax(0,1fr) 300px;gap:10px;padding:0 10px 10px}
+  .row{grid-template-columns:55px minmax(0,1fr);column-gap:6px}
+  .grid,.grid-side,.grid-sts{gap:6px!important}
+  .grid .card,.grid-side .card,.grid-sts .card{min-height:78px!important}
+}
+
+/* Tablets */
+@media (max-width:1100px){
+  .layout{display:flex;flex-direction:column}
+  .sidebar{width:100%;min-width:0;flex:0 0 auto;display:flex;flex-direction:row;overflow-x:auto;overflow-y:hidden;gap:6px;padding:8px}
+  .sidebar .menu-btn{flex:0 0 auto;min-width:140px;margin:0}
+  .main-content{width:100%;max-width:100%}
+  .dashboard-main{display:block;width:100%;padding:0 8px 10px}
+  .yard-container{width:100%;margin-bottom:12px}
+  .events-panel,.right-panel{width:100%;max-width:100%}
+  .row{grid-template-columns:48px minmax(0,1fr)}
+  .grid{grid-template-columns:repeat(7,minmax(0,1fr))!important}
+  .grid-side,.grid-sts{grid-template-columns:repeat(8,minmax(0,1fr))!important}
+  .grid .card,.grid-side .card,.grid-sts .card{min-height:72px!important}
+  .grid .code,.grid-side .code,.grid-sts .code{font-size:clamp(10px,2.2vw,18px)!important}
+}
+
+/* Teléfonos */
+@media (max-width:700px){
+  .topbar{height:auto;min-height:44px;padding:6px 8px}
+  .usuario-topbar{max-width:55%;min-width:0}
+  .sidebar{padding:6px;gap:5px}
+  .sidebar .menu-btn{min-width:115px;max-width:145px;min-height:40px;padding:6px 8px;white-space:normal}
+  .dashboard-main{padding:0 5px 8px}
+  .yard{padding:5px!important}
+  .yard-toolbar{position:relative!important;top:auto!important;flex-wrap:wrap}
+  .row{grid-template-columns:38px minmax(0,1fr);column-gap:4px;margin-bottom:6px}
+  .zona{font-size:7px!important;padding-top:7px}
+  .grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:5px!important}
+  .grid-side,.grid-sts{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:5px!important}
+  .grid .card,.grid-side .card,.grid-sts .card{min-height:62px!important;padding:5px 3px!important;border-radius:5px}
+  .grid .code,.grid-side .code,.grid-sts .code{font-size:clamp(10px,3.8vw,16px)!important;margin-top:3px;margin-bottom:4px}
+  .grid .small,.grid-side .small,.grid-sts .small{font-size:clamp(6px,2.1vw,9px)!important}
+  .grid .timer-card,.grid-side .timer-card,.grid-sts .timer-card{font-size:clamp(6px,2vw,8px)!important}
+  .estado-label,.corner-badge{font-size:6px!important;padding:1px 3px!important}
+  .leyenda-corner{position:relative!important;top:auto!important;right:auto!important;width:100%!important;max-width:100%!important;margin:6px 0!important}
+  .status-panels,.kpis{grid-template-columns:1fr 1fr!important}
+  .panel-header{font-size:11px}
+}
+
+@media (max-width:400px){
+  .topbar .logo{font-size:11px}
+  .usuario-topbar{font-size:9px}
+  .sidebar .menu-btn{min-width:100px;font-size:9px}
+  .row{grid-template-columns:32px minmax(0,1fr)}
+  .grid,.grid-side,.grid-sts{gap:4px!important}
+  .grid .card,.grid-side .card,.grid-sts .card{min-height:56px!important}
+  .grid .code,.grid-side .code,.grid-sts .code{font-size:10px!important}
+  .status-panels,.kpis{grid-template-columns:1fr!important}
+}
+
+/* Visualización: sin barra lateral */
+body.modo-visualizacion .sidebar{display:none!important}
+body.modo-visualizacion .main-content{width:100%!important;flex:1 1 100%!important}
+</style>
+
+<style id="responsive-100-final">
+/* =========================================================
+   RESPONSIVE 100% REAL - ÚLTIMA CAPA
+   No depende de anchos fijos del patio.
+   Todo se calcula con el espacio REAL disponible.
+========================================================= */
+html, body {
+  width:100% !important;
+  max-width:100% !important;
+  min-width:0 !important;
+  overflow-x:hidden !important;
+}
+*, *::before, *::after { box-sizing:border-box !important; }
+
+#app, .layout, .main-content, .vista, .dashboard,
+.dashboard-main, .yard-container, .yard, .row,
+.right-panel, .events-panel, .panel, .status-panels,
+.kpis, .top-section, .action-bar {
+  min-width:0 !important;
+  max-width:100% !important;
+}
+
+.layout { width:100% !important; }
+.main-content { flex:1 1 auto !important; width:auto !important; overflow-x:hidden !important; }
+.dashboard-main { width:100% !important; }
+.dashboard-main > * { min-width:0 !important; max-width:100% !important; }
+
+/* Patio: jamás genera una barra horizontal de toda la página */
+.yard-container { width:100% !important; overflow:hidden !important; }
+.yard {
+  width:100% !important;
+  max-width:100% !important;
+  min-width:0 !important;
+  overflow:hidden !important;
+  transform:none !important;
+  padding:clamp(5px, 1vw, 20px) !important;
+}
+
+/* Cada fila usa exactamente el ancho que tiene disponible */
+.row {
+  width:100% !important;
+  display:grid !important;
+  grid-template-columns:max-content minmax(0,1fr) !important;
+  column-gap:clamp(4px, .7vw, 10px) !important;
+  align-items:start !important;
+  margin-bottom:clamp(5px, .7vw, 10px) !important;
+}
+
+.zona {
+  width:auto !important;
+  min-width:0 !important;
+  max-width:clamp(32px, 5vw, 80px) !important;
+  white-space:normal !important;
+  overflow-wrap:anywhere !important;
+  font-size:clamp(7px, .75vw, 12px) !important;
+  line-height:1.05 !important;
+  padding-top:clamp(5px, .7vw, 10px) !important;
+}
+
+/* GRÚAS: siempre ocupan el ancho disponible */
+.grid, .grid-side, .grid-sts {
+  width:100% !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  overflow:visible !important;
+  display:grid !important;
+  align-items:stretch !important;
+}
+
+.grid {
+  grid-template-columns:repeat(11, minmax(0, 1fr)) !important;
+  gap:clamp(3px, .55vw, 10px) !important;
+}
+.grid-side, .grid-sts {
+  grid-template-columns:repeat(13, minmax(0, 1fr)) !important;
+  gap:clamp(3px, .55vw, 10px) !important;
+}
+
+.grid > *, .grid-side > *, .grid-sts > * {
+  min-width:0 !important;
+  max-width:100% !important;
+}
+
+.grid .card, .grid-side .card, .grid-sts .card {
+  width:100% !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  height:clamp(54px, 6vw, 100px) !important;
+  min-height:clamp(54px, 6vw, 100px) !important;
+  max-height:none !important;
+  padding:clamp(3px, .55vw, 9px) !important;
+  overflow:hidden !important;
+  transform:none;
+}
+
+.grid .code, .grid-side .code, .grid-sts .code {
+  width:100% !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  font-size:clamp(9px, 1.25vw, 22px) !important;
+  line-height:1 !important;
+  margin:clamp(2px, .4vw, 7px) 0 !important;
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+}
+
+.grid .small, .grid-side .small, .grid-sts .small,
+.grid .timer-card, .grid-side .timer-card, .grid-sts .timer-card,
+.grid .estado-label, .grid-side .estado-label, .grid-sts .estado-label,
+.grid .corner-badge, .grid-side .corner-badge, .grid-sts .corner-badge,
+.grid .priority-text, .grid-side .priority-text, .grid-sts .priority-text {
+  max-width:100% !important;
+  min-width:0 !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+}
+
+.grid .small, .grid-side .small, .grid-sts .small {
+  font-size:clamp(6px, .65vw, 11px) !important;
+  line-height:1.05 !important;
+  white-space:normal !important;
+  text-align:center !important;
+}
+
+.grid .timer-card, .grid-side .timer-card, .grid-sts .timer-card {
+  font-size:clamp(6px, .65vw, 10px) !important;
+  white-space:nowrap !important;
+}
+
+/* El texto de prioridad nunca aumenta el ancho de la tarjeta */
+.grid .priority-text, .grid-side .priority-text, .grid-sts .priority-text {
+  width:90% !important;
+  max-width:90% !important;
+  white-space:nowrap !important;
+  font-size:clamp(5px, .5vw, 10px) !important;
+  line-height:1 !important;
+}
+
+/* =========================================================
+   ESCRITORIO: sidebar + patio + panel derecho
+========================================================= */
+@media (min-width:1201px) {
+  .layout { display:flex !important; flex-direction:row !important; }
+  .sidebar { flex:0 0 clamp(190px, 13vw, 240px) !important; width:clamp(190px, 13vw, 240px) !important; min-width:0 !important; }
+  .dashboard-main {
+    display:grid !important;
+    grid-template-columns:minmax(0, 1fr) clamp(270px, 22vw, 360px) !important;
+    gap:clamp(8px, 1vw, 18px) !important;
+  }
+}
+
+/* =========================================================
+   TABLET / LAPTOP PEQUEÑA: panel derecho abajo
+========================================================= */
+@media (max-width:1200px) {
+  .layout { display:flex !important; flex-direction:column !important; }
+  .sidebar {
+    width:100% !important;
+    min-width:0 !important;
+    max-width:100% !important;
+    flex:0 0 auto !important;
+    display:flex !important;
+    flex-direction:row !important;
+    overflow-x:auto !important;
+    overflow-y:hidden !important;
+  }
+  .sidebar .menu-btn { flex:0 0 auto !important; }
+  .main-content { width:100% !important; }
+  .dashboard-main {
+    display:block !important;
+    width:100% !important;
+    padding:0 clamp(5px, 1vw, 12px) 10px !important;
+  }
+  .yard-container { margin-bottom:10px !important; }
+  .events-panel, .right-panel { width:100% !important; max-width:100% !important; position:static !important; }
+  .grid { grid-template-columns:repeat(8, minmax(0,1fr)) !important; }
+  .grid-side, .grid-sts { grid-template-columns:repeat(9, minmax(0,1fr)) !important; }
+  .row { grid-template-columns:45px minmax(0,1fr) !important; }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+@media (max-width:800px) {
+  .topbar { height:auto !important; min-height:44px !important; padding:6px 8px !important; }
+  .sidebar { padding:6px !important; gap:5px !important; }
+  .sidebar .menu-btn { min-width:115px !important; max-width:145px !important; white-space:normal !important; }
+  .dashboard-main { padding:0 5px 8px !important; }
+  .row { grid-template-columns:38px minmax(0,1fr) !important; }
+  .grid { grid-template-columns:repeat(6, minmax(0,1fr)) !important; gap:5px !important; }
+  .grid-side, .grid-sts { grid-template-columns:repeat(7, minmax(0,1fr)) !important; gap:5px !important; }
+  .grid .card, .grid-side .card, .grid-sts .card {
+    height:clamp(56px, 12vw, 82px) !important;
+    min-height:clamp(56px, 12vw, 82px) !important;
+  }
+  .grid .code, .grid-side .code, .grid-sts .code { font-size:clamp(9px, 2.6vw, 15px) !important; }
+  .status-panels, .kpis { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+}
+
+/* =========================================================
+   TELEFONO
+========================================================= */
+@media (max-width:520px) {
+  .topbar .logo { font-size:11px !important; max-width:48% !important; }
+  .usuario-topbar { font-size:9px !important; max-width:52% !important; }
+  .sidebar .menu-btn { min-width:96px !important; max-width:130px !important; font-size:9px !important; }
+  .row { grid-template-columns:32px minmax(0,1fr) !important; column-gap:4px !important; }
+  .zona { max-width:32px !important; font-size:6px !important; }
+  .grid { grid-template-columns:repeat(4, minmax(0,1fr)) !important; gap:4px !important; }
+  .grid-side, .grid-sts { grid-template-columns:repeat(4, minmax(0,1fr)) !important; gap:4px !important; }
+  .grid .card, .grid-side .card, .grid-sts .card {
+    height:clamp(52px, 18vw, 70px) !important;
+    min-height:clamp(52px, 18vw, 70px) !important;
+    padding:3px !important;
+  }
+  .grid .code, .grid-side .code, .grid-sts .code { font-size:clamp(8px, 3.2vw, 13px) !important; }
+  .grid .small, .grid-side .small, .grid-sts .small { font-size:clamp(5px, 1.8vw, 8px) !important; }
+  .grid .timer-card, .grid-side .timer-card, .grid-sts .timer-card { font-size:clamp(5px, 1.8vw, 8px) !important; }
+  .status-panels, .kpis { grid-template-columns:1fr 1fr !important; }
+  .leyenda-corner { position:relative !important; inset:auto !important; width:100% !important; max-width:100% !important; margin:5px 0 !important; }
+}
+
+@media (max-width:360px) {
+  .status-panels, .kpis { grid-template-columns:1fr !important; }
+  .sidebar .menu-btn { min-width:88px !important; }
+  .grid .card, .grid-side .card, .grid-sts .card { height:52px !important; min-height:52px !important; }
+}
+
+/* Visualización: sin barra lateral */
+body.modo-visualizacion .sidebar { display:none !important; }
+body.modo-visualizacion .layout { display:flex !important; width:100% !important; }
+body.modo-visualizacion .main-content { width:100% !important; flex:1 1 100% !important; }
+
+/* Ningún hijo puede imponer un ancho que rompa el viewport */
+.main-content, .main-content * { min-width:0; }
+</style>
+
+
+<style id="RESPONSIVE_ULTIMO_CORRECTIVO">
+/* ====== RESPONSIVE REAL: ÚLTIMA CAPA, SIN ANCHOS FIJOS ====== */
+html,body{width:100%!important;max-width:100%!important;min-width:0!important;overflow-x:hidden!important}
+body{margin:0!important}
+*,*:before,*:after{box-sizing:border-box!important}
+
+/* Estructura */
+.layout{width:100%!important;max-width:100%!important;min-width:0!important}
+.main-content{min-width:0!important;width:auto!important;max-width:100%!important;overflow-x:hidden!important}
+.dashboard-main{width:100%!important;min-width:0!important;max-width:100%!important}
+.yard-container,.yard{width:100%!important;min-width:0!important;max-width:100%!important;overflow:hidden!important;transform:none!important}
+
+/* Cada fila: etiqueta + espacio restante */
+.row{display:grid!important;width:100%!important;min-width:0!important;max-width:100%!important;grid-template-columns:clamp(34px,5.5vw,82px) minmax(0,1fr)!important;gap:clamp(4px,.7vw,10px)!important}
+.zona{width:100%!important;min-width:0!important;max-width:100%!important;white-space:normal!important;overflow-wrap:anywhere!important;font-size:clamp(7px,.75vw,12px)!important}
+
+/* TODAS LAS GRILLAS: columnas fluidas y ENVUELVEN cuando no caben */
+.grid,.grid-side,.grid-sts{
+  display:grid!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  overflow:visible!important;
+  align-items:stretch!important;
+  grid-auto-flow:row!important;
+}
+.grid{grid-template-columns:repeat(auto-fit,minmax(58px,1fr))!important;gap:clamp(3px,.55vw,9px)!important}
+.grid-side,.grid-sts{grid-template-columns:repeat(auto-fit,minmax(58px,1fr))!important;gap:clamp(3px,.55vw,9px)!important}
+
+/* Las tarjetas nunca fijan el ancho de la grilla */
+.grid>* ,.grid-side>* ,.grid-sts>*{min-width:0!important;max-width:100%!important}
+.grid .card,.grid-side .card,.grid-sts .card{
+ width:100%!important;min-width:0!important;max-width:100%!important;
+ height:clamp(54px,6.2vw,92px)!important;
+ min-height:clamp(54px,6.2vw,92px)!important;
+ padding:clamp(3px,.55vw,8px)!important;
+ overflow:hidden!important;
+}
+
+/* Texto siempre cabe dentro de su tarjeta */
+.grid .code,.grid-side .code,.grid-sts .code{
+ display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;
+ font-size:clamp(8px,1vw,16px)!important;
+ line-height:1!important;margin:clamp(2px,.35vw,6px) 0!important;
+ white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
+ text-align:center!important
+}
+.grid .small,.grid-side .small,.grid-sts .small{font-size:clamp(5px,.55vw,10px)!important;max-width:100%!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.grid .timer-card,.grid-side .timer-card,.grid-sts .timer-card{font-size:clamp(5px,.55vw,9px)!important;max-width:100%!important;overflow:hidden!important}
+.grid .priority-text,.grid-side .priority-text,.grid-sts .priority-text{max-width:90%!important;width:90%!important;font-size:clamp(4px,.45vw,9px)!important;overflow:hidden!important;white-space:nowrap!important}
+
+/* PANEL DERECHO: baja debajo cuando no hay espacio */
+@media (min-width:1101px){
+ .layout{display:flex!important;flex-direction:row!important}
+ .sidebar{flex:0 0 clamp(175px,13vw,225px)!important;width:clamp(175px,13vw,225px)!important;min-width:0!important}
+ .dashboard-main{display:grid!important;grid-template-columns:minmax(0,1fr) clamp(250px,22vw,350px)!important;gap:clamp(8px,1vw,16px)!important}
+}
+
+/* TABLET */
+@media (max-width:1100px){
+ .layout{display:flex!important;flex-direction:column!important}
+ .sidebar{width:100%!important;min-width:0!important;max-width:100%!important;flex:0 0 auto!important;
+   display:grid!important;grid-template-columns:repeat(auto-fit,minmax(130px,1fr))!important;gap:6px!important;padding:7px!important;overflow:visible!important}
+ .sidebar-title{grid-column:1/-1!important}
+ .sidebar-search,.sidebar .btn-excel{max-width:100%!important}
+ .sidebar .menu-btn{width:100%!important;min-width:0!important;max-width:100%!important;min-height:42px!important;margin:0!important;padding:7px 8px!important;white-space:normal!important}
+ .dashboard-main{display:block!important;width:100%!important;padding:0 8px 10px!important}
+ .right-panel,.events-panel{width:100%!important;max-width:100%!important;position:static!important}
+ .grid{grid-template-columns:repeat(auto-fit,minmax(62px,1fr))!important}
+ .grid-side,.grid-sts{grid-template-columns:repeat(auto-fit,minmax(62px,1fr))!important}
+}
+
+/* TELEFONO */
+@media (max-width:600px){
+ .topbar{width:100%!important;min-width:0!important;flex-wrap:wrap!important}
+ .sidebar{grid-template-columns:repeat(2,minmax(0,1fr))!important;padding:5px!important}
+ .sidebar-title{font-size:10px!important}
+ .sidebar .menu-btn{min-height:40px!important;font-size:10px!important;padding:6px!important}
+ .row{grid-template-columns:34px minmax(0,1fr)!important;gap:4px!important}
+ .grid,.grid-side,.grid-sts{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:4px!important}
+ .grid .card,.grid-side .card,.grid-sts .card{height:clamp(52px,18vw,70px)!important;min-height:clamp(52px,18vw,70px)!important;padding:3px!important}
+ .grid .code,.grid-side .code,.grid-sts .code{font-size:clamp(8px,3vw,13px)!important}
+}
+@media (max-width:360px){
+ .sidebar{grid-template-columns:1fr!important}
+ .grid,.grid-side,.grid-sts{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+
+/* Visualización sin barra */
+body.modo-visualizacion .sidebar{display:none!important}
+body.modo-visualizacion .layout{display:block!important;width:100%!important}
+body.modo-visualizacion .main-content{width:100%!important;max-width:100%!important}
+</style>
+
+
+<style id="RESPONSIVE_FINAL_RPC_MTTO">
+/* =========================================================
+   RESPONSIVE FINAL - RPC / MANTENIMIENTO / VISUALIZACION
+   La grilla usa TODO el ancho disponible. SIDE LOADER y STS
+   no se desbordan ni dejan una tarjeta sola por falta de 1-2px.
+========================================================= */
+html,body{width:100%!important;max-width:100%!important;min-width:0!important;overflow-x:hidden!important}
+body{margin:0!important}
+*,*:before,*:after{box-sizing:border-box!important}
+
+.layout{width:100%!important;max-width:100%!important;min-width:0!important}
+.main-content{width:auto!important;max-width:100%!important;min-width:0!important;overflow-x:hidden!important}
+.dashboard-main{width:100%!important;max-width:100%!important;min-width:0!important}
+.yard-container,.yard{width:100%!important;max-width:100%!important;min-width:0!important;overflow:hidden!important;transform:none!important}
+
+/* Fila de patio */
+.row{
+  display:grid!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  grid-template-columns:clamp(34px,5.2vw,82px) minmax(0,1fr)!important;
+  column-gap:clamp(4px,.7vw,10px)!important;
+  align-items:start!important;
+}
+.zona{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  white-space:normal!important;
+  overflow-wrap:anywhere!important;
+  font-size:clamp(7px,.75vw,12px)!important;
+}
+
+/* Todas las grillas pueden ocupar únicamente el ancho real */
+.grid,.grid-side,.grid-sts{
+  display:grid!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  overflow:visible!important;
+  grid-auto-flow:row!important;
+  align-items:stretch!important;
+}
+
+/* ESCRITORIO: las 13 de SIDE/STS caben siempre en la fila disponible.
+   Al usar 1fr no hay tarjeta extra que se vaya a la siguiente fila. */
+@media (min-width:1101px){
+  .layout{display:flex!important;flex-direction:row!important;}
+  .sidebar{
+    flex:0 0 clamp(180px,13vw,225px)!important;
+    width:clamp(180px,13vw,225px)!important;
+    min-width:0!important;
+    max-width:225px!important;
+  }
+  .main-content{flex:1 1 auto!important;min-width:0!important;}
+  .dashboard-main{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) clamp(250px,21vw,330px)!important;
+    gap:clamp(8px,1vw,16px)!important;
+  }
+  .grid{grid-template-columns:repeat(11,minmax(0,1fr))!important;gap:clamp(4px,.55vw,9px)!important}
+  .grid-side,.grid-sts{grid-template-columns:repeat(13,minmax(0,1fr))!important;gap:clamp(4px,.55vw,9px)!important}
+  .grid .card,.grid-side .card,.grid-sts .card{
+    width:100%!important;min-width:0!important;max-width:100%!important;
+    height:clamp(62px,6vw,92px)!important;
+    min-height:clamp(62px,6vw,92px)!important;
+    padding:clamp(4px,.5vw,8px)!important;
+  }
+}
+
+/* LAPTOP / TABLET HORIZONTAL: ya no se obliga a 13 tarjetas con un
+   ancho mínimo fijo; se envuelven sólo cuando realmente no caben. */
+@media (min-width:601px) and (max-width:1100px){
+  .layout{display:flex!important;flex-direction:column!important}
+  .sidebar{
+    width:100%!important;min-width:0!important;max-width:100%!important;
+    flex:0 0 auto!important;
+    display:grid!important;
+    grid-template-columns:repeat(auto-fit,minmax(120px,1fr))!important;
+    gap:6px!important;padding:7px!important;overflow:visible!important;
+  }
+  .sidebar-title{grid-column:1/-1!important}
+  .sidebar .menu-btn{width:100%!important;min-width:0!important;max-width:100%!important;margin:0!important;}
+  .dashboard-main{display:block!important;width:100%!important;max-width:100%!important;padding:0 8px 10px!important}
+  .right-panel,.events-panel{width:100%!important;max-width:100%!important;position:static!important}
+  .grid{grid-template-columns:repeat(auto-fit,minmax(55px,1fr))!important;gap:5px!important}
+  .grid-side,.grid-sts{grid-template-columns:repeat(auto-fit,minmax(55px,1fr))!important;gap:5px!important}
+  .grid .card,.grid-side .card,.grid-sts .card{
+    width:100%!important;min-width:0!important;max-width:100%!important;
+    height:clamp(58px,10vw,82px)!important;min-height:clamp(58px,10vw,82px)!important;
+  }
+}
+
+/* TELEFONO */
+@media (max-width:600px){
+  .topbar{width:100%!important;min-width:0!important;flex-wrap:wrap!important}
+  .sidebar{
+    width:100%!important;min-width:0!important;max-width:100%!important;
+    display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:5px!important;padding:5px!important;overflow:visible!important;
+  }
+  .sidebar-title{grid-column:1/-1!important;font-size:10px!important}
+  .sidebar .menu-btn{width:100%!important;min-width:0!important;max-width:100%!important;min-height:40px!important;font-size:10px!important;padding:6px!important;}
+  .dashboard-main{display:block!important;width:100%!important;max-width:100%!important;padding:0 5px 8px!important}
+  .right-panel,.events-panel{width:100%!important;max-width:100%!important;position:static!important}
+  .row{grid-template-columns:34px minmax(0,1fr)!important;gap:4px!important}
+  .grid,.grid-side,.grid-sts{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:4px!important}
+  .grid .card,.grid-side .card,.grid-sts .card{
+    width:100%!important;min-width:0!important;max-width:100%!important;
+    height:clamp(52px,18vw,70px)!important;min-height:clamp(52px,18vw,70px)!important;
+    padding:3px!important;
+  }
+  .grid .code,.grid-side .code,.grid-sts .code{
+    width:100%!important;max-width:100%!important;min-width:0!important;
+    font-size:clamp(8px,3vw,13px)!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
+  }
+}
+@media (max-width:360px){
+  .sidebar{grid-template-columns:1fr!important}
+  .grid,.grid-side,.grid-sts{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+
+/* VISUALIZACION: completamente sin menú lateral */
+body.modo-visualizacion .sidebar{display:none!important}
+body.modo-visualizacion .layout{display:block!important;width:100%!important;max-width:100%!important}
+body.modo-visualizacion .main-content{width:100%!important;max-width:100%!important;min-width:0!important}
+body.modo-visualizacion .dashboard-main{width:100%!important;max-width:100%!important}
+</style>
+
+
+<style id="RESPONSIVE_DEFINITIVO_REAL">
+/* =========================================================
+   RESPONSIVE DEFINITIVO
+   Se anulan las reglas responsive anteriores y se controla
+   cada nivel: menu / patio / SIDE LOADER / STS / panel derecho.
+========================================================= */
+html,body{width:100%!important;max-width:100%!important;min-width:0!important;margin:0!important;overflow-x:hidden!important}
+*,*:before,*:after{box-sizing:border-box!important}
+#app,.layout,.main-content,.contenido,.dashboard,.dashboard-main,.yard-container,.yard,.row{min-width:0!important;max-width:100%!important}
+.main-content{overflow-x:hidden!important;flex:1 1 auto!important;width:0!important}
+.layout{width:100%!important;display:flex!important;align-items:stretch!important}
+
+/* ================= PC ================= */
+@media (min-width:1101px){
+  .layout{flex-direction:row!important}
+  .sidebar{
+    flex:0 0 150px!important;
+    width:150px!important;
+    min-width:150px!important;
+    max-width:150px!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+  }
+  .sidebar .menu-btn{
+    width:100%!important;
+    min-width:0!important;
+    max-width:100%!important;
+    white-space:normal!important;
+    overflow-wrap:anywhere!important;
+  }
+  .dashboard-main{
+    width:100%!important;
+    min-width:0!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 260px!important;
+    gap:10px!important;
+    padding:0 10px 12px!important;
+  }
+  .yard-container{min-width:0!important;width:100%!important}
+  .yard{width:100%!important;min-width:0!important;max-width:100%!important;overflow:hidden!important;padding:12px!important;transform:none!important}
+  .row{
+    display:grid!important;
+    grid-template-columns:58px minmax(0,1fr)!important;
+    width:100%!important;
+    min-width:0!important;
+    column-gap:6px!important;
+    margin-bottom:7px!important;
+  }
+  .zona{width:100%!important;min-width:0!important;white-space:normal!important;font-size:clamp(8px,.75vw,12px)!important}
+
+  /* GRUAS NORMALES: siempre caben las 11 */
+  .grid{
+    display:grid!important;
+    grid-template-columns:repeat(11,minmax(0,1fr))!important;
+    width:100%!important;min-width:0!important;max-width:100%!important;
+    gap:5px!important;
+  }
+
+  /* SIDE LOADER + STS: UNA SOLA FILA EN PC.
+     Flex con basis 0 evita que una tarjeta se vaya abajo. */
+  .grid-side,.grid-sts{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:100%!important;
+    gap:5px!important;
+    overflow:hidden!important;
+  }
+  .grid-side>.card,.grid-sts>.card{
+    flex:1 1 0!important;
+    width:0!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:clamp(58px,6vw,90px)!important;
+    min-height:clamp(58px,6vw,90px)!important;
+    padding:5px 3px!important;
+    overflow:hidden!important;
+  }
+  .grid>.card{
+    width:100%!important;min-width:0!important;max-width:100%!important;
+    height:clamp(58px,6vw,90px)!important;min-height:clamp(58px,6vw,90px)!important;
+    padding:5px 3px!important;overflow:hidden!important;
+  }
+  .grid .code,.grid-side .code,.grid-sts .code{
+    display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;
+    white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
+    font-size:clamp(9px,1.2vw,18px)!important;line-height:1!important;text-align:center!important;
+  }
+  .grid .small,.grid-side .small,.grid-sts .small{max-width:100%!important;overflow:hidden!important;text-overflow:ellipsis!important;font-size:clamp(6px,.6vw,10px)!important}
+  .grid .timer-card,.grid-side .timer-card,.grid-sts .timer-card{max-width:100%!important;overflow:hidden!important;font-size:clamp(6px,.6vw,10px)!important}
+  .right-panel,.events-panel{width:100%!important;min-width:0!important;max-width:100%!important;position:static!important}
+}
+
+/* PC MEDIANO: más espacio para el patio */
+@media (min-width:1101px) and (max-width:1300px){
+  .sidebar{flex-basis:135px!important;width:135px!important;min-width:135px!important;max-width:135px!important}
+  .dashboard-main{grid-template-columns:minmax(0,1fr) 230px!important;gap:8px!important;padding-left:8px!important;padding-right:8px!important}
+  .row{grid-template-columns:52px minmax(0,1fr)!important;column-gap:5px!important}
+  .grid,.grid-side,.grid-sts{gap:3px!important}
+  .grid>.card,.grid-side>.card,.grid-sts>.card{min-height:54px!important;height:54px!important}
+  .grid .code,.grid-side .code,.grid-sts .code{font-size:clamp(8px,1.15vw,14px)!important}
+}
+
+/* ================= TABLET ================= */
+@media (min-width:601px) and (max-width:1100px){
+  .layout{flex-direction:column!important}
+  .sidebar{
+    width:100%!important;min-width:0!important;max-width:100%!important;flex:0 0 auto!important;
+    display:grid!important;grid-template-columns:repeat(auto-fit,minmax(120px,1fr))!important;
+    gap:6px!important;padding:7px!important;overflow:visible!important;height:auto!important;
+  }
+  .sidebar-title{grid-column:1/-1!important}
+  .sidebar .menu-btn{width:100%!important;min-width:0!important;max-width:100%!important;margin:0!important;white-space:normal!important}
+  .dashboard-main{display:block!important;width:100%!important;max-width:100%!important;padding:0 8px 10px!important}
+  .yard-container,.yard{width:100%!important;min-width:0!important;max-width:100%!important}
+  .yard{padding:10px!important;overflow:hidden!important}
+  .row{display:grid!important;grid-template-columns:55px minmax(0,1fr)!important;gap:5px!important;width:100%!important}
+  .grid{display:grid!important;grid-template-columns:repeat(8,minmax(0,1fr))!important;gap:5px!important;width:100%!important}
+  .grid-side,.grid-sts{display:grid!important;grid-template-columns:repeat(8,minmax(0,1fr))!important;gap:5px!important;width:100%!important}
+  .grid>.card,.grid-side>.card,.grid-sts>.card{width:100%!important;min-width:0!important;height:clamp(58px,10vw,82px)!important;min-height:clamp(58px,10vw,82px)!important;overflow:hidden!important}
+  .grid .code,.grid-side .code,.grid-sts .code{font-size:clamp(9px,2vw,16px)!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+  .right-panel,.events-panel{width:100%!important;max-width:100%!important;position:static!important;margin-top:10px!important}
+}
+
+/* ================= TELEFONO ================= */
+@media (max-width:600px){
+  .layout{flex-direction:column!important}
+  .sidebar{width:100%!important;min-width:0!important;max-width:100%!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:5px!important;padding:5px!important;overflow:visible!important;height:auto!important}
+  .sidebar-title{grid-column:1/-1!important}
+  .sidebar .menu-btn{width:100%!important;min-width:0!important;max-width:100%!important;min-height:40px!important;font-size:10px!important;padding:6px!important;white-space:normal!important}
+  .dashboard-main{display:block!important;width:100%!important;max-width:100%!important;padding:0 5px 8px!important}
+  .yard{width:100%!important;min-width:0!important;max-width:100%!important;padding:7px!important;overflow:hidden!important}
+  .row{display:grid!important;grid-template-columns:38px minmax(0,1fr)!important;gap:4px!important;width:100%!important}
+  .grid,.grid-side,.grid-sts{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:4px!important;width:100%!important;min-width:0!important}
+  .grid>.card,.grid-side>.card,.grid-sts>.card{width:100%!important;min-width:0!important;height:clamp(52px,18vw,70px)!important;min-height:clamp(52px,18vw,70px)!important;padding:3px!important;overflow:hidden!important}
+  .grid .code,.grid-side .code,.grid-sts .code{font-size:clamp(8px,3vw,13px)!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+  .grid .small,.grid-side .small,.grid-sts .small,.grid .timer-card,.grid-side .timer-card,.grid-sts .timer-card{font-size:clamp(5px,1.8vw,8px)!important;max-width:100%!important;overflow:hidden!important}
+  .right-panel,.events-panel{width:100%!important;max-width:100%!important;position:static!important;margin-top:8px!important}
+}
+@media (max-width:360px){
+  .sidebar{grid-template-columns:1fr!important}
+  .grid,.grid-side,.grid-sts{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+
+/* Visualización: no mostrar barra lateral */
+body.modo-visualizacion .sidebar{display:none!important}
+body.modo-visualizacion .layout{display:block!important;width:100%!important;max-width:100%!important}
+body.modo-visualizacion .main-content{width:100%!important;max-width:100%!important;min-width:0!important}
+</style>
+
+<style id="MENU_RESPONSIVE_CORREGIDO">
+/* =====================================================
+   MENU FINAL - NO ALTERAR EL PATIO
+   Corrige el tamaño del menú lateral en RPC/Mantenimiento
+   sin afectar SIDE LOADER, STS ni Visualización.
+===================================================== */
+.sidebar{
+  box-sizing:border-box !important;
+  background:linear-gradient(180deg,#0f172a,#1e293b) !important;
+  color:#fff !important;
+  overflow-x:hidden !important;
+}
+.sidebar-title{
+  display:block !important;
+  color:#93c5fd !important;
+  font-size:11px !important;
+  line-height:1.2 !important;
+  font-weight:800 !important;
+  letter-spacing:2px !important;
+  text-align:left !important;
+  white-space:nowrap !important;
+  margin:8px 0 12px !important;
+}
+.sidebar .menu-btn{
+  box-sizing:border-box !important;
+  width:100% !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  min-height:48px !important;
+  height:auto !important;
+  margin:0 0 8px 0 !important;
+  padding:8px 10px !important;
+  display:flex !important;
+  flex-direction:row !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+  gap:6px !important;
+  font-family:'Segoe UI',Tahoma,sans-serif !important;
+  font-size:14px !important;
+  font-weight:700 !important;
+  line-height:1.12 !important;
+  white-space:normal !important;
+  overflow:visible !important;
+  overflow-wrap:normal !important;
+  word-break:normal !important;
+  transform:none !important;
+}
+.sidebar .menu-btn span{
+  display:block !important;
+  flex:1 1 auto !important;
+  min-width:0 !important;
+  width:100% !important;
+  font-size:14px !important;
+  font-weight:700 !important;
+  line-height:1.12 !important;
+  text-align:center !important;
+  white-space:normal !important;
+  overflow-wrap:normal !important;
+  word-break:normal !important;
+}
+.sidebar .menu-btn i{
+  flex:0 0 auto !important;
+  width:16px !important;
+  font-size:13px !important;
+}
+.sidebar .msg-badge{
+  font-size:8px !important;
+  line-height:12px !important;
+  width:14px !important;
+  height:14px !important;
+  min-width:14px !important;
+}
+
+/* PC y laptop: menú lateral vertical y estable */
+@media (min-width:1101px){
+  .sidebar{
+    flex:0 0 180px !important;
+    width:180px !important;
+    min-width:180px !important;
+    max-width:180px !important;
+    padding:12px !important;
+    display:block !important;
+    height:auto !important;
+    max-height:none !important;
+  }
+  .sidebar .menu-btn{
+    width:100% !important;
+  }
+}
+
+/* Tablet: menú horizontal compacto */
+@media (min-width:601px) and (max-width:1100px){
+  .sidebar{
+    width:100% !important;
+    min-width:0 !important;
+    max-width:100% !important;
+    padding:7px !important;
+    display:grid !important;
+    grid-template-columns:repeat(auto-fit,minmax(145px,1fr)) !important;
+    gap:6px !important;
+  }
+  .sidebar-title{
+    grid-column:1 / -1 !important;
+    margin:2px 0 3px !important;
+  }
+  .sidebar .menu-btn{
+    width:100% !important;
+    min-height:44px !important;
+    margin:0 !important;
+    padding:7px 8px !important;
+    font-size:12px !important;
+  }
+  .sidebar .menu-btn span{
+    font-size:12px !important;
+  }
+}
+
+/* Teléfono */
+@media (max-width:600px){
+  .sidebar{
+    width:100% !important;
+    min-width:0 !important;
+    max-width:100% !important;
+    padding:6px !important;
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:5px !important;
+  }
+  .sidebar-title{
+    grid-column:1 / -1 !important;
+    font-size:10px !important;
+    margin:2px 0 4px !important;
+  }
+  .sidebar .menu-btn{
+    width:100% !important;
+    min-height:42px !important;
+    margin:0 !important;
+    padding:6px !important;
+    font-size:11px !important;
+    line-height:1.08 !important;
+  }
+  .sidebar .menu-btn span{
+    font-size:11px !important;
+    line-height:1.08 !important;
+  }
+}
+@media (max-width:360px){
+  .sidebar{
+    grid-template-columns:1fr !important;
+  }
+}
+
+/* Visualización: ocultar completamente */
+body.modo-visualizacion .sidebar{
+  display:none !important;
+}
+
+/* =========================================================
+   CORRECCION FINAL: CABECERA + BADGE DE NOTIFICACION
+   ========================================================= */
+
+/* El badge NO debe heredar flex:1 del span general del menu */
+.menu-btn .msg-badge,
+.msg-badge{
+  position:absolute !important;
+  top:5px !important;
+  right:5px !important;
+
+  width:16px !important;
+  min-width:16px !important;
+  max-width:16px !important;
+
+  height:16px !important;
+  min-height:16px !important;
+  max-height:16px !important;
+
+  flex:0 0 16px !important;
+  flex-grow:0 !important;
+  flex-shrink:0 !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+
+  padding:0 !important;
+  margin:0 !important;
+
+  border-radius:50% !important;
+  background:#dc2626 !important;
+  color:#fff !important;
+
+  font-size:9px !important;
+  font-weight:800 !important;
+  line-height:16px !important;
+  text-align:center !important;
+  white-space:nowrap !important;
+
+  box-sizing:border-box !important;
+  z-index:20 !important;
+
+  /* evita que el texto del badge se comporte como contenido del boton */
+  transform:none !important;
+}
+
+/* El texto del botón deja espacio al badge */
+.menu-btn.solo-edicion{
+  padding-right:30px !important;
+}
+
+/* CABECERA: usuario y salir nunca se enciman */
+.topbar{
+  width:100% !important;
+  min-width:0 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:12px !important;
+  overflow:hidden !important;
+}
+
+.topbar .logo{
+  min-width:0 !important;
+  flex:1 1 auto !important;
+  overflow:hidden !important;
+  white-space:nowrap !important;
+  text-overflow:ellipsis !important;
+}
+
+.usuario-topbar{
+  margin-left:auto !important;
+  flex:0 0 auto !important;
+  min-width:0 !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-end !important;
+  gap:10px !important;
+
+  padding-left:8px !important;
+  overflow:hidden !important;
+}
+
+.usuario-label{
+  min-width:0 !important;
+  max-width:clamp(110px, 22vw, 300px) !important;
+
+  display:flex !important;
+  align-items:center !important;
+  gap:5px !important;
+
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+}
+
+.usuario-label > span{
+  flex:0 0 auto !important;
+  white-space:nowrap !important;
+}
+
+.usuario-label strong{
+  min-width:0 !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  white-space:nowrap !important;
+  display:block !important;
+}
+
+.btn-cerrar-sesion{
+  flex:0 0 auto !important;
+  width:auto !important;
+  min-width:74px !important;
+  max-width:none !important;
+
+  height:32px !important;
+  padding:0 11px !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:5px !important;
+
+  white-space:nowrap !important;
+  overflow:visible !important;
+  box-sizing:border-box !important;
+
+  font-size:12px !important;
+}
+
+.btn-cerrar-sesion i{
+  flex:0 0 auto !important;
+  font-size:13px !important;
+}
+
+.btn-cerrar-sesion span{
+  display:inline !important;
+  white-space:nowrap !important;
+}
+
+/* TABLET */
+@media (max-width:900px){
+  .topbar{
+    gap:8px !important;
+    padding:0 10px !important;
+  }
+
+  .topbar .logo{
+    font-size:clamp(14px, 2vw, 18px) !important;
+  }
+
+  .usuario-topbar{
+    gap:6px !important;
+  }
+
+  .usuario-label{
+    max-width:clamp(90px, 20vw, 180px) !important;
+    font-size:11px !important;
+  }
+
+  .btn-cerrar-sesion{
+    min-width:68px !important;
+    height:30px !important;
+    padding:0 8px !important;
+    font-size:11px !important;
+  }
+}
+
+/* TELEFONO */
+@media (max-width:600px){
+  .topbar{
+    height:auto !important;
+    min-height:44px !important;
+    padding:5px 8px !important;
+  }
+
+  .topbar .logo{
+    font-size:clamp(11px, 3.5vw, 15px) !important;
+  }
+
+  .usuario-topbar{
+    gap:5px !important;
+  }
+
+  .usuario-label{
+    max-width:clamp(70px, 28vw, 130px) !important;
+    font-size:10px !important;
+  }
+
+  .btn-cerrar-sesion{
+    min-width:62px !important;
+    height:29px !important;
+    padding:0 7px !important;
+    font-size:10px !important;
+  }
+
+  .btn-cerrar-sesion i{
+    font-size:11px !important;
+  }
+}
+
+/* TELEFONO MUY PEQUEÑO */
+@media (max-width:400px){
+  .topbar .logo{
+    max-width:38vw !important;
+  }
+
+  .usuario-label{
+    max-width:34vw !important;
+  }
+
+  .btn-cerrar-sesion{
+    min-width:58px !important;
+    padding:0 6px !important;
+  }
+
+  .btn-cerrar-sesion span{
+    display:inline !important;
+  }
+}
+
+</style>
+
+
+<style id="fix-boton-salir-final">
+/* ===== CABECERA FINAL: Usuario + Salir ===== */
+.usuario-topbar{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-end !important;
+  gap:12px !important;
+  flex:0 1 auto !important;
+  min-width:0 !important;
+  max-width:min(48vw, 520px) !important;
+  overflow:visible !important;
+}
+.usuario-label{
+  display:flex !important;
+  align-items:center !important;
+  gap:7px !important;
+  min-width:0 !important;
+  max-width:clamp(150px, 24vw, 310px) !important;
+  overflow:hidden !important;
+  white-space:nowrap !important;
+}
+.usuario-label > span:first-child{
+  flex:0 0 auto !important;
+}
+.usuario-label strong{
+  min-width:0 !important;
+  max-width:100% !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  white-space:nowrap !important;
+}
+.btn-cerrar-sesion{
+  flex:0 0 92px !important;
+  width:92px !important;
+  min-width:92px !important;
+  max-width:92px !important;
+  height:36px !important;
+  margin:0 !important;
+  padding:0 12px !important;
+  border-radius:5px !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:7px !important;
+  box-sizing:border-box !important;
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  line-height:1 !important;
+  font-size:13px !important;
+  font-weight:700 !important;
+}
+.btn-cerrar-sesion i{
+  flex:0 0 auto !important;
+  font-size:14px !important;
+  line-height:1 !important;
+}
+.btn-cerrar-sesion span{
+  flex:0 0 auto !important;
+  display:inline !important;
+  white-space:nowrap !important;
+}
+@media (max-width:900px){
+  .usuario-topbar{max-width:58vw !important;gap:8px !important;}
+  .usuario-label{max-width:calc(58vw - 100px) !important;font-size:11px !important;}
+  .btn-cerrar-sesion{flex-basis:82px !important;width:82px !important;min-width:82px !important;max-width:82px !important;height:34px !important;font-size:12px !important;}
+}
+@media (max-width:600px){
+  .usuario-topbar{max-width:70vw !important;gap:6px !important;}
+  .usuario-label{max-width:calc(70vw - 88px) !important;font-size:10px !important;gap:4px !important;}
+  .btn-cerrar-sesion{flex-basis:76px !important;width:76px !important;min-width:76px !important;max-width:76px !important;height:32px !important;padding:0 7px !important;font-size:11px !important;gap:5px !important;}
+  .btn-cerrar-sesion i{font-size:12px !important;}
+}
+@media (max-width:400px){
+  .usuario-topbar{max-width:76vw !important;}
+  .usuario-label{max-width:calc(76vw - 82px) !important;font-size:9px !important;}
+  .btn-cerrar-sesion{flex-basis:70px !important;width:70px !important;min-width:70px !important;max-width:70px !important;height:30px !important;font-size:10px !important;}
+}
+</style>
+
+
+<style id="tabla-gruas-ajuste-final">
+/* ===== REPORTE GRÚAS: mostrar toda la tabla dentro del ancho disponible ===== */
+#tab-gruas .tabla-container {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 10px;
+}
+
+#tab-gruas .tabla-scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+#tab-gruas .tabla-reporte {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  table-layout: fixed !important;
+  border-collapse: collapse !important;
+  font-size: 13px;
+}
+
+#tab-gruas .tabla-reporte th,
+#tab-gruas .tabla-reporte td {
+  box-sizing: border-box;
+  min-width: 0 !important;
+  max-width: none !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  text-overflow: clip !important;
+  vertical-align: middle;
+}
+
+#tab-gruas .tabla-reporte thead th {
+  padding: 9px 6px;
+  line-height: 1.15;
+  white-space: normal !important;
+}
+
+#tab-gruas .tabla-reporte tbody td {
+  padding: 8px 7px;
+  line-height: 1.25;
+}
+
+/* 10 columnas = 100% exacto */
+#tab-gruas .tabla-reporte th:nth-child(1),
+#tab-gruas .tabla-reporte td:nth-child(1) { width: 12%; }
+#tab-gruas .tabla-reporte th:nth-child(2),
+#tab-gruas .tabla-reporte td:nth-child(2) { width: 5%; }
+#tab-gruas .tabla-reporte th:nth-child(3),
+#tab-gruas .tabla-reporte td:nth-child(3) { width: 8%; }
+#tab-gruas .tabla-reporte th:nth-child(4),
+#tab-gruas .tabla-reporte td:nth-child(4) { width: 8%; }
+#tab-gruas .tabla-reporte th:nth-child(5),
+#tab-gruas .tabla-reporte td:nth-child(5) { width: 7%; }
+#tab-gruas .tabla-reporte th:nth-child(6),
+#tab-gruas .tabla-reporte td:nth-child(6) { width: 13%; }
+#tab-gruas .tabla-reporte th:nth-child(7),
+#tab-gruas .tabla-reporte td:nth-child(7) { width: 18%; }
+#tab-gruas .tabla-reporte th:nth-child(8),
+#tab-gruas .tabla-reporte td:nth-child(8) { width: 20%; }
+#tab-gruas .tabla-reporte th:nth-child(9),
+#tab-gruas .tabla-reporte td:nth-child(9) { width: 4%; }
+#tab-gruas .tabla-reporte th:nth-child(10),
+#tab-gruas .tabla-reporte td:nth-child(10) { width: 5%; }
+
+#tab-gruas .tabla-reporte td:first-child {
+  font-weight: 700;
+  color: #155b96;
+}
+
+@media (max-width: 1100px) {
+  #tab-gruas .tabla-reporte { font-size: 11px; }
+  #tab-gruas .tabla-reporte thead th { padding: 7px 4px; }
+  #tab-gruas .tabla-reporte tbody td { padding: 6px 4px; }
+}
+
+@media (max-width: 700px) {
+  #tab-gruas .tabla-container { padding: 4px; }
+  #tab-gruas .tabla-reporte { font-size: 9px; }
+  #tab-gruas .tabla-reporte thead th { padding: 6px 3px; }
+  #tab-gruas .tabla-reporte tbody td { padding: 5px 3px; }
+}
+</style>
+
 </head>
 <body>
 
@@ -4274,6 +5941,11 @@ body{
 
         </div>
 
+        <label style="display:flex;align-items:center;gap:8px;margin:10px 0 14px;font-size:12px;color:#64748b;cursor:pointer;">
+            <input type="checkbox" id="recordarCredenciales" style="width:16px;height:16px;cursor:pointer;">
+            <span>Recordar mis credenciales en este dispositivo</span>
+        </label>
+
 
         <button
             type="button"
@@ -4300,12 +5972,9 @@ body{
         CONTROL OPERATIVO DE GRÚAS
     </div>
 
-<div class="topbar">
-
     <div class="usuario-topbar">
-
-        <span>
-            Usuario:
+        <span class="usuario-label">
+            <span>Usuario:</span>
             <strong id="usuarioActivo"></strong>
         </span>
 
@@ -4314,12 +5983,9 @@ body{
             class="btn-cerrar-sesion"
             onclick="cerrarSesion()">
             <i class="fa-solid fa-right-from-bracket"></i>
-            Salir
+            <span>Salir</span>
         </button>
-
     </div>
-
-</div>
 
 </div>
 
@@ -5107,6 +6773,85 @@ const personalPorSupervisor = {
 
 let equipos=[];
 
+// ================= ALERTA DE FALLA =================
+// Se usa un tono generado por el navegador, sin archivos externos.
+let audioContextAlerta = null;
+let alertaFallaInicializada = false;
+
+function prepararAudioAlerta() {
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    if (!audioContextAlerta) audioContextAlerta = new AC();
+    if (audioContextAlerta.state === "suspended") {
+      audioContextAlerta.resume().catch(() => {});
+    }
+  } catch (e) {
+    console.warn("Audio de alerta no disponible:", e);
+  }
+}
+
+function reproducirAlertaFalla() {
+  try {
+    prepararAudioAlerta();
+    if (!audioContextAlerta || audioContextAlerta.state !== "running") return;
+
+    // Aviso discreto pero un poco más largo: dos tonos suaves consecutivos.
+    const ahora = audioContextAlerta.currentTime;
+    const duracion = 0.32;
+    const pausa = 0.08;
+
+    [
+      { inicio: 0, frecuencia: 720 },
+      { inicio: duracion + pausa, frecuencia: 620 }
+    ].forEach(({inicio, frecuencia}) => {
+      const t = ahora + inicio;
+      const ganancia = audioContextAlerta.createGain();
+      ganancia.gain.setValueAtTime(0.0001, t);
+      ganancia.gain.exponentialRampToValueAtTime(0.075, t + 0.025);
+      ganancia.gain.exponentialRampToValueAtTime(0.0001, t + duracion);
+
+      const oscilador = audioContextAlerta.createOscillator();
+      oscilador.type = "sine";
+      oscilador.frequency.setValueAtTime(frecuencia, t);
+      oscilador.frequency.exponentialRampToValueAtTime(frecuencia - 70, t + duracion - 0.03);
+      oscilador.connect(ganancia);
+      ganancia.connect(audioContextAlerta.destination);
+      oscilador.start(t);
+      oscilador.stop(t + duracion);
+    });
+  } catch (e) {
+    console.warn("No se pudo reproducir la alerta de falla:", e);
+  }
+}
+
+function detectarNuevasFallas(nuevosEquipos) {
+  if (!alertaFallaInicializada) {
+    alertaFallaInicializada = true;
+    return;
+  }
+
+  const anteriores = new Map(
+    (equipos || []).map(g => [String(g.id), (g.estado || "").toLowerCase().trim()])
+  );
+
+  const nuevasFallas = nuevosEquipos.filter(g => {
+    const estadoNuevo = (g.estado || "").toLowerCase().trim();
+    const estadoAnterior = anteriores.get(String(g.id));
+    return estadoNuevo === "falla" && estadoAnterior && estadoAnterior !== "falla";
+  });
+
+  if (nuevasFallas.length > 0) {
+    // Un solo aviso aunque fallen varias grúas al mismo tiempo.
+    reproducirAlertaFalla();
+  }
+}
+
+// El primer clic/tecla del usuario habilita el audio para que las alertas
+// posteriores puedan sonar incluso cuando la sesión se recupera automáticamente.
+window.addEventListener("pointerdown", prepararAudioAlerta, { passive: true });
+window.addEventListener("keydown", prepararAudioAlerta, { passive: true });
+
 let actual=null;
 
 let filtroTexto='';
@@ -5343,14 +7088,17 @@ async function cargar(){
 
   console.log("DATA:", data);
 
-equipos = Array.isArray(data) ? data.map(g => ({
+  const datosNuevos = Array.isArray(data) ? data : [];
+  detectarNuevasFallas(datosNuevos);
+
+equipos = datosNuevos.map(g => ({
   ...g,
   estado: (g.estado || '').toLowerCase().trim(),
   prioridad: Number(g.prioridad || 0),
 
-  // 🔥 FIX DETALLE
+  // FIX DETALLE
   detalle: (typeof g.detalle === 'object') ? '' : (g.detalle || '')
-})) : [];
+}));
 
   console.log("EQUIPOS:", equipos.length);
 
@@ -6575,8 +8323,15 @@ if (!cont) {
   return;
 }
 
-  const m = data[0];
-console.log("MENSAJE ACTUAL:", m);
+  const m = data && data.length ? data[0] : null;
+  console.log("MENSAJE ACTUAL:", m);
+
+  // No hay mensajes: limpiar sin lanzar errores.
+  if (!m) {
+    if (cont) cont.innerHTML = '<div class="item">Sin mensaje activo</div>';
+    if (badge) badge.style.display = 'none';
+    return;
+  }
   // ================= BADGE (CORRECTO) =================
   if (badge) {
     if (ultimoIdGuardado != m.id) {
@@ -6618,14 +8373,6 @@ ${fechaFormateada}
 </div>
 `;
 console.log("CONTENIDO PINTADO:", cont.innerHTML);
-if (vista === 'mensajes') {
-
-    cargarMensajeActual();
-
-    const badge = document.getElementById('msgBadge');
-    if (badge) badge.style.display = 'none';
-
-}
 }
 
 /* ================= HISTORIAL ================= */
@@ -6698,63 +8445,112 @@ if(contenedor){
 }
 
 
+/* ================= ACTUALIZACION ROBUSTA ================= */
+let refreshEnCurso = false;
+let refreshPendiente = false;
+let refreshTimer = null;
+let realtimeGruas = null;
+let realtimeMensajes = null;
+let realtimeReconnectTimer = null;
+
+async function actualizarTodo(origen = 'manual') {
+  // Evita que varias actualizaciones simultáneas congelen la interfaz.
+  if (refreshEnCurso) {
+    refreshPendiente = true;
+    return;
+  }
+
+  refreshEnCurso = true;
+  try {
+    await Promise.allSettled([
+      cargar(),
+      cargarMensajeActual(),
+      cargarHistorial()
+    ]);
+    console.log('Datos actualizados:', origen, new Date().toLocaleTimeString());
+  } catch (e) {
+    console.warn('Actualización:', e);
+  } finally {
+    refreshEnCurso = false;
+    if (refreshPendiente) {
+      refreshPendiente = false;
+      setTimeout(() => actualizarTodo('pendiente'), 50);
+    }
+  }
+}
+
+function programarActualizacion(origen = 'evento') {
+  clearTimeout(refreshTimer);
+  refreshTimer = setTimeout(() => actualizarTodo(origen), 150);
+}
+
+function iniciarRealtime() {
+  clearTimeout(realtimeReconnectTimer);
+
+  // Elimina canales anteriores para evitar suscripciones duplicadas.
+  if (realtimeGruas) {
+    db.removeChannel(realtimeGruas).catch(() => {});
+    realtimeGruas = null;
+  }
+  if (realtimeMensajes) {
+    db.removeChannel(realtimeMensajes).catch(() => {});
+    realtimeMensajes = null;
+  }
+
+  realtimeGruas = db
+    .channel('gruas-changes-robusto')
+    .on('postgres_changes', {
+      event: '*', schema: 'public', table: 'gruas'
+    }, () => programarActualizacion('Realtime grúas'))
+    .subscribe(status => {
+      console.log('Realtime grúas:', status);
+      if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT' || status === 'CLOSED') {
+        clearTimeout(realtimeReconnectTimer);
+        realtimeReconnectTimer = setTimeout(() => iniciarRealtime(), 3000);
+      }
+    });
+
+  realtimeMensajes = db
+    .channel('mensajes-operativos-changes-robusto')
+    .on('postgres_changes', {
+      event: '*', schema: 'public', table: 'mensajes_operativos'
+    }, () => programarActualizacion('Realtime mensajes'))
+    .subscribe(status => {
+      console.log('Realtime mensajes:', status);
+      if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT' || status === 'CLOSED') {
+        clearTimeout(realtimeReconnectTimer);
+        realtimeReconnectTimer = setTimeout(() => iniciarRealtime(), 3000);
+      }
+    });
+}
+
+// Al volver de segundo plano, minimizar/restaurar, cambiar de pestaña,
+// recuperar internet o volver a enfocar la ventana, se fuerza una lectura real.
+function refrescarAlVolver(origen) {
+  programarActualizacion(origen);
+  iniciarRealtime();
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    refrescarAlVolver('visibilitychange');
+  }
+});
+window.addEventListener('pageshow', () => refrescarAlVolver('pageshow'));
+window.addEventListener('focus', () => refrescarAlVolver('focus'));
+window.addEventListener('online', () => refrescarAlVolver('online'));
+
+// Refresco de respaldo. Aunque el navegador pause timers en segundo plano,
+// visibilitychange/pageshow/focus actualizan inmediatamente al regresar.
+setInterval(() => {
+  if (document.visibilityState === 'visible' && navigator.onLine !== false) {
+    actualizarTodo('respaldo 15s');
+  }
+}, 15000);
+
 /* ================= REALTIME ================= */
+iniciarRealtime();
 
-db
-.channel('gruas-changes')
-.on(
-  'postgres_changes',
-  {
-    event: '*',
-    schema: 'public',
-    table: 'gruas'
-  },
-  () => {
-
-    clearTimeout(reloadTimeout);
-
-reloadTimeout = setTimeout(() => {
-  cargar().then(() => {
-    renderFallas();
-    renderPrioridad();
-    renderKPIs();
-  });
-}, 400);
-
-  }
-)
-.subscribe(status => {
-  console.log('Realtime:', status);
-});
-/* ================= REALTIME MENSAJES ================= */
-
-db
-.channel('mensajes-operativos-changes')
-.on(
-  'postgres_changes',
-  {
-    event: 'INSERT',
-    schema: 'public',
-    table: 'mensajes_operativos'
-  },
-  (payload) => {
-
-    console.log("🚨 EVENTO MENSAJE:", payload);
-
-    setTimeout(async () => {
-
-      await cargarMensajeActual();
-      await cargarHistorial();
-
-    }, 300);
-
-  }
-)
-.subscribe(status => {
-
-  console.log("ESTADO REALTIME MENSAJES:", status);
-
-});
 /* ================= CERRAR CLICK AFUERA ================= */
 
 window.onclick = function(e){
@@ -7207,9 +9003,7 @@ document.addEventListener('DOMContentLoaded', () => {
   controlarBotonStandby();
   mostrarVista('operativo');
   cargarOpcionesTiempoMuerto();
-  cargar();
-  cargarMensajeActual();
-  cargarHistorial();
+  actualizarTodo('DOMContentLoaded');
   cargarResponsabilidades();
 
   const estado = document.getElementById('estado');
@@ -9480,6 +11274,60 @@ function filtrarReporteDT(){
     pintarReporteDT(datos);
 
 }
+function limpiarModoVisualizacion() {
+    // Restaurar también la barra lateral al salir de Visualización.
+    document.body.classList.remove("modo-visualizacion");
+
+    // Restaurar restricciones que pudo dejar el usuario Visualizacion.
+    document.querySelectorAll(".card").forEach(card => {
+        card.style.cursor = "";
+        card.style.pointerEvents = "";
+    });
+
+    document.querySelectorAll(
+        "#panelEstado input, #panelEstado select, #panelEstado textarea, #panelEstado button, " +
+        "#formularioCierre input, #formularioCierre select, #formularioCierre textarea, #formularioCierre button, " +
+        "#formularioCierreFalla input, #formularioCierreFalla select, #formularioCierreFalla textarea, #formularioCierreFalla button"
+    ).forEach(elemento => {
+        elemento.disabled = false;
+    });
+
+    document.querySelectorAll(".menu-btn").forEach(boton => {
+        boton.disabled = false;
+        boton.style.pointerEvents = "";
+        boton.style.opacity = "";
+        boton.style.cursor = "";
+        boton.style.display = "";
+    });
+
+    // Las opciones exclusivas de edición vuelven a aparecer
+    // cuando inicia sesión RPC o Mantenimiento de grúas.
+    document.querySelectorAll(".solo-edicion").forEach(boton => {
+        boton.style.display = "";
+    });
+
+    const btnImportarExcel = document.getElementById("btnImportarExcel");
+    if (btnImportarExcel) {
+        btnImportarExcel.disabled = false;
+        btnImportarExcel.style.pointerEvents = "";
+        btnImportarExcel.style.opacity = "";
+        btnImportarExcel.style.cursor = "";
+        btnImportarExcel.onclick = function () {
+            const input = document.getElementById("excelFile");
+            if (input) input.click();
+        };
+    }
+}
+
+function aplicarPermisos() {
+    // Nunca arrastrar restricciones del usuario anterior.
+    limpiarModoVisualizacion();
+
+    if (localStorage.getItem("rolSistema") === "visualizar") {
+        activarSoloVisualizacion();
+    }
+}
+
 function activarSoloVisualizacion() {
 
     const rol = localStorage.getItem("rolSistema");
@@ -9487,6 +11335,9 @@ function activarSoloVisualizacion() {
     if (rol !== "visualizar") {
         return;
     }
+
+    // En Visualización no se muestra la barra lateral completa.
+    document.body.classList.add("modo-visualizacion");
 
     // ==============================
     // CONGELAR CONTROLES DE EDICIÓN
@@ -9513,6 +11364,14 @@ function activarSoloVisualizacion() {
 
     });
 
+
+    // ==============================
+    // OCULTAR OPCIONES DE EDICIÓN
+    // ==============================
+    // Visualización NO debe verlas en el menú.
+    document.querySelectorAll(".solo-edicion").forEach(boton => {
+        boton.style.display = "none";
+    });
 
     // ==============================
     // CONGELAR BOTONES DEL MENÚ
@@ -9561,6 +11420,9 @@ function iniciarSesion() {
   const password =
     document.getElementById("loginPassword").value;
 
+  const recordar =
+    document.getElementById("recordarCredenciales")?.checked === true;
+
   const error =
     document.getElementById("loginError");
 
@@ -9601,6 +11463,22 @@ if (usuarioActivo) {
 
 localStorage.setItem("usuarioSistema", usuario);
 localStorage.setItem("rolSistema", datos.rol);
+
+  // Recordar credenciales únicamente si el usuario lo solicita.
+  // Visualización no necesita contraseña.
+  if (recordar) {
+    localStorage.setItem("recordarCredenciales", "1");
+    localStorage.setItem("usuarioRecordado", usuario);
+    if (datos.password !== "") {
+      localStorage.setItem("passwordRecordada", password);
+    } else {
+      localStorage.removeItem("passwordRecordada");
+    }
+  } else {
+    localStorage.removeItem("recordarCredenciales");
+    localStorage.removeItem("usuarioRecordado");
+    localStorage.removeItem("passwordRecordada");
+  }
 document.getElementById("usuarioActivo").innerText =
     "👤 " + usuario;
 
@@ -9611,17 +11489,42 @@ document.getElementById("usuarioActivo").innerText =
   document.getElementById("app").style.display = "block";
 document.getElementById("usuarioActivo").innerText =
     "👤 " + usuario;
-  // ==========================================
-  // VISUALIZACIÓN = BLOQUEAR TODO
-  // ==========================================
-  if (datos.rol === "visualizar") {
-    activarSoloVisualizacion();
-  }
 
+  // ==========================================
+  // SIEMPRE INICIAR EN CONTROL OPERATIVO
+  // ==========================================
+  // Si el usuario anterior terminó en "Mensajes Operativos",
+  // esa vista queda viva en el DOM. Al cambiar de usuario sin
+  // recargar la página hay que llevarlo nuevamente al dashboard.
+  mostrarVista("operativo");
+
+  // ==========================================
+  // APLICAR PERMISOS DEL USUARIO ACTUAL
+  // ==========================================
   aplicarPermisos();
 
   console.log("Sesión iniciada:", usuarioSesion);
 }
+function cargarCredencialesRecordadas() {
+
+  const recordar = localStorage.getItem("recordarCredenciales") === "1";
+  const usuario = localStorage.getItem("usuarioRecordado");
+  const password = localStorage.getItem("passwordRecordada") || "";
+
+  const select = document.getElementById("loginUsuario");
+  const input = document.getElementById("loginPassword");
+  const check = document.getElementById("recordarCredenciales");
+
+  if (!select || !input || !check) return;
+
+  if (recordar && usuario && USUARIOS[usuario]) {
+    select.value = usuario;
+    input.value = password;
+    check.checked = true;
+    controlarPasswordLogin();
+  }
+}
+
 function mostrarSistema() {
 
   const usuario =
@@ -9639,9 +11542,7 @@ function mostrarSistema() {
   document.getElementById("app").style.display = "block";
 
   // CASO SOLO VISUALIZACIÓN
-  if (rol === "visualizar") {
-    activarSoloVisualizacion();
-  }
+  aplicarPermisos();
 
 }
 function congelarModoVisualizacion() {
@@ -9711,7 +11612,17 @@ function controlarPasswordLogin() {
 }
 function cerrarSesion() {
 
-    // Limpiar sesión
+    // IMPORTANTE: quitar primero los bloqueos del usuario Visualizacion.
+    // Así RPC/Mantenimiento gruas no heredan disabled/pointer-events.
+    limpiarModoVisualizacion();
+
+    // Reiniciar la vista para que la siguiente sesión NO herede
+    // "Mensajes Operativos", Downtime, etc.
+    mostrarVista("operativo");
+
+    // Limpiar solamente la sesión actual.
+    // Las credenciales recordadas permanecen para no tener que escribir
+    // nuevamente la contraseña al volver a entrar.
     localStorage.removeItem("usuarioSistema");
     localStorage.removeItem("rolSistema");
 
@@ -9735,7 +11646,15 @@ function cerrarSesion() {
         error.innerText = "";
     }
 
+    // Restaurar automáticamente usuario/contraseña guardados.
+    cargarCredencialesRecordadas();
+
 }
+
+// Restaurar credenciales al abrir o recargar la página.
+document.addEventListener("DOMContentLoaded", () => {
+    cargarCredencialesRecordadas();
+});
 </script>
 
 </div>
