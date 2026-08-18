@@ -5479,30 +5479,45 @@ body.modo-visualizacion .main-content{width:100%!important;max-width:100%!import
     width:100% !important;
     min-width:0 !important;
     max-width:100% !important;
-    padding:6px !important;
+    padding:5px !important;
     display:grid !important;
-    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
     gap:5px !important;
   }
   .sidebar-title{
     grid-column:1 / -1 !important;
-    font-size:10px !important;
-    margin:2px 0 4px !important;
+    font-size:9px !important;
+    margin:1px 0 3px !important;
   }
   .sidebar .menu-btn{
     width:100% !important;
-    min-height:42px !important;
+    min-height:54px !important;
     margin:0 !important;
-    padding:6px !important;
-    font-size:11px !important;
-    line-height:1.08 !important;
+    padding:5px 4px !important;
+    font-size:10px !important;
+    line-height:1.05 !important;
   }
   .sidebar .menu-btn span{
-    font-size:11px !important;
-    line-height:1.08 !important;
+    font-size:10px !important;
+    line-height:1.05 !important;
+  }
+  .menu-btn.solo-edicion{
+    padding-right:22px !important;
   }
 }
-@media (max-width:360px){
+@media (max-width:380px){
+  .sidebar{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  }
+  .sidebar .menu-btn{
+    min-height:48px !important;
+    font-size:9.5px !important;
+  }
+  .sidebar .menu-btn span{
+    font-size:9.5px !important;
+  }
+}
+@media (max-width:330px){
   .sidebar{
     grid-template-columns:1fr !important;
   }
@@ -6496,6 +6511,11 @@ body.modo-visualizacion .main-content{
   line-height:12px;
   white-space:nowrap;
   cursor:pointer;
+  pointer-events:auto;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;
+  -webkit-user-select:none;
   box-shadow:none;
   overflow:hidden;
   text-overflow:ellipsis;
@@ -6516,13 +6536,17 @@ body.modo-visualizacion .main-content{
 }
 @media (max-width:600px){
   .btn-sby-falla{
-    top:1px;
-    left:1px;
-    width:auto;
-    height:15px;
-    padding:2px 4px;
-    font-size:5px;
-    max-width:42%;
+    top:3px;
+    left:3px;
+    width:42px !important;
+    min-width:42px !important;
+    height:28px !important;
+    min-height:28px !important;
+    padding:5px 7px !important;
+    font-size:10px !important;
+    line-height:18px !important;
+    max-width:none !important;
+    z-index:100 !important;
   }
 }
 
@@ -6724,12 +6748,6 @@ body.modo-visualizacion .main-content{
 </div>
 
         </div>
-
-        <label style="display:flex;align-items:center;gap:8px;margin:10px 0 14px;font-size:12px;color:#64748b;cursor:pointer;">
-            <input type="checkbox" id="recordarCredenciales" style="width:16px;height:16px;cursor:pointer;">
-            <span>Recordar mis credenciales en este dispositivo</span>
-        </label>
-
 
         <button
             type="button"
@@ -8028,6 +8046,7 @@ estadoAnterior = g.estado;
 html += `
 <div
  class="card ${g.estado} ${(g.estado === 'falla' && g.sby_atendiendo_falla === true) ? 'priority-blink' : ''}"
+ data-grua-id="${g.id}"
  onclick="abrir('${g.id}')"
 >
 
@@ -8041,7 +8060,9 @@ html += `
               <button
                 type="button"
                 class="btn-sby-falla ${g.estado === 'falla' && g.sby_atendiendo_falla === true ? 'activo' : ''}"
-                onclick="event.stopPropagation(); activarAtencionFalla('${g.id}')"
+                onpointerdown="event.stopPropagation()"
+                onpointerup="event.stopPropagation()"
+                onclick="event.preventDefault(); event.stopPropagation(); activarAtencionFalla('${g.id}')"
                 title="Poner grúa en SBY atendiendo falla"
               >
                 SBY
@@ -8228,7 +8249,7 @@ function renderFallas(){
           }
         </div>
         <span>${g.registro_falla || 'Sin detalle'}</span>
-        <div>${obtenerTiempoContador(g)}</div>
+        <div class="falla-timer" data-falla-timer="${g.id}">${obtenerTiempoContador(g)}</div>
       </div>
     `;
   });
@@ -8286,14 +8307,23 @@ setInterval(() => {
         }
       }
 
-      const el = document.getElementById(`timer-card-${g.id}`);
+      const textoTiempo = formatearTiempo(segundos);
 
+      const el = document.getElementById(`timer-card-${g.id}`);
       if (el) {
-        el.innerText = formatearTiempo(segundos);
+        el.textContent = textoTiempo;
       }
 
+      // Actualiza únicamente el contador de la lista de fallas.
+      // No reconstruimos todo el panel cada segundo.
+      const fallaTimers = document.querySelectorAll('[data-falla-timer]');
+      fallaTimers.forEach(timer => {
+        if (timer.dataset.fallaTimer === String(g.id)) {
+          timer.textContent = textoTiempo;
+        }
+      });
+
     });
-renderFallas();
 }, 1000);
 /* ================= PRIORIDAD ================= */
 
@@ -9386,6 +9416,13 @@ function programarActualizacion(origen = 'evento') {
 function iniciarRealtime() {
   clearTimeout(realtimeReconnectTimer);
 
+  // Si ya existen ambas suscripciones, no las destruyas y reconstruyas.
+  // En teléfonos, focus/pageshow/visibilitychange pueden dispararse varias veces
+  // y recrear los canales continuamente provoca trabajo y pausas innecesarias.
+  if (realtimeGruas && realtimeMensajes) {
+    return;
+  }
+
   // Elimina canales anteriores para evitar suscripciones duplicadas.
   if (realtimeGruas) {
     db.removeChannel(realtimeGruas).catch(() => {});
@@ -9425,9 +9462,23 @@ function iniciarRealtime() {
 
 // Al volver de segundo plano, minimizar/restaurar, cambiar de pestaña,
 // recuperar internet o volver a enfocar la ventana, se fuerza una lectura real.
+let ultimaActualizacionAlVolver = 0;
 function refrescarAlVolver(origen) {
+  const ahora = Date.now();
+
+  // Agrupa eventos muy cercanos (focus + pageshow + visibilitychange).
+  // Así el teléfono no dispara varias lecturas consecutivas al regresar.
+  if (ahora - ultimaActualizacionAlVolver < 1200) {
+    return;
+  }
+
+  ultimaActualizacionAlVolver = ahora;
   programarActualizacion(origen);
-  iniciarRealtime();
+
+  // Solo intenta reconstruir realtime si realmente falta alguna suscripción.
+  if (!realtimeGruas || !realtimeMensajes) {
+    iniciarRealtime();
+  }
 }
 
 document.addEventListener('visibilitychange', () => {
@@ -9439,13 +9490,13 @@ window.addEventListener('pageshow', () => refrescarAlVolver('pageshow'));
 window.addEventListener('focus', () => refrescarAlVolver('focus'));
 window.addEventListener('online', () => refrescarAlVolver('online'));
 
-// Refresco de respaldo. Aunque el navegador pause timers en segundo plano,
-// visibilitychange/pageshow/focus actualizan inmediatamente al regresar.
+// Refresco de respaldo. Realtime es el mecanismo principal; este respaldo
+// evita consultas continuas en teléfonos cuando no hubo cambios.
 setInterval(() => {
   if (document.visibilityState === 'visible' && navigator.onLine !== false) {
-    actualizarTodo('respaldo 15s');
+    actualizarTodo('respaldo 30s');
   }
-}, 15000);
+}, 30000);
 
 /* ================= REALTIME ================= */
 iniciarRealtime();
@@ -11933,10 +11984,36 @@ async function cargarReporteSenal(){
 
   document.getElementById('tab-senal').innerHTML = html;
 }
+let sbyGuardando = false;
+
+// Actualiza SOLO la grúa tocada. No reconstruimos todo el patio al pulsar SBY,
+// porque en teléfonos esa reconstrucción completa puede provocar una pausa visible
+// y hacer que el siguiente toque no responda.
+function actualizarVisualSBY(id, activar){
+  const cards = document.querySelectorAll('.card[data-grua-id]');
+  let card = null;
+  cards.forEach(c => {
+    if (c.dataset.gruaId === String(id)) card = c;
+  });
+  if (!card) return;
+
+  card.classList.toggle('priority-blink', !!activar);
+  const btn = card.querySelector('.btn-sby-falla');
+  if (btn) btn.classList.toggle('activo', !!activar);
+}
+
 async function activarAtencionFalla(idGrua = actual){
 
   // El botón SBY y su acción son exclusivos de Mantenimiento gruas.
-  if (usuarioSesion?.nombre !== 'Mantenimiento gruas') {
+  // La comparación es insensible a mayúsculas para evitar que el botón
+  // se muestre pero no responda por diferencias como "Mantenimiento Gruas".
+  const nombreUsuario = String(
+    usuarioSesion?.nombre || localStorage.getItem('usuarioSistema') || ''
+  ).trim().toLowerCase();
+  const rolUsuario = String(usuarioSesion?.rolSupabase || '').trim().toLowerCase();
+  const puedeUsarSBY = nombreUsuario === 'mantenimiento gruas' || rolUsuario === 'mantenimiento';
+
+  if (!puedeUsarSBY || sbyGuardando) {
     return;
   }
 
@@ -11963,6 +12040,18 @@ async function activarAtencionFalla(idGrua = actual){
   // Al presionar SBY se activa/desactiva la atención.
   // El estado se guarda en Supabase, pero "estado" sigue siendo FALLA.
   const activar = !(g.estado === 'falla' && g.sby_atendiendo_falla === true);
+  const estadoAnteriorSBY = Boolean(g.sby_atendiendo_falla);
+
+  // Cambio visual INMEDIATO: no esperamos la respuesta de Supabase para iniciar
+  // el parpadeo. Así el operador ve el efecto al instante en móvil y PC.
+  sbyGuardando = true;
+  g.sby_atendiendo_falla = activar;
+  if (activar) {
+    if (!fallasAtendiendo.includes(id)) fallasAtendiendo.push(id);
+  } else {
+    fallasAtendiendo = fallasAtendiendo.filter(x => x !== id);
+  }
+  actualizarVisualSBY(id, activar);
 
   const { error } = await db
     .from('gruas')
@@ -11974,7 +12063,16 @@ async function activarAtencionFalla(idGrua = actual){
 
   if (error) {
     console.error('ERROR GUARDANDO SBY:', error);
+    // Si Supabase falla, revertimos el cambio visual local.
+    g.sby_atendiendo_falla = estadoAnteriorSBY;
+    if (estadoAnteriorSBY) {
+      if (!fallasAtendiendo.includes(id)) fallasAtendiendo.push(id);
+    } else {
+      fallasAtendiendo = fallasAtendiendo.filter(x => x !== id);
+    }
+    actualizarVisualSBY(id, estadoAnteriorSBY);
     alert('No se pudo guardar SBY: ' + error.message);
+    sbyGuardando = false;
     return;
   }
 
@@ -11993,8 +12091,8 @@ async function activarAtencionFalla(idGrua = actual){
   const equipoActualizado = getEquipo(id);
   if (equipoActualizado) equipoActualizado.sby_atendiendo_falla = activar;
 
-  render();
-  renderFallas();
+  actualizarVisualSBY(id, activar);
+  sbyGuardando = false;
 }
 
 function cargarOpcionesTiempoMuerto() {
@@ -12623,9 +12721,6 @@ async function iniciarSesion() {
   const password =
     document.getElementById("loginPassword").value;
 
-  const recordar =
-    document.getElementById("recordarCredenciales")?.checked === true;
-
   const error =
     document.getElementById("loginError");
 
@@ -12732,16 +12827,13 @@ async function iniciarSesion() {
       rolSistema
     );
 
-    // Nunca guardar contraseña.
+    // Por seguridad, nunca guardar la contraseña en localStorage.
+    // Se recuerda el usuario para que no tenga que volver a seleccionarlo.
     localStorage.removeItem("passwordRecordada");
 
-    if (recordar) {
-      localStorage.setItem("recordarCredenciales", "1");
-      localStorage.setItem("usuarioRecordado", usuario);
-    } else {
-      localStorage.removeItem("recordarCredenciales");
-      localStorage.removeItem("usuarioRecordado");
-    }
+    // No guardar ni recordar credenciales en este dispositivo.
+    localStorage.removeItem("recordarCredenciales");
+    localStorage.removeItem("usuarioRecordado");
 
     document.getElementById("login").style.display = "none";
     document.getElementById("app").style.display = "block";
@@ -12782,33 +12874,11 @@ async function iniciarSesion() {
   }
 }
 function cargarCredencialesRecordadas() {
-
-  const recordar =
-    localStorage.getItem("recordarCredenciales") === "1";
-
-  const usuario =
-    localStorage.getItem("usuarioRecordado");
-
-  const select =
-    document.getElementById("loginUsuario");
-
-  const input =
-    document.getElementById("loginPassword");
-
-  const check =
-    document.getElementById("recordarCredenciales");
-
-  if (!select || !input || !check) return;
-
-  // Eliminar cualquier contraseña de versiones anteriores.
+  // La opción "Recordar mi usuario" fue eliminada.
+  // Limpiamos cualquier dato antiguo que pudiera haber quedado guardado.
+  localStorage.removeItem("recordarCredenciales");
+  localStorage.removeItem("usuarioRecordado");
   localStorage.removeItem("passwordRecordada");
-
-  if (recordar && usuario && USUARIOS[usuario]) {
-    select.value = usuario;
-    input.value = "";
-    check.checked = true;
-    controlarPasswordLogin();
-  }
 }
 
 function mostrarSistema() {
@@ -12909,6 +12979,16 @@ function controlarPasswordLogin() {
 }
 function cerrarSesion() {
 
+    // Confirmar antes de cerrar la sesión para evitar salidas accidentales,
+    // especialmente en teléfono donde el botón puede tocarse por error.
+    const confirmarSalida = window.confirm(
+        "¿Seguro que quieres salir de la aplicación?\n\nSi eliges Aceptar, volverás a la pantalla de acceso."
+    );
+
+    if (!confirmarSalida) {
+        return;
+    }
+
     // IMPORTANTE: quitar primero los bloqueos del usuario Visualizacion.
     // Así RPC/Mantenimiento gruas no heredan disabled/pointer-events.
     limpiarModoVisualizacion();
@@ -12943,7 +13023,7 @@ function cerrarSesion() {
         error.innerText = "";
     }
 
-    // Restaurar automáticamente usuario/contraseña guardados.
+    // Asegurar que no queden credenciales recordadas.
     cargarCredencialesRecordadas();
 
 }
@@ -13532,3 +13612,127 @@ main, .dashboard, .dashboard-container {
   }
 })();
 </script>
+
+
+<!-- FIX FINAL MENU MOVIL -->
+<style>
+/* =========================================================
+   CORRECCION FINAL MENU TELEFONO
+   En movil el menu ocupa TODO el ancho y el contenido queda
+   debajo. Se elimina el comportamiento de sidebar lateral.
+========================================================= */
+@media (max-width: 768px) {
+  html, body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .layout {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    align-items: stretch !important;
+  }
+
+  .sidebar {
+    order: 0 !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    flex: 0 0 auto !important;
+    height: auto !important;
+    max-height: none !important;
+    padding: 7px !important;
+    gap: 6px !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+  }
+
+  .sidebar-title {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    margin: 2px 0 4px !important;
+    font-size: 10px !important;
+    text-align: left !important;
+  }
+
+  .sidebar-search {
+    grid-column: 1 / -1 !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    margin: 0 0 2px !important;
+  }
+
+  .sidebar .menu-btn {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    min-height: 52px !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 7px 6px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    overflow: visible !important;
+    transform: none !important;
+  }
+
+  .sidebar .menu-btn span {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    font-size: 11px !important;
+    line-height: 1.05 !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    text-align: center !important;
+  }
+
+  .sidebar .menu-btn i {
+    width: auto !important;
+    font-size: 14px !important;
+    margin: 0 0 2px !important;
+  }
+
+  .main-content {
+    order: 1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    flex: 0 0 auto !important;
+    overflow-x: hidden !important;
+  }
+
+  .dashboard-main {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .sidebar {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 5px !important;
+    padding: 6px !important;
+  }
+
+  .sidebar .menu-btn {
+    min-height: 48px !important;
+    padding: 6px 4px !important;
+  }
+
+  .sidebar .menu-btn span {
+    font-size: 10px !important;
+  }
+}
+</style>
