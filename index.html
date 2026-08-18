@@ -2992,6 +2992,34 @@ body{
     text-align: center;
 }
 
+/* FILTRO COMPACTO RTG / STS - GRUAS EN FALLA */
+.fallas-filtros{
+    display:flex;
+    gap:4px;
+    padding:6px 8px 2px;
+}
+.fallas-filtro-btn{
+    border:0;
+    border-radius:5px;
+    padding:4px 10px;
+    min-width:46px;
+    height:24px;
+    font-size:10px;
+    font-weight:800;
+    cursor:pointer;
+    background:#d9e2ea;
+    color:#17324d;
+    box-shadow:none;
+}
+.fallas-filtro-btn.activo{
+    background:#1976d2;
+    color:#fff;
+}
+@media(max-width:600px){
+    .fallas-filtros{padding:5px 7px 1px;gap:3px}
+    .fallas-filtro-btn{min-width:42px;height:22px;padding:3px 8px;font-size:9px}
+}
+
 /* PANEL FALLAS */
 .events-panel .dashboard-panel{
     height:520px;
@@ -5792,6 +5820,21 @@ body.modo-visualizacion .sidebar{
 
 
 <style id="tabla-gruas-ajuste-final">
+
+/* V36: pestañas compactas RTG / STS en Reporte Grúas */
+.btn-tipo-reporte{
+  border:0;
+  border-radius:7px;
+  padding:7px 28px;
+  background:#d9e3ec;
+  color:#123a5b;
+  font-weight:700;
+  cursor:pointer;
+}
+.btn-tipo-reporte.activo{
+  background:#1f73bd;
+  color:#fff;
+}
 /* ===== REPORTE GRÚAS: mostrar toda la tabla dentro del ancho disponible ===== */
 #tab-gruas .tabla-container {
   width: 100%;
@@ -6484,6 +6527,143 @@ body.modo-visualizacion .main-content{
 }
 
 </style>
+
+<style>
+/* ===== KPIs RTG + STS: organizados por bloques ===== */
+.kpis.kpis-rtg-sts{
+  display:grid !important;
+  grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) !important;
+  gap:8px !important;
+  margin:0 4px 6px !important;
+  align-items:stretch;
+}
+.kpi-group-wrap{
+  min-width:0;
+  background:#f7fafc;
+  border:1px solid #d7e1ea;
+  border-radius:9px;
+  overflow:hidden;
+  box-shadow:0 1px 3px rgba(0,0,0,.08);
+}
+.kpi-group-head{
+  height:18px;
+  display:flex;
+  align-items:center;
+  padding:0 9px;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.5px;
+  color:#fff;
+}
+.kpi-group-head.rtg{background:#1f6fb2;}
+.kpi-group-head.sts{background:#2f9b45;}
+.kpi-group-cards{
+  display:grid;
+  gap:4px;
+  padding:4px;
+}
+.kpi-group-cards.rtg{grid-template-columns:repeat(4,minmax(0,1fr));}
+.kpi-group-cards.sts{grid-template-columns:repeat(3,minmax(0,1fr));}
+.kpis-rtg-sts .kpi{
+  min-width:0 !important;
+  height:40px !important;
+  min-height:40px !important;
+  padding:4px 7px !important;
+  border-radius:6px !important;
+  position:relative;
+  background:#fff;
+  border:1px solid #e1e8ee;
+  box-shadow:none;
+}
+.kpis-rtg-sts .kpi-rtg{border-left:3px solid #1f6fb2 !important;}
+.kpis-rtg-sts .kpi-sts{border-left:3px solid #2f9b45 !important;}
+.kpis-rtg-sts .kpi-group{display:none !important;}
+.kpis-rtg-sts .kpi-title{
+  margin:0 !important;
+  font-size:7px !important;
+  line-height:1.1 !important;
+  font-weight:700;
+  color:#536777;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.kpis-rtg-sts .kpi-value{
+  margin-top:3px !important;
+  font-size:16px !important;
+  line-height:1 !important;
+  font-weight:500;
+  color:#173f67;
+}
+@media (max-width:900px){
+  .kpis.kpis-rtg-sts{grid-template-columns:1fr !important;}
+}
+@media (max-width:600px){
+  .kpis.kpis-rtg-sts{gap:5px !important;margin:0 3px 4px !important;}
+  .kpi-group-head{height:17px;font-size:7px;padding:0 7px;}
+  .kpi-group-cards{gap:3px;padding:3px;}
+  .kpi-group-cards.rtg,.kpi-group-cards.sts{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .kpis-rtg-sts .kpi{height:36px !important;min-height:36px !important;padding:3px 6px !important;}
+  .kpis-rtg-sts .kpi-title{font-size:6.5px !important;}
+  .kpis-rtg-sts .kpi-value{font-size:14px !important;margin-top:2px !important;}
+}
+</style>
+
+
+<style id="ajuste-v31-mensaje-alineado-k05">
+/* V31: Mensaje Activo alineado con la zona de tarjetas del Yard (aprox. K-05).
+   No modifica la lógica de fallas ni los filtros RTG/STS. */
+@media (min-width: 1001px){
+  .events-panel{
+    position:sticky !important;
+    top:94px !important;
+    align-self:start !important;
+  }
+  .events-panel > .dashboard-panel:nth-child(2){
+    margin-top:0 !important;
+  }
+}
+/* Mantener el comportamiento natural en tablet/teléfono. */
+@media (max-width:1000px){
+  .events-panel{
+    position:static !important;
+    top:auto !important;
+  }
+}
+</style>
+
+<style id="dt-operaciones-rtg-sts-v37">
+/* V37: separar DT OPERACIONES en RTG / STS sin tocar la lógica existente */
+.dt-tipo-reporte-wrap{
+  display:flex;
+  gap:8px;
+  margin:10px 0 12px;
+  align-items:center;
+}
+.dt-tipo-reporte{
+  border:0;
+  border-radius:7px;
+  padding:8px 34px;
+  min-width:105px;
+  background:#d9e3ec;
+  color:#123a5b;
+  font-weight:700;
+  cursor:pointer;
+  transition:.15s ease;
+}
+.dt-tipo-reporte.activo{
+  background:#1f73bd;
+  color:#fff;
+}
+.dt-tipo-reporte:hover{
+  filter:brightness(.98);
+}
+@media(max-width:600px){
+  .dt-tipo-reporte-wrap{margin:8px 0 10px;}
+  .dt-tipo-reporte{padding:7px 22px;min-width:88px;}
+}
+</style>
+
 </head>
 <body>
 
@@ -6772,28 +6952,46 @@ style="display:none;">
 <div id="vistaOperativo" class="vista activa">
 
 
-    <div class="kpis">
-
-        <div class="kpi">
+    <div class="kpis kpis-rtg-sts">
+      <section class="kpi-group-wrap">
+        <div class="kpi-group-head rtg">RTG</div>
+        <div class="kpi-group-cards rtg">
+          <div class="kpi kpi-rtg">
             <div class="kpi-title">GRÚAS TRABAJANDO</div>
             <div class="kpi-value" id="k1">0</div>
-        </div>
-
-        <div class="kpi">
+          </div>
+          <div class="kpi kpi-rtg">
             <div class="kpi-title">DAYLI</div>
             <div class="kpi-value" id="k2">0</div>
-        </div>
-
-        <div class="kpi">
+          </div>
+          <div class="kpi kpi-rtg">
             <div class="kpi-title">FALLAS ACTIVAS</div>
             <div class="kpi-value" id="k3">0</div>
-        </div>
-
-        <div class="kpi">
+          </div>
+          <div class="kpi kpi-rtg kpi-prioridad">
             <div class="kpi-title">GRÚAS PRIORIDAD</div>
             <div class="kpi-value" id="k4">0</div>
+          </div>
         </div>
+      </section>
 
+      <section class="kpi-group-wrap">
+        <div class="kpi-group-head sts">STS</div>
+        <div class="kpi-group-cards sts">
+          <div class="kpi kpi-sts">
+            <div class="kpi-title">GRÚAS TRABAJANDO</div>
+            <div class="kpi-value" id="k5">0</div>
+          </div>
+          <div class="kpi kpi-sts">
+            <div class="kpi-title">DAYLI</div>
+            <div class="kpi-value" id="k6">0</div>
+          </div>
+          <div class="kpi kpi-sts">
+            <div class="kpi-title">FALLAS ACTIVAS</div>
+            <div class="kpi-value" id="k7">0</div>
+          </div>
+        </div>
+      </section>
     </div>
   
 <input
@@ -6900,6 +7098,10 @@ style="display:none;">
         <div class="panel dashboard-panel">
             <div class="panel-header">
                 GRÚAS EN FALLA
+            </div>
+            <div class="fallas-filtros">
+                <button type="button" id="filtroFallasRTG" class="fallas-filtro-btn activo" onclick="cambiarFiltroFallas('rtg')">RTG</button>
+                <button type="button" id="filtroFallasSTS" class="fallas-filtro-btn" onclick="cambiarFiltroFallas('sts')">STS</button>
             </div>
 
             <div class="list" id="listaFallas"></div>
@@ -7213,18 +7415,8 @@ style="display:none;">
 
 
 <label>Supervisor</label>
-<select id="supervisor" onchange="cargarStandby()">
-
-<option value="">
-Seleccione
-</option>
-
-
-<option value="Leon">Leon</option>
-<option value="German">German</option>
-<option value="Alain">Alain</option>
-<option value="Larios">Larios</option>
-
+<select id="supervisor" onchange="cargarStandby('', document.getElementById('gruaGeneral')?.value || '')">
+<option value="">Seleccione</option>
 </select>
 
 <label>StandBy</label>
@@ -7287,22 +7479,17 @@ CERRAR
 // ================= USUARIOS =================
 
 const USUARIOS = {
-
     "RPC": {
-        password: "RPC2026",
         rol: "editar"
     },
 
     "Mantenimiento gruas": {
-        password: "MG2026",
         rol: "editar"
     },
 
     "Visualizacion": {
-        password: "",
         rol: "visualizar"
     }
-
 };
 
 let usuarioSesion = null;
@@ -7483,14 +7670,14 @@ const layout=[
 {
 zona:'A',
 gruas:[
-'N-59','N-57','N-55','K-23','K-19','K-12','','','','',''
+'N-59','N-57','N-55','K-19','K-12','','','','',''
 ]
 },
 
 {
 zona:'B',
 gruas:[
-'Z-28','Z-32','N-58','Z-44','Z-43','Z-42','N-53','N-54','K-22','',''
+'Z-28','Z-32','N-58','K-23','Z-42','N-53','N-54','K-22','',''
 ]
 },
 
@@ -7703,9 +7890,18 @@ equipos = datosNuevos.map(g => ({
 
   // Recuperar desde Supabase qué grúas están en SBY atendiendo falla.
   // Se mantiene separado de "estado" para conservar FALLA EN TURNO.
+  // SBY solo puede estar activo visualmente mientras la grúa siga en FALLA.
+  // Si Supabase trae un SBY antiguo para una grúa que ya no está en falla,
+  // no lo consideramos activo y lo limpiamos también en memoria.
   fallasAtendiendo = equipos
-    .filter(g => g.sby_atendiendo_falla === true)
+    .filter(g => g.estado === 'falla' && g.sby_atendiendo_falla === true)
     .map(g => g.id);
+
+  equipos.forEach(g => {
+    if (g.estado !== 'falla' && g.sby_atendiendo_falla === true) {
+      g.sby_atendiendo_falla = false;
+    }
+  });
 
   console.log("EQUIPOS:", equipos.length);
   console.log("SBY ATENDIENDO FALLA:", fallasAtendiendo);
@@ -7824,12 +8020,14 @@ estadoAnterior = g.estado;
       // Así los refresh/render de Supabase no hacen desaparecer el botón.
       const usuarioActual =
         usuarioSesion?.nombre || localStorage.getItem('usuarioSistema') || '';
-      const puedeUsarSBY = usuarioActual === 'Mantenimiento gruas';
+      const puedeUsarSBY =
+        usuarioActual.trim().toLowerCase() === 'mantenimiento gruas' ||
+        usuarioSesion?.rolSupabase === 'mantenimiento';
 
 
 html += `
 <div
- class="card ${g.estado} ${fallasAtendiendo.includes(g.id) ? 'priority-blink' : ''}"
+ class="card ${g.estado} ${(g.estado === 'falla' && g.sby_atendiendo_falla === true) ? 'priority-blink' : ''}"
  onclick="abrir('${g.id}')"
 >
 
@@ -7842,7 +8040,7 @@ html += `
             ? `
               <button
                 type="button"
-                class="btn-sby-falla ${fallasAtendiendo.includes(g.id) ? 'activo' : ''}"
+                class="btn-sby-falla ${g.estado === 'falla' && g.sby_atendiendo_falla === true ? 'activo' : ''}"
                 onclick="event.stopPropagation(); activarAtencionFalla('${g.id}')"
                 title="Poner grúa en SBY atendiendo falla"
               >
@@ -7906,15 +8104,21 @@ document.getElementById('yard').innerHTML = html;
 
 function renderKPIs(){
 
-    // Solo RTG (K, N y Z)
+    // RTG = K, N y Z
     const rtg = equipos.filter(g => {
         const id = (g.id || "").toUpperCase();
-
         return id.startsWith("K") ||
                id.startsWith("N") ||
                id.startsWith("Z");
     });
 
+    // STS = únicamente equipos STS
+    const sts = equipos.filter(g => {
+        const id = (g.id || "").toUpperCase();
+        return id.startsWith("STS");
+    });
+
+    // KPIs RTG
     document.getElementById('k1').innerText =
         rtg.filter(g => g.estado === 'operacion').length;
 
@@ -7926,6 +8130,16 @@ function renderKPIs(){
 
     document.getElementById('k4').innerText =
         rtg.filter(g => parseInt(g.prioridad || 0) > 0).length;
+
+    // KPIs STS: no se muestra prioridad para STS
+    document.getElementById('k5').innerText =
+        sts.filter(g => g.estado === 'operacion').length;
+
+    document.getElementById('k6').innerText =
+        sts.filter(g => g.estado === 'dayli').length;
+
+    document.getElementById('k7').innerText =
+        sts.filter(g => g.estado === 'falla').length;
 }
 function obtenerTiempoContador(g){
 
@@ -7948,27 +8162,52 @@ function obtenerTiempoContador(g){
   return formatearTiempo(segundos);
 
 }
+let filtroFallasTipo = 'rtg';
+
+function cambiarFiltroFallas(tipo){
+  filtroFallasTipo = (tipo === 'sts') ? 'sts' : 'rtg';
+
+  const rtg = document.getElementById('filtroFallasRTG');
+  const sts = document.getElementById('filtroFallasSTS');
+  if(rtg) rtg.classList.toggle('activo', filtroFallasTipo === 'rtg');
+  if(sts) sts.classList.toggle('activo', filtroFallasTipo === 'sts');
+
+  renderFallas();
+}
+
+function esEquipoSD(id){
+  return String(id || '').trim().toUpperCase().startsWith('SD');
+}
+
+function esEquipoSTS(id){
+  return String(id || '').trim().toUpperCase().startsWith('STS');
+}
+
 function renderFallas(){
 
   const cont = document.getElementById('listaFallas');
   if(!cont) return;
 
-  const fallas = equipos.filter(g =>
-    (g.estado || '').toLowerCase().trim() === 'falla'
-  );
+  // Las SD quedan completamente fuera de este panel.
+  // RTG = todo equipo que no sea SD ni STS.
+  // STS = equipos cuyo código comienza con STS.
+  const fallas = equipos.filter(g => {
+    const estado = (g.estado || '').toLowerCase().trim();
+    if(estado !== 'falla') return false;
 
+    const id = String(g.id || '').trim().toUpperCase();
+    if(esEquipoSD(id)) return false;
 
-  // ORDENAR PRIORIDAD P1 → P7
-  // SIN PRIORIDAD AL FINAL
-  fallas.sort((a,b)=>{
-
-    const prioridadA = Number(a.prioridad) || 999;
-    const prioridadB = Number(b.prioridad) || 999;
-
-    return prioridadA - prioridadB;
-
+    return filtroFallasTipo === 'sts'
+      ? esEquipoSTS(id)
+      : !esEquipoSTS(id);
   });
 
+  fallas.sort((a,b)=>{
+    const prioridadA = Number(a.prioridad) || 999;
+    const prioridadB = Number(b.prioridad) || 999;
+    return prioridadA - prioridadB;
+  });
 
   if(fallas.length === 0){
     cont.innerHTML = "Sin fallas";
@@ -7978,34 +8217,18 @@ function renderFallas(){
   let html = '';
 
   fallas.forEach(g => {
-
     html += `
       <div class="item">
-
         <div class="falla-header">
-
           <strong>${g.id}</strong>
-
           ${
             g.prioridad > 0
-            ? `<span class="badge-prioridad">
-                 P${g.prioridad}
-               </span>`
+            ? `<span class="badge-prioridad">P${g.prioridad}</span>`
             : ''
           }
-
         </div>
-
-
-        <span>
-          ${g.registro_falla || 'Sin detalle'}
-        </span>
-
-
-        <div>
-          ${obtenerTiempoContador(g)}
-        </div>
-
+        <span>${g.registro_falla || 'Sin detalle'}</span>
+        <div>${obtenerTiempoContador(g)}</div>
       </div>
     `;
   });
@@ -8117,6 +8340,57 @@ function abrir(id){
         return;
     }
   actual = id;
+
+  /* ================================================================
+     CATALOGO DEFINITIVO DEL FORMULARIO DOWNTIME
+     Se carga directamente al abrir la grúa, antes de cualquier otra
+     rutina del formulario. Solo modifica Supervisor y StandBy.
+     ================================================================ */
+  (function cargarCatalogoInicialDowntime(codigoGrua){
+    const sup = document.getElementById('supervisor');
+    const sb  = document.getElementById('standby');
+    if(!sup || !sb) return;
+
+    const codigo = String(codigoGrua || '').trim().toUpperCase().replace(/[-\s]/g,'');
+    const esSTS = codigo.startsWith('STS');
+
+    const supervisores = esSTS
+      ? ['Nieves','Jose Chiquito','Gonzalo','Manzano']
+      : ['Leon','German','Alain','Larios'];
+
+    const standbyPorSupervisor = esSTS
+      ? {
+          'Nieves':['Bonilla','Saul'],
+          'Jose Chiquito':['Claudio','Torres'],
+          'Gonzalo':['Landiz','Aaron'],
+          'Manzano':['Arturo','Denilson']
+        }
+      : {
+          'Leon':['Azahel','Felipe','Axel','Mateo','Leon'],
+          'Alain':['Vega','Veronica','Oscar L.','Armando','Alain','Yair'],
+          'Larios':['Veronica','Felipe','Larios','Vega','Magallon','Cynthia','Azahel','Victor','Yutaka','Peregrina','Valderrama','Yair','Fabian','Brayan','Oscar L','Denilson','David'],
+          'German':['Cynthia','Magallon','Banton','German','Fabian']
+        };
+
+    sup.innerHTML = '<option value="">Seleccione</option>' +
+      supervisores.map(n => `<option value="${n}">${n}</option>`).join('');
+
+    sb.innerHTML = '<option value="">Seleccione supervisor</option>';
+
+    sup.onchange = function(){
+      const elegido = this.value || '';
+      const lista = Array.isArray(standbyPorSupervisor[elegido])
+        ? standbyPorSupervisor[elegido]
+        : [];
+
+      sb.innerHTML = '<option value="">' +
+        (elegido ? 'Seleccione' : 'Seleccione supervisor') +
+        '</option>' +
+        lista.map(n => `<option value="${n}">${n}</option>`).join('');
+
+      sb.value = '';
+    };
+  })(id);
   // Limpiar formulario anterior
 document.getElementById("estado").value = "disponible";
 document.getElementById("registro_falla").value = "";
@@ -8182,11 +8456,44 @@ if (bloque) {
   document.getElementById('prioridad').value = g.prioridad || 0;
 
   document.getElementById('areaMantto').value = detectarArea(g.id);
-  document.getElementById('supervisor').value = g.supervisor || '';
 
-  cargarStandby();
+  // Restaurar el supervisor/standby guardado SIN cambiar el catálogo de la grúa.
+  (function restaurarCatalogoGuardado(){
+    const sup = document.getElementById('supervisor');
+    const sb = document.getElementById('standby');
+    if(!sup || !sb) return;
 
-  document.getElementById('standby').value = g.standby || '';
+    const codigo = String(id || '').trim().toUpperCase().replace(/[-\s]/g,'');
+    const esSTS = codigo.startsWith('STS');
+    const supervisores = esSTS
+      ? ['Nieves','Jose Chiquito','Gonzalo','Manzano']
+      : ['Leon','German','Alain','Larios'];
+    const mapa = esSTS
+      ? {'Nieves':['Bonilla','Saul'],'Jose Chiquito':['Claudio','Torres'],'Gonzalo':['Landiz','Aaron'],'Manzano':['Arturo','Denilson']}
+      : {'Leon':['Azahel','Felipe','Axel','Mateo','Leon'],'Alain':['Vega','Veronica','Oscar L.','Armando','Alain','Yair'],'Larios':['Veronica','Felipe','Larios','Vega','Magallon','Cynthia','Azahel','Victor','Yutaka','Peregrina','Valderrama','Yair','Fabian','Brayan','Oscar L','Denilson','David'],'German':['Cynthia','Magallon','Banton','German','Fabian']};
+
+    const supGuardado = String(g.supervisor || '').trim();
+    sup.innerHTML = '<option value="">Seleccione</option>' +
+      supervisores.map(n => `<option value="${n}">${n}</option>`).join('');
+    sup.value = supervisores.includes(supGuardado) ? supGuardado : '';
+
+    const lista = Array.isArray(mapa[sup.value]) ? mapa[sup.value] : [];
+    sb.innerHTML = '<option value="">' +
+      (sup.value ? 'Seleccione' : 'Seleccione supervisor') +
+      '</option>' + lista.map(n => `<option value="${n}">${n}</option>`).join('');
+    const sbGuardado = String(g.standby || '').trim();
+    sb.value = lista.includes(sbGuardado) ? sbGuardado : '';
+
+    sup.onchange = function(){
+      const elegido = this.value || '';
+      const listaNueva = Array.isArray(mapa[elegido]) ? mapa[elegido] : [];
+      sb.innerHTML = '<option value="">' +
+        (elegido ? 'Seleccione' : 'Seleccione supervisor') +
+        '</option>' + listaNueva.map(n => `<option value="${n}">${n}</option>`).join('');
+      sb.value = '';
+    };
+  })();
+
   document.getElementById('responsabilidad').value = g.responsabilidad || 'MECANICA';
   document.getElementById('codigoFalla').value = g.codigo_falla || '';
   document.querySelector('#descripcionFalla').value = g.descripcion_falla || '';
@@ -8197,7 +8504,22 @@ if (bloque) {
   document.getElementById('opActividad').value = g.actividad || '';
   document.getElementById('opMonitorReporta').value = g.monitor_reporta || '';
   document.getElementById('opMonitorCierre').value = g.monitor_cierre || '';
-  document.getElementById('gruaGeneral').value = grupoTREN[0];
+  document.getElementById('gruaGeneral').value = id;
+
+  // Reafirmar el catálogo una vez terminada toda la carga del formulario.
+  // Esto evita que otra rutina de cambio de formulario lo deje en blanco.
+  if (typeof supervisorSelect !== 'undefined' && supervisorSelect) {
+    const supervisorFinal = supervisorSelect.value || '';
+    const listaFinal = esSTSFormulario
+      ? (Array.isArray(mapaStandbySTS[supervisorFinal]) ? mapaStandbySTS[supervisorFinal] : [])
+      : (Array.isArray(mapaStandbyRTG[supervisorFinal]) ? mapaStandbyRTG[supervisorFinal] : []);
+    if (standbySelect) {
+      standbySelect.innerHTML = '<option value="">' +
+        (supervisorFinal ? 'Seleccione' : 'Seleccione supervisor') +
+        '</option>' +
+        listaFinal.map(v => `<option value="${v}">${v}</option>`).join('');
+    }
+  }
   
   // ================= INDICADOR =================
   const indicador = document.getElementById('estadoIndicador');
@@ -8247,13 +8569,11 @@ function controlarPrioridad() {
     .toUpperCase()
     .replace(/[-\s]/g,'');
 
-  const esSideLoaderSTS =
-    id.startsWith("SD") ||
-    id.startsWith("STS");
-
+  const esSD = id.startsWith("SD");
+  const esSTS = id.startsWith("STS");
 
   const ocultarCampos =
-    esFalla && esSideLoaderSTS;
+    esFalla && esSD;
 
 
   const grupoPrioridad = document.getElementById('grupoPrioridad');
@@ -8303,7 +8623,9 @@ function controlarPrioridad() {
 
   if (grupoAct) {
     grupoAct.style.display =
-      ocultarCampos ? 'none' : (esFalla ? 'block' : 'none');
+      (esFalla && esSTS) || ocultarCampos
+        ? 'none'
+        : (esFalla ? 'block' : 'none');
   }
 
 
@@ -8828,39 +9150,62 @@ if (estado === 'falla') {
 
 /* ================= STANDBY ================= */
 
-function cargarStandby(){
+function cargarStandby(valorActual = '', idGrua = ''){
 
-  const supervisor =
-  document.getElementById('supervisor').value;
+  const supervisor = document.getElementById('supervisor')?.value || '';
+  const standby = document.getElementById('standby');
+  if(!standby) return;
 
-  const standby =
-  document.getElementById('standby');
+  // Prioridad: código enviado por el formulario -> campo gruaGeneral -> actual.
+  const codigo = String(
+    idGrua ||
+    document.getElementById('gruaGeneral')?.value ||
+    actual ||
+    ''
+  ).trim();
 
-  standby.innerHTML='';
+  const normalId = codigo.toUpperCase().replace(/[-\s]/g,'');
+  const esSTS = normalId.startsWith('STS');
+
+  // ================= STS =================
+  const mapaSTS = {
+    'Nieves': ['Bonilla','Saul'],
+    'Jose Chiquito': ['Claudio','Torres'],
+    'Gonzalo': ['Landiz','Aaron'],
+    'Manzano': ['Arturo','Denilson']
+  };
+
+  // ================= RTG =================
+  // Se conserva el mapa RTG existente del sistema.
+  const mapaRTG = (typeof personalPorSupervisor !== 'undefined' && personalPorSupervisor)
+    ? personalPorSupervisor
+    : {};
+
+  const mapa = esSTS ? mapaSTS : mapaRTG;
+
+  standby.innerHTML = '';
 
   if(!supervisor){
-
-    standby.innerHTML=
-    '<option>Seleccione supervisor</option>';
-
+    standby.innerHTML = '<option value="">Seleccione supervisor</option>';
     return;
-
   }
 
-  personalPorSupervisor[supervisor]
-  .forEach(persona=>{
+  const lista = Array.isArray(mapa[supervisor]) ? mapa[supervisor] : [];
 
-    standby.innerHTML += `
+  standby.innerHTML =
+    '<option value="">Seleccione</option>' +
+    lista.map(persona =>
+      `<option value="${persona}">${persona}</option>`
+    ).join('');
 
-      <option value="${persona}">
-        ${persona}
-      </option>
-
-    `;
-
-  });
-
+  if(valorActual && lista.includes(valorActual)){
+    standby.value = valorActual;
+  } else {
+    standby.value = '';
+  }
 }
+
+
 
 /* ================= MENSAJES ================= */
 
@@ -8932,7 +9277,7 @@ async function cargarMensajeActual() {
   if (!m) { cont.innerHTML = '<div class="item">Sin mensaje activo</div>'; if (badge) badge.style.display = 'none'; return; }
   if (badge) badge.style.display = (ultimoIdGuardado != m.id) ? 'block' : 'none';
   cont.innerHTML = mensajes.map(mensaje => {
-    const fechaFormateada = formatearFechaMX(mensaje.created_at);
+    const fechaFormateada = formatearFechaHoraMX(mensaje.created_at);
     return `<div class="item"><div style="font-weight:bold;color:#0b5aa2;">${mensaje.autor || "SIN REMITENTE"}</div><div style="margin-top:10px;color:#111;font-size:16px;display:block;">${mensaje.mensaje || ''}</div><div style="margin-top:10px;font-size:12px;color:#64748b;">${fechaFormateada}</div></div>`;
   }).join('');
 }
@@ -8959,18 +9304,9 @@ async function cargarHistorial(){
 
   data.forEach(m=>{
 
-    // 🔥 FIX DE FECHA (México + UTC seguro)
-    const fecha = new Date(m.created_at + 'Z');
-
-    const fechaFormateada = fecha.toLocaleString('es-MX', {
-      timeZone: 'America/Mexico_City',
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false
-    });
+    // Fecha/hora consistente: evita conversiones UTC que puedan
+    // cambiar el día cuando created_at viene sin zona horaria.
+    const fechaFormateada = formatearFechaHoraMX(m.created_at);
 
 html += `
 <div class="history-item">
@@ -9681,6 +10017,7 @@ async function cargarReporteGruas() {
     return;
   }
   reporteGruasData = data || [];
+  tipoReporteGruaActual = 'RTG';
   llenarFiltrosReporte();
 
   let html = `
@@ -9723,6 +10060,11 @@ async function cargarReporteGruas() {
 
 
 
+    </div>
+
+    <div class="reporte-tipo-tabs" style="display:flex;gap:8px;margin:0 0 10px 0;">
+      <button type="button" class="btn-tipo-reporte activo" data-tipo="RTG" onclick="seleccionarReporteGruaTipo('RTG', this)">RTG</button>
+      <button type="button" class="btn-tipo-reporte" data-tipo="STS" onclick="seleccionarReporteGruaTipo('STS', this)">STS</button>
     </div>
 
     <div class="tabla-container">
@@ -9770,6 +10112,24 @@ async function cargarReporteGruas() {
   document.getElementById('tab-gruas').innerHTML = html;
   pintarTablaReporteGruas(reporteGruasData);
 }
+let tipoReporteGruaActual = 'RTG';
+
+function esRTGIdReporte(id){
+  const v = String(id || '').toUpperCase().replace(/[-\s]/g,'');
+  return (v.startsWith('K') || v.startsWith('N') || v.startsWith('Z')) && !v.startsWith('STS') && !v.startsWith('SD');
+}
+
+function esSTSIdReporte(id){
+  return String(id || '').toUpperCase().replace(/[-\s]/g,'').startsWith('STS');
+}
+
+function seleccionarReporteGruaTipo(tipo, boton){
+  tipoReporteGruaActual = tipo === 'STS' ? 'STS' : 'RTG';
+  document.querySelectorAll('#tab-gruas .btn-tipo-reporte').forEach(b => b.classList.remove('activo'));
+  if(boton) boton.classList.add('activo');
+  filtrarReporteGruas();
+}
+
 function llenarFiltrosReporte(){
 
     const equipo = document.getElementById('filtroEquipo');
@@ -9819,6 +10179,7 @@ function filtrarReporteGruas(){
 
 let datos = [...reporteGruasData];
 
+ datos = datos.filter(r => tipoReporteGruaActual === 'STS' ? esSTSIdReporte(r.grua) : esRTGIdReporte(r.grua));
 
  if(inicio){
 
@@ -9968,6 +10329,8 @@ async function actualizarDatoFallaTabla(elemento){
 
 function pintarTablaReporteGruas(data){
 
+  data = (data || []).filter(r => tipoReporteGruaActual === 'STS' ? esSTSIdReporte(r.grua) : esRTGIdReporte(r.grua));
+
   let html = '';
 
   if(data && data.length > 0){
@@ -10054,6 +10417,7 @@ async function cargarReporteDT() {
     return;
   }
 reporteDTData = data || [];
+  tipoReporteDTActual = 'RTG';
   let html = `
   <div class="reporte-container">
 
@@ -10080,6 +10444,11 @@ reporteDTData = data || [];
               <button onclick="descargarExcel()" class="btn-excel">
     Descargar Excel
   </button>
+    </div>
+
+    <div class="dt-tipo-reporte-wrap" aria-label="Tipo de grúa">
+      <button type="button" class="dt-tipo-reporte activo" onclick="seleccionarReporteDTTipo('RTG', this)">RTG</button>
+      <button type="button" class="dt-tipo-reporte" onclick="seleccionarReporteDTTipo('STS', this)">STS</button>
     </div>
 
     <div class="tabla-container">
@@ -10224,19 +10593,15 @@ function ponerFechaGruaReportada(){
 async function guardarEstadoRapido() {
   const tipoGrua = actual.substring(0,3);
 
-const esSDSTS =
-    actual &&
-    (
-        actual.toUpperCase().startsWith("SD") ||
-        actual.toUpperCase().startsWith("STS")
-    );
+const esSD =
+    actual && actual.toUpperCase().startsWith("SD");
 
 console.log("ENTRÉ A GUARDAR ESTADO RÁPIDO");
 try {
 
-  // SIDE LOADER / STS: modo simple temporal.
-  // Solo actualiza el estado; no valida formulario ni genera reportes.
-  if (esSDSTS) {
+  // SIDE LOADER (SD): modo simple.
+  // Las STS conservan el flujo completo de abrir/cerrar falla.
+  if (esSD) {
     const estadoSimple = document.getElementById('estado').value;
     const { error: errorSDSTS } = await db
       .from('gruas')
@@ -10282,14 +10647,17 @@ try {
 
     let errores = [];
 
-if (!esSDSTS) {
+if (!esSD) {
 
     if (!quien) {
       errores.push("Quién reportó");
       document.getElementById('quienReporto').style.border = "2px solid red";
     }
 
-    if (!actividad) {
+    // STS: "Actividad que realizaba" NO se solicita ni es obligatoria.
+    // RTG: sí continúa siendo obligatoria.
+    const esSTSActual = String(actual || '').toUpperCase().startsWith('STS');
+    if (!esSTSActual && !actividad) {
       errores.push("Actividad que realizaba");
       document.getElementById('actividad').style.border = "2px solid red";
     }
@@ -10358,8 +10726,7 @@ const entroAFalla =
 
 // ================= FALLA =================
 if (estado === 'falla') {
-const esSDSTS =
-  actual.startsWith("SD") || actual.startsWith("STS");
+const esSD = actual.startsWith("SD");
   if (estadoAnterior !== 'falla') {
 
     ponerFechaFallaActual();
@@ -10835,11 +11202,11 @@ function manejarCambioEstado() {
 
   if (!equipo) return;
 
-  // SIDE LOADER (SD) y STS: por ahora SOLO se cambia el estado.
-  // No abrir formulario, no pedir datos y no generar reporte.
+  // SIDE LOADER (SD): por ahora SOLO cambia el estado.
+  // STS conserva el flujo completo de abrir/cerrar falla.
   const idEquipo = String(equipo.id || actual || '').toUpperCase().replace(/[-\s]/g,'');
-  const esSDSTS = idEquipo.startsWith('SD') || idEquipo.startsWith('STS');
-  if (esSDSTS) {
+  const esSD = idEquipo.startsWith('SD');
+  if (esSD) {
     guardarEstadoRapido();
     return;
   }
@@ -10924,18 +11291,67 @@ function getDescripcionActividad(g) {
     ''
   );
 }
-function formatearFechaMX(fechaBD){
+function formatearFechaMX(fechaBD) {
+  if (!fechaBD) return '';
 
-    if(!fechaBD) return '';
+  const valor = String(fechaBD).trim();
 
-    const fecha = new Date(fechaBD);
+  const tieneZonaHoraria = /(?:Z|[+-]\d{2}:?\d{2})$/i.test(valor);
 
-    return fecha.toLocaleDateString('es-MX', {
-        day:'2-digit',
-        month:'2-digit',
-        year:'numeric'
-    });
+  if (!tieneZonaHoraria) {
+    const partes = valor.match(
+      /^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/
+    );
 
+    if (partes) {
+      const [, y, mo, d] = partes;
+      return `${String(d).padStart(2,'0')}/${String(mo).padStart(2,'0')}/${y}`;
+    }
+  }
+
+  const fecha = new Date(valor);
+  if (Number.isNaN(fecha.getTime())) return valor;
+
+  return fecha.toLocaleDateString('es-MX', {
+    timeZone: 'America/Mexico_City',
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  });
+}
+
+function formatearFechaHoraMX(fechaBD) {
+  if (!fechaBD) return '';
+
+  const valor = String(fechaBD).trim();
+
+  // Si Supabase entrega el timestamp sin zona horaria,
+  // usamos directamente la fecha y hora almacenadas.
+  if (!/(?:Z|[+-]\d{2}:?\d{2})$/i.test(valor)) {
+    const partes = valor.match(
+      /^(\d{4})[-/](\d{1,2})[-/](\d{1,2})(?:[T\s](\d{1,2}):?(\d{2})?(?::?(\d{2}))?)?/
+    );
+
+    if (partes) {
+      const [, y, mo, d, h = '00', mi = '00'] = partes;
+      return `${String(d).padStart(2,'0')}/${String(mo).padStart(2,'0')}/${y}, ${String(h).padStart(2,'0')}:${String(mi).padStart(2,'0')}`;
+    }
+
+    return valor;
+  }
+
+  const fecha = new Date(valor);
+  if (Number.isNaN(fecha.getTime())) return valor;
+
+  return fecha.toLocaleString('es-MX', {
+    timeZone: 'America/Mexico_City',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  });
 }
 
 function ocultarControlesEstado() {
@@ -11185,23 +11601,24 @@ if (grupoFechaOpRepo) {
     grupoFechaOpRepo.style.display = "none";
 }
 // CONTROL SD / STS
-const esSDSTS =
-    actual.startsWith("SD") || actual.startsWith("STS");
+// SD = cambio de estado simple. STS = flujo completo de falla.
+const esSD = String(actual || '').toUpperCase().startsWith("SD");
+const esSTS = String(actual || '').toUpperCase().startsWith("STS");
 
 const fechaRepo = document.getElementById("grupoFechaOpRepo");
 const btnStandby = document.getElementById("btnAtenderFalla");
 
-if (esSDSTS) {
+if (esSD) {
 
-    // Ocultar Fecha/Hora Grúa Reportada
-    if (fechaRepo) {
-        fechaRepo.style.display = "none";
-    }
+    // SD: solo cambio de estado.
+    if (fechaRepo) fechaRepo.style.display = "none";
+    if (btnStandby) btnStandby.style.display = "none";
 
-    // Ocultar botón STANDBY
-    if (btnStandby) {
-        btnStandby.style.display = "none";
-    }
+} else if (esSTS) {
+
+    // STS: conserva el flujo de falla. Solo se oculta
+    // "Actividad que realizaba"; supervisor/standby y cierre siguen activos.
+    if (fechaRepo) fechaRepo.style.display = "none";
 
 }
 }
@@ -11545,7 +11962,7 @@ async function activarAtencionFalla(idGrua = actual){
 
   // Al presionar SBY se activa/desactiva la atención.
   // El estado se guarda en Supabase, pero "estado" sigue siendo FALLA.
-  const activar = !fallasAtendiendo.includes(id);
+  const activar = !(g.estado === 'falla' && g.sby_atendiendo_falla === true);
 
   const { error } = await db
     .from('gruas')
@@ -11562,10 +11979,16 @@ async function activarAtencionFalla(idGrua = actual){
   }
 
   if(activar){
-    fallasAtendiendo.push(id);
+    if (!fallasAtendiendo.includes(id)) fallasAtendiendo.push(id);
   }else{
     fallasAtendiendo = fallasAtendiendo.filter(x => x !== id);
   }
+
+  // Nunca conservar SBY/parpadeo para una grúa que ya no esté en FALLA.
+  fallasAtendiendo = fallasAtendiendo.filter(x => {
+    const equipo = getEquipo(x);
+    return equipo && equipo.estado === 'falla' && equipo.sby_atendiendo_falla === true;
+  });
 
   const equipoActualizado = getEquipo(id);
   if (equipoActualizado) equipoActualizado.sby_atendiendo_falla = activar;
@@ -11963,6 +12386,24 @@ function capturarTablero(){
 
 
 }
+let tipoReporteDTActual = 'RTG';
+
+function esRTGIdReporteDT(id){
+  const v = String(id || '').toUpperCase().replace(/[-\s]/g,'');
+  return (v.startsWith('K') || v.startsWith('N') || v.startsWith('Z')) && !v.startsWith('STS') && !v.startsWith('SD');
+}
+
+function esSTSIdReporteDT(id){
+  return String(id || '').toUpperCase().replace(/[-\s]/g,'').startsWith('STS');
+}
+
+function seleccionarReporteDTTipo(tipo, boton){
+  tipoReporteDTActual = tipo === 'STS' ? 'STS' : 'RTG';
+  document.querySelectorAll('#contenedorReporteDT .dt-tipo-reporte').forEach(b => b.classList.remove('activo'));
+  if(boton) boton.classList.add('activo');
+  filtrarReporteDT();
+}
+
 function pintarReporteDT(data){
 
     let html = '';
@@ -12007,6 +12448,12 @@ function filtrarReporteDT(){
     const fin = document.getElementById("dtFechaFin").value;
 
     let datos = [...reporteDTData];
+
+    datos = datos.filter(r =>
+        tipoReporteDTActual === 'STS'
+          ? esSTSIdReporteDT(r.grua)
+          : esRTGIdReporteDT(r.grua)
+    );
 
     if(inicio){
 
@@ -12168,10 +12615,10 @@ if (btnImportarExcel) {
     btnImportarExcel.style.cursor = "not-allowed";
 }
 }
-function iniciarSesion() {
+async function iniciarSesion() {
 
   const usuario =
-    document.getElementById("loginUsuario").value;
+    document.getElementById("loginUsuario").value.trim();
 
   const password =
     document.getElementById("loginPassword").value;
@@ -12194,94 +12641,171 @@ function iniciarSesion() {
     return;
   }
 
-  // ==========================================
-  // USUARIO SIN CONTRASEÑA
-  // ==========================================
-  if (datos.password !== "" && datos.password !== password) {
-    error.innerText = "Contraseña incorrecta";
+  const esVisualizacion =
+    datos.rol === "visualizar";
+
+  // Visualización entra sin contraseña.
+  if (!esVisualizacion && !password) {
+    error.innerText = "Ingrese la contraseña";
     return;
   }
 
-  // Guardar sesión
-  usuarioSesion = {
-    nombre: usuario,
-    rol: datos.rol,
-    puedeEditar: datos.rol === "editar"
-  };
+  error.innerText = "";
 
-const usuarioActivo =
-    document.getElementById("usuarioActivo");
+  try {
 
-if (usuarioActivo) {
-    usuarioActivo.innerText = usuario;
-}
+    let resultado;
 
+    if (esVisualizacion) {
 
-localStorage.setItem("usuarioSistema", usuario);
-localStorage.setItem("rolSistema", datos.rol);
+      // Acceso de solo lectura.
+      resultado = {
+        ok: true,
+        usuario: "Visualizacion",
+        rol: "visualizacion",
+        session: null
+      };
 
-  // Recordar credenciales únicamente si el usuario lo solicita.
-  // Visualización no necesita contraseña.
-  if (recordar) {
-    localStorage.setItem("recordarCredenciales", "1");
-    localStorage.setItem("usuarioRecordado", usuario);
-    if (datos.password !== "") {
-      localStorage.setItem("passwordRecordada", password);
     } else {
-      localStorage.removeItem("passwordRecordada");
+
+      // RPC y Mantenimiento Gruas se validan en Supabase.
+      const response = await fetch(
+        `${SUPABASE_URL}/functions/v1/login-usuario`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_KEY
+          },
+          body: JSON.stringify({
+            usuario: usuario,
+            password: password
+          })
+        }
+      );
+
+      resultado = await response.json();
+
+      if (!response.ok || !resultado.ok) {
+        error.innerText =
+          resultado.error ||
+          "Usuario o contraseña incorrectos";
+        return;
+      }
     }
-  } else {
-    localStorage.removeItem("recordarCredenciales");
-    localStorage.removeItem("usuarioRecordado");
+
+    let rolSistema = "";
+
+    if (resultado.rol === "rpc") {
+      rolSistema = "editar";
+    } else if (resultado.rol === "mantenimiento") {
+      rolSistema = "editar";
+    } else if (resultado.rol === "visualizacion") {
+      rolSistema = "visualizar";
+    } else {
+      error.innerText = "El usuario no tiene un rol válido";
+      return;
+    }
+
+    usuarioSesion = {
+      nombre: resultado.usuario,
+      rol: rolSistema,
+      puedeEditar: rolSistema === "editar",
+      session: resultado.session
+    };
+
+    const usuarioActivo =
+      document.getElementById("usuarioActivo");
+
+    if (usuarioActivo) {
+      usuarioActivo.innerText =
+        "👤 " + resultado.usuario;
+    }
+
+    localStorage.setItem(
+      "usuarioSistema",
+      resultado.usuario
+    );
+
+    localStorage.setItem(
+      "rolSistema",
+      rolSistema
+    );
+
+    // Nunca guardar contraseña.
     localStorage.removeItem("passwordRecordada");
+
+    if (recordar) {
+      localStorage.setItem("recordarCredenciales", "1");
+      localStorage.setItem("usuarioRecordado", usuario);
+    } else {
+      localStorage.removeItem("recordarCredenciales");
+      localStorage.removeItem("usuarioRecordado");
+    }
+
+    document.getElementById("login").style.display = "none";
+    document.getElementById("app").style.display = "block";
+
+    // Cargar el tablero después de mostrar la aplicación,
+    // sin modificar el resto de su funcionamiento.
+    setTimeout(() => {
+      try {
+        mostrarVista("operativo");
+        aplicarPermisos();
+        render();
+        renderKPIs();
+
+        if (typeof renderFallas === "function") {
+          renderFallas();
+        }
+
+        if (typeof renderPrioridad === "function") {
+          renderPrioridad();
+        }
+      } catch (e) {
+        console.error(
+          "Error al cargar el tablero después del login:",
+          e
+        );
+      }
+    }, 0);
+
+  } catch (e) {
+
+    console.error(
+      "Error conectando con login-usuario:",
+      e
+    );
+
+    error.innerText =
+      "No se pudo conectar con el servidor";
   }
-document.getElementById("usuarioActivo").innerText =
-    "👤 " + usuario;
-
-  // Ocultar login
-  document.getElementById("login").style.display = "none";
-
-  // Mostrar aplicación
-  document.getElementById("app").style.display = "block";
-document.getElementById("usuarioActivo").innerText =
-    "👤 " + usuario;
-
-  // ==========================================
-  // SIEMPRE INICIAR EN CONTROL OPERATIVO
-  // ==========================================
-  // Si el usuario anterior terminó en "Mensajes Operativos",
-  // esa vista queda viva en el DOM. Al cambiar de usuario sin
-  // recargar la página hay que llevarlo nuevamente al dashboard.
-  mostrarVista("operativo");
-
-  // ==========================================
-  // APLICAR PERMISOS DEL USUARIO ACTUAL
-  // ==========================================
-  aplicarPermisos();
-
-  // Mostrar SBY inmediatamente al entrar, sin esperar al siguiente refresh.
-  render();
-  renderKPIs();
-  if (typeof renderFallas === 'function') renderFallas();
-  if (typeof renderPrioridad === 'function') renderPrioridad();
-
-  console.log("Sesión iniciada:", usuarioSesion);
 }
 function cargarCredencialesRecordadas() {
 
-  const recordar = localStorage.getItem("recordarCredenciales") === "1";
-  const usuario = localStorage.getItem("usuarioRecordado");
-  const password = localStorage.getItem("passwordRecordada") || "";
+  const recordar =
+    localStorage.getItem("recordarCredenciales") === "1";
 
-  const select = document.getElementById("loginUsuario");
-  const input = document.getElementById("loginPassword");
-  const check = document.getElementById("recordarCredenciales");
+  const usuario =
+    localStorage.getItem("usuarioRecordado");
+
+  const select =
+    document.getElementById("loginUsuario");
+
+  const input =
+    document.getElementById("loginPassword");
+
+  const check =
+    document.getElementById("recordarCredenciales");
 
   if (!select || !input || !check) return;
 
+  // Eliminar cualquier contraseña de versiones anteriores.
+  localStorage.removeItem("passwordRecordada");
+
   if (recordar && usuario && USUARIOS[usuario]) {
     select.value = usuario;
-    input.value = password;
+    input.value = "";
     check.checked = true;
     controlarPasswordLogin();
   }
@@ -12542,6 +13066,56 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 </style>
 
+
+<style id="ajuste-v30-login-fallas-mensajes">
+/* V30: conservar siempre los filtros RTG/STS visibles en GRÚAS EN FALLA */
+.events-panel .fallas-filtros{
+  display:flex !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  height:auto !important;
+  min-height:0 !important;
+  padding:6px 8px 2px !important;
+  gap:4px !important;
+}
+.events-panel .fallas-filtro-btn{
+  display:inline-flex !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  flex:0 0 70px !important;
+  width:70px !important;
+  min-width:70px !important;
+  max-width:70px !important;
+  height:24px !important;
+  margin:0 !important;
+  padding:3px 8px !important;
+  align-items:center !important;
+  justify-content:center !important;
+  font-size:10px !important;
+  line-height:1 !important;
+}
+.events-panel .fallas-filtro-btn.activo{background:#1976d2 !important;color:#fff !important;}
+.events-panel .fallas-filtro-btn:not(.activo){background:#d9e2ea !important;color:#17324d !important;}
+
+/* V30: subir un poco MENSAJE ACTIVO sin pegarlo al panel de fallas */
+.events-panel{gap:8px !important;}
+.events-panel > .dashboard-panel:nth-child(2){margin-top:-2px !important;}
+
+@media(max-width:600px){
+  .events-panel .fallas-filtros{padding:5px 7px 1px !important;gap:3px !important;}
+  .events-panel .fallas-filtro-btn{flex-basis:64px !important;width:64px !important;min-width:64px !important;max-width:64px !important;height:22px !important;font-size:9px !important;}
+  .events-panel{gap:6px !important;}
+  .events-panel > .dashboard-panel:nth-child(2){margin-top:-1px !important;}
+}
+</style>
+
+
+
+
+
+
+
+
 </body>
 
 </html>
@@ -12654,3 +13228,307 @@ document.addEventListener("DOMContentLoaded", () => {
 #mensajeActivo .item:last-child{margin-bottom:0;}
 @media (max-width:700px){#mensajeActivo{max-height:210px !important;}}
 </style>
+
+<style id="ajuste-panel-fallas-sin-espacio-v29">
+/* ===== PANEL GRÚAS EN FALLA: SUBIR AL MÁXIMO Y ELIMINAR ESPACIO EN BLANCO ===== */
+.events-panel{
+  margin-top:0 !important;
+  padding-top:0 !important;
+  top:0 !important;
+}
+.events-panel .dashboard-panel:first-child{
+  margin-top:0 !important;
+}
+
+/* En PC: el panel derecho empieza exactamente al inicio del dashboard */
+@media (min-width:1401px){
+  .dashboard-main{
+    align-items:start !important;
+  }
+  .events-panel{
+    position:sticky !important;
+    top:0 !important;
+    margin-top:0 !important;
+    align-self:start !important;
+  }
+}
+
+/* Tablet/teléfono: sin separación artificial antes de GRÚAS EN FALLA */
+@media (max-width:1400px){
+  .events-panel{
+    margin-top:0 !important;
+    padding-top:0 !important;
+    gap:8px !important;
+  }
+}
+
+@media (max-width:600px){
+  .dashboard-main{
+    gap:6px !important;
+  }
+  .events-panel{
+    margin-top:0 !important;
+  }
+  .events-panel .dashboard-panel:first-child{
+    margin-top:0 !important;
+  }
+}
+</style>
+
+<style id="ajuste-v34-mensaje-k05-sin-salto">
+/* V34: Mensaje Activo alineado con K-05 SIN movimiento visible al refrescar.
+   El panel permanece invisible hasta que su posición real fue calculada. */
+@media (min-width:1001px){
+  .events-panel{
+    position:relative !important;
+    align-self:start !important;
+  }
+  .events-panel > .dashboard-panel:nth-child(2){
+    position:absolute !important;
+    left:0 !important;
+    right:0 !important;
+    width:100% !important;
+    margin:0 !important;
+    z-index:5 !important;
+    visibility:hidden !important;
+    opacity:0 !important;
+    transition:none !important;
+  }
+  .events-panel > .dashboard-panel:nth-child(2).mensaje-k05-listo{
+    visibility:visible !important;
+    opacity:1 !important;
+  }
+}
+@media (max-width:1000px){
+  .events-panel > .dashboard-panel:nth-child(2){
+    position:relative !important;
+    top:auto !important;
+    left:auto !important;
+    right:auto !important;
+    width:100% !important;
+    margin:0 !important;
+    visibility:visible !important;
+    opacity:1 !important;
+  }
+}
+
+/* ===== CAPA RESPONSIVE ADICIONAL ===== */
+html, body {
+  width: 100%;
+  min-width: 0 !important;
+  overflow-x: hidden;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+img, svg, canvas, video {
+  max-width: 100%;
+  height: auto;
+}
+
+button, input, select, textarea {
+  max-width: 100%;
+}
+
+#app, #login, .container, .main-container, .content,
+main, .dashboard, .dashboard-container {
+  max-width: 100%;
+}
+
+@media (max-width: 900px) {
+  body {
+    font-size: clamp(13px, 1.8vw, 16px);
+  }
+
+  .container,
+  .main-container,
+  .content,
+  main,
+  .dashboard,
+  .dashboard-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  .table-container,
+  .tabla-container,
+  .table-wrapper {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  button {
+    min-height: 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    font-size: 14px;
+  }
+
+  header,
+  nav,
+  .header,
+  .navbar {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .grid,
+  .dashboard-grid,
+  .cards,
+  .card-grid,
+  .form-grid,
+  .row {
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100% !important;
+  }
+
+  .flex-row {
+    flex-wrap: wrap !important;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  button {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    white-space: normal;
+  }
+
+  .table-container,
+  .tabla-container,
+  .table-wrapper {
+    overflow-x: auto !important;
+    width: 100% !important;
+  }
+
+  table {
+    min-width: 620px;
+  }
+
+  .sidebar,
+  .side-menu,
+  .menu-lateral {
+    max-width: 100vw;
+  }
+}
+
+@media (max-width: 420px) {
+  body {
+    font-size: 13px;
+  }
+
+  h1 { font-size: 1.35rem; }
+  h2 { font-size: 1.15rem; }
+  h3 { font-size: 1rem; }
+
+  button {
+    min-height: 38px;
+    padding: 8px 10px;
+  }
+
+  .modal,
+  .dialog,
+  .popup {
+    width: calc(100vw - 20px) !important;
+    max-width: calc(100vw - 20px) !important;
+    margin: 10px auto;
+  }
+}
+
+/* ===== FIN CAPA RESPONSIVE ===== */
+
+</style>
+
+<script>
+/* V35: alinear MENSAJE ACTIVO con K-05 sin parpadeo ni bucle de MutationObserver. */
+(function(){
+  let rafId = 0;
+  let resizeObserver = null;
+  let listenersAdded = false;
+
+  function obtenerElementos(){
+    const k05 = Array.from(document.querySelectorAll('.card')).find(el => {
+      const code = el.querySelector('.code');
+      return code && code.textContent.trim() === 'K-05';
+    });
+    const eventsPanel = document.querySelector('.events-panel');
+    const paneles = eventsPanel ? eventsPanel.querySelectorAll(':scope > .dashboard-panel') : [];
+    const mensajePanel = paneles.length > 1 ? paneles[1] : null;
+    return {k05, eventsPanel, mensajePanel};
+  }
+
+  function alinearMensajeConK05(){
+    if (window.innerWidth <= 1000) return;
+
+    const {k05, eventsPanel, mensajePanel} = obtenerElementos();
+    if (!k05 || !eventsPanel || !mensajePanel) return;
+
+    const k05Rect = k05.getBoundingClientRect();
+    const eventsRect = eventsPanel.getBoundingClientRect();
+    const top = Math.max(0, Math.round(k05Rect.top - eventsRect.top));
+
+    /* Se escribe la posición antes de hacerlo visible. */
+    mensajePanel.style.top = top + 'px';
+    mensajePanel.style.visibility = 'visible';
+    mensajePanel.style.opacity = '1';
+    mensajePanel.classList.add('mensaje-k05-listo');
+  }
+
+  function programarAlineacion(){
+    cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(alinearSeguro);
+  }
+
+  function alinearSeguro(){
+    try { alinearMensajeConK05(); } catch(e) { console.warn('Alineación Mensaje Activo:', e); }
+  }
+
+  function iniciar(){
+    /* Primer cálculo después de que el layout exista. */
+    programarAlineacion();
+    setTimeout(programarAlineacion, 80);
+    setTimeout(programarAlineacion, 200);
+    setTimeout(programarAlineacion, 400);
+
+    if (!listenersAdded) {
+      listenersAdded = true;
+      window.addEventListener('resize', programarAlineacion, {passive:true});
+      window.addEventListener('scroll', programarAlineacion, {passive:true});
+    }
+
+    /* Si cambia el tamaño real del panel/grilla, recalcular sin observar mutaciones del DOM. */
+    const {k05, eventsPanel} = obtenerElementos();
+    if (typeof ResizeObserver !== 'undefined') {
+      if (resizeObserver) resizeObserver.disconnect();
+      resizeObserver = new ResizeObserver(() => programarAlineacion());
+      if (k05) resizeObserver.observe(k05);
+      if (eventsPanel) resizeObserver.observe(eventsPanel);
+    }
+  }
+
+  window.alinearMensajeConK05 = alinearMensajeConK05;
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', iniciar, {once:true});
+  } else {
+    iniciar();
+  }
+})();
+</script>
