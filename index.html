@@ -9653,6 +9653,8 @@ function iniciarRealtime() {
 // recuperar internet o volver a enfocar la ventana, se fuerza una lectura real.
 let ultimaActualizacionAlVolver = 0;
 function refrescarAlVolver(origen) {
+  if (!haySesionActiva()) return;
+
   const ahora = Date.now();
 
   // Agrupa eventos muy cercanos (focus + pageshow + visibilitychange).
@@ -9682,13 +9684,39 @@ window.addEventListener('online', () => refrescarAlVolver('online'));
 // Refresco de respaldo. Realtime es el mecanismo principal; este respaldo
 // evita consultas continuas en teléfonos cuando no hubo cambios.
 setInterval(() => {
-  if (document.visibilityState === 'visible' && navigator.onLine !== false) {
+  if (haySesionActiva() && document.visibilityState === 'visible' && navigator.onLine !== false) {
     actualizarTodo('respaldo 30s');
   }
 }, 30000);
 
 /* ================= REALTIME ================= */
-iniciarRealtime();
+// El login debe quedar completamente libre de consultas/render pesado.
+// El sistema de datos y Realtime se activan solo después de una sesión válida.
+let sistemaDatosIniciado = false;
+
+function haySesionActiva(){
+  return !!(usuarioSesion || localStorage.getItem('usuarioSistema'));
+}
+
+function iniciarDatosDespuesLogin(){
+  if (sistemaDatosIniciado) return;
+  sistemaDatosIniciado = true;
+
+  // Ejecutar después de que el navegador haya podido pintar el login/app.
+  setTimeout(() => {
+    try {
+      actualizarTodo('login correcto');
+      cargarResponsabilidades();
+      iniciarRealtime();
+    } catch(e) {
+      console.warn('Inicialización posterior al login:', e);
+    }
+  }, 0);
+}
+
+// No iniciar Realtime mientras la pantalla de login está activa.
+// Se inicia desde iniciarSesion() cuando las credenciales son válidas.
+
 
 /* ================= CERRAR CLICK AFUERA ================= */
 
@@ -10142,8 +10170,12 @@ document.addEventListener('DOMContentLoaded', () => {
   controlarBotonStandby();
   mostrarVista('operativo');
   cargarOpcionesTiempoMuerto();
-  actualizarTodo('DOMContentLoaded');
-  cargarResponsabilidades();
+
+  // Importante: no consultar Supabase ni construir el tablero mientras
+  // el usuario todavía está en la pantalla de login.
+  if (haySesionActiva()) {
+    iniciarDatosDespuesLogin();
+  }
 
   const estado = document.getElementById('estado');
 
@@ -13044,6 +13076,9 @@ async function iniciarSesion() {
         if (typeof renderPrioridad === "function") {
           renderPrioridad();
         }
+
+        // Ahora que el login terminó, iniciar las consultas y Realtime.
+        iniciarDatosDespuesLogin();
       } catch (e) {
         console.error(
           "Error al cargar el tablero después del login:",
@@ -13100,6 +13135,7 @@ function mostrarSistema() {
   // CASO SOLO VISUALIZACIÓN
   aplicarPermisos();
   render();
+  iniciarDatosDespuesLogin();
 
 }
 function congelarModoVisualizacion() {
