@@ -6688,6 +6688,195 @@ body.modo-visualizacion .main-content{
 }
 </style>
 
+<style id="fix-contadores-rtg-sts-sd">
+/* SOLO: reinicio de contador al entrar a FALLA y exclusion de SIDE LOADER */
+</style>
+<script>
+/* PATCH CONTADORES: no modifica otras funciones */
+(function(){
+  const _guardarEstadoRapido = window.guardarEstadoRapido;
+  if (typeof _guardarEstadoRapido !== 'function') return;
+  window.guardarEstadoRapido = async function(){
+    const id = String(window.actual || '').toUpperCase().replace(/[-\s]/g,'');
+    const esSD = id.startsWith('SD');
+    const g = typeof getEquipo === 'function' ? getEquipo(window.actual) : null;
+    const estadoNuevo = document.getElementById('estado')?.value;
+    if (g && esSD) {
+      // SIDE LOADER: conservar su comportamiento de solo cambio de estado;
+      // sus contadores no deben correr.
+      const r = await _guardarEstadoRapido.apply(this, arguments);
+      try {
+        if (typeof db !== 'undefined') {
+          await db.from('gruas').update({
+            contador_estado:'stopped', contador_inicio:null, contador_segundos:0,
+            contador_bano_estado:'stopped', contador_bano_inicio:null, contador_bano_segundos:0,
+            contador_senal_estado:'stopped', contador_senal_inicio:null, contador_senal_segundos:0
+          }).eq('id', g.id);
+        }
+        g.contador_estado='stopped'; g.contador_inicio=null; g.contador_segundos=0;
+        g.contador_bano_estado='stopped'; g.contador_bano_inicio=null; g.contador_bano_segundos=0;
+        g.contador_senal_estado='stopped'; g.contador_senal_inicio=null; g.contador_senal_segundos=0;
+        if (typeof render === 'function') render();
+      } catch(e) { console.warn('PATCH SD:',e); }
+      return r;
+    }
+    return _guardarEstadoRapido.apply(this, arguments);
+  };
+})();
+</script>
+
+<style id="responsive-mobile-tablet-final">
+/* ==========================================================
+   AJUSTE FINAL MOVIL + TABLET
+   SOLO PRESENTACION / TACTIL. NO CAMBIA LOGICA.
+   ========================================================== */
+
+/* Evita que los controles tactiles sufran doble accion o zoom */
+@media (max-width: 1100px){
+  button, select, input, textarea, .menu-btn, .card{
+    touch-action: manipulation;
+  }
+
+  .menu-btn, button{
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* TABLET: 769-1100 px */
+@media (min-width:769px) and (max-width:1100px){
+  .layout{
+    flex-direction:column !important;
+  }
+
+  .sidebar{
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    height:auto !important;
+    display:flex !important;
+    flex-wrap:wrap !important;
+    align-items:center !important;
+    gap:8px !important;
+    padding:10px !important;
+    box-sizing:border-box !important;
+  }
+
+  .sidebar-title{
+    width:100% !important;
+    text-align:center !important;
+    margin:2px 0 6px !important;
+  }
+
+  .menu-btn{
+    width:calc(33.333% - 6px) !important;
+    min-height:54px !important;
+    margin:0 !important;
+    justify-content:center !important;
+  }
+
+  .main-content{
+    width:100% !important;
+    min-width:0 !important;
+  }
+
+  .dashboard-main{
+    width:100% !important;
+    box-sizing:border-box !important;
+    padding:8px !important;
+  }
+
+  .yard{
+    width:100% !important;
+    max-width:100% !important;
+    overflow-x:auto !important;
+    -webkit-overflow-scrolling:touch !important;
+  }
+
+  .grid{
+    width:max-content !important;
+  }
+}
+
+/* CELULAR: 0-768 px */
+@media (max-width:768px){
+  .layout{
+    flex-direction:column !important;
+  }
+
+  .sidebar{
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    height:auto !important;
+    display:flex !important;
+    flex-wrap:wrap !important;
+    align-items:center !important;
+    gap:8px !important;
+    padding:8px !important;
+    box-sizing:border-box !important;
+    overflow:visible !important;
+  }
+
+  .sidebar-title{
+    width:100% !important;
+    text-align:center !important;
+    margin:2px 0 6px !important;
+  }
+
+  .menu-btn{
+    width:calc(50% - 4px) !important;
+    min-height:54px !important;
+    margin:0 !important;
+    justify-content:center !important;
+    box-sizing:border-box !important;
+  }
+
+  .main-content{
+    width:100% !important;
+    min-width:0 !important;
+  }
+
+  .dashboard-main{
+    width:100% !important;
+    box-sizing:border-box !important;
+    padding:5px !important;
+  }
+
+  .yard{
+    width:100% !important;
+    max-width:100% !important;
+    overflow-x:auto !important;
+    -webkit-overflow-scrolling:touch !important;
+  }
+
+  /* Mantiene todas las tarjetas visibles sin deformar el contenido */
+  .grid, .grid-side, .grid-sts{
+    max-width:none !important;
+  }
+
+  /* Area tactil comoda sin cambiar el comportamiento */
+  .menu-btn, .btn-sby-falla, .topbar button, button{
+    min-height:44px;
+  }
+
+  body{
+    padding-bottom:70px !important;
+  }
+}
+
+/* SIDE LOADER: SBY nunca visible aunque hubiera datos antiguos */
+.card[data-grua-id^="SD"] .btn-sby-falla,
+.card[data-grua-id^="sd"] .btn-sby-falla{
+  display:none !important;
+}
+</style>
+
+<style id="fix-no-time-side-loader">
+/* SIDE LOADER: nunca mostrar contadores de tiempo en sus tarjetas. */
+.card[data-grua-id^="SD"] .timer-card,
+.card[id^="card-SD"] .timer-card,
+.grid-side .timer-card { display:none !important; }
+</style>
 </head>
 <body>
 
@@ -8055,7 +8244,7 @@ html += `
           </div>
 
           ${
-            g.estado === 'falla' && puedeUsarSBY
+            g.estado === 'falla' && puedeUsarSBY && !String(g.id || '').toUpperCase().replace(/[-\s]/g,'').startsWith('SD')
             ? `
               <button
                 type="button"
@@ -8094,12 +8283,12 @@ html += `
           }
 
 ${
-    g.estado === 'falla' || g.estado === 'baño' || g.estado === 'fseñal'
+    !String(g.id || '').toUpperCase().replace(/[-\s]/g,'').startsWith('SD') &&
+    (g.estado === 'falla' || g.estado === 'baño' || g.estado === 'fseñal')
     ? `
         <div
             class="timer-card"
-            id="timer-card-${g.id}">
-            00:00:00
+            id="timer-card-${g.id}">${obtenerTiempoContador(g)}
         </div>
     `
     : ''
@@ -11121,7 +11310,10 @@ function actualizarCardGrua(id){
 
 let timer = card.querySelector(`#timer-card-${g.id}`);
 
-if (g.estado === 'falla' || g.estado === 'baño' || g.estado === 'fseñal') {
+if (
+  !String(g.id || '').toUpperCase().replace(/[-\s]/g,'').startsWith('SD') &&
+  (g.estado === 'falla' || g.estado === 'baño' || g.estado === 'fseñal')
+) {
 
   if (!timer) {
     timer = document.createElement('div');
@@ -11376,22 +11568,14 @@ function formatearFechaHoraMX(fechaBD) {
 
   const valor = String(fechaBD).trim();
 
-  // Si Supabase entrega el timestamp sin zona horaria,
-  // usamos directamente la fecha y hora almacenadas.
-  if (!/(?:Z|[+-]\d{2}:?\d{2})$/i.test(valor)) {
-    const partes = valor.match(
-      /^(\d{4})[-/](\d{1,2})[-/](\d{1,2})(?:[T\s](\d{1,2}):?(\d{2})?(?::?(\d{2}))?)?/
-    );
+  // Los mensajes de Supabase se almacenan en UTC.
+  // Si el timestamp viene sin indicador de zona, se interpreta como UTC
+  // antes de convertirlo a la hora local de México.
+  const valorConZona = /(?:Z|[+-]\d{2}:?\d{2})$/i.test(valor)
+    ? valor
+    : `${valor}Z`;
 
-    if (partes) {
-      const [, y, mo, d, h = '00', mi = '00'] = partes;
-      return `${String(d).padStart(2,'0')}/${String(mo).padStart(2,'0')}/${y}, ${String(h).padStart(2,'0')}:${String(mi).padStart(2,'0')}`;
-    }
-
-    return valor;
-  }
-
-  const fecha = new Date(valor);
+  const fecha = new Date(valorConZona);
   if (Number.isNaN(fecha.getTime())) return valor;
 
   return fecha.toLocaleString('es-MX', {
@@ -12025,6 +12209,12 @@ async function activarAtencionFalla(idGrua = actual){
   }
 
   const g = getEquipo(id);
+
+  // SIDE LOADER (SD) nunca usa SBY.
+  const esSD = String(g?.id || id || '').toUpperCase().replace(/[-\s]/g,'').startsWith('SD');
+  if (esSD) {
+    return;
+  }
 
   if(!g){
     alert("No se encontró la grúa");
@@ -12951,31 +13141,31 @@ function congelarModoVisualizacion() {
 }
 function controlarPasswordLogin() {
 
-    const usuario =
-        document.getElementById("loginUsuario").value;
+    // Optimización LOGIN:
+    // evita recalcular el DOM varias veces al cambiar usuario.
+    const selectUsuario = document.getElementById("loginUsuario");
+    const contenedor = document.getElementById("contenedorPassword");
+    const password = document.getElementById("loginPassword");
 
-    const contenedor =
-        document.getElementById("contenedorPassword");
+    if (!selectUsuario || !contenedor || !password) return;
 
-    const password =
-        document.getElementById("loginPassword");
+    const usuario = selectUsuario.value;
 
-    if (!contenedor || !password) return;
+    // Ejecutar solo el cambio visual necesario en el siguiente frame.
+    requestAnimationFrame(() => {
 
-    if (usuario === "Visualizacion") {
+        if (usuario === "Visualizacion") {
 
-        // Ocultar contraseña completa
-        contenedor.style.display = "none";
+            contenedor.style.display = "none";
+            password.value = "";
 
-        // Limpiar contraseña
-        password.value = "";
+        } else {
 
-    } else {
+            contenedor.style.display = "block";
 
-        // Mostrar contraseña
-        contenedor.style.display = "block";
+        }
 
-    }
+    });
 }
 function cerrarSesion() {
 
