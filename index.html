@@ -14,7 +14,6 @@ content="width=device-width, initial-scale=1.0"
 CONTROL OPERATIVO GRÚAS
 </title>
 
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <!-- XLSX: se conserva la versión 0.18.5 que ya usaba el HTML; se elimina la carga duplicada para evitar bloqueo en móvil/tablet. -->
 <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -10173,7 +10172,7 @@ if(
 document.addEventListener('DOMContentLoaded', () => {
   // Mantener el arranque del login ligero. Todo lo que reconstruye
   // el tablero se ejecuta solamente si ya existe una sesión.
-  if (haySesionActiva()) {
+  if (typeof haySesionActiva === 'function' && haySesionActiva()) {
     ponerFechasFallaAutomaticas();
     controlarBotonStandby();
     mostrarVista('operativo');
