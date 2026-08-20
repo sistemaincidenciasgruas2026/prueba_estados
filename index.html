@@ -8450,6 +8450,10 @@ function renderFallas(){
 
 setInterval(() => {
 
+  // No ejecutar el actualizador visual mientras la pantalla de login está activa.
+  // Esto evita trabajo de DOM innecesario y deja libres los campos del login.
+  if (!haySesionActiva()) return;
+
   equipos
     .filter(g =>
       g.estado === 'falla' ||
@@ -10166,14 +10170,13 @@ if(
 
 }
 document.addEventListener('DOMContentLoaded', () => {
-  ponerFechasFallaAutomaticas();
-  controlarBotonStandby();
-  mostrarVista('operativo');
-  cargarOpcionesTiempoMuerto();
-
-  // Importante: no consultar Supabase ni construir el tablero mientras
-  // el usuario todavía está en la pantalla de login.
+  // Mantener el arranque del login ligero. Todo lo que reconstruye
+  // el tablero se ejecuta solamente si ya existe una sesión.
   if (haySesionActiva()) {
+    ponerFechasFallaAutomaticas();
+    controlarBotonStandby();
+    mostrarVista('operativo');
+    cargarOpcionesTiempoMuerto();
     iniciarDatosDespuesLogin();
   }
 
@@ -10839,8 +10842,9 @@ function ponerFechaFallaActual(){
 
     const hora = String(ahora.getHours()).padStart(2,'0');
     const minuto = String(ahora.getMinutes()).padStart(2,'0');
+    const segundo = String(ahora.getSeconds()).padStart(2,'0');
 
-    fecha.value = `${año}-${mes}-${dia}T${hora}:${minuto}`;
+    fecha.value = `${año}-${mes}-${dia}T${hora}:${minuto}:${segundo}`;
 
     console.log("FECHA PUESTA:", fecha.value);
 }
