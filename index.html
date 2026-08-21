@@ -15,18 +15,18 @@ CONTROL OPERATIVO GRÚAS
 </title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<!-- XLSX: se conserva la versión 0.18.5 que ya usaba el HTML; se elimina la carga duplicada para evitar bloqueo en móvil/tablet. -->
-<script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <link rel="stylesheet"
 href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <link 
 rel="stylesheet" 
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
-<script defer src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
 <style>
 
 /* ================= RESET ================= */
@@ -6688,195 +6688,6 @@ body.modo-visualizacion .main-content{
 }
 </style>
 
-<style id="fix-contadores-rtg-sts-sd">
-/* SOLO: reinicio de contador al entrar a FALLA y exclusion de SIDE LOADER */
-</style>
-<script>
-/* PATCH CONTADORES: no modifica otras funciones */
-(function(){
-  const _guardarEstadoRapido = window.guardarEstadoRapido;
-  if (typeof _guardarEstadoRapido !== 'function') return;
-  window.guardarEstadoRapido = async function(){
-    const id = String(window.actual || '').toUpperCase().replace(/[-\s]/g,'');
-    const esSD = id.startsWith('SD');
-    const g = typeof getEquipo === 'function' ? getEquipo(window.actual) : null;
-    const estadoNuevo = document.getElementById('estado')?.value;
-    if (g && esSD) {
-      // SIDE LOADER: conservar su comportamiento de solo cambio de estado;
-      // sus contadores no deben correr.
-      const r = await _guardarEstadoRapido.apply(this, arguments);
-      try {
-        if (typeof db !== 'undefined') {
-          await db.from('gruas').update({
-            contador_estado:'stopped', contador_inicio:null, contador_segundos:0,
-            contador_bano_estado:'stopped', contador_bano_inicio:null, contador_bano_segundos:0,
-            contador_senal_estado:'stopped', contador_senal_inicio:null, contador_senal_segundos:0
-          }).eq('id', g.id);
-        }
-        g.contador_estado='stopped'; g.contador_inicio=null; g.contador_segundos=0;
-        g.contador_bano_estado='stopped'; g.contador_bano_inicio=null; g.contador_bano_segundos=0;
-        g.contador_senal_estado='stopped'; g.contador_senal_inicio=null; g.contador_senal_segundos=0;
-        if (typeof render === 'function') render();
-      } catch(e) { console.warn('PATCH SD:',e); }
-      return r;
-    }
-    return _guardarEstadoRapido.apply(this, arguments);
-  };
-})();
-</script>
-
-<style id="responsive-mobile-tablet-final">
-/* ==========================================================
-   AJUSTE FINAL MOVIL + TABLET
-   SOLO PRESENTACION / TACTIL. NO CAMBIA LOGICA.
-   ========================================================== */
-
-/* Evita que los controles tactiles sufran doble accion o zoom */
-@media (max-width: 1100px){
-  button, select, input, textarea, .menu-btn, .card{
-    touch-action: manipulation;
-  }
-
-  .menu-btn, button{
-    -webkit-tap-highlight-color: transparent;
-  }
-}
-
-/* TABLET: 769-1100 px */
-@media (min-width:769px) and (max-width:1100px){
-  .layout{
-    flex-direction:column !important;
-  }
-
-  .sidebar{
-    width:100% !important;
-    max-width:100% !important;
-    min-width:0 !important;
-    height:auto !important;
-    display:flex !important;
-    flex-wrap:wrap !important;
-    align-items:center !important;
-    gap:8px !important;
-    padding:10px !important;
-    box-sizing:border-box !important;
-  }
-
-  .sidebar-title{
-    width:100% !important;
-    text-align:center !important;
-    margin:2px 0 6px !important;
-  }
-
-  .menu-btn{
-    width:calc(33.333% - 6px) !important;
-    min-height:54px !important;
-    margin:0 !important;
-    justify-content:center !important;
-  }
-
-  .main-content{
-    width:100% !important;
-    min-width:0 !important;
-  }
-
-  .dashboard-main{
-    width:100% !important;
-    box-sizing:border-box !important;
-    padding:8px !important;
-  }
-
-  .yard{
-    width:100% !important;
-    max-width:100% !important;
-    overflow-x:auto !important;
-    -webkit-overflow-scrolling:touch !important;
-  }
-
-  .grid{
-    width:max-content !important;
-  }
-}
-
-/* CELULAR: 0-768 px */
-@media (max-width:768px){
-  .layout{
-    flex-direction:column !important;
-  }
-
-  .sidebar{
-    width:100% !important;
-    max-width:100% !important;
-    min-width:0 !important;
-    height:auto !important;
-    display:flex !important;
-    flex-wrap:wrap !important;
-    align-items:center !important;
-    gap:8px !important;
-    padding:8px !important;
-    box-sizing:border-box !important;
-    overflow:visible !important;
-  }
-
-  .sidebar-title{
-    width:100% !important;
-    text-align:center !important;
-    margin:2px 0 6px !important;
-  }
-
-  .menu-btn{
-    width:calc(50% - 4px) !important;
-    min-height:54px !important;
-    margin:0 !important;
-    justify-content:center !important;
-    box-sizing:border-box !important;
-  }
-
-  .main-content{
-    width:100% !important;
-    min-width:0 !important;
-  }
-
-  .dashboard-main{
-    width:100% !important;
-    box-sizing:border-box !important;
-    padding:5px !important;
-  }
-
-  .yard{
-    width:100% !important;
-    max-width:100% !important;
-    overflow-x:auto !important;
-    -webkit-overflow-scrolling:touch !important;
-  }
-
-  /* Mantiene todas las tarjetas visibles sin deformar el contenido */
-  .grid, .grid-side, .grid-sts{
-    max-width:none !important;
-  }
-
-  /* Area tactil comoda sin cambiar el comportamiento */
-  .menu-btn, .btn-sby-falla, .topbar button, button{
-    min-height:44px;
-  }
-
-  body{
-    padding-bottom:70px !important;
-  }
-}
-
-/* SIDE LOADER: SBY nunca visible aunque hubiera datos antiguos */
-.card[data-grua-id^="SD"] .btn-sby-falla,
-.card[data-grua-id^="sd"] .btn-sby-falla{
-  display:none !important;
-}
-</style>
-
-<style id="fix-no-time-side-loader">
-/* SIDE LOADER: nunca mostrar contadores de tiempo en sus tarjetas. */
-.card[data-grua-id^="SD"] .timer-card,
-.card[id^="card-SD"] .timer-card,
-.grid-side .timer-card { display:none !important; }
-</style>
 </head>
 <body>
 
@@ -8244,7 +8055,7 @@ html += `
           </div>
 
           ${
-            g.estado === 'falla' && puedeUsarSBY && !String(g.id || '').toUpperCase().replace(/[-\s]/g,'').startsWith('SD')
+            g.estado === 'falla' && puedeUsarSBY
             ? `
               <button
                 type="button"
@@ -8283,12 +8094,12 @@ html += `
           }
 
 ${
-    !String(g.id || '').toUpperCase().replace(/[-\s]/g,'').startsWith('SD') &&
-    (g.estado === 'falla' || g.estado === 'baño' || g.estado === 'fseñal')
+    g.estado === 'falla' || g.estado === 'baño' || g.estado === 'fseñal'
     ? `
         <div
             class="timer-card"
-            id="timer-card-${g.id}">${obtenerTiempoContador(g)}
+            id="timer-card-${g.id}">
+            00:00:00
         </div>
     `
     : ''
@@ -8449,10 +8260,6 @@ function renderFallas(){
 /* ================= TIMER VISUAL ================= */
 
 setInterval(() => {
-
-  // No ejecutar el actualizador visual mientras la pantalla de login está activa.
-  // Esto evita trabajo de DOM innecesario y deja libres los campos del login.
-  if (!haySesionActiva()) return;
 
   equipos
     .filter(g =>
@@ -9574,8 +9381,13 @@ let refreshTimer = null;
 let realtimeGruas = null;
 let realtimeMensajes = null;
 let realtimeReconnectTimer = null;
+// FIX LOGIN MOVIL: no iniciar consultas/realtime mientras la pantalla de acceso está activa.
+let sistemaActivo = false;
 
 async function actualizarTodo(origen = 'manual') {
+  // FIX LOGIN MOVIL: el tablero no debe hacer consultas mientras el usuario está en login.
+  if (!sistemaActivo) return;
+
   // Evita que varias actualizaciones simultáneas congelen la interfaz.
   if (refreshEnCurso) {
     refreshPendiente = true;
@@ -9607,6 +9419,9 @@ function programarActualizacion(origen = 'evento') {
 }
 
 function iniciarRealtime() {
+  // FIX LOGIN MOVIL: diferir Realtime hasta que el login haya terminado.
+  if (!sistemaActivo) return;
+
   clearTimeout(realtimeReconnectTimer);
 
   // Si ya existen ambas suscripciones, no las destruyas y reconstruyas.
@@ -9657,7 +9472,8 @@ function iniciarRealtime() {
 // recuperar internet o volver a enfocar la ventana, se fuerza una lectura real.
 let ultimaActualizacionAlVolver = 0;
 function refrescarAlVolver(origen) {
-  if (!haySesionActiva()) return;
+  // No hacer trabajo de Supabase mientras se está mostrando el login.
+  if (!sistemaActivo) return;
 
   const ahora = Date.now();
 
@@ -9688,39 +9504,14 @@ window.addEventListener('online', () => refrescarAlVolver('online'));
 // Refresco de respaldo. Realtime es el mecanismo principal; este respaldo
 // evita consultas continuas en teléfonos cuando no hubo cambios.
 setInterval(() => {
-  if (haySesionActiva() && document.visibilityState === 'visible' && navigator.onLine !== false) {
+  if (sistemaActivo && document.visibilityState === 'visible' && navigator.onLine !== false) {
     actualizarTodo('respaldo 30s');
   }
 }, 30000);
 
 /* ================= REALTIME ================= */
-// El login debe quedar completamente libre de consultas/render pesado.
-// El sistema de datos y Realtime se activan solo después de una sesión válida.
-let sistemaDatosIniciado = false;
-
-function haySesionActiva(){
-  return !!(usuarioSesion || localStorage.getItem('usuarioSistema'));
-}
-
-function iniciarDatosDespuesLogin(){
-  if (sistemaDatosIniciado) return;
-  sistemaDatosIniciado = true;
-
-  // Ejecutar después de que el navegador haya podido pintar el login/app.
-  setTimeout(() => {
-    try {
-      actualizarTodo('login correcto');
-      cargarResponsabilidades();
-      iniciarRealtime();
-    } catch(e) {
-      console.warn('Inicialización posterior al login:', e);
-    }
-  }, 0);
-}
-
-// No iniciar Realtime mientras la pantalla de login está activa.
-// Se inicia desde iniciarSesion() cuando las credenciales son válidas.
-
+// Se inicia después de un login correcto.
+// iniciarRealtime();
 
 /* ================= CERRAR CLICK AFUERA ================= */
 
@@ -10170,15 +9961,13 @@ if(
 
 }
 document.addEventListener('DOMContentLoaded', () => {
-  // Mantener el arranque del login ligero. Todo lo que reconstruye
-  // el tablero se ejecuta solamente si ya existe una sesión.
-  if (typeof haySesionActiva === 'function' && haySesionActiva()) {
-    ponerFechasFallaAutomaticas();
-    controlarBotonStandby();
-    mostrarVista('operativo');
-    cargarOpcionesTiempoMuerto();
-    iniciarDatosDespuesLogin();
-  }
+  ponerFechasFallaAutomaticas();
+  controlarBotonStandby();
+  mostrarVista('operativo');
+  cargarOpcionesTiempoMuerto();
+  // FIX LOGIN MOVIL: estas consultas se ejecutan después del login.
+  // actualizarTodo('DOMContentLoaded');
+  // cargarResponsabilidades();
 
   const estado = document.getElementById('estado');
 
@@ -11345,10 +11134,7 @@ function actualizarCardGrua(id){
 
 let timer = card.querySelector(`#timer-card-${g.id}`);
 
-if (
-  !String(g.id || '').toUpperCase().replace(/[-\s]/g,'').startsWith('SD') &&
-  (g.estado === 'falla' || g.estado === 'baño' || g.estado === 'fseñal')
-) {
+if (g.estado === 'falla' || g.estado === 'baño' || g.estado === 'fseñal') {
 
   if (!timer) {
     timer = document.createElement('div');
@@ -11603,14 +11389,22 @@ function formatearFechaHoraMX(fechaBD) {
 
   const valor = String(fechaBD).trim();
 
-  // Los mensajes de Supabase se almacenan en UTC.
-  // Si el timestamp viene sin indicador de zona, se interpreta como UTC
-  // antes de convertirlo a la hora local de México.
-  const valorConZona = /(?:Z|[+-]\d{2}:?\d{2})$/i.test(valor)
-    ? valor
-    : `${valor}Z`;
+  // Si Supabase entrega el timestamp sin zona horaria,
+  // usamos directamente la fecha y hora almacenadas.
+  if (!/(?:Z|[+-]\d{2}:?\d{2})$/i.test(valor)) {
+    const partes = valor.match(
+      /^(\d{4})[-/](\d{1,2})[-/](\d{1,2})(?:[T\s](\d{1,2}):?(\d{2})?(?::?(\d{2}))?)?/
+    );
 
-  const fecha = new Date(valorConZona);
+    if (partes) {
+      const [, y, mo, d, h = '00', mi = '00'] = partes;
+      return `${String(d).padStart(2,'0')}/${String(mo).padStart(2,'0')}/${y}, ${String(h).padStart(2,'0')}:${String(mi).padStart(2,'0')}`;
+    }
+
+    return valor;
+  }
+
+  const fecha = new Date(valor);
   if (Number.isNaN(fecha.getTime())) return valor;
 
   return fecha.toLocaleString('es-MX', {
@@ -12244,12 +12038,6 @@ async function activarAtencionFalla(idGrua = actual){
   }
 
   const g = getEquipo(id);
-
-  // SIDE LOADER (SD) nunca usa SBY.
-  const esSD = String(g?.id || id || '').toUpperCase().replace(/[-\s]/g,'').startsWith('SD');
-  if (esSD) {
-    return;
-  }
 
   if(!g){
     alert("No se encontró la grúa");
@@ -13063,6 +12851,13 @@ async function iniciarSesion() {
     document.getElementById("login").style.display = "none";
     document.getElementById("app").style.display = "block";
 
+    // FIX LOGIN MOVIL: activar Supabase/Realtime SOLO después del login.
+    sistemaActivo = true;
+    iniciarRealtime();
+
+    // Cargar los datos auxiliares que antes se consultaban durante el login.
+    cargarResponsabilidades();
+
     // Cargar el tablero después de mostrar la aplicación,
     // sin modificar el resto de su funcionamiento.
     setTimeout(() => {
@@ -13079,9 +12874,6 @@ async function iniciarSesion() {
         if (typeof renderPrioridad === "function") {
           renderPrioridad();
         }
-
-        // Ahora que el login terminó, iniciar las consultas y Realtime.
-        iniciarDatosDespuesLogin();
       } catch (e) {
         console.error(
           "Error al cargar el tablero después del login:",
@@ -13138,7 +12930,6 @@ function mostrarSistema() {
   // CASO SOLO VISUALIZACIÓN
   aplicarPermisos();
   render();
-  iniciarDatosDespuesLogin();
 
 }
 function congelarModoVisualizacion() {
@@ -13180,31 +12971,31 @@ function congelarModoVisualizacion() {
 }
 function controlarPasswordLogin() {
 
-    // Optimización LOGIN:
-    // evita recalcular el DOM varias veces al cambiar usuario.
-    const selectUsuario = document.getElementById("loginUsuario");
-    const contenedor = document.getElementById("contenedorPassword");
-    const password = document.getElementById("loginPassword");
+    const usuario =
+        document.getElementById("loginUsuario").value;
 
-    if (!selectUsuario || !contenedor || !password) return;
+    const contenedor =
+        document.getElementById("contenedorPassword");
 
-    const usuario = selectUsuario.value;
+    const password =
+        document.getElementById("loginPassword");
 
-    // Ejecutar solo el cambio visual necesario en el siguiente frame.
-    requestAnimationFrame(() => {
+    if (!contenedor || !password) return;
 
-        if (usuario === "Visualizacion") {
+    if (usuario === "Visualizacion") {
 
-            contenedor.style.display = "none";
-            password.value = "";
+        // Ocultar contraseña completa
+        contenedor.style.display = "none";
 
-        } else {
+        // Limpiar contraseña
+        password.value = "";
 
-            contenedor.style.display = "block";
+    } else {
 
-        }
+        // Mostrar contraseña
+        contenedor.style.display = "block";
 
-    });
+    }
 }
 function cerrarSesion() {
 
