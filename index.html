@@ -15,17 +15,18 @@ CONTROL OPERATIVO GRÚAS
 </title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js" defer></script>
+
+
 <link rel="stylesheet"
 href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+
 <link 
 rel="stylesheet" 
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js" defer></script>
+
 <style>
 
 /* ================= RESET ================= */
@@ -6766,6 +6767,129 @@ body.modo-visualizacion .main-content{
     </div>
 
 </div>
+
+<!-- LOGIN AISLADO: durante el acceso NO se ejecuta el código pesado del tablero. -->
+<script>
+(function(){
+  const SUPABASE_URL = 'https://gogalvnmpntvjtiunowz.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFub24iLCJpYXQiOjE3NzIyNzM5MzcsImV4cCI6MjA4Nzg0OTkzN30.wOZbM_s2F-FjdrXqUz6lvRnOYAPuTYlGhwcP3hzbYTw';
+  const USUARIOS_LOGIN = {
+    'RPC': 'editar',
+    'Mantenimiento gruas': 'editar',
+    'Visualizacion': 'visualizar'
+  };
+  let cargandoSistema = false;
+
+  window.controlarPasswordLogin = function(){
+    const usuario = document.getElementById('loginUsuario')?.value;
+    const cont = document.getElementById('contenedorPassword');
+    if (cont) cont.style.display = usuario === 'Visualizacion' ? 'none' : 'block';
+  };
+
+  async function cargarScript(src){
+    return new Promise((resolve,reject)=>{
+      const el=document.createElement('script');
+      el.src=src; el.async=false;
+      el.onload=resolve; el.onerror=()=>reject(new Error('No se pudo cargar '+src));
+      document.head.appendChild(el);
+    });
+  }
+
+  async function iniciarSistemaDespuesDelLogin(){
+    if(cargandoSistema) return;
+    cargandoSistema=true;
+    try{
+      // Estas librerías ya no bloquean el login; se cargan solamente al entrar.
+      if(!window.XLSX) await cargarScript('https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js');
+      if(!window.html2canvas) await cargarScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
+      if(!window.TomSelect) await cargarScript('https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js');
+
+      const main=document.getElementById('sistema-script');
+      if(main){
+        const code=main.textContent || '';
+        const runner=document.createElement('script');
+        runner.textContent=code;
+        document.body.appendChild(runner);
+        main.remove();
+      }
+
+      // El segundo script depende del primero y se ejecuta después.
+      const align=document.getElementById('alineacion-script');
+      if(align){
+        const code=align.textContent || '';
+        const runner=document.createElement('script');
+        runner.textContent=code;
+        document.body.appendChild(runner);
+        align.remove();
+      }
+
+      // Los listeners del sistema fueron registrados durante la carga diferida.
+      document.dispatchEvent(new Event('DOMContentLoaded'));
+    }catch(e){
+      console.error('Error cargando el sistema después del login:',e);
+    }finally{
+      cargandoSistema=false;
+    }
+  }
+
+  window.iniciarSesion = async function(){
+    const usuario=document.getElementById('loginUsuario')?.value || '';
+    const password=document.getElementById('loginPassword')?.value || '';
+    const error=document.getElementById('loginError');
+    if(error) error.innerText='';
+
+    if(!usuario){ if(error) error.innerText='Seleccione un usuario'; return; }
+    if(!USUARIOS_LOGIN[usuario]){ if(error) error.innerText='Usuario no válido'; return; }
+
+    const esVisualizacion=USUARIOS_LOGIN[usuario]==='visualizar';
+    if(!esVisualizacion && !password){ if(error) error.innerText='Ingrese la contraseña'; return; }
+
+    try{
+      let resultado;
+      if(esVisualizacion){
+        resultado={ok:true,usuario:'Visualizacion',rol:'visualizacion',session:null};
+      }else{
+        const response=await fetch(`${SUPABASE_URL}/functions/v1/login-usuario`,{
+          method:'POST',
+          headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY},
+          body:JSON.stringify({usuario,password})
+        });
+        resultado=await response.json();
+        if(!response.ok || !resultado.ok){
+          if(error) error.innerText=resultado.error || 'Usuario o contraseña incorrectos';
+          return;
+        }
+      }
+
+      const rolSistema = resultado.rol==='rpc' || resultado.rol==='mantenimiento' ? 'editar' : 'visualizar';
+      window.usuarioSesion={nombre:resultado.usuario,rol:rolSistema,puedeEditar:rolSistema==='editar',session:resultado.session};
+      localStorage.setItem('usuarioSistema',resultado.usuario);
+      localStorage.setItem('rolSistema',rolSistema);
+      localStorage.removeItem('passwordRecordada');
+      localStorage.removeItem('recordarCredenciales');
+      localStorage.removeItem('usuarioRecordado');
+
+      const ua=document.getElementById('usuarioActivo');
+      if(ua) ua.innerText='👤 '+resultado.usuario;
+      const login=document.getElementById('login');
+      const app=document.getElementById('app');
+      if(login) login.style.display='none';
+      if(app) app.style.display='block';
+
+      await iniciarSistemaDespuesDelLogin();
+    }catch(e){
+      console.error('Error conectando con login-usuario:',e);
+      if(error) error.innerText='No se pudo conectar con el servidor';
+    }
+  };
+
+  // No se inicializa ningún AudioContext, Realtime, observer ni render aquí.
+  // Solo se configura la visibilidad inicial del campo de contraseña.
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',()=>window.controlarPasswordLogin(),{once:true});
+  }else window.controlarPasswordLogin();
+})();
+</script>
 <div id="app" style="display:none;">
 <div class="topbar">
 
@@ -7492,7 +7616,8 @@ CERRAR
 </div>
 
 
-<script>
+<script type="text/plain" id="sistema-script">
+
 // ================= USUARIOS =================
 
 const USUARIOS = {
@@ -13051,6 +13176,7 @@ function cerrarSesion() {
 document.addEventListener("DOMContentLoaded", () => {
     cargarCredencialesRecordadas();
 });
+
 </script>
 
 </div>
@@ -13556,7 +13682,8 @@ main, .dashboard, .dashboard-container {
 
 </style>
 
-<script>
+<script type="text/plain" id="alineacion-script">
+
 /* V35: alinear MENSAJE ACTIVO con K-05 sin parpadeo ni bucle de MutationObserver. */
 (function(){
   let rafId = 0;
@@ -13630,6 +13757,7 @@ main, .dashboard, .dashboard-container {
     iniciar();
   }
 })();
+
 </script>
 
 
