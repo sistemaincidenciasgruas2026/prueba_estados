@@ -1,31 +1,20 @@
 <!DOCTYPE html>
+
 <html lang="es">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
->
-
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>
 CONTROL OPERATIVO GRÚAS
 </title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
-<link rel="stylesheet"
-href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
 
-<link 
-rel="stylesheet" 
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet"/>
 
 <style>
 
@@ -4653,7 +4642,6 @@ button,input,select,textarea{max-width:100%;}
   .main-content [style*="width:340px"]{width:100%!important;max-width:100%!important;}
 }
 </style>
-
 <style id="responsive-real-final">
 /* ===== RESPONSIVE REAL: SIN DESBORDAMIENTO ===== */
 html,body{width:100%;max-width:100%;min-width:0;overflow-x:hidden!important}
@@ -4738,7 +4726,6 @@ img,iframe,video,canvas{max-width:100%}
 body.modo-visualizacion .sidebar{display:none!important}
 body.modo-visualizacion .main-content{width:100%!important;flex:1 1 100%!important}
 </style>
-
 <style id="responsive-100-final">
 /* =========================================================
    RESPONSIVE 100% REAL - ÚLTIMA CAPA
@@ -4976,8 +4963,6 @@ body.modo-visualizacion .main-content { width:100% !important; flex:1 1 100% !im
 /* Ningún hijo puede imponer un ancho que rompa el viewport */
 .main-content, .main-content * { min-width:0; }
 </style>
-
-
 <style id="RESPONSIVE_ULTIMO_CORRECTIVO">
 /* ====== RESPONSIVE REAL: ÚLTIMA CAPA, SIN ANCHOS FIJOS ====== */
 html,body{width:100%!important;max-width:100%!important;min-width:0!important;overflow-x:hidden!important}
@@ -5071,8 +5056,6 @@ body.modo-visualizacion .sidebar{display:none!important}
 body.modo-visualizacion .layout{display:block!important;width:100%!important}
 body.modo-visualizacion .main-content{width:100%!important;max-width:100%!important}
 </style>
-
-
 <style id="RESPONSIVE_FINAL_RPC_MTTO">
 /* =========================================================
    RESPONSIVE FINAL - RPC / MANTENIMIENTO / VISUALIZACION
@@ -5202,8 +5185,6 @@ body.modo-visualizacion .layout{display:block!important;width:100%!important;max
 body.modo-visualizacion .main-content{width:100%!important;max-width:100%!important;min-width:0!important}
 body.modo-visualizacion .dashboard-main{width:100%!important;max-width:100%!important}
 </style>
-
-
 <style id="RESPONSIVE_DEFINITIVO_REAL">
 /* =========================================================
    RESPONSIVE DEFINITIVO
@@ -5354,7 +5335,6 @@ body.modo-visualizacion .sidebar{display:none!important}
 body.modo-visualizacion .layout{display:block!important;width:100%!important;max-width:100%!important}
 body.modo-visualizacion .main-content{width:100%!important;max-width:100%!important;min-width:0!important}
 </style>
-
 <style id="MENU_RESPONSIVE_CORREGIDO">
 /* =====================================================
    MENU FINAL - NO ALTERAR EL PATIO
@@ -5752,8 +5732,6 @@ body.modo-visualizacion .sidebar{
 }
 
 </style>
-
-
 <style id="fix-boton-salir-final">
 /* ===== CABECERA FINAL: Usuario + Salir ===== */
 .usuario-topbar{
@@ -5832,8 +5810,6 @@ body.modo-visualizacion .sidebar{
   .btn-cerrar-sesion{flex-basis:70px !important;width:70px !important;min-width:70px !important;max-width:70px !important;height:30px !important;font-size:10px !important;}
 }
 </style>
-
-
 <style id="tabla-gruas-ajuste-final">
 
 /* V36: pestañas compactas RTG / STS en Reporte Grúas */
@@ -5976,8 +5952,6 @@ body.modo-visualizacion .sidebar{
   #tab-gruas .tabla-reporte tbody td { padding: 5px 3px; }
 }
 </style>
-
-
 <style id="FIX-MOBILE-MAIN-CONTENT">
 /* =========================================================
    CORRECCION MOVIL: el contenido no puede quedar con width:0
@@ -6047,8 +6021,6 @@ body.modo-visualizacion .main-content{
   flex:1 1 100% !important;
 }
 </style>
-
-
 <style id="ajuste-final-filas-gruas">
 /* ===== AJUSTE FINAL: las filas de grúas usan el ancho REAL disponible =====
    Evita que .grid tenga 100% + el ancho de ZONA y corte las últimas tarjetas. */
@@ -6138,8 +6110,6 @@ body.modo-visualizacion .main-content{
   }
 }
 </style>
-
-
 <style id="responsive-patio-final-2026">
 /* =========================================================
    AJUSTE FINAL DE PATIO
@@ -6273,8 +6243,6 @@ body.modo-visualizacion .main-content{
   .card,.grid .card,.grid-side .card,.grid-sts .card{height:56px!important;min-height:56px!important;}
 }
 </style>
-
-
 <style id="ajuste-altura-patio-final">
 /* =========================================================
    AJUSTE FINAL DE ALTURA DEL PATIO
@@ -6345,7 +6313,6 @@ body.modo-visualizacion .main-content{
   clear:both !important;
 }
 </style>
-
 <style id="ajuste-botones-importar-capturar">
 /* ===== BOTONES IMPORTAR / CAPTURAR: SIN SOLAPARSE CON EL PATIO ===== */
 .barra-acciones{
@@ -6416,7 +6383,6 @@ body.modo-visualizacion .main-content{
   }
 }
 </style>
-
 <style id="ajuste-botones-final-20260815">
 /* ===== AJUSTE DEFINITIVO BOTONES IMPORTAR / CAPTURAR ===== */
 .barra-acciones{
@@ -6487,8 +6453,6 @@ body.modo-visualizacion .main-content{
   }
 }
 </style>
-
-
 <style>
 /* ===== SBY SOBRE LA GRÚA EN FALLA ===== */
 /* Botón pequeño: nunca tapa el código ni cambia el tamaño de la grúa. */
@@ -6551,7 +6515,6 @@ body.modo-visualizacion .main-content{
 }
 
 </style>
-
 <style>
 /* ===== KPIs RTG + STS: organizados por bloques ===== */
 .kpis.kpis-rtg-sts{
@@ -6632,8 +6595,6 @@ body.modo-visualizacion .main-content{
   .kpis-rtg-sts .kpi-value{font-size:14px !important;margin-top:2px !important;}
 }
 </style>
-
-
 <style id="ajuste-v31-mensaje-alineado-k05">
 /* V31: Mensaje Activo alineado con la zona de tarjetas del Yard (aprox. K-05).
    No modifica la lógica de fallas ni los filtros RTG/STS. */
@@ -6655,7 +6616,6 @@ body.modo-visualizacion .main-content{
   }
 }
 </style>
-
 <style id="dt-operaciones-rtg-sts-v37">
 /* V37: separar DT OPERACIONES en RTG / STS sin tocar la lógica existente */
 .dt-tipo-reporte-wrap{
@@ -6687,937 +6647,694 @@ body.modo-visualizacion .main-content{
   .dt-tipo-reporte{padding:7px 22px;min-width:88px;}
 }
 </style>
-
 </head>
 <body>
-
 <div id="login">
-
-    <div class="login-card">
-
-        <div class="login-header">
-
-
-            <h1>VISUALIZACION DE ESTADO DE GRUAS EN OPERACION</h1>
-
-            <div class="login-subtitle">
+<div class="login-card">
+<div class="login-header">
+<h1>VISUALIZACION DE ESTADO DE GRUAS EN OPERACION</h1>
+<div class="login-subtitle">
                 Acceso
             </div>
-
-        </div>
-
-
-        <div class="login-field">
-
-            <label for="loginUsuario">
+</div>
+<div class="login-field">
+<label for="loginUsuario">
                 Usuario
             </label>
-
-            <select id="loginUsuario" onchange="controlarPasswordLogin()">
-
-                <option value="RPC">
+<select id="loginUsuario" onchange="controlarPasswordLogin()">
+<option value="RPC">
                     RPC
                 </option>
-
-                <option value="Mantenimiento gruas">
+<option value="Mantenimiento gruas">
                     Mantenimiento grúas
                 </option>
-
-                <option value="Visualizacion">
+<option value="Visualizacion">
                     Visualizacion
                 </option>
-
-            </select>
-
-        </div>
-
-
-        <div class="login-field">
-
+</select>
+</div>
+<div class="login-field">
 <div id="contenedorPassword">
-
-    <label for="loginPassword">
+<label for="loginPassword">
         Contraseña
     </label>
-
-    <input
-        type="password"
-        id="loginPassword"
-        placeholder="Contraseña">
-
+<input id="loginPassword" placeholder="Contraseña" type="password"/>
 </div>
-
-        </div>
-
-        <button
-            type="button"
-            onclick="iniciarSesion()"
-        >
+</div>
+<button onclick="iniciarSesion()" type="button">
             ENTRAR
         </button>
-
-
-        <div id="loginError"></div>
-
-
-        <div class="login-footer">
+<div id="loginError"></div>
+<div class="login-footer">
             Sistema de control y monitoreo de grúas
         </div>
-
-    </div>
-
 </div>
-
-<!-- LOGIN AISLADO: durante el acceso NO se ejecuta el código pesado del tablero. -->
-<script>
-(function(){
-  const SUPABASE_URL = 'https://gogalvnmpntvjtiunowz.supabase.co';
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFub24iLCJpYXQiOjE3NzIyNzM5MzcsImV4cCI6MjA4Nzg0OTkzN30.wOZbM_s2F-FjdrXqUz6lvRnOYAPuTYlGhwcP3hzbYTw';
-  const USUARIOS_LOGIN = {
-    'RPC': 'editar',
-    'Mantenimiento gruas': 'editar',
-    'Visualizacion': 'visualizar'
-  };
-  let cargandoSistema = false;
-
-  window.controlarPasswordLogin = function(){
-    const usuario = document.getElementById('loginUsuario')?.value;
-    const cont = document.getElementById('contenedorPassword');
-    if (cont) cont.style.display = usuario === 'Visualizacion' ? 'none' : 'block';
-  };
-
-  async function cargarScript(src){
-    return new Promise((resolve,reject)=>{
-      const el=document.createElement('script');
-      el.src=src; el.async=false;
-      el.onload=resolve; el.onerror=()=>reject(new Error('No se pudo cargar '+src));
-      document.head.appendChild(el);
-    });
-  }
-
-  async function iniciarSistemaDespuesDelLogin(){
-    if(cargandoSistema) return;
-    cargandoSistema=true;
-    try{
-      // Estas librerías ya no bloquean el login; se cargan solamente al entrar.
-      if(!window.XLSX) await cargarScript('https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js');
-      if(!window.html2canvas) await cargarScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
-      if(!window.TomSelect) await cargarScript('https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js');
-
-      const main=document.getElementById('sistema-script');
-      if(main){
-        const code=main.textContent || '';
-        const runner=document.createElement('script');
-        runner.textContent=code;
-        document.body.appendChild(runner);
-        main.remove();
-      }
-
-      // El segundo script depende del primero y se ejecuta después.
-      const align=document.getElementById('alineacion-script');
-      if(align){
-        const code=align.textContent || '';
-        const runner=document.createElement('script');
-        runner.textContent=code;
-        document.body.appendChild(runner);
-        align.remove();
-      }
-
-      // Los listeners del sistema fueron registrados durante la carga diferida.
-      document.dispatchEvent(new Event('DOMContentLoaded'));
-    }catch(e){
-      console.error('Error cargando el sistema después del login:',e);
-    }finally{
-      cargandoSistema=false;
-    }
-  }
-
-  window.iniciarSesion = async function(){
-    const usuario=document.getElementById('loginUsuario')?.value || '';
-    const password=document.getElementById('loginPassword')?.value || '';
-    const error=document.getElementById('loginError');
-    if(error) error.innerText='';
-
-    if(!usuario){ if(error) error.innerText='Seleccione un usuario'; return; }
-    if(!USUARIOS_LOGIN[usuario]){ if(error) error.innerText='Usuario no válido'; return; }
-
-    const esVisualizacion=USUARIOS_LOGIN[usuario]==='visualizar';
-    if(!esVisualizacion && !password){ if(error) error.innerText='Ingrese la contraseña'; return; }
-
-    try{
-      let resultado;
-      if(esVisualizacion){
-        resultado={ok:true,usuario:'Visualizacion',rol:'visualizacion',session:null};
-      }else{
-        const response=await fetch(`${SUPABASE_URL}/functions/v1/login-usuario`,{
-          method:'POST',
-          headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY},
-          body:JSON.stringify({usuario,password})
-        });
-        resultado=await response.json();
-        if(!response.ok || !resultado.ok){
-          if(error) error.innerText=resultado.error || 'Usuario o contraseña incorrectos';
-          return;
-        }
-      }
-
-      const rolSistema = resultado.rol==='rpc' || resultado.rol==='mantenimiento' ? 'editar' : 'visualizar';
-      window.usuarioSesion={nombre:resultado.usuario,rol:rolSistema,puedeEditar:rolSistema==='editar',session:resultado.session};
-      localStorage.setItem('usuarioSistema',resultado.usuario);
-      localStorage.setItem('rolSistema',rolSistema);
-      localStorage.removeItem('passwordRecordada');
-      localStorage.removeItem('recordarCredenciales');
-      localStorage.removeItem('usuarioRecordado');
-
-      const ua=document.getElementById('usuarioActivo');
-      if(ua) ua.innerText='👤 '+resultado.usuario;
-      const login=document.getElementById('login');
-      const app=document.getElementById('app');
-      if(login) login.style.display='none';
-      if(app) app.style.display='block';
-
-      await iniciarSistemaDespuesDelLogin();
-    }catch(e){
-      console.error('Error conectando con login-usuario:',e);
-      if(error) error.innerText='No se pudo conectar con el servidor';
-    }
-  };
-
-  // No se inicializa ningún AudioContext, Realtime, observer ni render aquí.
-  // Solo se configura la visibilidad inicial del campo de contraseña.
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded',()=>window.controlarPasswordLogin(),{once:true});
-  }else window.controlarPasswordLogin();
-})();
-</script>
+</div>
 <div id="app" style="display:none;">
 <div class="topbar">
-
-    <div class="logo">
+<div class="logo">
         CONTROL OPERATIVO DE GRÚAS
     </div>
-
-    <div class="usuario-topbar">
-        <span class="usuario-label">
-            <span>Usuario:</span>
-            <strong id="usuarioActivo"></strong>
-        </span>
-
-        <button
-            type="button"
-            class="btn-cerrar-sesion"
-            onclick="cerrarSesion()">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span>Salir</span>
-        </button>
-    </div>
-
+<div class="usuario-topbar">
+<span class="usuario-label">
+<span>Usuario:</span>
+<strong id="usuarioActivo"></strong>
+</span>
+<button class="btn-cerrar-sesion" onclick="cerrarSesion()" type="button">
+<i class="fa-solid fa-right-from-bracket"></i>
+<span>Salir</span>
+</button>
 </div>
-
+</div>
 <div class="layout">
 <div class="sidebar">
-
-  <div class="sidebar-title">
+<div class="sidebar-title">
     APLICACIONES 
   </div>
-
-  <button class="menu-btn" onclick="mostrarVista('operativo')">
-    <span>Control Operativo de gruas</span>
-  </button>
-  
+<button class="menu-btn" onclick="mostrarVista('operativo')">
+<span>Control Operativo de gruas</span>
+</button>
 <button class="menu-btn solo-edicion" onclick="mostrarVista('mensajes')">
     Mensajes Operativos
-    <span id="msgBadge" class="msg-badge">1</span>
+    <span class="msg-badge" id="msgBadge">1</span>
 </button>
-
 <button class="menu-btn solo-edicion" onclick="abrirDowntimeMTTO()">
-    <span>Downtime gruas operacion</span>
+<span>Downtime gruas operacion</span>
 </button>
-
 <button class="menu-btn solo-edicion" onclick="abrirIFS()">
-    <span>Gestion de Work Task</span>
+<span>Gestion de Work Task</span>
 </button>
-
 <button class="menu-btn solo-edicion" onclick="abrirIncidentes()">
-    <span>Incidentes grúas</span>
+<span>Incidentes grúas</span>
 </button>
-<div id="vistaReportes" class="vista">
-    <iframe
-        src="https://carrix.ifs.cloud/main/ifsapplications/web/page/WorkTasks/List;path=0.644174039.1121334549.1222308653.1131468548"
-        style="
+<div class="vista" id="vistaReportes">
+<iframe src="https://carrix.ifs.cloud/main/ifsapplications/web/page/WorkTasks/List;path=0.644174039.1121334549.1222308653.1131468548" style="
             width:100%;
             height:calc(100vh - 70px);
             border:none;
             background:white;
         ">
-    </iframe>
+</iframe>
 </div>
-
 </div>
-
-    <div class="main-content">
-    <div id="vistaReportesOperaciones" class="vista">
-
-
-
-  <div class="contenido">
-
+<div class="main-content">
+<div class="vista" id="vistaReportesOperaciones">
+<div class="contenido">
 <div class="menu-reportes">
 <div class="barra-reportes">
-<button class="btn-reporte activo"
-    onclick="cambiarReporte('gruas', this)">
+<button class="btn-reporte activo" onclick="cambiarReporte('gruas', this)">
     DT REPORTE MTTO GRÚAS
 </button>
-
-<button class="btn-reporte"
-    onclick="cambiarReporte('operadores', this)">
+<button class="btn-reporte" onclick="cambiarReporte('operadores', this)">
     REPORTE TIEMPO OPERADORES BAÑO
 </button>
-
-<button class="btn-reporte"
-    onclick="cambiarReporte('senal', this)">
+<button class="btn-reporte" onclick="cambiarReporte('senal', this)">
     REPORTE MI JACK SIN SEÑAL
 </button>
-
-<button class="btn-reporte"
-    onclick="generarReporteDT(this)">
+<button class="btn-reporte" onclick="generarReporteDT(this)">
     REPORTE FALLAS OPERACIONES
 </button>
-
-
 </div>
-
 </div>
-
-
 <div id="contenedorReporteGruas">
-
 </div>
-
 <div id="contenedorReporteDT" style="display:none;">
-
 </div>
-
-<div id="contenedorReporteOperadores"
-style="display:none;">
-
+<div id="contenedorReporteOperadores" style="display:none;">
 </div>
-    <div id="tab-gruas"></div>
-
+<div id="tab-gruas"></div>
 <div id="tab-operadores"></div>
 <div id="tab-senal"></div>
-
-  </div>
-
 </div>
-    <div id="vistaIncidentes" class="vista">
-  <iframe
-    src="https://sistemaincidenciasgruas2026.github.io/Reporte-Gruas2.0/"
-    style="
+</div>
+<div class="vista" id="vistaIncidentes">
+<iframe src="https://sistemaincidenciasgruas2026.github.io/Reporte-Gruas2.0/" style="
       width:100%;
       height:calc(100vh - 70px);
       border:none;
       background:white;
     ">
-  </iframe>
+</iframe>
 </div>
-<div id="vistaMensajes" class="vista">
-
-    <div class="messages-container">
-
-        <div class="messages-header">
-
-            <h2>Mensajes Operativos OPERACIONES - GRÚAS RTG</h2>
-
-            <span>
+<div class="vista" id="vistaMensajes">
+<div class="messages-container">
+<div class="messages-header">
+<h2>Mensajes Operativos OPERACIONES - GRÚAS RTG</h2>
+<span>
                 Información en tiempo real para Operaciones y Mantenimiento
             </span>
-
-        </div>
-
-        <!-- LAS DOS COLUMNAS -->
-        <div class="messages-dashboard">
-
-            <!-- IZQUIERDA -->
-            <div class="compose-card">
-
-                <div class="card-title">
+</div>
+<!-- LAS DOS COLUMNAS -->
+<div class="messages-dashboard">
+<!-- IZQUIERDA -->
+<div class="compose-card">
+<div class="card-title">
                     NUEVO MENSAJE
                 </div>
-
-                <label><strong>Quién envía</strong></label>
-                <select id="autorMensaje" class="input">
-                    <option value="">Seleccione...</option>
-                    <option value="OPERACIONES">OPERACIONES</option>
-                    <option value="MTTO GRÚAS">MTTO GRÚAS</option>
-                    <option value="Supervisor">Supervisor</option>
-                    <option value="Monitor AB">Monitor AB</option>
-                    <option value="Monitor CD">Monitor CD</option>
-                    <option value="Monitor EF">Monitor EF</option>
-                    <option value="Monitor SDS">Monitor SDS</option>
-                    <option value="Monitor VSL">Monitor VSL</option>
-                    <option value="Rail Monitor ">Rail Monitor </option>
-                </select>
-                <textarea
-                    class="msg"
-                    id="mensajeInput"
-                    placeholder="Informe acerca de la grúa..."
-                ></textarea>
-
-                <div class="msg-actions">
-                    <button
-                        class="publish-btn"
-                        onclick="guardarMensaje()">
+<label><strong>Quién envía</strong></label>
+<select class="input" id="autorMensaje">
+<option value="">Seleccione...</option>
+<option value="OPERACIONES">OPERACIONES</option>
+<option value="MTTO GRÚAS">MTTO GRÚAS</option>
+<option value="Supervisor">Supervisor</option>
+<option value="Monitor AB">Monitor AB</option>
+<option value="Monitor CD">Monitor CD</option>
+<option value="Monitor EF">Monitor EF</option>
+<option value="Monitor SDS">Monitor SDS</option>
+<option value="Monitor VSL">Monitor VSL</option>
+<option value="Rail Monitor ">Rail Monitor </option>
+</select>
+<textarea class="msg" id="mensajeInput" placeholder="Informe acerca de la grúa..."></textarea>
+<div class="msg-actions">
+<button class="publish-btn" onclick="guardarMensaje()">
                         PUBLICAR MENSAJE
                     </button>
-                </div>
-
-            </div>
-
-            <!-- DERECHA -->
-            <div class="history-card">
-
-                <div class="history-header">
+</div>
+</div>
+<!-- DERECHA -->
+<div class="history-card">
+<div class="history-header">
                     HISTORIAL OPERATIVO
                 </div>
-
-                <div id="historialMensajes"></div>
-
-            </div>
-
-        </div>
-
-    </div>
-
+<div id="historialMensajes"></div>
 </div>
-<div id="vistaOperativo" class="vista activa">
-
-
-    <div class="kpis kpis-rtg-sts">
-      <section class="kpi-group-wrap">
-        <div class="kpi-group-head rtg">RTG</div>
-        <div class="kpi-group-cards rtg">
-          <div class="kpi kpi-rtg">
-            <div class="kpi-title">GRÚAS TRABAJANDO</div>
-            <div class="kpi-value" id="k1">0</div>
-          </div>
-          <div class="kpi kpi-rtg">
-            <div class="kpi-title">DAYLI</div>
-            <div class="kpi-value" id="k2">0</div>
-          </div>
-          <div class="kpi kpi-rtg">
-            <div class="kpi-title">FALLAS ACTIVAS</div>
-            <div class="kpi-value" id="k3">0</div>
-          </div>
-          <div class="kpi kpi-rtg kpi-prioridad">
-            <div class="kpi-title">GRÚAS PRIORIDAD</div>
-            <div class="kpi-value" id="k4">0</div>
-          </div>
-        </div>
-      </section>
-
-      <section class="kpi-group-wrap">
-        <div class="kpi-group-head sts">STS</div>
-        <div class="kpi-group-cards sts">
-          <div class="kpi kpi-sts">
-            <div class="kpi-title">GRÚAS TRABAJANDO</div>
-            <div class="kpi-value" id="k5">0</div>
-          </div>
-          <div class="kpi kpi-sts">
-            <div class="kpi-title">DAYLI</div>
-            <div class="kpi-value" id="k6">0</div>
-          </div>
-          <div class="kpi kpi-sts">
-            <div class="kpi-title">FALLAS ACTIVAS</div>
-            <div class="kpi-value" id="k7">0</div>
-          </div>
-        </div>
-      </section>
-    </div>
-  
-<input
-  type="file"
-  id="excelFile"
-  accept=".xlsx,.xls"
-  style="display:none"
-  onchange="cargarExcel(event)"
->
+</div>
+</div>
+</div>
+<div class="vista activa" id="vistaOperativo">
+<div class="kpis kpis-rtg-sts">
+<section class="kpi-group-wrap">
+<div class="kpi-group-head rtg">RTG</div>
+<div class="kpi-group-cards rtg">
+<div class="kpi kpi-rtg">
+<div class="kpi-title">GRÚAS TRABAJANDO</div>
+<div class="kpi-value" id="k1">0</div>
+</div>
+<div class="kpi kpi-rtg">
+<div class="kpi-title">DAYLI</div>
+<div class="kpi-value" id="k2">0</div>
+</div>
+<div class="kpi kpi-rtg">
+<div class="kpi-title">FALLAS ACTIVAS</div>
+<div class="kpi-value" id="k3">0</div>
+</div>
+<div class="kpi kpi-rtg kpi-prioridad">
+<div class="kpi-title">GRÚAS PRIORIDAD</div>
+<div class="kpi-value" id="k4">0</div>
+</div>
+</div>
+</section>
+<section class="kpi-group-wrap">
+<div class="kpi-group-head sts">STS</div>
+<div class="kpi-group-cards sts">
+<div class="kpi kpi-sts">
+<div class="kpi-title">GRÚAS TRABAJANDO</div>
+<div class="kpi-value" id="k5">0</div>
+</div>
+<div class="kpi kpi-sts">
+<div class="kpi-title">DAYLI</div>
+<div class="kpi-value" id="k6">0</div>
+</div>
+<div class="kpi kpi-sts">
+<div class="kpi-title">FALLAS ACTIVAS</div>
+<div class="kpi-value" id="k7">0</div>
+</div>
+</div>
+</section>
+</div>
+<input accept=".xlsx,.xls" id="excelFile" onchange="cargarExcel(event)" style="display:none" type="file"/>
 <div class="barra-acciones">
-
-<button 
-    id="btnImportarExcel"
-    class="btn-accion btn-importar"
-    onclick="document.getElementById('excelFile').click()">
-
-    <i class="fa-solid fa-file-import"></i>
+<button class="btn-accion btn-importar" id="btnImportarExcel" onclick="document.getElementById('excelFile').click()">
+<i class="fa-solid fa-file-import"></i>
     Importar Estados de Hoja de Equipo
 
 </button>
-    <button 
-        class="btn-accion btn-captura"
-        onclick="capturarTablero()">
-
-        <i class="fa-solid fa-camera"></i>
+<button class="btn-accion btn-captura" onclick="capturarTablero()">
+<i class="fa-solid fa-camera"></i>
         Capturar Yard Estado de Gruas
     </button>
-
 </div>
-
 <div class="dashboard-main">
-
-    <!-- IZQUIERDA -->
-    <div class="yard-container">
-
-
+<!-- IZQUIERDA -->
+<div class="yard-container">
 <div class="yard" style="position:relative;">
-
-  <div class="leyenda-corner">
-
-  <div class="legend-mini">
-
-    <div class="legend-row">
-      <span class="color-box operacion"></span>
-      <span>Operación</span>
-    </div>
-
-    <div class="legend-row">
-      <span class="color-box disponible"></span>
-      <span>Disponible</span>
-    </div>
-
-    <div class="legend-row">
-      <span class="color-box falla"></span>
-      <span>Falla en turno</span>
-    </div>
-
-    <div class="legend-row">
-      <span class="color-box dayli"></span>
-      <span>Dayli</span>
-    </div>
-
-    <div class="legend-row">
-      <span class="color-box baño"></span>
-      <span>Baño</span>
-    </div>
-
-    <div class="legend-row">
-      <span class="color-box anclada"></span>
-      <span>Anclado</span>
-    </div>
-
-    <div class="legend-row">
-      <span class="color-box fmenor"></span>
-      <span>Falla menor</span>
-    </div>
-
-    <div class="legend-row">
-      <span class="color-box fseñal"></span>
-      <span>Falla de señal</span>
-
-    </div>
-        <div class="legend-row">
-        <span class="color-box percance"></span>
-        <span>Percance</span>
-    </div>
-
-  </div>
-
+<div class="leyenda-corner">
+<div class="legend-mini">
+<div class="legend-row">
+<span class="color-box operacion"></span>
+<span>Operación</span>
+</div>
+<div class="legend-row">
+<span class="color-box disponible"></span>
+<span>Disponible</span>
+</div>
+<div class="legend-row">
+<span class="color-box falla"></span>
+<span>Falla en turno</span>
+</div>
+<div class="legend-row">
+<span class="color-box dayli"></span>
+<span>Dayli</span>
+</div>
+<div class="legend-row">
+<span class="color-box baño"></span>
+<span>Baño</span>
+</div>
+<div class="legend-row">
+<span class="color-box anclada"></span>
+<span>Anclado</span>
+</div>
+<div class="legend-row">
+<span class="color-box fmenor"></span>
+<span>Falla menor</span>
+</div>
+<div class="legend-row">
+<span class="color-box fseñal"></span>
+<span>Falla de señal</span>
+</div>
+<div class="legend-row">
+<span class="color-box percance"></span>
+<span>Percance</span>
+</div>
+</div>
 </div>
 <div class="yard-panel">
 </div>
-
-
-  <div id="yard"></div>
-
+<div id="yard"></div>
 </div>
-
-    </div>
-
-    <!-- DERECHA -->
-    <div class="events-panel">
-
-        <div class="panel dashboard-panel">
-            <div class="panel-header">
+</div>
+<!-- DERECHA -->
+<div class="events-panel">
+<div class="panel dashboard-panel">
+<div class="panel-header">
                 GRÚAS EN FALLA
             </div>
-            <div class="fallas-filtros">
-                <button type="button" id="filtroFallasRTG" class="fallas-filtro-btn activo" onclick="cambiarFiltroFallas('rtg')">RTG</button>
-                <button type="button" id="filtroFallasSTS" class="fallas-filtro-btn" onclick="cambiarFiltroFallas('sts')">STS</button>
-            </div>
-
-            <div class="list" id="listaFallas"></div>
-        </div>
-
+<div class="fallas-filtros">
+<button class="fallas-filtro-btn activo" id="filtroFallasRTG" onclick="cambiarFiltroFallas('rtg')" type="button">RTG</button>
+<button class="fallas-filtro-btn" id="filtroFallasSTS" onclick="cambiarFiltroFallas('sts')" type="button">STS</button>
+</div>
+<div class="list" id="listaFallas"></div>
+</div>
 <div class="panel dashboard-panel">
-
-    <div class="panel-header">
+<div class="panel-header">
         MENSAJE ACTIVO
     </div>
-
-<div id="mensajeActivo" class="mensaje-activo">
+<div class="mensaje-activo" id="mensajeActivo">
     Cargando mensaje...
 </div>
-
-</div>
-        </div>
-
-    </div>
-
-</div>
-
-
 </div>
 </div>
-
-
 </div>
-
-  
+</div>
+</div>
+</div>
 </div>
 
 <!-- ================= MODAL ================= -->
-
 <div class="modal" id="modal">
-
 <div class="modal-content">
-
-    <button 
-        type="button"
-        class="cerrar-modal"
-        onclick="cerrarModal()">
+<button class="cerrar-modal" onclick="cerrarModal()" type="button">
         ✕
     </button>
-
 <div class="modal-title" id="modalTitle">
-
-    <span>REGISTRO DE EVENTO</span>
-
-    <button 
-        type="button"
-        class="cerrar-modal"
-        onclick="cerrarModal()">
+<span>REGISTRO DE EVENTO</span>
+<button class="cerrar-modal" onclick="cerrarModal()" type="button">
         ✕
     </button>
-
 </div>
-
-
 <div class="operador-box">
-
-    <span class="operador-label">OPERADOR:</span>
-
-    <span id="operadorActual" class="operador-nombre">
+<span class="operador-label">OPERADOR:</span>
+<span class="operador-nombre" id="operadorActual">
         SIN ASIGNAR
     </span>
-
-    <button
-        type="button"
-        class="btn-editar"
-        onclick="mostrarEditorOperador()"
-        title="Editar operador">
-        <i class="fas fa-pen"></i>
-    </button>
-
+<button class="btn-editar" onclick="mostrarEditorOperador()" title="Editar operador" type="button">
+<i class="fas fa-pen"></i>
+</button>
 </div>
-
-<div id="editorOperador" class="editor-operador" style="display:none;">
-
-    <input
-        id="operadorManual"
-        type="text"
-        placeholder="Nuevo operador">
-
-    <button
-        type="button"
-        class="btn-operador"
-        onclick="guardarOperadorManual()"
-        title="Guardar">
-        <i class="fas fa-check"></i>
-    </button>
-
-    <button
-        type="button"
-        class="btn-cancelar"
-        onclick="ocultarEditorOperador()"
-        title="Cancelar">
-        <i class="fas fa-times"></i>
-    </button>
-
+<div class="editor-operador" id="editorOperador" style="display:none;">
+<input id="operadorManual" placeholder="Nuevo operador" type="text"/>
+<button class="btn-operador" onclick="guardarOperadorManual()" title="Guardar" type="button">
+<i class="fas fa-check"></i>
+</button>
+<button class="btn-cancelar" onclick="ocultarEditorOperador()" title="Cancelar" type="button">
+<i class="fas fa-times"></i>
+</button>
 </div>
-
-<div id="editorOperador" class="editor-operador" style="display:none;">
-
-    <input
-        id="operadorManual"
-        type="text"
-        placeholder="Nuevo operador">
-
-    <button class="btn-operador" onclick="guardarOperadorManual()">
+<div class="editor-operador" id="editorOperador" style="display:none;">
+<input id="operadorManual" placeholder="Nuevo operador" type="text"/>
+<button class="btn-operador" onclick="guardarOperadorManual()">
         ✔
     </button>
-
-    <button class="btn-cancelar" onclick="ocultarEditorOperador()">
+<button class="btn-cancelar" onclick="ocultarEditorOperador()">
         ✖
     </button>
-
 </div>
-
 <div class="estado-panel">
-
-  <div id="panelEstado">
-  <label>Estado de la grúa</label>
-
-<select id="estado"
-
-  onchange="actualizarIndicadorEstado(); manejarCambioEstado()">
-  <option value="operacion">OPERACION</option>
-  <option value="disponible">DISPONIBLE</option>
-  <option value="falla">FALLA EN TURNO</option>
-  <option value="dayli">DAYLI</option>
-  <option value="baño">BAÑO</option>
-  <option value="anclada">ANCLADA</option>
-  <option value="fmenor">FALLA MENOR</option>
-  <option value="fseñal">FALLA DE SEÑAL</option>
-  <option value="percance">PERCANCE</option>
+<div id="panelEstado">
+<label>Estado de la grúa</label>
+<select id="estado" onchange="actualizarIndicadorEstado(); manejarCambioEstado()">
+<option value="operacion">OPERACION</option>
+<option value="disponible">DISPONIBLE</option>
+<option value="falla">FALLA EN TURNO</option>
+<option value="dayli">DAYLI</option>
+<option value="baño">BAÑO</option>
+<option value="anclada">ANCLADA</option>
+<option value="fmenor">FALLA MENOR</option>
+<option value="fseñal">FALLA DE SEÑAL</option>
+<option value="percance">PERCANCE</option>
 </select>
 <div id="bloqueOperaciones">
-
 <div id="grupoFechaOpRepo" style="display:none;">
 <label>Fecha/Hora Grua Reportada</label>
-<input type="datetime-local" id="fechaOpRepo"readonly>
+<input id="fechaOpRepo" readonly="" type="datetime-local"/>
 </div>
-
-
 <div id="grupoQuienReporto" style="display:none;">
-
-    <label for="quienReporto">Quién reportó</label>
-
-    <input
-        type="text"
-        id="quienReporto"
-        list="listaReportantes"
-        placeholder="Escriba un apellido o nombre">
-
-    <datalist id="listaReportantes">
-        <option value="AGUILAR SANCHEZ"><option value="HERNÁNDEZ SOSA"><option value="RODRÍGUEZ PÉREZ"></option>
-        <option value="ALVARADO CRUZ"><option value="HERRERA RINCON"><option value="ROMERO BLANCA"></option>
-        <option value="ANAYA ORTIZ"><option value="HUERTA BERNAL"><option value="ROSALES FONSECA"></option>
-        <option value="ARENAS PÉREZ"><option value="IBARRA LÓPEZ"><option value="RUÍZ ALCÁNTARA"></option>
-        <option value="ARROYO LOPEZ"><option value="JIMENEZ RIVAS"><option value="RUIZ LEY"></option>
-        <option value="ARUMIR BLANCAS"><option value="JUAREZ JIMENEZ"><option value="SALES ALVAREZ"></option>
-        <option value="AVILA ARROYO"><option value="JULIAN SIMON"><option value="SANCHEZ MARTINEZ"></option>
-        <option value="BARRAGAN MOLINA"><option value="LEZAMA GARCIA"><option value="SANTIAGO TORIBIO"></option>
-        <option value="BLANDO CORONA"><option value="LÓPEZ AGUADO"><option value="VALDEZ GOMEZ"></option>
-        <option value="CALDERON FIGUEROA"><option value="LOPEZ ALTAMIRANO"><option value="VAZQUEZ NEGRETE"></option>
-        <option value="CARRILLO MORALES"><option value="LOPEZ MARTINEZ"><option value="VIEYRA DIAZ"></option>
-        <option value="CLAVELLINA LORA"><option value="LOPEZ VELA"><option value="ZAMORA ORTEGA"></option>
-        <option value="CORTES GONZALEZ"><option value="MACIAS TAMAYO"><option value="ZARATE SEGUNDO"></option>
-        <option value="CRUZ ARRIAGA"><option value="MACUIL GUEVARA"><option value="ZAVALA RAMIREZ"></option>
-        <option value="CRUZ HERNÁNDEZ"><option value="MAGAÑA CATARINO"><option value="ZAVALA REYES"></option>
-        <option value="CUETO MENDOZA"><option value="MAGOS CATALÁN">
-        <option value="CUEVAS MARTINEZ"><option value="MANRIQUEZ BONILLA">
-        <option value="DE JESÚS ALBERDIN"><option value="MARCIAL VALENTE">
-        <option value="DEHESA VEYRA"><option value="MAYA CAMPOS">
-        <option value="ESCORCIA GARCÍA"><option value="MENDOZA MONTIEL">
-        <option value="ESPINOSA CORTES"><option value="MOLINA LIMA">
-        <option value="ESPINOSA DURAN"><option value="MORALES HIDALGO">
-        <option value="FERNANDEZ LOPEZ"><option value="ORTÍZ DÁVALOS">
-        <option value="FERNÁNDEZ VILLALOBOS"><option value="PALOMERA AVILES">
-        <option value="FLORES BLANCAS"><option value="PEREZ NAZARIO">
-        <option value="FRAGOSO CARREÓN"><option value="PEREZ OLIVARES">
-        <option value="GARCIA MALDONADO"><option value="PONCE AGUILAR">
-        <option value="GARCÍA MARTÍNEZ"><option value="PRIETO SALDIVAR">
-        <option value="GARCIA PAREDES"><option value="RAMIREZ GUZMAN">
-        <option value="ZAVALA REYES"><option value="RAMIREZ ROBLES">
-        <option value="GOMEZ GUERRA"><option value="RAMOS BAUTISTA">
-        <option value="HERNANDEZ CORIA"><option value="REZA CRUZ">
-        <option value="HERNANDEZ GARDUÑO"><option value="RIVERA MARTINEZ">
-        <option value="HERNANDEZ SERENA"><option value="RODRÍGUEZ MARTÍNEZ">
-
-          </option>
-    </datalist>
-
+<label for="quienReporto">Quién reportó</label>
+<input id="quienReporto" list="listaReportantes" placeholder="Escriba un apellido o nombre" type="text"/>
+<datalist id="listaReportantes">
+<option value="AGUILAR SANCHEZ"><option value="HERNÁNDEZ SOSA"><option value="RODRÍGUEZ PÉREZ"></option>
+<option value="ALVARADO CRUZ"><option value="HERRERA RINCON"><option value="ROMERO BLANCA"></option>
+<option value="ANAYA ORTIZ"><option value="HUERTA BERNAL"><option value="ROSALES FONSECA"></option>
+<option value="ARENAS PÉREZ"><option value="IBARRA LÓPEZ"><option value="RUÍZ ALCÁNTARA"></option>
+<option value="ARROYO LOPEZ"><option value="JIMENEZ RIVAS"><option value="RUIZ LEY"></option>
+<option value="ARUMIR BLANCAS"><option value="JUAREZ JIMENEZ"><option value="SALES ALVAREZ"></option>
+<option value="AVILA ARROYO"><option value="JULIAN SIMON"><option value="SANCHEZ MARTINEZ"></option>
+<option value="BARRAGAN MOLINA"><option value="LEZAMA GARCIA"><option value="SANTIAGO TORIBIO"></option>
+<option value="BLANDO CORONA"><option value="LÓPEZ AGUADO"><option value="VALDEZ GOMEZ"></option>
+<option value="CALDERON FIGUEROA"><option value="LOPEZ ALTAMIRANO"><option value="VAZQUEZ NEGRETE"></option>
+<option value="CARRILLO MORALES"><option value="LOPEZ MARTINEZ"><option value="VIEYRA DIAZ"></option>
+<option value="CLAVELLINA LORA"><option value="LOPEZ VELA"><option value="ZAMORA ORTEGA"></option>
+<option value="CORTES GONZALEZ"><option value="MACIAS TAMAYO"><option value="ZARATE SEGUNDO"></option>
+<option value="CRUZ ARRIAGA"><option value="MACUIL GUEVARA"><option value="ZAVALA RAMIREZ"></option>
+<option value="CRUZ HERNÁNDEZ"><option value="MAGAÑA CATARINO"><option value="ZAVALA REYES"></option>
+<option value="CUETO MENDOZA"><option value="MAGOS CATALÁN">
+<option value="CUEVAS MARTINEZ"><option value="MANRIQUEZ BONILLA">
+<option value="DE JESÚS ALBERDIN"><option value="MARCIAL VALENTE">
+<option value="DEHESA VEYRA"><option value="MAYA CAMPOS">
+<option value="ESCORCIA GARCÍA"><option value="MENDOZA MONTIEL">
+<option value="ESPINOSA CORTES"><option value="MOLINA LIMA">
+<option value="ESPINOSA DURAN"><option value="MORALES HIDALGO">
+<option value="FERNANDEZ LOPEZ"><option value="ORTÍZ DÁVALOS">
+<option value="FERNÁNDEZ VILLALOBOS"><option value="PALOMERA AVILES">
+<option value="FLORES BLANCAS"><option value="PEREZ NAZARIO">
+<option value="FRAGOSO CARREÓN"><option value="PEREZ OLIVARES">
+<option value="GARCIA MALDONADO"><option value="PONCE AGUILAR">
+<option value="GARCÍA MARTÍNEZ"><option value="PRIETO SALDIVAR">
+<option value="GARCIA PAREDES"><option value="RAMIREZ GUZMAN">
+<option value="ZAVALA REYES"><option value="RAMIREZ ROBLES">
+<option value="GOMEZ GUERRA"><option value="RAMOS BAUTISTA">
+<option value="HERNANDEZ CORIA"><option value="REZA CRUZ">
+<option value="HERNANDEZ GARDUÑO"><option value="RIVERA MARTINEZ">
+<option value="HERNANDEZ SERENA"><option value="RODRÍGUEZ MARTÍNEZ">
+</option>
+</option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></datalist>
 </div>
-
 <div id="grupoActividad" style="display:none;">
-  <label for="actividad">Actividad que realizaba</label>
-  <select id="actividad">
-    <option value="Buque-(Descarga/Carga)">Buque-(Descarga/Carga)</option>
-    <option value="CFS-(Programacion/Retirada)">CFS-(Programacion/Retirada)</option>
-    <option value="Cuadrillas-(Mantto.Patio)">Cuadrillas-(Mantto.Patio)</option>
-    <option value="Garita-(Entrega/Recepcion)">Garita-(Entrega/Recepcion)</option>
-    <option value="Liberaciones-(Remanejos)">Liberaciones-(Remanejos)</option>
-    <option value="Otros-Ir al baño">Otros-Ir al baño</option>
-    <option value="Servicios Internos-(Escaneos,Pesajes,Transf.)">Servicios Internos-(Escaneos,Pesajes,Transf.)</option>
-    <option value="Traslados(Entrega/Recepcion)">Traslados(Entrega/Recepcion)</option>
-    <option value="Tren-(Carga/Descarga)">Tren-(Carga/Descarga)</option>
-  </select>
+<label for="actividad">Actividad que realizaba</label>
+<select id="actividad">
+<option value="Buque-(Descarga/Carga)">Buque-(Descarga/Carga)</option>
+<option value="CFS-(Programacion/Retirada)">CFS-(Programacion/Retirada)</option>
+<option value="Cuadrillas-(Mantto.Patio)">Cuadrillas-(Mantto.Patio)</option>
+<option value="Garita-(Entrega/Recepcion)">Garita-(Entrega/Recepcion)</option>
+<option value="Liberaciones-(Remanejos)">Liberaciones-(Remanejos)</option>
+<option value="Otros-Ir al baño">Otros-Ir al baño</option>
+<option value="Servicios Internos-(Escaneos,Pesajes,Transf.)">Servicios Internos-(Escaneos,Pesajes,Transf.)</option>
+<option value="Traslados(Entrega/Recepcion)">Traslados(Entrega/Recepcion)</option>
+<option value="Tren-(Carga/Descarga)">Tren-(Carga/Descarga)</option>
+</select>
 </div>
-
-
 <div id="labelRegistroFalla" style="display:none;">
-  <label for="registro_falla">¿Qué falla reporta?</label>
-
-  <select id="registro_falla">
-    <option value="">Seleccione una opción</option>
-    <option value="Spreader">Spreader</option>
-    <option value="Falla Gantry">Falla Gantry</option>
-    <option value="Falla Hoist">Falla Hoist</option>
-    <option value="Falla Winche (Cable)">Falla Winche (Cable)</option>
-    <option value="Falla Aire Acondicionado">Falla Aire Acondicionado</option>
-    <option value="Falla Alumbrado">Falla Alumbrado</option>
-    <option value="Falla Control">Falla Control</option>
-    <option value="Falla en Trolley">Falla en Trolley</option>
-    <option value="Falla Neumática (Llanta)">Falla Neumática (Llanta)</option>
-    <option value="Percance">Percance</option>
-    <option value="Preventivo">Preventivo</option>
-    <option value="Falla Eléctrica">Falla Eléctrica</option>
-    <option value="Falla Sistema">Falla Sistema</option>
-  </select>
+<label for="registro_falla">¿Qué falla reporta?</label>
+<select id="registro_falla">
+<option value="">Seleccione una opción</option>
+<option value="Spreader">Spreader</option>
+<option value="Falla Gantry">Falla Gantry</option>
+<option value="Falla Hoist">Falla Hoist</option>
+<option value="Falla Winche (Cable)">Falla Winche (Cable)</option>
+<option value="Falla Aire Acondicionado">Falla Aire Acondicionado</option>
+<option value="Falla Alumbrado">Falla Alumbrado</option>
+<option value="Falla Control">Falla Control</option>
+<option value="Falla en Trolley">Falla en Trolley</option>
+<option value="Falla Neumática (Llanta)">Falla Neumática (Llanta)</option>
+<option value="Percance">Percance</option>
+<option value="Preventivo">Preventivo</option>
+<option value="Falla Eléctrica">Falla Eléctrica</option>
+<option value="Falla Sistema">Falla Sistema</option>
+</select>
 </div>
-
 <div id="grupoPrioridad" style="display:none">
-
-  <label id="labelPrioridad" for="prioridad">
+<label for="prioridad" id="labelPrioridad">
     ¿Qué prioridad tiene?
   </label>
-
-  <select id="prioridad">
-    <option value="0">0</option>
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-    <option value="6">6</option>
-    <option value="7">7</option>
-  </select>
-
-</div>
+<select id="prioridad">
+<option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
 </select>
-
 </div>
 
-<div id="estadoIndicador" class="estado-indicador">
+</div>
+<div class="estado-indicador" id="estadoIndicador">
   Estado actual: —
 </div>
-  <button type="button" class="btn-estado" onclick="guardarEstadoRapido()">
+<button class="btn-estado" onclick="guardarEstadoRapido()" type="button">
     ACTUALIZAR ESTADO
   </button>
 </div>
 </div>
-
 <div id="formularioCierre" style="display:none;">
-  <center>
-  <h3>Formulario para Downtime</h3>
-  </center>
+<center>
+<h3>Formulario para Downtime</h3>
+</center>
 <div class="form-group" style="display:none;">
-    <label>Grúa</label>
-    <input type="text" id="gruaGeneral" readonly>
+<label>Grúa</label>
+<input id="gruaGeneral" readonly="" type="text"/>
 </div>
-
-
 <div style="display:none;">
-  <label>Turno</label>
-  <select id="turnoGeneral">
-    <option value="1">1er Turno</option>
-    <option value="2">2do Turno</option>
-    <option value="3">3er Turno</option>
-  </select>
-</div>
-
-
-<div style="display:none;">
-  <label>Bloque / Tramo</label>
-  <input type="text" id="bloqueTramo">
-</div>
-
-
-<div style="display:none;">
-  <label>Fecha/Hora de grua entregada</label>
-  <input type="datetime-local" id="fechaReporte">
-</div>
-
-<label>Tiempo Muerto</label>
-
-<select id="tiempoMuerto">
-    <option value="">Seleccione...</option>
+<label>Turno</label>
+<select id="turnoGeneral">
+<option value="1">1er Turno</option>
+<option value="2">2do Turno</option>
+<option value="3">3er Turno</option>
 </select>
-
-
-<div style="display:none;">
-  <label>Área</label>
-
-  <select id="areaMantto">
-    <option value="RTG">RTG</option>
-    <option value="TREN">TREN</option>
-  </select>
 </div>
-
-
+<div style="display:none;">
+<label>Bloque / Tramo</label>
+<input id="bloqueTramo" type="text"/>
+</div>
+<div style="display:none;">
+<label>Fecha/Hora de grua entregada</label>
+<input id="fechaReporte" type="datetime-local"/>
+</div>
+<label>Tiempo Muerto</label>
+<select id="tiempoMuerto">
+<option value="">Seleccione...</option>
+</select>
+<div style="display:none;">
+<label>Área</label>
+<select id="areaMantto">
+<option value="RTG">RTG</option>
+<option value="TREN">TREN</option>
+</select>
+</div>
 <label>Supervisor</label>
 <select id="supervisor" onchange="cargarStandby('', document.getElementById('gruaGeneral')?.value || '')">
 <option value="">Seleccione</option>
 </select>
-
 <label>StandBy</label>
-
 <select id="standby">
-
 <option value="">
 Seleccione supervisor
 </option>
 </select>
-
-
 <label>Responsabilidad</label>
-
-<select id="responsabilidad"
-        onchange="cargarCodigos()">
+<select id="responsabilidad" onchange="cargarCodigos()">
 </select>
-
 <!-- CÓDIGO Y DESCRIPCIÓN DE FALLA: OCULTOS POR AHORA.
      Se conservan en el formulario y en la base de datos para poder habilitarlos después. -->
 <div style="display:none;">
-  <label>Código Falla</label>
-  <select id="codigoFalla">
-  </select>
-</div>
-
-<div style="display:none;">
-  <label>Descripción de falla</label>
-  <textarea id="descripcionFalla" placeholder="Describe la falla..."></textarea>
-</div>
-
-<label>Indique tipo de falla (TM/TI)</label>
-
-<select id="TMI">
-    <option value="">Seleccione tipo de falla...</option>
-    <option value="TIEMPO MUERTO">TIEMPO MUERTO</option>
-    <option value="TIEMPO INVERTIDO">TIEMPO INVERTIDO</option>
+<label>Código Falla</label>
+<select id="codigoFalla">
 </select>
-
-
+</div>
+<div style="display:none;">
+<label>Descripción de falla</label>
+<textarea id="descripcionFalla" placeholder="Describe la falla..."></textarea>
+</div>
+<label>Indique tipo de falla (TM/TI)</label>
+<select id="TMI">
+<option value="">Seleccione tipo de falla...</option>
+<option value="TIEMPO MUERTO">TIEMPO MUERTO</option>
+<option value="TIEMPO INVERTIDO">TIEMPO INVERTIDO</option>
+</select>
 <button onclick="guardar()">
 GUARDAR
 </button>
-
-<button
-class="close"
-onclick="cerrarModal()"
->
+<button class="close" onclick="cerrarModal()">
 CERRAR
 </button>
 </div>
 </div>
-
-</div>
-</div>
 </div>
 
 
-<script type="text/plain" id="sistema-script">
 
+
+
+
+
+
+<style id="ajuste-final-espacio-y-grillas">
+/* ===== AJUSTE FINAL: MENOS ESPACIO ARRIBA + GRILLAS COMPLETAS ===== */
+.kpis{
+  margin:0 4px 4px !important;
+  gap:5px !important;
+}
+.kpi{
+  min-height:38px !important;
+  height:38px !important;
+  padding:3px 8px !important;
+}
+.kpi-title{font-size:8px !important;margin-bottom:0 !important;line-height:1.05 !important}
+.kpi-value{font-size:15px !important;line-height:1 !important}
+.barra-acciones{
+  padding:3px 6px !important;
+  margin:0 0 5px !important;
+  min-height:38px !important;
+  height:38px !important;
+  gap:5px !important;
+}
+.btn-accion{
+  height:30px !important;
+  width:250px !important;
+  max-width:calc(50vw - 10px) !important;
+}
+.dashboard-main{
+  padding:0 6px 8px !important;
+  gap:8px !important;
+}
+.yard{
+  padding:10px !important;
+}
+/* Cada fila: etiqueta pequeña + todo el espacio restante */
+.row{
+  grid-template-columns:58px minmax(0,1fr) !important;
+  column-gap:6px !important;
+  width:100% !important;
+}
+/* Las 11 grúas principales siempre comparten el ancho disponible */
+.grid{
+  width:100% !important;
+  min-width:0 !important;
+  grid-template-columns:repeat(11,minmax(0,1fr)) !important;
+  gap:5px !important;
+}
+/* SIDE LOADER y STS: las 13 tarjetas comparten exactamente el ancho disponible */
+.grid-side,.grid-sts{
+  width:100% !important;
+  min-width:0 !important;
+  grid-template-columns:repeat(13,minmax(0,1fr)) !important;
+  gap:5px !important;
+}
+.grid .card,.grid-side .card,.grid-sts .card{
+  width:100% !important;
+  min-width:0 !important;
+  max-width:none !important;
+  min-height:76px !important;
+  height:76px !important;
+  padding:6px 4px !important;
+}
+.grid .code,.grid-side .code,.grid-sts .code{
+  font-size:clamp(10px,1.25vw,20px) !important;
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+}
+.grid .small,.grid-side .small,.grid-sts .small{
+  font-size:clamp(6px,.58vw,10px) !important;
+  white-space:normal !important;
+  overflow:hidden !important;
+}
+/* PC/laptop: quitar espacio vertical extra */
+@media (min-width:769px){
+  .topbar{height:40px !important;min-height:40px !important}
+  .kpis{margin-top:0 !important}
+  .dashboard-main{padding-top:0 !important}
+}
+/* Tablet: también aprovechar todo el ancho */
+@media (max-width:1100px){
+  .dashboard-main{padding:0 5px 7px !important}
+  .row{grid-template-columns:45px minmax(0,1fr) !important}
+  .grid{grid-template-columns:repeat(7,minmax(0,1fr)) !important}
+  .grid-side,.grid-sts{grid-template-columns:repeat(8,minmax(0,1fr)) !important}
+  .grid .card,.grid-side .card,.grid-sts .card{height:68px !important;min-height:68px !important}
+}
+/* Teléfono: 4 columnas y sin desbordamiento */
+@media (max-width:700px){
+  .kpis{margin:0 3px 3px !important}
+  .kpi{height:34px !important;min-height:34px !important;padding:2px 5px !important}
+  .kpi-title{font-size:7px !important}
+  .kpi-value{font-size:12px !important}
+  .barra-acciones{height:auto !important;min-height:34px !important;margin:0 0 4px !important;padding:3px !important}
+  .btn-accion{width:calc(50% - 3px) !important;max-width:none !important;height:30px !important;font-size:8px !important}
+  .yard{padding:5px !important}
+  .row{grid-template-columns:34px minmax(0,1fr) !important;column-gap:4px !important}
+  .grid,.grid-side,.grid-sts{grid-template-columns:repeat(4,minmax(0,1fr)) !important;gap:4px !important}
+  .grid .card,.grid-side .card,.grid-sts .card{height:58px !important;min-height:58px !important;padding:4px 2px !important}
+  .grid .code,.grid-side .code,.grid-sts .code{font-size:clamp(9px,3.4vw,14px) !important}
+}
+@media (max-width:400px){
+  .grid,.grid-side,.grid-sts{grid-template-columns:repeat(3,minmax(0,1fr)) !important}
+  .grid .card,.grid-side .card,.grid-sts .card{height:54px !important;min-height:54px !important}
+}
+</style>
+<style id="ajuste-v30-login-fallas-mensajes">
+/* V30: conservar siempre los filtros RTG/STS visibles en GRÚAS EN FALLA */
+.events-panel .fallas-filtros{
+  display:flex !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  height:auto !important;
+  min-height:0 !important;
+  padding:6px 8px 2px !important;
+  gap:4px !important;
+}
+.events-panel .fallas-filtro-btn{
+  display:inline-flex !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  flex:0 0 70px !important;
+  width:70px !important;
+  min-width:70px !important;
+  max-width:70px !important;
+  height:24px !important;
+  margin:0 !important;
+  padding:3px 8px !important;
+  align-items:center !important;
+  justify-content:center !important;
+  font-size:10px !important;
+  line-height:1 !important;
+}
+.events-panel .fallas-filtro-btn.activo{background:#1976d2 !important;color:#fff !important;}
+.events-panel .fallas-filtro-btn:not(.activo){background:#d9e2ea !important;color:#17324d !important;}
+
+/* V30: subir un poco MENSAJE ACTIVO sin pegarlo al panel de fallas */
+.events-panel{gap:8px !important;}
+.events-panel > .dashboard-panel:nth-child(2){margin-top:-2px !important;}
+
+@media(max-width:600px){
+  .events-panel .fallas-filtros{padding:5px 7px 1px !important;gap:3px !important;}
+  .events-panel .fallas-filtro-btn{flex-basis:64px !important;width:64px !important;min-width:64px !important;max-width:64px !important;height:22px !important;font-size:9px !important;}
+  .events-panel{gap:6px !important;}
+  .events-panel > .dashboard-panel:nth-child(2){margin-top:-1px !important;}
+}
+</style>
+<template id="appScriptTemplate"><script>
 // ================= USUARIOS =================
 
 const USUARIOS = {
@@ -13176,176 +12893,218 @@ function cerrarSesion() {
 document.addEventListener("DOMContentLoaded", () => {
     cargarCredencialesRecordadas();
 });
+</script></template><template id="alignScriptTemplate"><script>
+/* V35: alinear MENSAJE ACTIVO con K-05 sin parpadeo ni bucle de MutationObserver. */
+(function(){
+  let rafId = 0;
+  let resizeObserver = null;
+  let listenersAdded = false;
 
+  function obtenerElementos(){
+    const k05 = Array.from(document.querySelectorAll('.card')).find(el => {
+      const code = el.querySelector('.code');
+      return code && code.textContent.trim() === 'K-05';
+    });
+    const eventsPanel = document.querySelector('.events-panel');
+    const paneles = eventsPanel ? eventsPanel.querySelectorAll(':scope > .dashboard-panel') : [];
+    const mensajePanel = paneles.length > 1 ? paneles[1] : null;
+    return {k05, eventsPanel, mensajePanel};
+  }
+
+  function alinearMensajeConK05(){
+    if (window.innerWidth <= 1000) return;
+
+    const {k05, eventsPanel, mensajePanel} = obtenerElementos();
+    if (!k05 || !eventsPanel || !mensajePanel) return;
+
+    const k05Rect = k05.getBoundingClientRect();
+    const eventsRect = eventsPanel.getBoundingClientRect();
+    const top = Math.max(0, Math.round(k05Rect.top - eventsRect.top));
+
+    /* Se escribe la posición antes de hacerlo visible. */
+    mensajePanel.style.top = top + 'px';
+    mensajePanel.style.visibility = 'visible';
+    mensajePanel.style.opacity = '1';
+    mensajePanel.classList.add('mensaje-k05-listo');
+  }
+
+  function programarAlineacion(){
+    cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(alinearSeguro);
+  }
+
+  function alinearSeguro(){
+    try { alinearMensajeConK05(); } catch(e) { console.warn('Alineación Mensaje Activo:', e); }
+  }
+
+  function iniciar(){
+    /* Primer cálculo después de que el layout exista. */
+    programarAlineacion();
+    setTimeout(programarAlineacion, 80);
+    setTimeout(programarAlineacion, 200);
+    setTimeout(programarAlineacion, 400);
+
+    if (!listenersAdded) {
+      listenersAdded = true;
+      window.addEventListener('resize', programarAlineacion, {passive:true});
+      window.addEventListener('scroll', programarAlineacion, {passive:true});
+    }
+
+    /* Si cambia el tamaño real del panel/grilla, recalcular sin observar mutaciones del DOM. */
+    const {k05, eventsPanel} = obtenerElementos();
+    if (typeof ResizeObserver !== 'undefined') {
+      if (resizeObserver) resizeObserver.disconnect();
+      resizeObserver = new ResizeObserver(() => programarAlineacion());
+      if (k05) resizeObserver.observe(k05);
+      if (eventsPanel) resizeObserver.observe(eventsPanel);
+    }
+  }
+
+  window.alinearMensajeConK05 = alinearMensajeConK05;
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', iniciar, {once:true});
+  } else {
+    iniciar();
+  }
+})();
+</script></template>
+<script>
+/* =========================================================
+   LOGIN LIGERO: el sistema completo se inicializa SOLO despues de autenticar.
+   No se ejecuta el JavaScript del dashboard durante la pantalla de acceso.
+   ========================================================= */
+const LOGIN_SUPABASE_URL = 'https://gogalvnmpntvjtiunowz.supabase.co';
+const LOGIN_SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvZ2Fsdm5tcG50dmp0aXVub3d6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyNzM5MzcsImV4cCI6MjA4Nzg0OTkzN30.wOZbM_s2F-FjdrXqUz6lvRnOYAPuTYlGhwcP3hzbYTw';
+let LOGIN_SISTEMA_CARGANDO=false, LOGIN_SISTEMA_CARGADO=false;
+function controlarPasswordLogin(){
+  const u=document.getElementById('loginUsuario'), c=document.getElementById('contenedorPassword'), p=document.getElementById('loginPassword');
+  if(!u||!c||!p)return;
+  if(u.value==='Visualizacion'){c.style.display='none';p.value='';}else c.style.display='block';
+}
+function mostrarCargaLogin(texto){
+  let o=document.getElementById('loginLoadingOverlay');
+  if(!o){o=document.createElement('div');o.id='loginLoadingOverlay';o.innerHTML='<div class="login-loading-card" role="status" aria-live="polite"><div class="login-spinner"></div><div class="login-loading-title">Cargando sistema...</div><div class="login-loading-text"></div></div>';document.body.appendChild(o);}
+  const t=o.querySelector('.login-loading-text');if(t)t.textContent=texto||'Preparando grúas, datos y funciones...';o.style.display='flex';
+}
+function ocultarCargaLogin(){const o=document.getElementById('loginLoadingOverlay');if(o)o.style.display='none';}
+function loginCargarScript(src){return new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=src;s.async=true;s.onload=resolve;s.onerror=()=>reject(new Error('No se pudo cargar '+src));document.head.appendChild(s);});}
+function loginCargarCSS(href){return new Promise((resolve,reject)=>{const l=document.createElement('link');l.rel='stylesheet';l.href=href;l.onload=resolve;l.onerror=()=>reject(new Error('No se pudo cargar '+href));document.head.appendChild(l);});}
+async function loginEjecutarTemplate(id){const tpl=document.getElementById(id);if(!tpl)throw new Error('Falta '+id);const sc=tpl.content.querySelector('script');if(!sc)throw new Error('Falta script '+id);const run=document.createElement('script');run.textContent=sc.textContent;document.body.appendChild(run);}
+async function cargarSistemaCompleto(){
+  if(LOGIN_SISTEMA_CARGADO){ocultarCargaLogin();return;}
+  if(LOGIN_SISTEMA_CARGANDO)return;
+  LOGIN_SISTEMA_CARGANDO=true;mostrarCargaLogin('Cargando herramientas del sistema...');
+  try{
+    await Promise.all([
+      loginCargarScript('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'),
+      loginCargarScript('https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js'),
+      loginCargarScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'),
+      loginCargarScript('https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js'),
+      loginCargarCSS('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css'),
+      loginCargarCSS('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css'),
+      loginCargarCSS('https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css')
+    ]);
+    mostrarCargaLogin('Inicializando control de grúas...');
+    await loginEjecutarTemplate('appScriptTemplate');
+    await loginEjecutarTemplate('alignScriptTemplate');
+
+    // Reconstruir exactamente la sesión que el login original dejaba en memoria.
+    if(typeof usuarioSesion!=='undefined'){usuarioSesion={nombre:LOGIN_USUARIO_NOMBRE,rol:LOGIN_ROL_SISTEMA,puedeEditar:LOGIN_ROL_SISTEMA==='editar',session:LOGIN_SESSION};}
+
+    // IMPORTANTE: todavía NO arrancamos Realtime. Primero cargamos los datos iniciales.
+    // Así el usuario ve claramente que el sistema está trabajando después del login y
+    // no mezclamos la primera carga con las suscripciones en tiempo real.
+    if(typeof sistemaActivo!=='undefined') sistemaActivo=true;
+
+    mostrarCargaLogin('Cargando datos de grúas...');
+
+    // El script original registra varios listeners en DOMContentLoaded. Como el documento ya cargó,
+    // disparamos el evento una sola vez después de haber inyectado la aplicación.
+    document.dispatchEvent(new Event('DOMContentLoaded'));
+
+    // Primera carga REAL de datos. El indicador permanece visible hasta terminar.
+    // No se cierra inmediatamente después de inyectar los scripts.
+    const cargaInicial = await Promise.allSettled([
+      (typeof cargar === 'function' ? cargar() : Promise.resolve()),
+      (typeof cargarMensajeActual === 'function' ? cargarMensajeActual() : Promise.resolve()),
+      (typeof cargarHistorial === 'function' ? cargarHistorial() : Promise.resolve()),
+      (typeof cargarResponsabilidades === 'function' ? cargarResponsabilidades() : Promise.resolve())
+    ]);
+
+    const cargaFallida = cargaInicial.some(r => r.status === 'rejected');
+    if(cargaFallida){
+      throw new Error('Una o más cargas iniciales no pudieron completarse');
+    }
+
+    mostrarCargaLogin('Preparando panel de control...');
+
+    try{
+      if(typeof mostrarVista==='function')mostrarVista('operativo');
+      if(typeof aplicarPermisos==='function')aplicarPermisos();
+      if(typeof render==='function')render();
+      if(typeof renderKPIs==='function')renderKPIs();
+      if(typeof renderFallas==='function')renderFallas();
+      if(typeof renderPrioridad==='function')renderPrioridad();
+    }catch(e){
+      console.error('Error al preparar tablero:',e);
+      throw e;
+    }
+
+    // Solo cuando la primera carga terminó correctamente arrancamos Realtime.
+    mostrarCargaLogin('Conectando actualizaciones en tiempo real...');
+    if(typeof iniciarRealtime==='function') iniciarRealtime();
+
+    LOGIN_SISTEMA_CARGADO=true;
+    LOGIN_SISTEMA_CARGANDO=false;
+
+    // Dejamos el indicador visible un instante muy corto para que el usuario
+    // vea que realmente terminó la carga y no perciba un salto de pantalla.
+    await new Promise(resolve => setTimeout(resolve, 180));
+    ocultarCargaLogin();
+  }catch(e){
+    LOGIN_SISTEMA_CARGANDO=false;console.error('Error cargando sistema:',e);mostrarCargaLogin('No se pudo cargar una parte del sistema. Revisa la conexión y vuelve a intentar.');
+    const er=document.getElementById('loginError');if(er)er.innerText='El sistema no terminó de cargar. Intente nuevamente.';
+  }
+}
+async function iniciarSesion(){
+  if(LOGIN_SISTEMA_CARGANDO)return;
+  const usuario=(document.getElementById('loginUsuario')?.value||'').trim();
+  const password=document.getElementById('loginPassword')?.value||'';
+  const error=document.getElementById('loginError');
+  if(!usuario){error.innerText='Seleccione un usuario';return;}
+  const esVisualizacion=usuario==='Visualizacion';
+  if(!esVisualizacion&&!password){error.innerText='Ingrese la contraseña';return;}
+  error.innerText='';
+  try{
+    let resultado;
+    if(esVisualizacion) resultado={ok:true,usuario:'Visualizacion',rol:'visualizacion',session:null};
+    else{
+      const response=await fetch(`${LOGIN_SUPABASE_URL}/functions/v1/login-usuario`,{method:'POST',headers:{'Content-Type':'application/json','apikey':LOGIN_SUPABASE_KEY},body:JSON.stringify({usuario,password})});
+      resultado=await response.json();
+      if(!response.ok||!resultado.ok){error.innerText=resultado.error||'Usuario o contraseña incorrectos';return;}
+    }
+    let rolSistema='';if(resultado.rol==='rpc'||resultado.rol==='mantenimiento')rolSistema='editar';else if(resultado.rol==='visualizacion')rolSistema='visualizar';else{error.innerText='El usuario no tiene un rol válido';return;}
+    window.LOGIN_USUARIO_NOMBRE=resultado.usuario;window.LOGIN_ROL_SISTEMA=rolSistema;window.LOGIN_SESSION=resultado.session;
+    const ua=document.getElementById('usuarioActivo');if(ua)ua.innerText='👤 '+resultado.usuario;
+    localStorage.setItem('usuarioSistema',resultado.usuario);localStorage.setItem('rolSistema',rolSistema);
+    localStorage.removeItem('passwordRecordada');localStorage.removeItem('recordarCredenciales');localStorage.removeItem('usuarioRecordado');
+    document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';
+    mostrarCargaLogin('Cargando sistema de control de grúas...');
+    await cargarSistemaCompleto();
+  }catch(e){console.error('Error conectando con login-usuario:',e);error.innerText='No se pudo conectar con el servidor';}
+}
+function cargarCredencialesRecordadas(){localStorage.removeItem('recordarCredenciales');localStorage.removeItem('usuarioRecordado');localStorage.removeItem('passwordRecordada');}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{cargarCredencialesRecordadas();controlarPasswordLogin();},{once:true});else{cargarCredencialesRecordadas();controlarPasswordLogin();}
 </script>
-
-</div>
-</div>
-</div>
-</div>
-
-</div>
-
-<style id="ajuste-final-espacio-y-grillas">
-/* ===== AJUSTE FINAL: MENOS ESPACIO ARRIBA + GRILLAS COMPLETAS ===== */
-.kpis{
-  margin:0 4px 4px !important;
-  gap:5px !important;
-}
-.kpi{
-  min-height:38px !important;
-  height:38px !important;
-  padding:3px 8px !important;
-}
-.kpi-title{font-size:8px !important;margin-bottom:0 !important;line-height:1.05 !important}
-.kpi-value{font-size:15px !important;line-height:1 !important}
-.barra-acciones{
-  padding:3px 6px !important;
-  margin:0 0 5px !important;
-  min-height:38px !important;
-  height:38px !important;
-  gap:5px !important;
-}
-.btn-accion{
-  height:30px !important;
-  width:250px !important;
-  max-width:calc(50vw - 10px) !important;
-}
-.dashboard-main{
-  padding:0 6px 8px !important;
-  gap:8px !important;
-}
-.yard{
-  padding:10px !important;
-}
-/* Cada fila: etiqueta pequeña + todo el espacio restante */
-.row{
-  grid-template-columns:58px minmax(0,1fr) !important;
-  column-gap:6px !important;
-  width:100% !important;
-}
-/* Las 11 grúas principales siempre comparten el ancho disponible */
-.grid{
-  width:100% !important;
-  min-width:0 !important;
-  grid-template-columns:repeat(11,minmax(0,1fr)) !important;
-  gap:5px !important;
-}
-/* SIDE LOADER y STS: las 13 tarjetas comparten exactamente el ancho disponible */
-.grid-side,.grid-sts{
-  width:100% !important;
-  min-width:0 !important;
-  grid-template-columns:repeat(13,minmax(0,1fr)) !important;
-  gap:5px !important;
-}
-.grid .card,.grid-side .card,.grid-sts .card{
-  width:100% !important;
-  min-width:0 !important;
-  max-width:none !important;
-  min-height:76px !important;
-  height:76px !important;
-  padding:6px 4px !important;
-}
-.grid .code,.grid-side .code,.grid-sts .code{
-  font-size:clamp(10px,1.25vw,20px) !important;
-  white-space:nowrap !important;
-  overflow:hidden !important;
-  text-overflow:ellipsis !important;
-}
-.grid .small,.grid-side .small,.grid-sts .small{
-  font-size:clamp(6px,.58vw,10px) !important;
-  white-space:normal !important;
-  overflow:hidden !important;
-}
-/* PC/laptop: quitar espacio vertical extra */
-@media (min-width:769px){
-  .topbar{height:40px !important;min-height:40px !important}
-  .kpis{margin-top:0 !important}
-  .dashboard-main{padding-top:0 !important}
-}
-/* Tablet: también aprovechar todo el ancho */
-@media (max-width:1100px){
-  .dashboard-main{padding:0 5px 7px !important}
-  .row{grid-template-columns:45px minmax(0,1fr) !important}
-  .grid{grid-template-columns:repeat(7,minmax(0,1fr)) !important}
-  .grid-side,.grid-sts{grid-template-columns:repeat(8,minmax(0,1fr)) !important}
-  .grid .card,.grid-side .card,.grid-sts .card{height:68px !important;min-height:68px !important}
-}
-/* Teléfono: 4 columnas y sin desbordamiento */
-@media (max-width:700px){
-  .kpis{margin:0 3px 3px !important}
-  .kpi{height:34px !important;min-height:34px !important;padding:2px 5px !important}
-  .kpi-title{font-size:7px !important}
-  .kpi-value{font-size:12px !important}
-  .barra-acciones{height:auto !important;min-height:34px !important;margin:0 0 4px !important;padding:3px !important}
-  .btn-accion{width:calc(50% - 3px) !important;max-width:none !important;height:30px !important;font-size:8px !important}
-  .yard{padding:5px !important}
-  .row{grid-template-columns:34px minmax(0,1fr) !important;column-gap:4px !important}
-  .grid,.grid-side,.grid-sts{grid-template-columns:repeat(4,minmax(0,1fr)) !important;gap:4px !important}
-  .grid .card,.grid-side .card,.grid-sts .card{height:58px !important;min-height:58px !important;padding:4px 2px !important}
-  .grid .code,.grid-side .code,.grid-sts .code{font-size:clamp(9px,3.4vw,14px) !important}
-}
-@media (max-width:400px){
-  .grid,.grid-side,.grid-sts{grid-template-columns:repeat(3,minmax(0,1fr)) !important}
-  .grid .card,.grid-side .card,.grid-sts .card{height:54px !important;min-height:54px !important}
-}
+<style id="loginLoadingStyles">
+#loginLoadingOverlay{position:fixed;inset:0;z-index:999999;display:none;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;background:rgba(8,20,32,.72);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.login-loading-card{width:min(390px,calc(100vw - 36px));box-sizing:border-box;padding:28px 22px;border-radius:16px;background:#fff;text-align:center;box-shadow:0 15px 50px rgba(0,0,0,.28)}
+.login-spinner{width:42px;height:42px;margin:0 auto 16px;border:4px solid #dbe5ee;border-top-color:#1f73bd;border-radius:50%;animation:loginSpin .8s linear infinite}
+.login-loading-title{font-weight:800;font-size:18px;color:#123a5b;margin-bottom:7px}.login-loading-text{font-size:14px;color:#526575;line-height:1.4}@keyframes loginSpin{to{transform:rotate(360deg)}}
+@media(max-width:600px){#loginLoadingOverlay{padding:14px}.login-loading-card{padding:24px 18px}}
 </style>
-
-
-<style id="ajuste-v30-login-fallas-mensajes">
-/* V30: conservar siempre los filtros RTG/STS visibles en GRÚAS EN FALLA */
-.events-panel .fallas-filtros{
-  display:flex !important;
-  visibility:visible !important;
-  opacity:1 !important;
-  height:auto !important;
-  min-height:0 !important;
-  padding:6px 8px 2px !important;
-  gap:4px !important;
-}
-.events-panel .fallas-filtro-btn{
-  display:inline-flex !important;
-  visibility:visible !important;
-  opacity:1 !important;
-  flex:0 0 70px !important;
-  width:70px !important;
-  min-width:70px !important;
-  max-width:70px !important;
-  height:24px !important;
-  margin:0 !important;
-  padding:3px 8px !important;
-  align-items:center !important;
-  justify-content:center !important;
-  font-size:10px !important;
-  line-height:1 !important;
-}
-.events-panel .fallas-filtro-btn.activo{background:#1976d2 !important;color:#fff !important;}
-.events-panel .fallas-filtro-btn:not(.activo){background:#d9e2ea !important;color:#17324d !important;}
-
-/* V30: subir un poco MENSAJE ACTIVO sin pegarlo al panel de fallas */
-.events-panel{gap:8px !important;}
-.events-panel > .dashboard-panel:nth-child(2){margin-top:-2px !important;}
-
-@media(max-width:600px){
-  .events-panel .fallas-filtros{padding:5px 7px 1px !important;gap:3px !important;}
-  .events-panel .fallas-filtro-btn{flex-basis:64px !important;width:64px !important;min-width:64px !important;max-width:64px !important;height:22px !important;font-size:9px !important;}
-  .events-panel{gap:6px !important;}
-  .events-panel > .dashboard-panel:nth-child(2){margin-top:-1px !important;}
-}
-</style>
-
-
-
-
-
-
-
-
 </body>
-
 </html>
-
-
 <style id="fix-prioridad-sin-tapar-codigo">
 /* ==========================================================
    PRIORIDAD BUQUE: NUNCA TAPAR EL CODIGO DE LA GRUA
@@ -13453,7 +13212,6 @@ document.addEventListener("DOMContentLoaded", () => {
 #mensajeActivo .item:last-child{margin-bottom:0;}
 @media (max-width:700px){#mensajeActivo{max-height:210px !important;}}
 </style>
-
 <style id="ajuste-panel-fallas-sin-espacio-v29">
 /* ===== PANEL GRÚAS EN FALLA: SUBIR AL MÁXIMO Y ELIMINAR ESPACIO EN BLANCO ===== */
 .events-panel{
@@ -13499,7 +13257,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 }
 </style>
-
 <style id="ajuste-v34-mensaje-k05-sin-salto">
 /* V34: Mensaje Activo alineado con K-05 SIN movimiento visible al refrescar.
    El panel permanece invisible hasta que su posición real fue calculada. */
@@ -13681,85 +13438,6 @@ main, .dashboard, .dashboard-container {
 /* ===== FIN CAPA RESPONSIVE ===== */
 
 </style>
-
-<script type="text/plain" id="alineacion-script">
-
-/* V35: alinear MENSAJE ACTIVO con K-05 sin parpadeo ni bucle de MutationObserver. */
-(function(){
-  let rafId = 0;
-  let resizeObserver = null;
-  let listenersAdded = false;
-
-  function obtenerElementos(){
-    const k05 = Array.from(document.querySelectorAll('.card')).find(el => {
-      const code = el.querySelector('.code');
-      return code && code.textContent.trim() === 'K-05';
-    });
-    const eventsPanel = document.querySelector('.events-panel');
-    const paneles = eventsPanel ? eventsPanel.querySelectorAll(':scope > .dashboard-panel') : [];
-    const mensajePanel = paneles.length > 1 ? paneles[1] : null;
-    return {k05, eventsPanel, mensajePanel};
-  }
-
-  function alinearMensajeConK05(){
-    if (window.innerWidth <= 1000) return;
-
-    const {k05, eventsPanel, mensajePanel} = obtenerElementos();
-    if (!k05 || !eventsPanel || !mensajePanel) return;
-
-    const k05Rect = k05.getBoundingClientRect();
-    const eventsRect = eventsPanel.getBoundingClientRect();
-    const top = Math.max(0, Math.round(k05Rect.top - eventsRect.top));
-
-    /* Se escribe la posición antes de hacerlo visible. */
-    mensajePanel.style.top = top + 'px';
-    mensajePanel.style.visibility = 'visible';
-    mensajePanel.style.opacity = '1';
-    mensajePanel.classList.add('mensaje-k05-listo');
-  }
-
-  function programarAlineacion(){
-    cancelAnimationFrame(rafId);
-    rafId = requestAnimationFrame(alinearSeguro);
-  }
-
-  function alinearSeguro(){
-    try { alinearMensajeConK05(); } catch(e) { console.warn('Alineación Mensaje Activo:', e); }
-  }
-
-  function iniciar(){
-    /* Primer cálculo después de que el layout exista. */
-    programarAlineacion();
-    setTimeout(programarAlineacion, 80);
-    setTimeout(programarAlineacion, 200);
-    setTimeout(programarAlineacion, 400);
-
-    if (!listenersAdded) {
-      listenersAdded = true;
-      window.addEventListener('resize', programarAlineacion, {passive:true});
-      window.addEventListener('scroll', programarAlineacion, {passive:true});
-    }
-
-    /* Si cambia el tamaño real del panel/grilla, recalcular sin observar mutaciones del DOM. */
-    const {k05, eventsPanel} = obtenerElementos();
-    if (typeof ResizeObserver !== 'undefined') {
-      if (resizeObserver) resizeObserver.disconnect();
-      resizeObserver = new ResizeObserver(() => programarAlineacion());
-      if (k05) resizeObserver.observe(k05);
-      if (eventsPanel) resizeObserver.observe(eventsPanel);
-    }
-  }
-
-  window.alinearMensajeConK05 = alinearMensajeConK05;
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', iniciar, {once:true});
-  } else {
-    iniciar();
-  }
-})();
-
-</script>
-
 
 <!-- FIX FINAL MENU MOVIL -->
 <style>
