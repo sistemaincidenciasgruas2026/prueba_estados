@@ -8261,6 +8261,10 @@ function renderFallas(){
 
 setInterval(() => {
 
+  // Mientras se muestra el login no ejecutar el contador visual.
+  // Esto evita trabajo en el hilo principal de celulares y tablets.
+  if (!sistemaActivo) return;
+
   equipos
     .filter(g =>
       g.estado === 'falla' ||
@@ -9961,14 +9965,8 @@ if(
 
 }
 document.addEventListener('DOMContentLoaded', () => {
-  ponerFechasFallaAutomaticas();
-  controlarBotonStandby();
-  mostrarVista('operativo');
-  cargarOpcionesTiempoMuerto();
-  // FIX LOGIN MOVIL: estas consultas se ejecutan después del login.
-  // actualizarTodo('DOMContentLoaded');
-  // cargarResponsabilidades();
-
+  // IMPORTANTE: durante el login solo registramos eventos ligeros.
+  // Toda inicialización del tablero se ejecuta DESPUÉS de autenticar.
   const estado = document.getElementById('estado');
 
   if (estado) {
@@ -12726,6 +12724,39 @@ if (btnImportarExcel) {
     btnImportarExcel.style.cursor = "not-allowed";
 }
 }
+let inicializacionSistemaEjecutada = false;
+
+async function inicializarSistemaDespuesLogin() {
+  if (inicializacionSistemaEjecutada || !sistemaActivo) return;
+  inicializacionSistemaEjecutada = true;
+
+  // Mantener exactamente las mismas rutinas del sistema,
+  // pero no ejecutarlas mientras el usuario está escribiendo el login.
+  try {
+    ponerFechasFallaAutomaticas();
+    controlarBotonStandby();
+    mostrarVista('operativo');
+    cargarOpcionesTiempoMuerto();
+    cargarResponsabilidades();
+
+    // Dar un frame al navegador para que termine de pintar la interfaz
+    // antes de iniciar las consultas y renderizados del tablero.
+    await new Promise(resolve => {
+      requestAnimationFrame(() => resolve());
+    });
+
+    await actualizarTodo('login correcto');
+    iniciarRealtime();
+
+    // Reactivar la alineación responsive existente después del login.
+    if (typeof window.__iniciarAlineacionMovil === 'function') {
+      window.__iniciarAlineacionMovil();
+    }
+  } catch (e) {
+    console.error('Error inicializando el sistema después del login:', e);
+  }
+}
+
 async function iniciarSesion() {
 
   const usuario =
@@ -12851,35 +12882,13 @@ async function iniciarSesion() {
     document.getElementById("login").style.display = "none";
     document.getElementById("app").style.display = "block";
 
-    // FIX LOGIN MOVIL: activar Supabase/Realtime SOLO después del login.
+    // Activar el sistema solo después de que la autenticación terminó.
     sistemaActivo = true;
-    iniciarRealtime();
 
-    // Cargar los datos auxiliares que antes se consultaban durante el login.
-    cargarResponsabilidades();
-
-    // Cargar el tablero después de mostrar la aplicación,
-    // sin modificar el resto de su funcionamiento.
+    // Todo el arranque pesado queda DESPUÉS del login.
+    // El login ya está visible/oculto correctamente antes de iniciar consultas.
     setTimeout(() => {
-      try {
-        mostrarVista("operativo");
-        aplicarPermisos();
-        render();
-        renderKPIs();
-
-        if (typeof renderFallas === "function") {
-          renderFallas();
-        }
-
-        if (typeof renderPrioridad === "function") {
-          renderPrioridad();
-        }
-      } catch (e) {
-        console.error(
-          "Error al cargar el tablero después del login:",
-          e
-        );
-      }
+      inicializarSistemaDespuesLogin();
     }, 0);
 
   } catch (e) {
@@ -13625,9 +13634,12 @@ main, .dashboard, .dashboard-container {
   }
 
   window.alinearMensajeConK05 = alinearMensajeConK05;
+  window.__iniciarAlineacionMovil = iniciar;
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', iniciar, {once:true});
-  } else {
+    document.addEventListener('DOMContentLoaded', () => {
+      if (sistemaActivo) iniciar();
+    }, {once:true});
+  } else if (sistemaActivo) {
     iniciar();
   }
 })();
