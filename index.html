@@ -6688,8 +6688,17 @@ body.modo-visualizacion .main-content{
 }
 </style>
 
+<style id="FIX_LOGIN_MOVIL_FINAL">
+html, body.login-only { width:100%; height:100%; margin:0; overflow:hidden !important; overscroll-behavior:none; }
+body.login-only #app { display:none !important; }
+body.login-only #login { position:fixed !important; inset:0 !important; width:100% !important; height:100dvh !important; min-height:0 !important; overflow:hidden !important; z-index:2147483647 !important; isolation:isolate; contain:layout paint style; }
+body.login-only #login .login-card { transform:none !important; transition:none !important; }
+body.login-only #login input, body.login-only #login select, body.login-only #login button { transition:none !important; animation:none !important; -webkit-tap-highlight-color:transparent; }
+body.login-only #login input:focus, body.login-only #login select:focus { transform:none !important; }
+@media (max-width:768px) { body.login-only #login .login-card { width:calc(100% - 24px) !important; max-width:420px !important; padding:24px 20px !important; max-height:calc(100dvh - 24px); overflow:auto; -webkit-overflow-scrolling:touch; } body.login-only #login h1 { font-size:20px !important; } body.login-only #login input, body.login-only #login select { min-height:44px !important; font-size:16px !important; } }
+</style>
 </head>
-<body>
+<body class="login-only">
 
 <div id="login">
 
@@ -12888,6 +12897,7 @@ async function iniciarSesion() {
     localStorage.removeItem("recordarCredenciales");
     localStorage.removeItem("usuarioRecordado");
 
+    document.body.classList.remove("login-only");
     document.getElementById("login").style.display = "none";
     document.getElementById("app").style.display = "block";
 
@@ -13045,6 +13055,7 @@ function cerrarSesion() {
     document.getElementById("app").style.display = "none";
 
     // Mostrar login
+    document.body.classList.add("login-only");
     document.getElementById("login").style.display = "flex";
 
     // Limpiar contraseña
