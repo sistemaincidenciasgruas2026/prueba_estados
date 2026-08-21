@@ -15,18 +15,17 @@ CONTROL OPERATIVO GRÚAS
 </title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js" defer></script>
 <link rel="stylesheet"
 href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 <link 
 rel="stylesheet" 
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js" defer></script>
 <style>
 
 /* ================= RESET ================= */
@@ -7655,17 +7654,8 @@ function detectarNuevasFallas(nuevosEquipos) {
 
 // El primer clic/tecla del usuario habilita el audio para que las alertas
 // posteriores puedan sonar incluso cuando la sesión se recupera automáticamente.
-// El audio NO se inicializa durante el login.
-// En móviles/tablets crear AudioContext al tocar o escribir en el login
-// puede bloquear momentáneamente el hilo principal.
-let audioEventosActivos = false;
-function activarEventosAudioDespuesDelLogin() {
-  if (audioEventosActivos) return;
-  audioEventosActivos = true;
-  window.addEventListener("pointerdown", prepararAudioAlerta, { passive: true });
-  window.addEventListener("keydown", prepararAudioAlerta, { passive: true });
-}
-
+window.addEventListener("pointerdown", prepararAudioAlerta, { passive: true });
+window.addEventListener("keydown", prepararAudioAlerta, { passive: true });
 
 let actual=null;
 
@@ -12862,10 +12852,6 @@ async function iniciarSesion() {
 
     // FIX LOGIN MOVIL: activar Supabase/Realtime SOLO después del login.
     sistemaActivo = true;
-    activarEventosAudioDespuesDelLogin();
-    if (typeof window.alinearMensajeConK05 === "function") {
-      requestAnimationFrame(() => { try { window.alinearMensajeConK05(); } catch(e) {} });
-    }
     iniciarRealtime();
 
     // Cargar los datos auxiliares que antes se consultaban durante el login.
@@ -13638,19 +13624,10 @@ main, .dashboard, .dashboard-container {
   }
 
   window.alinearMensajeConK05 = alinearMensajeConK05;
-
-  // No inicializar observadores/layout del tablero mientras el login está visible.
-  // Se conserva exactamente la misma rutina; solo se difiere hasta que haya sesión.
-  function iniciarAlineacionCuandoCorresponda(){
-    if (typeof sistemaActivo !== 'undefined' && sistemaActivo) {
-      iniciar();
-    }
-  }
-
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', iniciarAlineacionCuandoCorresponda, {once:true});
+    document.addEventListener('DOMContentLoaded', iniciar, {once:true});
   } else {
-    iniciarAlineacionCuandoCorresponda();
+    iniciar();
   }
 })();
 </script>
