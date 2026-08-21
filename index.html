@@ -6688,8 +6688,17 @@ body.modo-visualizacion .main-content{
 }
 </style>
 
+<style id="FIX_LOGIN_MOVIL_FINAL">
+html, body.login-only { width:100%; height:100%; margin:0; overflow:hidden !important; overscroll-behavior:none; }
+body.login-only #app { display:none !important; }
+body.login-only #login { position:fixed !important; inset:0 !important; width:100% !important; height:100dvh !important; min-height:0 !important; overflow:hidden !important; z-index:2147483647 !important; isolation:isolate; contain:layout paint style; }
+body.login-only #login .login-card { transform:none !important; transition:none !important; }
+body.login-only #login input, body.login-only #login select, body.login-only #login button { transition:none !important; animation:none !important; -webkit-tap-highlight-color:transparent; }
+body.login-only #login input:focus, body.login-only #login select:focus { transform:none !important; }
+@media (max-width:768px) { body.login-only #login .login-card { width:calc(100% - 24px) !important; max-width:420px !important; padding:24px 20px !important; max-height:calc(100dvh - 24px); overflow:auto; -webkit-overflow-scrolling:touch; } body.login-only #login h1 { font-size:20px !important; } body.login-only #login input, body.login-only #login select { min-height:44px !important; font-size:16px !important; } }
+</style>
 </head>
-<body>
+<body class="login-only">
 
 <div id="login">
 
@@ -9381,8 +9390,10 @@ let refreshTimer = null;
 let realtimeGruas = null;
 let realtimeMensajes = null;
 let realtimeReconnectTimer = null;
+let sistemaActivo = false;
 
 async function actualizarTodo(origen = 'manual') {
+  if (!sistemaActivo) return;
   // Evita que varias actualizaciones simultáneas congelen la interfaz.
   if (refreshEnCurso) {
     refreshPendiente = true;
@@ -9414,6 +9425,8 @@ function programarActualizacion(origen = 'evento') {
 }
 
 function iniciarRealtime() {
+  if (!sistemaActivo) return;
+
   clearTimeout(realtimeReconnectTimer);
 
   // Si ya existen ambas suscripciones, no las destruyas y reconstruyas.
@@ -9464,11 +9477,7 @@ function iniciarRealtime() {
 // recuperar internet o volver a enfocar la ventana, se fuerza una lectura real.
 let ultimaActualizacionAlVolver = 0;
 function refrescarAlVolver(origen) {
-  // No hacer consultas, realtime ni trabajo pesado mientras el login está visible.
-  const app = document.getElementById('app');
-  if (!usuarioSesion || !app || app.style.display !== 'block') {
-    return;
-  }
+  if (!sistemaActivo) return;
 
   const ahora = Date.now();
 
@@ -9499,16 +9508,13 @@ window.addEventListener('online', () => refrescarAlVolver('online'));
 // Refresco de respaldo. Realtime es el mecanismo principal; este respaldo
 // evita consultas continuas en teléfonos cuando no hubo cambios.
 setInterval(() => {
-  const app = document.getElementById('app');
-  if (usuarioSesion && app && app.style.display === 'block' &&
-      document.visibilityState === 'visible' && navigator.onLine !== false) {
+  if (document.visibilityState === 'visible' && navigator.onLine !== false) {
     actualizarTodo('respaldo 30s');
   }
 }, 30000);
 
 /* ================= REALTIME ================= */
-// Se inicia únicamente después del login o al restaurar una sesión.
-
+iniciarRealtime();
 
 /* ================= CERRAR CLICK AFUERA ================= */
 
@@ -9958,11 +9964,8 @@ if(
 
 }
 document.addEventListener('DOMContentLoaded', () => {
-  ponerFechasFallaAutomaticas();
-  controlarBotonStandby();
-  mostrarVista('operativo');
-  cargarOpcionesTiempoMuerto();
-
+  // Durante el login solo registramos eventos ligeros.
+  // La inicializacion pesada ocurre despues de autenticar.
   const estado = document.getElementById('estado');
 
   if (estado) {
@@ -12720,6 +12723,28 @@ if (btnImportarExcel) {
     btnImportarExcel.style.cursor = "not-allowed";
 }
 }
+let inicializacionSistemaEjecutada = false;
+
+async function inicializarSistemaDespuesLogin() {
+  if (inicializacionSistemaEjecutada || !sistemaActivo) return;
+  inicializacionSistemaEjecutada = true;
+  try {
+    ponerFechasFallaAutomaticas();
+    controlarBotonStandby();
+    mostrarVista('operativo');
+    cargarOpcionesTiempoMuerto();
+    cargarResponsabilidades();
+    await new Promise(resolve => requestAnimationFrame(resolve));
+    await actualizarTodo('login correcto');
+    iniciarRealtime();
+    if (typeof window.__iniciarAlineacionMovil === 'function') {
+      window.__iniciarAlineacionMovil();
+    }
+  } catch (e) {
+    console.error('Error inicializando el sistema despues del login:', e);
+  }
+}
+
 async function iniciarSesion() {
 
   const usuario =
@@ -12842,36 +12867,13 @@ async function iniciarSesion() {
     localStorage.removeItem("recordarCredenciales");
     localStorage.removeItem("usuarioRecordado");
 
+    document.body.classList.remove("login-only");
     document.getElementById("login").style.display = "none";
     document.getElementById("app").style.display = "block";
 
-    // Cargar el tablero después de mostrar la aplicación,
-    // sin modificar el resto de su funcionamiento.
+    sistemaActivo = true;
     setTimeout(() => {
-      try {
-        mostrarVista("operativo");
-        aplicarPermisos();
-        render();
-        renderKPIs();
-
-        // Iniciar Supabase/realtime solamente después de validar el login.
-        cargarResponsabilidades();
-        actualizarTodo('login');
-        iniciarRealtime();
-
-        if (typeof renderFallas === "function") {
-          renderFallas();
-        }
-
-        if (typeof renderPrioridad === "function") {
-          renderPrioridad();
-        }
-      } catch (e) {
-        console.error(
-          "Error al cargar el tablero después del login:",
-          e
-        );
-      }
+      inicializarSistemaDespuesLogin();
     }, 0);
 
   } catch (e) {
@@ -12919,14 +12921,11 @@ function mostrarSistema() {
   const usuarioActivo = document.getElementById('usuarioActivo');
   if (usuarioActivo) usuarioActivo.innerText = '👤 ' + usuario;
 
+  sistemaActivo = true;
+
   // CASO SOLO VISUALIZACIÓN
   aplicarPermisos();
   render();
-
-  // Si se restaura una sesión guardada, iniciar aquí el sistema completo.
-  cargarResponsabilidades();
-  actualizarTodo('sesion restaurada');
-  iniciarRealtime();
 
 }
 function congelarModoVisualizacion() {
@@ -13622,9 +13621,12 @@ main, .dashboard, .dashboard-container {
   }
 
   window.alinearMensajeConK05 = alinearMensajeConK05;
+  window.__iniciarAlineacionMovil = iniciar;
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', iniciar, {once:true});
-  } else {
+    document.addEventListener('DOMContentLoaded', () => {
+      if (sistemaActivo) iniciar();
+    }, {once:true});
+  } else if (sistemaActivo) {
     iniciar();
   }
 })();
