@@ -7653,10 +7653,19 @@ function detectarNuevasFallas(nuevosEquipos) {
   }
 }
 
-// El primer clic/tecla del usuario habilita el audio para que las alertas
-// posteriores puedan sonar incluso cuando la sesión se recupera automáticamente.
-window.addEventListener("pointerdown", prepararAudioAlerta, { passive: true });
-window.addEventListener("keydown", prepararAudioAlerta, { passive: true });
+// IMPORTANTE: durante el login NO inicializar AudioContext.
+// En celulares/tablets el teclado virtual genera pointer/keydown y crear o
+// reanudar AudioContext en cada interacción puede bloquear momentáneamente
+// el hilo principal justo cuando el usuario intenta escribir la contraseña.
+// Después del login, las alertas conservan exactamente su comportamiento.
+window.addEventListener("pointerdown", () => {
+  if (!sistemaActivo) return;
+  prepararAudioAlerta();
+}, { passive: true });
+window.addEventListener("keydown", () => {
+  if (!sistemaActivo) return;
+  prepararAudioAlerta();
+}, { passive: true });
 
 let actual=null;
 
