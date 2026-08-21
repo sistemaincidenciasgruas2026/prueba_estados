@@ -6688,17 +6688,8 @@ body.modo-visualizacion .main-content{
 }
 </style>
 
-<style id="FIX_LOGIN_MOVIL_FINAL">
-html, body.login-only { width:100%; height:100%; margin:0; overflow:hidden !important; overscroll-behavior:none; }
-body.login-only #app { display:none !important; }
-body.login-only #login { position:fixed !important; inset:0 !important; width:100% !important; height:100dvh !important; min-height:0 !important; overflow:hidden !important; z-index:2147483647 !important; isolation:isolate; contain:layout paint style; }
-body.login-only #login .login-card { transform:none !important; transition:none !important; }
-body.login-only #login input, body.login-only #login select, body.login-only #login button { transition:none !important; animation:none !important; -webkit-tap-highlight-color:transparent; }
-body.login-only #login input:focus, body.login-only #login select:focus { transform:none !important; }
-@media (max-width:768px) { body.login-only #login .login-card { width:calc(100% - 24px) !important; max-width:420px !important; padding:24px 20px !important; max-height:calc(100dvh - 24px); overflow:auto; -webkit-overflow-scrolling:touch; } body.login-only #login h1 { font-size:20px !important; } body.login-only #login input, body.login-only #login select { min-height:44px !important; font-size:16px !important; } }
-</style>
 </head>
-<body class="login-only">
+<body>
 
 <div id="login">
 
@@ -9390,10 +9381,13 @@ let refreshTimer = null;
 let realtimeGruas = null;
 let realtimeMensajes = null;
 let realtimeReconnectTimer = null;
+// FIX LOGIN: mantener el sistema inactivo mientras la pantalla de acceso está activa.
 let sistemaActivo = false;
 
 async function actualizarTodo(origen = 'manual') {
+  // No consultar Supabase mientras el usuario está en el login.
   if (!sistemaActivo) return;
+
   // Evita que varias actualizaciones simultáneas congelen la interfaz.
   if (refreshEnCurso) {
     refreshPendiente = true;
@@ -9425,6 +9419,7 @@ function programarActualizacion(origen = 'evento') {
 }
 
 function iniciarRealtime() {
+  // No abrir Realtime mientras el usuario está en el login.
   if (!sistemaActivo) return;
 
   clearTimeout(realtimeReconnectTimer);
@@ -9477,6 +9472,7 @@ function iniciarRealtime() {
 // recuperar internet o volver a enfocar la ventana, se fuerza una lectura real.
 let ultimaActualizacionAlVolver = 0;
 function refrescarAlVolver(origen) {
+  // No hacer trabajo de Supabase mientras se está mostrando el login.
   if (!sistemaActivo) return;
 
   const ahora = Date.now();
@@ -9508,13 +9504,14 @@ window.addEventListener('online', () => refrescarAlVolver('online'));
 // Refresco de respaldo. Realtime es el mecanismo principal; este respaldo
 // evita consultas continuas en teléfonos cuando no hubo cambios.
 setInterval(() => {
-  if (document.visibilityState === 'visible' && navigator.onLine !== false) {
+  if (sistemaActivo && document.visibilityState === 'visible' && navigator.onLine !== false) {
     actualizarTodo('respaldo 30s');
   }
 }, 30000);
 
 /* ================= REALTIME ================= */
-iniciarRealtime();
+// Se inicia únicamente después de un login correcto.
+// iniciarRealtime();
 
 /* ================= CERRAR CLICK AFUERA ================= */
 
@@ -9963,9 +9960,47 @@ if(
   );
 
 }
+let inicializacionSistemaEjecutada = false;
+
+async function inicializarSistemaDespuesLogin() {
+  if (inicializacionSistemaEjecutada || !sistemaActivo) return;
+  inicializacionSistemaEjecutada = true;
+
+  try {
+    // Mantener exactamente las mismas rutinas del sistema,
+    // pero ejecutarlas únicamente después de autenticar.
+    ponerFechasFallaAutomaticas();
+    controlarBotonStandby();
+    mostrarVista('operativo');
+    aplicarPermisos();
+    render();
+    renderKPIs();
+
+    if (typeof renderFallas === 'function') {
+      renderFallas();
+    }
+
+    if (typeof renderPrioridad === 'function') {
+      renderPrioridad();
+    }
+
+    cargarOpcionesTiempoMuerto();
+    cargarResponsabilidades();
+
+    // Permitir que el navegador termine de pintar el tablero antes
+    // de iniciar las consultas y renderizados.
+    await new Promise(resolve => {
+      requestAnimationFrame(() => resolve());
+    });
+
+    await actualizarTodo('login correcto');
+    iniciarRealtime();
+  } catch (e) {
+    console.error('Error inicializando el sistema después del login:', e);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  // Durante el login solo registramos eventos ligeros.
-  // La inicializacion pesada ocurre despues de autenticar.
   const estado = document.getElementById('estado');
 
   if (estado) {
@@ -12723,28 +12758,6 @@ if (btnImportarExcel) {
     btnImportarExcel.style.cursor = "not-allowed";
 }
 }
-let inicializacionSistemaEjecutada = false;
-
-async function inicializarSistemaDespuesLogin() {
-  if (inicializacionSistemaEjecutada || !sistemaActivo) return;
-  inicializacionSistemaEjecutada = true;
-  try {
-    ponerFechasFallaAutomaticas();
-    controlarBotonStandby();
-    mostrarVista('operativo');
-    cargarOpcionesTiempoMuerto();
-    cargarResponsabilidades();
-    await new Promise(resolve => requestAnimationFrame(resolve));
-    await actualizarTodo('login correcto');
-    iniciarRealtime();
-    if (typeof window.__iniciarAlineacionMovil === 'function') {
-      window.__iniciarAlineacionMovil();
-    }
-  } catch (e) {
-    console.error('Error inicializando el sistema despues del login:', e);
-  }
-}
-
 async function iniciarSesion() {
 
   const usuario =
@@ -12867,11 +12880,13 @@ async function iniciarSesion() {
     localStorage.removeItem("recordarCredenciales");
     localStorage.removeItem("usuarioRecordado");
 
-    document.body.classList.remove("login-only");
     document.getElementById("login").style.display = "none";
     document.getElementById("app").style.display = "block";
 
+    // Activar el sistema solamente después de terminar la autenticación.
     sistemaActivo = true;
+
+    // Todo el arranque pesado queda después del login.
     setTimeout(() => {
       inicializarSistemaDespuesLogin();
     }, 0);
@@ -12920,8 +12935,6 @@ function mostrarSistema() {
 
   const usuarioActivo = document.getElementById('usuarioActivo');
   if (usuarioActivo) usuarioActivo.innerText = '👤 ' + usuario;
-
-  sistemaActivo = true;
 
   // CASO SOLO VISUALIZACIÓN
   aplicarPermisos();
@@ -12994,6 +13007,10 @@ function controlarPasswordLogin() {
     }
 }
 function cerrarSesion() {
+
+    sistemaActivo = false;
+    clearTimeout(refreshTimer);
+    clearTimeout(realtimeReconnectTimer);
 
     // Confirmar antes de cerrar la sesión para evitar salidas accidentales,
     // especialmente en teléfono donde el botón puede tocarse por error.
@@ -13621,12 +13638,9 @@ main, .dashboard, .dashboard-container {
   }
 
   window.alinearMensajeConK05 = alinearMensajeConK05;
-  window.__iniciarAlineacionMovil = iniciar;
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      if (sistemaActivo) iniciar();
-    }, {once:true});
-  } else if (sistemaActivo) {
+    document.addEventListener('DOMContentLoaded', iniciar, {once:true});
+  } else {
     iniciar();
   }
 })();
