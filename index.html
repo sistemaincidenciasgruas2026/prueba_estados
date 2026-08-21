@@ -8363,212 +8363,138 @@ cont.innerHTML = list.map(g => `
 /* ================= MODAL ================= */
 
 function abrir(id){
-      const rol = localStorage.getItem("rolSistema");
+  const rol = localStorage.getItem("rolSistema");
 
-    // CASSETAS = SOLO VISUALIZACIÓN
-    if (rol === "visualizar") {
-        return;
-    }
+  // VISUALIZACION: solo lectura
+  if (rol === "visualizar") return;
+
+  const g = getEquipo(id);
+  if (!g) {
+    alert("No se encontró la grúa");
+    return;
+  }
+
   actual = id;
 
-  /* ================================================================
-     CATALOGO DEFINITIVO DEL FORMULARIO DOWNTIME
-     Se carga directamente al abrir la grúa, antes de cualquier otra
-     rutina del formulario. Solo modifica Supervisor y StandBy.
-     ================================================================ */
-  (function cargarCatalogoInicialDowntime(codigoGrua){
-    const sup = document.getElementById('supervisor');
-    const sb  = document.getElementById('standby');
-    if(!sup || !sb) return;
+  // ================= CATÁLOGO DEL FORMULARIO =================
+  // Se determina exclusivamente por la grúa que se está abriendo.
+  // STS y RTG permanecen completamente separados.
+  const codigo = String(id || '').trim().toUpperCase().replace(/[-\s]/g,'');
+  const esSTS = codigo.startsWith('STS');
 
-    const codigo = String(codigoGrua || '').trim().toUpperCase().replace(/[-\s]/g,'');
-    const esSTS = codigo.startsWith('STS');
+  const supervisores = esSTS
+    ? ['Nieves','Jose Chiquito','Gonzalo','Manzano']
+    : ['Leon','German','Alain','Larios'];
 
-    const supervisores = esSTS
-      ? ['Nieves','Jose Chiquito','Gonzalo','Manzano']
-      : ['Leon','German','Alain','Larios'];
+  const mapa = esSTS
+    ? {
+        'Nieves':['Bonilla','Saul'],
+        'Jose Chiquito':['Claudio','Torres'],
+        'Gonzalo':['Landiz','Aaron'],
+        'Manzano':['Arturo','Denilson']
+      }
+    : {
+        'Leon':['Azahel','Felipe','Axel','Mateo','Leon'],
+        'Alain':['Vega','Veronica','Oscar L.','Armando','Alain','Yair'],
+        'Larios':['Veronica','Felipe','Larios','Vega','Magallon','Cynthia','Azahel','Victor','Yutaka','Peregrina','Valderrama','Yair','Fabian','Brayan','Oscar L','Denilson','David'],
+        'German':['Cynthia','Magallon','Banton','German','Fabian']
+      };
 
-    const standbyPorSupervisor = esSTS
-      ? {
-          'Nieves':['Bonilla','Saul'],
-          'Jose Chiquito':['Claudio','Torres'],
-          'Gonzalo':['Landiz','Aaron'],
-          'Manzano':['Arturo','Denilson']
-        }
-      : {
-          'Leon':['Azahel','Felipe','Axel','Mateo','Leon'],
-          'Alain':['Vega','Veronica','Oscar L.','Armando','Alain','Yair'],
-          'Larios':['Veronica','Felipe','Larios','Vega','Magallon','Cynthia','Azahel','Victor','Yutaka','Peregrina','Valderrama','Yair','Fabian','Brayan','Oscar L','Denilson','David'],
-          'German':['Cynthia','Magallon','Banton','German','Fabian']
-        };
+  const sup = document.getElementById('supervisor');
+  const sb = document.getElementById('standby');
+
+  if (sup && sb) {
+    const supervisorGuardado = String(g.supervisor || '').trim();
+    const standbyGuardado = String(g.standby || '').trim();
 
     sup.innerHTML = '<option value="">Seleccione</option>' +
       supervisores.map(n => `<option value="${n}">${n}</option>`).join('');
 
-    sb.innerHTML = '<option value="">Seleccione supervisor</option>';
+    sup.value = supervisores.includes(supervisorGuardado) ? supervisorGuardado : '';
 
-    sup.onchange = function(){
-      const elegido = this.value || '';
-      const lista = Array.isArray(standbyPorSupervisor[elegido])
-        ? standbyPorSupervisor[elegido]
-        : [];
+    const cargarStandbyFormulario = () => {
+      const elegido = sup.value || '';
+      const lista = Array.isArray(mapa[elegido]) ? mapa[elegido] : [];
 
       sb.innerHTML = '<option value="">' +
         (elegido ? 'Seleccione' : 'Seleccione supervisor') +
         '</option>' +
         lista.map(n => `<option value="${n}">${n}</option>`).join('');
 
-      sb.value = '';
+      sb.value = lista.includes(standbyGuardado) ? standbyGuardado : '';
     };
-  })(id);
-  // Limpiar formulario anterior
-document.getElementById("estado").value = "disponible";
-document.getElementById("registro_falla").value = "";
-document.getElementById("quienReporto").value = "";
-document.getElementById("actividad").value = "";
 
-  setTimeout(() => {
-  const area = detectarArea(id);
-
-  const select = document.getElementById('areaMantto');
-
-  if (select) {
-    select.value = area;
-
-    // 🔥 fuerza actualización visual en algunos browsers
-    select.dispatchEvent(new Event('change'));
-  }
-
-}, 0);
-  const g = getEquipo(id);
-
-  if (!g) {
-    alert("No se encontró la grúa");
-    return;
-  }
-
-  mostrarPanelEstado();
-
-  document.getElementById("estado").value = "disponible";
-actualizarUIEstado();
-
-  document.getElementById('operadorActual').innerText =
-  g.nombre_operador || "SIN ASIGNAR";
-  document.getElementById('operadorManual').value =
-g.nombre_operador || "";
-document.getElementById('modalTitle').innerText = id;
-  document.getElementById('modal').style.display = 'flex';
-
-  // Siempre poner la fecha y hora actual
-ponerFechaGruaReportada();
-ponerFechaFallaActual();
-
-
-  document.getElementById('gruaGeneral').value = id;
-const bloque = document.getElementById('bloqueTramo');
-
-if (bloque) {
-  bloque.value = obtenerZonaGrua(id);
-}
-
-  document.getElementById('tiempoMuerto').value = g.tiempo_muerto || '';
-  document.getElementById('turnoGeneral').value = g.turno_operacion || '1';
-  document.getElementById('tipoRegistro').value = 'operaciones';
-
-  document.getElementById('registro_falla').value = g.registro_falla || '';
-  document.getElementById('quienReporto').value = g.quien_reporto || '';
-  document.getElementById('actividad').value = g.actividad || '';
-
-  // ================= OPERACIONES =================
-  cambiarFormulario();
-
-  document.getElementById('estado').value = g.estado || 'disponible';
-  document.getElementById('prioridad').value = g.prioridad || 0;
-
-  document.getElementById('areaMantto').value = detectarArea(g.id);
-
-  // Restaurar el supervisor/standby guardado SIN cambiar el catálogo de la grúa.
-  (function restaurarCatalogoGuardado(){
-    const sup = document.getElementById('supervisor');
-    const sb = document.getElementById('standby');
-    if(!sup || !sb) return;
-
-    const codigo = String(id || '').trim().toUpperCase().replace(/[-\s]/g,'');
-    const esSTS = codigo.startsWith('STS');
-    const supervisores = esSTS
-      ? ['Nieves','Jose Chiquito','Gonzalo','Manzano']
-      : ['Leon','German','Alain','Larios'];
-    const mapa = esSTS
-      ? {'Nieves':['Bonilla','Saul'],'Jose Chiquito':['Claudio','Torres'],'Gonzalo':['Landiz','Aaron'],'Manzano':['Arturo','Denilson']}
-      : {'Leon':['Azahel','Felipe','Axel','Mateo','Leon'],'Alain':['Vega','Veronica','Oscar L.','Armando','Alain','Yair'],'Larios':['Veronica','Felipe','Larios','Vega','Magallon','Cynthia','Azahel','Victor','Yutaka','Peregrina','Valderrama','Yair','Fabian','Brayan','Oscar L','Denilson','David'],'German':['Cynthia','Magallon','Banton','German','Fabian']};
-
-    const supGuardado = String(g.supervisor || '').trim();
-    sup.innerHTML = '<option value="">Seleccione</option>' +
-      supervisores.map(n => `<option value="${n}">${n}</option>`).join('');
-    sup.value = supervisores.includes(supGuardado) ? supGuardado : '';
-
-    const lista = Array.isArray(mapa[sup.value]) ? mapa[sup.value] : [];
-    sb.innerHTML = '<option value="">' +
-      (sup.value ? 'Seleccione' : 'Seleccione supervisor') +
-      '</option>' + lista.map(n => `<option value="${n}">${n}</option>`).join('');
-    const sbGuardado = String(g.standby || '').trim();
-    sb.value = lista.includes(sbGuardado) ? sbGuardado : '';
-
-    sup.onchange = function(){
-      const elegido = this.value || '';
-      const listaNueva = Array.isArray(mapa[elegido]) ? mapa[elegido] : [];
+    sup.onchange = () => {
+      // Al cambiar supervisor, el StandBy debe volver a seleccionarse.
+      const elegido = sup.value || '';
+      const lista = Array.isArray(mapa[elegido]) ? mapa[elegido] : [];
       sb.innerHTML = '<option value="">' +
         (elegido ? 'Seleccione' : 'Seleccione supervisor') +
-        '</option>' + listaNueva.map(n => `<option value="${n}">${n}</option>`).join('');
+        '</option>' +
+        lista.map(n => `<option value="${n}">${n}</option>`).join('');
       sb.value = '';
     };
-  })();
 
-  document.getElementById('responsabilidad').value = g.responsabilidad || 'MECANICA';
-  document.getElementById('codigoFalla').value = g.codigo_falla || '';
-  document.querySelector('#descripcionFalla').value = g.descripcion_falla || '';
+    cargarStandbyFormulario();
+  }
 
+  // ================= DATOS BÁSICOS =================
+  document.getElementById("gruaGeneral").value = id;
+  document.getElementById("estado").value = g.estado || 'disponible';
+  document.getElementById("prioridad").value = g.prioridad || 0;
+  document.getElementById("registro_falla").value = g.registro_falla || '';
+  document.getElementById("quienReporto").value = g.quien_reporto || '';
+  document.getElementById("actividad").value = g.actividad || '';
+  document.getElementById("tiempoMuerto").value = g.tiempo_muerto || '';
+  document.getElementById("turnoGeneral").value = g.turno_operacion || '1';
+  document.getElementById("tipoRegistro").value = 'operaciones';
+  document.getElementById("areaMantto").value = detectarArea(g.id);
+  document.getElementById("responsabilidad").value = g.responsabilidad || 'MECANICA';
+  document.getElementById("codigoFalla").value = g.codigo_falla || '';
+  document.getElementById("descripcionFalla").value = g.descripcion_falla || '';
 
   document.getElementById('opOperador').value = g.operador || '';
   document.getElementById('opTipoFalla').value = g.tipo_falla || '';
   document.getElementById('opActividad').value = g.actividad || '';
   document.getElementById('opMonitorReporta').value = g.monitor_reporta || '';
   document.getElementById('opMonitorCierre').value = g.monitor_cierre || '';
-  document.getElementById('gruaGeneral').value = id;
 
-  // Reafirmar el catálogo una vez terminada toda la carga del formulario.
-  // Esto evita que otra rutina de cambio de formulario lo deje en blanco.
-  if (typeof supervisorSelect !== 'undefined' && supervisorSelect) {
-    const supervisorFinal = supervisorSelect.value || '';
-    const listaFinal = esSTSFormulario
-      ? (Array.isArray(mapaStandbySTS[supervisorFinal]) ? mapaStandbySTS[supervisorFinal] : [])
-      : (Array.isArray(mapaStandbyRTG[supervisorFinal]) ? mapaStandbyRTG[supervisorFinal] : []);
-    if (standbySelect) {
-      standbySelect.innerHTML = '<option value="">' +
-        (supervisorFinal ? 'Seleccione' : 'Seleccione supervisor') +
-        '</option>' +
-        listaFinal.map(v => `<option value="${v}">${v}</option>`).join('');
-    }
-  }
-  
-  // ================= INDICADOR =================
+  const bloque = document.getElementById('bloqueTramo');
+  if (bloque) bloque.value = obtenerZonaGrua(id);
+
+  const operador = document.getElementById('operadorActual');
+  if (operador) operador.innerText = g.nombre_operador || 'SIN ASIGNAR';
+
+  const operadorManual = document.getElementById('operadorManual');
+  if (operadorManual) operadorManual.value = g.nombre_operador || '';
+
+  document.getElementById('modalTitle').innerText = id;
+
+  // Fechas automáticas del formulario.
+  const fechaOpRepo = document.getElementById("fechaOpRepo");
+  if (fechaOpRepo) fechaOpRepo.value = "";
+  ponerFechaGruaReportada();
+  ponerFechaFallaActual();
+
+  // ================= MOSTRAR FORMULARIO =================
+  mostrarPanelEstado();
+  cambiarFormulario();
+  document.getElementById('modal').style.display = 'flex';
+
+  // ================= ESTADO / UI =================
+  actualizarUIEstado();
+  controlarPrioridad();
+  actualizarIndicadorEstado();
+
   const indicador = document.getElementById('estadoIndicador');
-
   if (indicador) {
     indicador.innerText = `Estado actual: ${obtenerTextoEstado(g)}`;
-    indicador.className = 'estado-indicador ' + g.estado;
+    indicador.className = 'estado-indicador ' + (g.estado || 'disponible');
   }
 
-document.getElementById("fechaOpRepo").value = "";
-ponerFechaGruaReportada();
-
-
-  // ================= UI STATE (IMPORTANTE ORDEN) =================
-  actualizarUIEstado();        // 👈 primero campos dinámicos (quién reportó)
-  controlarPrioridad();        // 👈 luego prioridad
-  actualizarIndicadorEstado(); // 👈 indicador final
   estadoAnterior = g.estado;
 }
+
 function nombreEquipoModal(id){
 
   const equiposEspeciales = {
@@ -9381,13 +9307,8 @@ let refreshTimer = null;
 let realtimeGruas = null;
 let realtimeMensajes = null;
 let realtimeReconnectTimer = null;
-// FIX LOGIN: mantener el sistema inactivo mientras la pantalla de acceso está activa.
-let sistemaActivo = false;
 
 async function actualizarTodo(origen = 'manual') {
-  // No consultar Supabase mientras el usuario está en el login.
-  if (!sistemaActivo) return;
-
   // Evita que varias actualizaciones simultáneas congelen la interfaz.
   if (refreshEnCurso) {
     refreshPendiente = true;
@@ -9419,9 +9340,6 @@ function programarActualizacion(origen = 'evento') {
 }
 
 function iniciarRealtime() {
-  // No abrir Realtime mientras el usuario está en el login.
-  if (!sistemaActivo) return;
-
   clearTimeout(realtimeReconnectTimer);
 
   // Si ya existen ambas suscripciones, no las destruyas y reconstruyas.
@@ -9472,9 +9390,6 @@ function iniciarRealtime() {
 // recuperar internet o volver a enfocar la ventana, se fuerza una lectura real.
 let ultimaActualizacionAlVolver = 0;
 function refrescarAlVolver(origen) {
-  // No hacer trabajo de Supabase mientras se está mostrando el login.
-  if (!sistemaActivo) return;
-
   const ahora = Date.now();
 
   // Agrupa eventos muy cercanos (focus + pageshow + visibilitychange).
@@ -9504,14 +9419,13 @@ window.addEventListener('online', () => refrescarAlVolver('online'));
 // Refresco de respaldo. Realtime es el mecanismo principal; este respaldo
 // evita consultas continuas en teléfonos cuando no hubo cambios.
 setInterval(() => {
-  if (sistemaActivo && document.visibilityState === 'visible' && navigator.onLine !== false) {
+  if (document.visibilityState === 'visible' && navigator.onLine !== false) {
     actualizarTodo('respaldo 30s');
   }
 }, 30000);
 
 /* ================= REALTIME ================= */
-// Se inicia únicamente después de un login correcto.
-// iniciarRealtime();
+iniciarRealtime();
 
 /* ================= CERRAR CLICK AFUERA ================= */
 
@@ -9960,47 +9874,14 @@ if(
   );
 
 }
-let inicializacionSistemaEjecutada = false;
-
-async function inicializarSistemaDespuesLogin() {
-  if (inicializacionSistemaEjecutada || !sistemaActivo) return;
-  inicializacionSistemaEjecutada = true;
-
-  try {
-    // Mantener exactamente las mismas rutinas del sistema,
-    // pero ejecutarlas únicamente después de autenticar.
-    ponerFechasFallaAutomaticas();
-    controlarBotonStandby();
-    mostrarVista('operativo');
-    aplicarPermisos();
-    render();
-    renderKPIs();
-
-    if (typeof renderFallas === 'function') {
-      renderFallas();
-    }
-
-    if (typeof renderPrioridad === 'function') {
-      renderPrioridad();
-    }
-
-    cargarOpcionesTiempoMuerto();
-    cargarResponsabilidades();
-
-    // Permitir que el navegador termine de pintar el tablero antes
-    // de iniciar las consultas y renderizados.
-    await new Promise(resolve => {
-      requestAnimationFrame(() => resolve());
-    });
-
-    await actualizarTodo('login correcto');
-    iniciarRealtime();
-  } catch (e) {
-    console.error('Error inicializando el sistema después del login:', e);
-  }
-}
-
 document.addEventListener('DOMContentLoaded', () => {
+  ponerFechasFallaAutomaticas();
+  controlarBotonStandby();
+  mostrarVista('operativo');
+  cargarOpcionesTiempoMuerto();
+  actualizarTodo('DOMContentLoaded');
+  cargarResponsabilidades();
+
   const estado = document.getElementById('estado');
 
   if (estado) {
@@ -12883,12 +12764,28 @@ async function iniciarSesion() {
     document.getElementById("login").style.display = "none";
     document.getElementById("app").style.display = "block";
 
-    // Activar el sistema solamente después de terminar la autenticación.
-    sistemaActivo = true;
-
-    // Todo el arranque pesado queda después del login.
+    // Cargar el tablero después de mostrar la aplicación,
+    // sin modificar el resto de su funcionamiento.
     setTimeout(() => {
-      inicializarSistemaDespuesLogin();
+      try {
+        mostrarVista("operativo");
+        aplicarPermisos();
+        render();
+        renderKPIs();
+
+        if (typeof renderFallas === "function") {
+          renderFallas();
+        }
+
+        if (typeof renderPrioridad === "function") {
+          renderPrioridad();
+        }
+      } catch (e) {
+        console.error(
+          "Error al cargar el tablero después del login:",
+          e
+        );
+      }
     }, 0);
 
   } catch (e) {
@@ -13007,10 +12904,6 @@ function controlarPasswordLogin() {
     }
 }
 function cerrarSesion() {
-
-    sistemaActivo = false;
-    clearTimeout(refreshTimer);
-    clearTimeout(realtimeReconnectTimer);
 
     // Confirmar antes de cerrar la sesión para evitar salidas accidentales,
     // especialmente en teléfono donde el botón puede tocarse por error.
