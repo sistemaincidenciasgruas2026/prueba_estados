@@ -7655,8 +7655,16 @@ function detectarNuevasFallas(nuevosEquipos) {
 
 // El primer clic/tecla del usuario habilita el audio para que las alertas
 // posteriores puedan sonar incluso cuando la sesión se recupera automáticamente.
-window.addEventListener("pointerdown", prepararAudioAlerta, { passive: true });
-window.addEventListener("keydown", prepararAudioAlerta, { passive: true });
+// En celular/tablet NO crear/reanudar AudioContext mientras se escribe el login.
+// El teclado virtual puede generar pointer/keydown y bloquear momentáneamente el hilo.
+window.addEventListener("pointerdown", () => {
+  if (!sistemaActivo) return;
+  prepararAudioAlerta();
+}, { passive: true });
+window.addEventListener("keydown", () => {
+  if (!sistemaActivo) return;
+  prepararAudioAlerta();
+}, { passive: true });
 
 let actual=null;
 
@@ -9381,8 +9389,13 @@ let refreshTimer = null;
 let realtimeGruas = null;
 let realtimeMensajes = null;
 let realtimeReconnectTimer = null;
+// FIX LOGIN MOVIL: no iniciar consultas/realtime mientras la pantalla de acceso está activa.
+let sistemaActivo = false;
 
 async function actualizarTodo(origen = 'manual') {
+  // No hacer consultas mientras se muestra el login.
+  if (!sistemaActivo) return;
+
   // Evita que varias actualizaciones simultáneas congelen la interfaz.
   if (refreshEnCurso) {
     refreshPendiente = true;
@@ -9414,6 +9427,9 @@ function programarActualizacion(origen = 'evento') {
 }
 
 function iniciarRealtime() {
+  // No conectar Realtime durante el login.
+  if (!sistemaActivo) return;
+
   clearTimeout(realtimeReconnectTimer);
 
   // Si ya existen ambas suscripciones, no las destruyas y reconstruyas.
@@ -9464,6 +9480,9 @@ function iniciarRealtime() {
 // recuperar internet o volver a enfocar la ventana, se fuerza una lectura real.
 let ultimaActualizacionAlVolver = 0;
 function refrescarAlVolver(origen) {
+  // No hacer trabajo de Supabase mientras está el login.
+  if (!sistemaActivo) return;
+
   const ahora = Date.now();
 
   // Agrupa eventos muy cercanos (focus + pageshow + visibilitychange).
@@ -9493,13 +9512,13 @@ window.addEventListener('online', () => refrescarAlVolver('online'));
 // Refresco de respaldo. Realtime es el mecanismo principal; este respaldo
 // evita consultas continuas en teléfonos cuando no hubo cambios.
 setInterval(() => {
-  if (document.visibilityState === 'visible' && navigator.onLine !== false) {
+  if (sistemaActivo && document.visibilityState === 'visible' && navigator.onLine !== false) {
     actualizarTodo('respaldo 30s');
   }
 }, 30000);
 
 /* ================= REALTIME ================= */
-iniciarRealtime();
+// Se inicia únicamente después de un login correcto.
 
 /* ================= CERRAR CLICK AFUERA ================= */
 
@@ -9949,12 +9968,8 @@ if(
 
 }
 document.addEventListener('DOMContentLoaded', () => {
-  ponerFechasFallaAutomaticas();
-  controlarBotonStandby();
-  mostrarVista('operativo');
-  cargarOpcionesTiempoMuerto();
-  actualizarTodo('DOMContentLoaded');
-  cargarResponsabilidades();
+  // El login debe permanecer completamente liviano.
+  // La carga de Supabase y del tablero se realiza después de autenticar.
 
   const estado = document.getElementById('estado');
 
@@ -12713,6 +12728,29 @@ if (btnImportarExcel) {
     btnImportarExcel.style.cursor = "not-allowed";
 }
 }
+let inicializacionSistemaEjecutada = false;
+
+async function inicializarSistemaDespuesLogin() {
+  if (inicializacionSistemaEjecutada || !sistemaActivo) return;
+  inicializacionSistemaEjecutada = true;
+
+  try {
+    ponerFechasFallaAutomaticas();
+    controlarBotonStandby();
+    mostrarVista('operativo');
+    cargarOpcionesTiempoMuerto();
+    cargarResponsabilidades();
+
+    // Permitir que el navegador pinte primero la aplicación.
+    await new Promise(resolve => requestAnimationFrame(resolve));
+
+    await actualizarTodo('login correcto');
+    iniciarRealtime();
+  } catch (e) {
+    console.error('Error inicializando el sistema después del login:', e);
+  }
+}
+
 async function iniciarSesion() {
 
   const usuario =
@@ -12838,28 +12876,13 @@ async function iniciarSesion() {
     document.getElementById("login").style.display = "none";
     document.getElementById("app").style.display = "block";
 
+    // Activar el sistema SOLO después de que la autenticación terminó.
+    sistemaActivo = true;
+
     // Cargar el tablero después de mostrar la aplicación,
     // sin modificar el resto de su funcionamiento.
     setTimeout(() => {
-      try {
-        mostrarVista("operativo");
-        aplicarPermisos();
-        render();
-        renderKPIs();
-
-        if (typeof renderFallas === "function") {
-          renderFallas();
-        }
-
-        if (typeof renderPrioridad === "function") {
-          renderPrioridad();
-        }
-      } catch (e) {
-        console.error(
-          "Error al cargar el tablero después del login:",
-          e
-        );
-      }
+      inicializarSistemaDespuesLogin();
     }, 0);
 
   } catch (e) {
