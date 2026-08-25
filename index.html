@@ -14,7 +14,7 @@ content="width=device-width, initial-scale=1.0"
 CONTROL OPERATIVO GRÚAS
 </title>
 
-<!-- Supabase se carga de forma diferida para no bloquear el login. -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <!-- XLSX: se conserva la versión 0.18.5 que ya usaba el HTML; se elimina la carga duplicada para evitar bloqueo en móvil/tablet. -->
 <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <link rel="stylesheet"
@@ -3056,7 +3056,8 @@ body{
 }
 
 
-.campo-filtro input{
+.campo-filtro input,
+.campo-filtro select{
     height:36px;
     padding:0 10px;
     border:1px solid #cbd5e1;
@@ -7655,12 +7656,13 @@ Seleccione supervisor
   <textarea id="descripcionFalla" placeholder="Describe la falla..."></textarea>
 </div>
 
-<label>Indique tipo de falla (TM/TI)</label>
+<label>Indique tipo de falla (TM/TI/ST)</label>
 
 <select id="TMI">
     <option value="">Seleccione tipo de falla...</option>
     <option value="TIEMPO MUERTO">TIEMPO MUERTO</option>
     <option value="TIEMPO INVERTIDO">TIEMPO INVERTIDO</option>
+    <option value="ST">ST</option>
 </select>
 
 
@@ -7708,36 +7710,11 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvZ2Fsdm5tcG50dmp0aXVub3d6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyNzM5MzcsImV4cCI6MjA4Nzg0OTkzN30.wOZbM_s2F-FjdrXqUz6lvRnOYAPuTYlGhwcP3hzbYTw';
 
-let db = null;
-let supabaseLoading = null;
-
-// Carga Supabase solamente cuando realmente se necesita.
-// Esto deja libre el selector y la contraseña del login desde el inicio.
-function asegurarSupabase() {
-  if (db) return Promise.resolve(db);
-
-  if (window.supabase) {
-    db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    return Promise.resolve(db);
-  }
-
-  if (supabaseLoading) return supabaseLoading;
-
-  supabaseLoading = new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
-    script.async = true;
-    script.onload = () => {
-      try {
-        db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        resolve(db);
-      } catch (e) { reject(e); }
-    };
-    script.onerror = reject;
-    document.head.appendChild(script);
-  });
-  return supabaseLoading;
-}
+const db =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
 /* ================= PERSONAL ================= */
 
 const personalPorSupervisor = {
@@ -8473,11 +8450,77 @@ function renderFallas(){
 
 /* ================= TIMER VISUAL ================= */
 
-setInterval(() => {
+/*
+  Cada contador se actualiza de forma independiente.
+  El tiempo sigue tomando como origen la fecha de inicio propia
+  de cada grúa, pero cada grúa tiene su propio ciclo de actualización.
+*/
+const timersIndependientes = new Map();
 
-  // No ejecutar el actualizador visual mientras la pantalla de login está activa.
-  // Esto evita trabajo de DOM innecesario y deja libres los campos del login.
+function actualizarTimerIndependiente(g) {
+
   if (!haySesionActiva()) return;
+
+  let segundosBase = 0;
+  let inicio = null;
+  let estadoContador = 'stopped';
+
+  if (g.estado === 'falla') {
+    segundosBase = Number(g.contador_segundos || 0);
+    inicio = g.contador_inicio;
+    estadoContador = g.contador_estado;
+  } else if (g.estado === 'baño') {
+    segundosBase = Number(g.contador_bano_segundos || 0);
+    inicio = g.contador_bano_inicio;
+    estadoContador = g.contador_bano_estado;
+  } else if (g.estado === 'fseñal') {
+    segundosBase = Number(g.contador_senal_segundos || 0);
+    inicio = g.contador_senal_inicio;
+    estadoContador = g.contador_senal_estado;
+  } else {
+    return;
+  }
+
+  let segundos = segundosBase;
+
+  if (estadoContador === 'running' && inicio) {
+    segundos += Math.floor((Date.now() - new Date(inicio)) / 1000);
+  }
+
+  const textoTiempo = formatearTiempo(segundos);
+
+  const el = document.getElementById(`timer-card-${g.id}`);
+  if (el) {
+    el.textContent = textoTiempo;
+  }
+
+  const fallaTimers = document.querySelectorAll('[data-falla-timer]');
+  fallaTimers.forEach(timer => {
+    if (timer.dataset.fallaTimer === String(g.id)) {
+      timer.textContent = textoTiempo;
+    }
+  });
+
+  // El siguiente tick se programa según el propio inicio del contador,
+  // evitando que todos los relojes queden ligados al mismo segundo global.
+  const key = String(g.id);
+  const ahora = Date.now();
+  const proximoSegundo = estadoContador === 'running' && inicio
+    ? 1000 - ((ahora - new Date(inicio).getTime()) % 1000)
+    : 1000;
+
+  clearTimeout(timersIndependientes.get(key));
+  timersIndependientes.set(
+    key,
+    setTimeout(() => actualizarTimerIndependiente(g), Math.max(50, proximoSegundo))
+  );
+}
+
+function sincronizarTimersIndependientes() {
+
+  if (!haySesionActiva()) return;
+
+  const activos = new Set();
 
   equipos
     .filter(g =>
@@ -8486,64 +8529,30 @@ setInterval(() => {
       g.estado === 'fseñal'
     )
     .forEach(g => {
+      const key = String(g.id);
+      activos.add(key);
 
-      let segundos = 0;
-
-      // ================= FALLA =================
-      if (g.estado === 'falla') {
-
-        segundos = Number(g.contador_segundos || 0);
-
-        if (g.contador_estado === 'running' && g.contador_inicio) {
-          const inicio = new Date(g.contador_inicio);
-          segundos += Math.floor((Date.now() - inicio) / 1000);
-        }
+      if (!timersIndependientes.has(key)) {
+        actualizarTimerIndependiente(g);
       }
-
-      // ================= BAÑO =================
-      else if (g.estado === 'baño') {
-
-        segundos = Number(g.contador_bano_segundos || 0);
-
-        if (g.contador_bano_estado === 'running' && g.contador_bano_inicio) {
-          const inicio = new Date(g.contador_bano_inicio);
-          segundos += Math.floor((Date.now() - inicio) / 1000);
-        }
-      }
-
-      // ================= FALLA DE SEÑAL =================
-      else if (g.estado === 'fseñal') {
-
-        segundos = Number(g.contador_senal_segundos || 0);
-
-        if (
-          g.contador_senal_estado === 'running' &&
-          g.contador_senal_inicio
-        ) {
-          const inicio = new Date(g.contador_senal_inicio);
-          segundos += Math.floor((Date.now() - inicio) / 1000);
-        }
-      }
-
-      const textoTiempo = formatearTiempo(segundos);
-
-      const el = document.getElementById(`timer-card-${g.id}`);
-      if (el) {
-        el.textContent = textoTiempo;
-      }
-
-      // Actualiza únicamente el contador de la lista de fallas.
-      // No reconstruimos todo el panel cada segundo.
-      const fallaTimers = document.querySelectorAll('[data-falla-timer]');
-      fallaTimers.forEach(timer => {
-        if (timer.dataset.fallaTimer === String(g.id)) {
-          timer.textContent = textoTiempo;
-        }
-      });
-
     });
-}, 1000);
+
+  // Elimina ciclos de equipos que ya no tienen contador visible.
+  for (const [key, timerId] of timersIndependientes.entries()) {
+    if (!activos.has(key)) {
+      clearTimeout(timerId);
+      timersIndependientes.delete(key);
+    }
+  }
+}
+
+// Revisa únicamente si aparecen/desaparecen contadores.
+// El avance de cada reloj lo maneja su propio ciclo.
+setInterval(sincronizarTimersIndependientes, 1000);
+sincronizarTimersIndependientes();
+
 /* ================= PRIORIDAD ================= */
+
 
 /* ================= PRIORIDAD OPERATIVA ================= */
 
@@ -9032,16 +9041,16 @@ estadoNuevo !== 'falla';
   const grua = equipoActual.id;
 
 
-  const turno =
-    parseInt(document.getElementById("turnoGeneral").value);
-
-
-const bloque_tramo =
+  const bloque_tramo =
     obtenerZonaGrua(grua);
 
 
   const fecha_hora_falla =
     document.getElementById("fechaReporte").value;
+
+
+const turno =
+    obtenerNumeroTurno(fecha_hora_falla);
 
  const fecha_op_repo =
 equipoActual.fecha_op_repo || null;
@@ -9710,11 +9719,27 @@ window.addEventListener('pageshow', () => refrescarAlVolver('pageshow'));
 window.addEventListener('focus', () => refrescarAlVolver('focus'));
 window.addEventListener('online', () => refrescarAlVolver('online'));
 
-// Refresco de respaldo. Realtime es el mecanismo principal; este respaldo
-// evita consultas continuas en teléfonos cuando no hubo cambios.
+// Refresco de respaldo. Realtime es el mecanismo principal.
+// También detecta cuando la computadora estuvo dormida/pantalla apagada
+// y fuerza una actualización al regresar, aunque el navegador no dispare
+// visibilitychange/focus.
+let ultimaRevisionPantalla = Date.now();
 setInterval(() => {
+  const ahora = Date.now();
+  const tiempoAusente = ahora - ultimaRevisionPantalla;
+  ultimaRevisionPantalla = ahora;
+
   if (haySesionActiva() && document.visibilityState === 'visible' && navigator.onLine !== false) {
-    actualizarTodo('respaldo 30s');
+    if (tiempoAusente > 45000) {
+      // La computadora estuvo suspendida o el navegador dejó de ejecutar timers.
+      // Actualiza datos y restablece Realtime sin recargar la página.
+      actualizarTodo('regreso de suspensión');
+      if (!realtimeGruas || !realtimeMensajes) {
+        iniciarRealtime();
+      }
+    } else {
+      actualizarTodo('respaldo 30s');
+    }
   }
 }, 30000);
 
@@ -9733,15 +9758,13 @@ function iniciarDatosDespuesLogin(){
 
   // Ejecutar después de que el navegador haya podido pintar el login/app.
   setTimeout(() => {
-    asegurarSupabase()
-      .then(() => {
-        actualizarTodo('login correcto');
-        cargarResponsabilidades();
-        iniciarRealtime();
-      })
-      .catch(e => {
-        console.warn('Inicialización posterior al login:', e);
-      });
+    try {
+      actualizarTodo('login correcto');
+      cargarResponsabilidades();
+      iniciarRealtime();
+    } catch(e) {
+      console.warn('Inicialización posterior al login:', e);
+    }
   }, 0);
 }
 
@@ -10343,6 +10366,13 @@ async function cargarReporteGruas() {
 
 
     <div class="campo-filtro">
+        <label>Supervisor</label>
+        <select id="filtroSupervisor" onchange="filtrarReporteGruas()">
+            <option value="">Todos</option>
+        </select>
+    </div>
+
+    <div class="campo-filtro">
         <label>Ordenar</label>
         <select id="ordenReporte" onchange="filtrarReporteGruas()">
             <option value="normal">Normal</option>
@@ -10369,14 +10399,17 @@ async function cargarReporteGruas() {
       <button type="button" class="btn-tipo-reporte" data-tipo="STS" onclick="seleccionarReporteGruaTipo('STS', this)">STS</button>
     </div>
 
-    <div class="tabla-container">
+    <div class="reporte-ti-tabs" style="display:flex;gap:8px;margin:0 0 10px 0;">
+      <button type="button" class="btn-ti-reporte activo" data-ti="TM" onclick="seleccionarReporteGruaTiempo('TM', this)">TM</button>
+      <button type="button" class="btn-ti-reporte" data-ti="TI" onclick="seleccionarReporteGruaTiempo('TI', this)">TI</button>
+    </div>
+
+    <div class="tabla-container tabla-tiempo tabla-tiempo-tm">
       <div class="tabla-scroll">
-
+        <h3 class="titulo-tabla-tipo">TM - TIEMPO MUERTO</h3>
         <table class="tabla-reporte">
-
           <thead>
             <tr>
-               <!-- <th>FECHA/HORA GRÚA REPORTADA</th> -->
               <th>FECHA/HORA DE REPORTE</th>
               <th>TURNO</th>
               <th>SUPERVISOR</th>
@@ -10387,34 +10420,56 @@ async function cargarReporteGruas() {
               <th>DESCRIPCIÓN</th>
               <th>TM</th>
               <th>Grua inactiva</th>
-              <!-- <th>ACTIVIDAD REALIZABA OPERADOR</th>-->
-              <!-- <th>ÁREA</th>-->
-              <!-- <th>BLOQUE</th>-->
-              <!-- <th>QUIÉN REPORTÓ</th>-->
-              <!-- <th>ACTIVIDAD REALIZABA OPERADOR</th>-->
             </tr>
           </thead>
-
-          <tbody id="tbodyReporteGruas">
-</tbody>
-
-  `;
-
-  html += `
-          </tbody>
-
+          <tbody id="tbodyReporteGruasTM"></tbody>
         </table>
-
       </div>
     </div>
 
+    <div class="tabla-container tabla-tiempo tabla-tiempo-ti" style="display:none;">
+      <div class="tabla-scroll">
+        <h3 class="titulo-tabla-tipo">TI - TIEMPO INVERTIDO</h3>
+        <table class="tabla-reporte">
+          <thead>
+            <tr>
+              <th>FECHA/HORA DE REPORTE</th>
+              <th>TURNO</th>
+              <th>SUPERVISOR</th>
+              <th>STANDBY</th>
+              <th>EQUIPO</th>
+              <th>RESPONSABILIDAD</th>
+              <th>CÓDIGO DE FALLA</th>
+              <th>DESCRIPCIÓN</th>
+              <th>TI</th>
+              <th>Grua inactiva</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyReporteGruasTI"></tbody>
+        </table>
+      </div>
+    </div>
+
+
   </div>
-  `;
+    `;
 
   document.getElementById('tab-gruas').innerHTML = html;
+  llenarFiltrosReporte();
   pintarTablaReporteGruas(reporteGruasData);
 }
 let tipoReporteGruaActual = 'RTG';
+let tipoReporteGruaTiempoActual = 'TM';
+
+function seleccionarReporteGruaTiempo(tipo, boton){
+  tipoReporteGruaTiempoActual = tipo === 'TI' ? 'TI' : 'TM';
+  document.querySelectorAll('#tab-gruas .btn-ti-reporte').forEach(b => b.classList.remove('activo'));
+  if(boton) boton.classList.add('activo');
+  const tm = document.querySelector('#tab-gruas .tabla-tiempo-tm');
+  const ti = document.querySelector('#tab-gruas .tabla-tiempo-ti');
+  if(tm) tm.style.display = tipoReporteGruaTiempoActual === 'TM' ? '' : 'none';
+  if(ti) ti.style.display = tipoReporteGruaTiempoActual === 'TI' ? '' : 'none';
+}
 
 function esRTGIdReporte(id){
   const v = String(id || '').toUpperCase().replace(/[-\s]/g,'');
@@ -10436,6 +10491,26 @@ function llenarFiltrosReporte(){
 
     const equipo = document.getElementById('filtroEquipo');
     const codigo = document.getElementById('filtroCodigo');
+    const supervisor = document.getElementById('filtroSupervisor');
+
+    if(supervisor){
+        const valorActualSupervisor = supervisor.value || '';
+        const supervisores = [...new Set(
+            reporteGruasData.map(r => String(r.supervisor || '').trim())
+            .filter(Boolean)
+        )].sort((a,b) => a.localeCompare(b, 'es'));
+
+        supervisor.innerHTML = `
+            <option value="">Todos</option>
+            ${supervisores.map(s =>
+                `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`
+            ).join('')}
+        `;
+
+        if(supervisores.includes(valorActualSupervisor)){
+            supervisor.value = valorActualSupervisor;
+        }
+    }
 
     if(!equipo || !codigo) return;
 
@@ -10450,8 +10525,6 @@ function llenarFiltrosReporte(){
         reporteGruasData.map(r => r.codigo_falla)
         .filter(Boolean)
     )];
-
-
     equipo.innerHTML = `
         <option value="">Todos</option>
         ${
@@ -10477,60 +10550,50 @@ function filtrarReporteGruas(){
  const orden = document.getElementById('ordenReporte').value;
  const inicio = document.getElementById('fechaInicio').value;
  const fin = document.getElementById('fechaFin').value;
+ const supervisorSeleccionado = (document.getElementById('filtroSupervisor')?.value || '').trim().toLowerCase();
 
-
-let datos = [...reporteGruasData];
+ let datos = [...reporteGruasData];
 
  datos = datos.filter(r => tipoReporteGruaActual === 'STS' ? esSTSIdReporte(r.grua) : esRTGIdReporte(r.grua));
 
- if(inicio){
-
+ if(supervisorSeleccionado){
    datos = datos.filter(r =>
-     new Date(r.fecha_hora_falla) >= new Date(inicio)
+     String(r.supervisor || '').trim().toLowerCase() === supervisorSeleccionado
    );
-
  }
 
+ // FILTRO DE FECHA: comparar solo YYYY-MM-DD para evitar desfases
+ // por zona horaria. Desde y Hasta son inclusivos.
+ if(inicio){
+   datos = datos.filter(r => {
+     const fechaRegistro = String(r.fecha_hora_falla || '').slice(0,10);
+     return fechaRegistro && fechaRegistro >= inicio;
+   });
+ }
 
  if(fin){
-
-   const fechaFin = new Date(fin);
-   fechaFin.setHours(23,59,59);
-
-   datos = datos.filter(r =>
-     new Date(r.fecha_hora_falla) <= fechaFin
-   );
-
+   datos = datos.filter(r => {
+     const fechaRegistro = String(r.fecha_hora_falla || '').slice(0,10);
+     return fechaRegistro && fechaRegistro <= fin;
+   });
  }
 
-
-if(orden === "az"){
-
-    datos.sort((a,b)=>{
-
-        let gruaA = (a.grua || '').toString();
-        let gruaB = (b.grua || '').toString();
-
-        let compararGrua = gruaA.localeCompare(gruaB);
-
-        if(compararGrua !== 0){
-            return compararGrua;
-        }
-
-
-        let codigoA = (a.codigo_falla || '').toString();
-        let codigoB = (b.codigo_falla || '').toString();
-
-        return codigoA.localeCompare(codigoB);
-
-    });
-
-}
+ if(orden === "az"){
+     datos.sort((a,b)=>{
+         let gruaA = (a.grua || '').toString();
+         let gruaB = (b.grua || '').toString();
+         let compararGrua = gruaA.localeCompare(gruaB);
+         if(compararGrua !== 0){
+             return compararGrua;
+         }
+         let codigoA = (a.codigo_falla || '').toString();
+         let codigoB = (b.codigo_falla || '').toString();
+         return codigoA.localeCompare(codigoB);
+     });
+ }
 
  pintarTablaReporteGruas(datos);
-
 }
-
 
 function escapeHtml(valor){
   return String(valor ?? '')
@@ -10631,29 +10694,32 @@ async function actualizarDatoFallaTabla(elemento){
 
 function pintarTablaReporteGruas(data){
 
-  data = (data || []).filter(r => tipoReporteGruaActual === 'STS' ? esSTSIdReporte(r.grua) : esRTGIdReporte(r.grua));
+  data = (data || []).filter(r =>
+    tipoReporteGruaActual === 'STS' ? esSTSIdReporte(r.grua) : esRTGIdReporte(r.grua)
+  );
 
-  let html = '';
+  const normalizarTipo = (valor) => String(valor || '').trim().toUpperCase();
 
-  if(data && data.length > 0){
+  // TM/TI vienen del selector TMI. ST se contempla como una tercera clasificación
+  // cuando el registro ya trae ST en ese campo.
+  const registrosTM = data.filter(r => {
+    const tipo = normalizarTipo(r.tmi);
+    return tipo === 'TIEMPO MUERTO' || tipo === 'TM';
+  });
 
-    data.forEach(r => {
+  const registrosTI = data.filter(r => {
+    const tipo = normalizarTipo(r.tmi);
+    return tipo === 'TIEMPO INVERTIDO' || tipo === 'TI';
+  });
 
-      html += `
+  const fila = (r) => `
       <tr>
-
         <td>${formatearFechaMX(r.fecha_hora_falla)}</td>
-
         <td>${r.turno ?? ''}</td>
-
         <td>${r.supervisor ?? ''}</td>
-
         <td>${r.standby ?? ''}</td>
-
         <td>${r.grua ?? ''}</td>
-
         <td>${r.responsabilidad ?? ''}</td>
-
         <td class="celda-editable-falla">
           <select
             class="campo-edicion-tabla select-codigo-tabla"
@@ -10667,7 +10733,6 @@ function pintarTablaReporteGruas(data){
             <option value="">Cargando opciones...</option>
           </select>
         </td>
-
         <td class="celda-editable-falla descripcion-editable">
           <textarea
             class="campo-edicion-tabla campo-descripcion-tabla"
@@ -10677,36 +10742,26 @@ function pintarTablaReporteGruas(data){
             onchange="actualizarDatoFallaTabla(this)"
           >${escapeHtml(r.descripcion_falla ?? '')}</textarea>
         </td>
-
         <td>${r.tiempo_muerto || ''}</td>
-
-        <td>${r.tiempo_muerto_real || '00:00:00'}</td>
+        <td>${r.tiempo_muerto_real ?? ''}</td>
       </tr>
-      `;
+  `;
 
-    });
+  const pintar = (lista, tbodyId) => {
+    const tbody = document.getElementById(tbodyId);
+    if(!tbody) return;
+    tbody.innerHTML = lista.length
+      ? lista.map(fila).join('')
+      : `<tr><td colspan="10" style="text-align:center;padding:20px;">Sin registros</td></tr>`;
+  };
 
-  }else{
+  pintar(registrosTM, 'tbodyReporteGruasTM');
+  pintar(registrosTI, 'tbodyReporteGruasTI');
+  seleccionarReporteGruaTiempo(tipoReporteGruaTiempoActual, document.querySelector('#tab-gruas .btn-ti-reporte.activo'));
 
-    html = `
-    <tr>
-      <td colspan="10" style="text-align:center;padding:20px;">
-        Sin registros
-      </td>
-    </tr>
-    `;
-
-  }
-
-
-  const tbody = document.getElementById('tbodyReporteGruas');
-
-  if(tbody){
-    tbody.innerHTML = html;
-    cargarOpcionesCodigoTabla();
-  }
-
+  cargarOpcionesCodigoTabla();
 }
+
 let reporteDTData = [];
 async function cargarReporteDT() {
   const { data, error } = await db
@@ -11039,11 +11094,9 @@ actualizarUIEstado();
 controlarPrioridad();
 actualizarIndicadorEstado();
 
-    const fechaInput =
-      document.getElementById('fechaReporte').value;
-
-    const inicioFalla =
-      new Date(fechaInput).toISOString();
+    // Cada grúa que entra en falla inicia su propio contador desde este instante.
+    // No reutilizar la fecha del campo oculto para evitar heredar el contador de otra grúa.
+    const inicioFalla = new Date().toISOString();
 
     contador_estado = 'running';
     contador_inicio = inicioFalla;
@@ -12526,9 +12579,10 @@ async function cargarCodigos(){
   });
 
 }
-function obtenerTurnoActual(){
+function obtenerTurnoActual(fechaHora = null){
 
-  const hora = new Date().getHours();
+  const fecha = fechaHora ? new Date(fechaHora) : new Date();
+  const hora = fecha.getHours();
 
   if(hora >= 6 && hora < 14){
     return "1er Turno";
@@ -12539,6 +12593,17 @@ function obtenerTurnoActual(){
   }
 
   return "3er Turno";
+
+}
+
+function obtenerNumeroTurno(fechaHora = null){
+
+  const fecha = fechaHora ? new Date(fechaHora) : new Date();
+  const hora = fecha.getHours();
+
+  if(hora >= 6 && hora < 14) return 1;
+  if(hora >= 14 && hora < 22) return 2;
+  return 3;
 
 }
 function controlarBotonStandby(){
@@ -13990,5 +14055,289 @@ main, .dashboard, .dashboard-container {
   .sidebar .menu-btn span {
     font-size: 10px !important;
   }
+}
+
+/* CORRECCION PUNTUAL: evitar que MENSAJE ACTIVO se encime con GRUAS EN FALLA en pantallas pequeñas.
+   No cambia la logica ni elimina ningun elemento. */
+@media (max-width:600px){
+  .events-panel{
+    display:flex !important;
+    flex-direction:column !important;
+    gap:16px !important;
+    position:static !important;
+  }
+
+  .events-panel .dashboard-panel{
+    height:auto !important;
+    max-height:none !important;
+    overflow:visible !important;
+    flex:0 0 auto !important;
+    position:relative !important;
+  }
+
+  #listaFallas{
+    height:auto !important;
+    max-height:460px !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+  }
+
+  #mensajeActivo{
+    position:relative !important;
+    z-index:1 !important;
+  }
+}
+</style>
+
+<style id="correccion-final-no-encimar-mensaje-movil">
+/* Corrección puntual: MENSAJE ACTIVO siempre debajo de GRÚAS EN FALLA en móvil. */
+@media (max-width:600px){
+  .events-panel{
+    height:auto !important;
+    max-height:none !important;
+    overflow:visible !important;
+    gap:16px !important;
+  }
+
+  .events-panel > .dashboard-panel:first-child{
+    height:auto !important;
+    max-height:none !important;
+    overflow:visible !important;
+    position:relative !important;
+    flex:0 0 auto !important;
+  }
+
+  #listaFallas{
+    height:460px !important;
+    max-height:460px !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+  }
+
+  .events-panel > .dashboard-panel:nth-child(2){
+    position:relative !important;
+    top:auto !important;
+    margin-top:0 !important;
+    flex:0 0 auto !important;
+  }
+}
+</style>
+
+<style id="correccion-final-encimado-movil-v2">
+/* SOLO CORRECCION DEL ENCIMADO EN MOVIL: MENSAJE ACTIVO DEBAJO DE GRUAS EN FALLA */
+@media (max-width:600px){
+  .events-panel > .dashboard-panel:first-child{
+    height:auto !important;
+    max-height:none !important;
+    overflow:hidden !important;
+    position:relative !important;
+  }
+
+  #listaFallas{
+    height:400px !important;
+    max-height:400px !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+  }
+
+  .events-panel > .dashboard-panel:nth-child(2){
+    position:relative !important;
+    top:auto !important;
+    left:auto !important;
+    right:auto !important;
+    margin-top:16px !important;
+    z-index:1 !important;
+  }
+}
+</style>
+
+<style id="fix-unico-encimado-movil-final">
+/* SOLO CORRECCION DEL ENCIMADO: el panel MENSAJE ACTIVO queda DESPUES del panel GRUAS EN FALLA. */
+@media (max-width:600px){
+  .events-panel{
+    display:block !important;
+    position:static !important;
+    height:auto !important;
+    max-height:none !important;
+    overflow:visible !important;
+  }
+
+  .events-panel > .dashboard-panel:first-child{
+    display:block !important;
+    position:relative !important;
+    height:520px !important;
+    max-height:520px !important;
+    min-height:520px !important;
+    overflow:hidden !important;
+    margin:0 !important;
+  }
+
+  .events-panel > .dashboard-panel:first-child #listaFallas{
+    height:400px !important;
+    max-height:400px !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+  }
+
+  .events-panel > .dashboard-panel:nth-child(2){
+    display:block !important;
+    position:relative !important;
+    top:auto !important;
+    left:auto !important;
+    right:auto !important;
+    width:100% !important;
+    height:auto !important;
+    max-height:none !important;
+    margin:16px 0 0 !important;
+    z-index:1 !important;
+    clear:both !important;
+  }
+}
+</style>
+
+<style id="fix-encimado-fallas-movil-definitivo">
+/* SOLO CORRECCION SOLICITADA: en movil GRUAS EN FALLA tiene su propio scroll y MENSAJE ACTIVO queda debajo. */
+@media (max-width:600px){
+  .events-panel{
+    display:block !important;
+    position:static !important;
+    height:auto !important;
+    max-height:none !important;
+    overflow:visible !important;
+  }
+
+  .events-panel > .dashboard-panel:first-child{
+    display:block !important;
+    position:relative !important;
+    height:560px !important;
+    min-height:560px !important;
+    max-height:560px !important;
+    overflow:hidden !important;
+    margin:0 !important;
+  }
+
+  .events-panel > .dashboard-panel:first-child #listaFallas{
+    height:400px !important;
+    max-height:400px !important;
+    min-height:0 !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+  }
+
+  .events-panel > .dashboard-panel:nth-child(2){
+    display:block !important;
+    position:relative !important;
+    top:auto !important;
+    right:auto !important;
+    bottom:auto !important;
+    left:auto !important;
+    inset:auto !important;
+    transform:none !important;
+    width:100% !important;
+    height:auto !important;
+    max-height:none !important;
+    margin:16px 0 0 !important;
+    z-index:1 !important;
+    clear:both !important;
+  }
+}
+</style>
+
+<style id="independizar-tarjetas-fallas-mensajes">
+/* SOLO CAMBIO SOLICITADO:
+   GRUAS EN FALLA y MENSAJE ACTIVO quedan como tarjetas independientes.
+   Cada una conserva su propio contenido y, cuando hay muchos elementos,
+   el scroll pertenece únicamente a su lista. */
+@media (max-width:600px){
+  .events-panel{
+    display:flex !important;
+    flex-direction:column !important;
+    gap:16px !important;
+    position:static !important;
+    height:auto !important;
+    max-height:none !important;
+    overflow:visible !important;
+  }
+
+  /* TARJETA 1: GRUAS EN FALLA */
+  .events-panel > .dashboard-panel:first-child{
+    display:block !important;
+    position:relative !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    overflow:visible !important;
+    flex:0 0 auto !important;
+    margin:0 !important;
+  }
+
+  /* Solo la lista de fallas tiene scroll y se adapta al contenido. */
+  .events-panel > .dashboard-panel:first-child #listaFallas{
+    height:auto !important;
+    min-height:0 !important;
+    max-height:400px !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+  }
+
+  /* TARJETA 2: MENSAJE ACTIVO */
+  .events-panel > .dashboard-panel:nth-child(2){
+    display:block !important;
+    position:relative !important;
+    inset:auto !important;
+    top:auto !important;
+    right:auto !important;
+    bottom:auto !important;
+    left:auto !important;
+    transform:none !important;
+    width:100% !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    overflow:visible !important;
+    flex:0 0 auto !important;
+    margin:0 !important;
+    z-index:1 !important;
+  }
+
+  /* Solo los mensajes tienen su propio scroll. */
+  .events-panel > .dashboard-panel:nth-child(2) #mensajeActivo{
+    height:auto !important;
+    min-height:0 !important;
+    max-height:280px !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+  }
+}
+
+/* Separación visual de las tablas TM / TI / ST */
+.titulo-tabla-tipo{
+  margin:0;
+  padding:10px 14px;
+  font-size:15px;
+  font-weight:800;
+  color:#17324d;
+  background:#eef4f8;
+  border-bottom:1px solid #cbd5e1;
+}
+
+/* TM / TI: selector de la tabla visible */
+#tab-gruas .btn-ti-reporte{
+  border:1px solid #9fb3c5;
+  padding:6px 14px;
+  width:72px;
+  min-width:72px;
+  border-radius:18px;
+  background:#eef3f7;
+  color:#17324d;
+  font-size:12px;
+  font-weight:800;
+  line-height:1.1;
+  cursor:pointer;
+}
+#tab-gruas .btn-ti-reporte.activo{
+  background:#17324d;
+  border-color:#17324d;
+  color:#fff;
 }
 </style>
