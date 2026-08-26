@@ -7662,7 +7662,6 @@ Seleccione supervisor
     <option value="">Seleccione tipo de falla...</option>
     <option value="TIEMPO MUERTO">TIEMPO MUERTO</option>
     <option value="TIEMPO INVERTIDO">TIEMPO INVERTIDO</option>
-    <option value="ST">ST</option>
 </select>
 
 
@@ -8369,6 +8368,23 @@ function obtenerTiempoContador(g){
       (ahora - inicio) / 1000
     );
 
+  } else if (
+    g.estado === 'falla' &&
+    Number(segundos) <= 0 &&
+    g.falla_inicio
+  ) {
+
+    // Respaldo: si la grúa sigue en FALLA pero el contador
+    // guardado no está disponible, calcular desde el inicio de falla.
+    const inicioFalla = new Date(g.falla_inicio);
+    const ahora = new Date();
+
+    if (!isNaN(inicioFalla.getTime())) {
+      segundos = Math.max(
+        0,
+        Math.floor((ahora - inicioFalla) / 1000)
+      );
+    }
   }
 
   return formatearTiempo(segundos);
@@ -8461,6 +8477,12 @@ function actualizarTimerIndependiente(g) {
 
   if (!haySesionActiva()) return;
 
+  // Siempre usar la versión más reciente de la grúa.
+  // Esto evita que un render/recarga de datos deje un timer
+  // trabajando con una copia anterior y provoque saltos visuales.
+  const gActual = getEquipo(g.id) || g;
+  g = gActual;
+
   let segundosBase = 0;
   let inicio = null;
   let estadoContador = 'stopped';
@@ -8485,6 +8507,22 @@ function actualizarTimerIndependiente(g) {
 
   if (estadoContador === 'running' && inicio) {
     segundos += Math.floor((Date.now() - new Date(inicio)) / 1000);
+  } else if (
+    g.estado === 'falla' &&
+    segundos <= 0 &&
+    g.falla_inicio
+  ) {
+
+    // Respaldo para mantener visible el tiempo de FALLA
+    // aunque temporalmente falte el contador persistido.
+    const inicioFalla = new Date(g.falla_inicio);
+
+    if (!isNaN(inicioFalla.getTime())) {
+      segundos = Math.max(
+        0,
+        Math.floor((Date.now() - inicioFalla.getTime()) / 1000)
+      );
+    }
   }
 
   const textoTiempo = formatearTiempo(segundos);
@@ -8532,9 +8570,12 @@ function sincronizarTimersIndependientes() {
       const key = String(g.id);
       activos.add(key);
 
-      if (!timersIndependientes.has(key)) {
-        actualizarTimerIndependiente(g);
+      // Reanclar el timer a la grúa actual después de cada recarga/render.
+      if (timersIndependientes.has(key)) {
+        clearTimeout(timersIndependientes.get(key));
+        timersIndependientes.delete(key);
       }
+      actualizarTimerIndependiente(g);
     });
 
   // Elimina ciclos de equipos que ya no tienen contador visible.
@@ -8699,7 +8740,7 @@ if (bloque) {
 }
 
   document.getElementById('tiempoMuerto').value = g.tiempo_muerto || '';
-  document.getElementById('turnoGeneral').value = g.turno_operacion || '1';
+  document.getElementById('turnoGeneral').value = obtenerNumeroTurno();
   document.getElementById('tipoRegistro').value = 'operaciones';
 
   document.getElementById('registro_falla').value = g.registro_falla || '';
@@ -9132,10 +9173,20 @@ if (salioDeFalla) {
 
 
 const fechaInicio =
-  falla_inicio || equipoActual.contador_inicio;
+  falla_inicio ||
+  equipoActual.contador_inicio ||
+  equipoActual.fecha_hora_falla;
+
+const inicioTexto = String(fechaInicio || '').trim();
+
+// Evita fechas inválidas cuando el valor ya trae Z o zona horaria.
+const fechaInicioNormalizada =
+  /(?:Z|[+-]\d{2}:?\d{2})$/i.test(inicioTexto)
+    ? inicioTexto
+    : `${inicioTexto}Z`;
 
 const inicio =
-  new Date(fechaInicio + "Z").getTime();
+  new Date(fechaInicioNormalizada).getTime();
 
 
     const fin =
@@ -10715,7 +10766,7 @@ function pintarTablaReporteGruas(data){
   const fila = (r) => `
       <tr>
         <td>${formatearFechaMX(r.fecha_hora_falla)}</td>
-        <td>${r.turno ?? ''}</td>
+        <td>${r.turno || obtenerNumeroTurno(r.fecha_hora_falla)}</td>
         <td>${r.supervisor ?? ''}</td>
         <td>${r.standby ?? ''}</td>
         <td>${r.grua ?? ''}</td>
@@ -11624,8 +11675,16 @@ function iniciarContadorNuevo(g) {
 
   if (g.contador_estado === 'running') return;
 
+  // Cada vez que una grúa entra en FALLA, el contador comienza
+  // nuevamente desde cero, sin conservar el contador anterior.
+  g.contador_segundos = 0;
   g.contador_estado = 'running';
-  g.contador_inicio = new Date().toISOString();
+
+  const ahora = new Date().toISOString();
+  g.contador_inicio = ahora;
+
+  // El inicio de la falla también corresponde a esta nueva captura.
+  g.falla_inicio = ahora;
 }
 function detenerContadorNuevo(g) {
   if (!g || !g.contador_inicio) return;
@@ -12837,7 +12896,7 @@ function pintarReporteDT(data){
                 <td>${r.registro_falla ?? ''}</td>
                 <td>${r.actividad ?? ''}</td>
                 <td>${r.quien_reporto ?? ''}</td>
-                <td>${r.turno ?? ''}</td>
+                <td>${r.turno || obtenerNumeroTurno(r.fecha_hora_falla)}</td>
                 <td>${r.area_mantto ?? ''}</td>
             </tr>
             `;
