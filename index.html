@@ -2968,6 +2968,29 @@ body{
 
 
 /* TEXTO COMPLETO AL PASAR MOUSE */
+.select-responsabilidad-tabla{
+    width:100%;
+    min-width:150px;
+    height:34px;
+    border:1px solid #cbd5e1;
+    border-radius:5px;
+    background:#fff;
+    padding:5px 8px;
+    font-size:12px;
+    color:#1f2937;
+    cursor:pointer;
+}
+
+.select-responsabilidad-tabla:focus{
+    border-color:#1f6fb2;
+    outline:none;
+    box-shadow:0 0 0 2px rgba(31,111,178,.12);
+}
+
+.responsabilidad-editable{
+    min-width:170px;
+}
+
 .tabla-reporte td:hover{
 
     white-space:normal;
@@ -5253,7 +5276,7 @@ html,body{width:100%!important;max-width:100%!important;min-width:0!important;ma
     column-gap:6px!important;
     margin-bottom:7px!important;
   }
-  .zona{width:100%!important;min-width:0!important;white-space:normal!important;font-size:clamp(8px,.75vw,12px)!important}
+  .zona{width:100%!important;min-width:0!important;white-space:normal!important;font-size:clamp(10px,.9vw,14px)!important}
 
   /* GRUAS NORMALES: siempre caben las 11 */
   .grid{
@@ -10543,6 +10566,7 @@ function llenarFiltrosReporte(){
     const equipo = document.getElementById('filtroEquipo');
     const codigo = document.getElementById('filtroCodigo');
     const supervisor = document.getElementById('filtroSupervisor');
+    const filtroResponsabilidad = document.getElementById('filtroResponsabilidad');
 
     if(supervisor){
         const valorActualSupervisor = supervisor.value || '';
@@ -10560,6 +10584,25 @@ function llenarFiltrosReporte(){
 
         if(supervisores.includes(valorActualSupervisor)){
             supervisor.value = valorActualSupervisor;
+        }
+    }
+
+    if(filtroResponsabilidad){
+        const valorActualResponsabilidad = filtroResponsabilidad.value || '';
+        const responsabilidades = [...new Set(
+            reporteGruasData.map(r => String(r.responsabilidad || '').trim())
+            .filter(Boolean)
+        )].sort((a,b) => a.localeCompare(b, 'es'));
+
+        filtroResponsabilidad.innerHTML = `
+            <option value="">Todas</option>
+            ${responsabilidades.map(r =>
+                `<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`
+            ).join('')}
+        `;
+
+        if(responsabilidades.includes(valorActualResponsabilidad)){
+            filtroResponsabilidad.value = valorActualResponsabilidad;
         }
     }
 
@@ -10602,6 +10645,7 @@ function filtrarReporteGruas(){
  const inicio = document.getElementById('fechaInicio').value;
  const fin = document.getElementById('fechaFin').value;
  const supervisorSeleccionado = (document.getElementById('filtroSupervisor')?.value || '').trim().toLowerCase();
+ const responsabilidadSeleccionada = (document.getElementById('filtroResponsabilidad')?.value || '').trim().toLowerCase();
 
  let datos = [...reporteGruasData];
 
@@ -10610,6 +10654,12 @@ function filtrarReporteGruas(){
  if(supervisorSeleccionado){
    datos = datos.filter(r =>
      String(r.supervisor || '').trim().toLowerCase() === supervisorSeleccionado
+   );
+ }
+
+ if(responsabilidadSeleccionada){
+   datos = datos.filter(r =>
+     String(r.responsabilidad || '').trim().toLowerCase() === responsabilidadSeleccionada
    );
  }
 
@@ -10678,6 +10728,48 @@ async function obtenerOpcionesCodigoTabla(responsabilidad){
   return opciones;
 }
 
+async function cargarOpcionesResponsabilidadTabla(){
+  const selects = document.querySelectorAll('#tab-gruas .select-responsabilidad-tabla');
+
+  let opciones = Array.isArray(columnasCodigos) ? [...columnasCodigos] : [];
+
+  if(!opciones.length){
+    const { data, error } = await db.from('Codigo_fallas').select('*').limit(1);
+    if(!error && data && data.length){
+      opciones = Object.keys(data[0]);
+      columnasCodigos = [...opciones];
+    }
+  }
+
+  opciones.sort((a,b) => String(a).localeCompare(String(b), 'es'));
+
+  selects.forEach(select => {
+    const valorActual = select.dataset.valorActual || '';
+    select.innerHTML = '';
+
+    const vacia = document.createElement('option');
+    vacia.value = '';
+    vacia.textContent = 'Seleccione responsabilidad...';
+    select.appendChild(vacia);
+
+    opciones.forEach(valor => {
+      const option = document.createElement('option');
+      option.value = valor;
+      option.textContent = String(valor).replace(/_/g, ' ').toUpperCase();
+      select.appendChild(option);
+    });
+
+    if(valorActual && !opciones.includes(String(valorActual))){
+      const option = document.createElement('option');
+      option.value = valorActual;
+      option.textContent = valorActual;
+      select.appendChild(option);
+    }
+
+    select.value = valorActual;
+  });
+}
+
 async function cargarOpcionesCodigoTabla(){
   const selects = document.querySelectorAll('#tab-gruas .select-codigo-tabla');
   for(const select of selects){
@@ -10710,7 +10802,7 @@ async function actualizarDatoFallaTabla(elemento){
   const id = elemento.dataset.id;
   const campo = elemento.dataset.campo;
 
-  if(!id || !['codigo_falla','descripcion_falla'].includes(campo)) return;
+  if(!id || !['responsabilidad','codigo_falla','descripcion_falla'].includes(campo)) return;
 
   const valor = elemento.value ?? '';
 
@@ -10729,6 +10821,16 @@ async function actualizarDatoFallaTabla(elemento){
 
     const registro = reporteGruasData.find(r => String(r.id) === String(id));
     if(registro) registro[campo] = cambio[campo];
+
+    if(campo === 'responsabilidad'){
+      const fila = elemento.closest('tr');
+      const selectCodigo = fila?.querySelector('.select-codigo-tabla');
+      if(selectCodigo){
+        selectCodigo.dataset.responsabilidad = cambio[campo];
+        selectCodigo.dataset.valorActual = '';
+      }
+      await cargarOpcionesCodigoTabla();
+    }
 
     elemento.classList.remove('edicion-error');
     elemento.classList.add('edicion-guardada');
@@ -10770,7 +10872,17 @@ function pintarTablaReporteGruas(data){
         <td>${r.supervisor ?? ''}</td>
         <td>${r.standby ?? ''}</td>
         <td>${r.grua ?? ''}</td>
-        <td>${r.responsabilidad ?? ''}</td>
+        <td class="celda-editable-falla responsabilidad-editable">
+          <select
+            class="campo-edicion-tabla select-responsabilidad-tabla"
+            data-id="${r.id}"
+            data-campo="responsabilidad"
+            data-valor-actual="${escapeHtml(r.responsabilidad ?? '')}"
+            onchange="actualizarDatoFallaTabla(this)"
+          >
+            <option value="">Cargando opciones...</option>
+          </select>
+        </td>
         <td class="celda-editable-falla">
           <select
             class="campo-edicion-tabla select-codigo-tabla"
@@ -10810,6 +10922,7 @@ function pintarTablaReporteGruas(data){
   pintar(registrosTI, 'tbodyReporteGruasTI');
   seleccionarReporteGruaTiempo(tipoReporteGruaTiempoActual, document.querySelector('#tab-gruas .btn-ti-reporte.activo'));
 
+  cargarOpcionesResponsabilidadTabla();
   cargarOpcionesCodigoTabla();
 }
 
@@ -14398,5 +14511,11 @@ main, .dashboard, .dashboard-container {
   background:#17324d;
   border-color:#17324d;
   color:#fff;
+}
+
+/* SOLO OCULTAR EL FILTRO DE RESPONSABILIDAD EN REPORTE GRUAS.
+   Se conserva todo el codigo y su funcionamiento. */
+.filtros-reporte .campo-filtro:has(#filtroResponsabilidad){
+  display:none !important;
 }
 </style>
