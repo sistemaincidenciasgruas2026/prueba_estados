@@ -15,8 +15,8 @@ CONTROL OPERATIVO GRÚAS
 </title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<!-- XLSX: se conserva la versión 0.18.5 que ya usaba el HTML; se elimina la carga duplicada para evitar bloqueo en móvil/tablet. -->
-<script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 <link rel="stylesheet"
 href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet"
@@ -29,7 +29,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 <script defer src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
 <style>
 
-/* ================= RESET ================= */
+
 
 *{
 margin:0;
@@ -37,7 +37,7 @@ padding:0;
 box-sizing:border-box;
 }
 
-/* ================= ROOT ================= */
+
 
 :root{
   --bg:#eef3f8;
@@ -56,7 +56,7 @@ box-sizing:border-box;
   --muted:#6b7280;
 }
 
-/* ================= BODY ================= */
+
 
 body{
   background:
@@ -74,7 +74,7 @@ body{
   color:var(--text);
 }
 
-/* ================= HEADER ================= */
+
 
 .header{
 
@@ -88,7 +88,7 @@ justify-content:space-between;
 
 align-items:center;
 
-padding:8px 18px;   /* antes 14px */
+padding:8px 18px;   
 
 position:sticky;
 
@@ -100,13 +100,13 @@ z-index:1000;
 
 .title{
 
-font-size:18px;      /* antes 20px */
+font-size:18px;      
 
 font-weight:700;
 
 letter-spacing:0.5px;
 
-margin:0;            /* importante */
+margin:0;            
 
 line-height:1.2;
 
@@ -148,7 +148,7 @@ font-weight:700;
 
 }
 
-/* ================= KPIS ================= */
+
 
 .kpis{
     display:grid;
@@ -181,13 +181,13 @@ font-weight:700;
   line-height:1;
 }
 
-/* ================= DASHBOARD ================= */
+
 
 .dashboard{
   display:flex;
   flex-direction:column;
 }
-/* ================= NO SE DEFORME EN TABLET================ */
+
 img, iframe{
   max-width:100%;
 }
@@ -236,7 +236,7 @@ img, iframe{
     white-space:nowrap;
 
 }
-/* ================= YARD ================= */
+
 
 .yard{
   background:white;
@@ -261,10 +261,10 @@ img, iframe{
   top:10px;
   right:10px;
 
-  width:170px;        /* 👈 CLAVE: evita que se expanda */
-  max-height:260px;   /* 👈 evita que crezca infinito */
+  width:170px;        
+  max-height:260px;   
 
-  overflow:hidden;    /* 👈 evita que “se salga” */
+  overflow:hidden;    
   z-index:10;
 }
 .yard{
@@ -302,7 +302,7 @@ margin-bottom:8px;
 
 }
 
-/* ================= GRID ================= */
+
 
 .grid{
   display:grid;
@@ -317,7 +317,7 @@ margin-bottom:8px;
   grid-template-columns: repeat(13, minmax(95px, 1fr));
   gap:10px;
 }
-/* ================= CARD ================= */
+
 
 .card{
   position:relative;
@@ -335,7 +335,7 @@ margin-bottom:8px;
   align-items:center;
   justify-content:flex-start;
 
-  overflow:visible; /* evita que se corte el texto */
+  overflow:visible; 
 }
 
 .code{
@@ -359,7 +359,7 @@ margin-bottom:8px;
   0 12px 25px rgba(0,0,0,.20);
 }
 
-/* ================= ESTADOS ================= */
+
 
 .operacion{
  background:
@@ -413,7 +413,7 @@ margin-bottom:8px;
   background:#8e73a8;
   color:#fff;
 }
-/* ================= PARPADEO PRIORIDAD 1 ================= */
+
 
 @keyframes blinkPriority {
 
@@ -459,7 +459,7 @@ border:
 
 }
 
-/* ================= CARD TEXT ================= */
+
 
 .small{
 
@@ -472,7 +472,7 @@ font-weight:700;
 text-transform:uppercase;
 
 }
-/* ================= TIMER EN CARD ================= */
+
 
 .timer-card{
 
@@ -493,7 +493,7 @@ border-radius:4px;
 letter-spacing:1px;
 
 }
-/* ================= TEXTO PRIORIDAD ================= */
+
 
 .priority-text{
 
@@ -516,7 +516,7 @@ letter-spacing:1px;
 
   width:100%;
 }
-/* ================= EFECTO TEXTO ================= */
+
 
 @keyframes pulseText{
 
@@ -533,7 +533,7 @@ opacity:1;
 }
 
 }
-/* ================= SIGNAL ================= */
+
 
 .signal{
 
@@ -557,7 +557,7 @@ background:#35A643
 background:#8f2f2f;
 }
 
-/* ================= SIDE ================= */
+
 
 .side{
    width:320px;
@@ -636,7 +636,7 @@ background:#8f2f2f;
 }
 
 
-/* ================= ITEM ================= */
+
 
 .item{
 
@@ -667,7 +667,7 @@ font-size:11px;
 color:var(--muted);
 
 }
-/* ================= TIMER FALLA ================= */
+
 
 .timer-line{
 
@@ -710,7 +710,7 @@ font-size:11px;
     margin:16px;
     margin-top:20px;
 }
-/* ================= TEXTAREA ================= */
+
 
 textarea.msg{
 
@@ -742,7 +742,7 @@ textarea.msg:focus{
 
 }
 
-/* ================= BUTTON ================= */
+
 
 button{
 
@@ -770,7 +770,7 @@ background:#4d5a66;
 
 }
 
-/* ================= MESSAGE BOX ================= */
+
 
 .message-box{
 
@@ -789,7 +789,7 @@ line-height:1.5;
 
 }
 
-/* ================= MODAL ================= */
+
 
 .modal{
     display:none;
@@ -830,7 +830,7 @@ width:100%;
 
 }
 
-/* ================= FORM ================= */
+
 
 label{
 
@@ -871,9 +871,6 @@ color:#1f2933;
 
 }
 
-/* =========================================
-   TABLET
-========================================= */
 
 @media (max-width: 1100px){
 
@@ -903,9 +900,7 @@ color:#1f2933;
   }
 }
 
-/* =========================================
-   TABLET PEQUEÑA / MOBILE
-========================================= */
+
 
 @media (max-width: 768px){
 
@@ -939,9 +934,7 @@ color:#1f2933;
   }
 }
 
-/* =========================================
-   CELULARES
-========================================= */
+
 
 @media (max-width: 480px){
 
@@ -958,10 +951,10 @@ color:#1f2933;
   }
 
 }
-/* ================= INTRANET ================= */
+
 
 .topbar{
-  height:40px;              /* antes 70px */
+  height:40px;              
 
   background:
   linear-gradient(
@@ -974,11 +967,11 @@ color:#1f2933;
   justify-content:space-between;
   align-items:center;
 
-  padding:0 16px;           /* antes 25px */
+  padding:0 16px;           
 
   color:white;
 
-  font-size:20px;           /* antes 24px */
+  font-size:20px;           
   font-weight:700;
 
   box-shadow:
@@ -1001,7 +994,7 @@ color:#1f2933;
 
 }
 
-/* ================= SIDEBAR MODERNA ================= */
+
 
 .sidebar{
   width:170px;
@@ -1052,7 +1045,7 @@ color:#1f2933;
 
 
 
-/* BOTONES */
+
 .sidebar{
   width:220px;
   background:linear-gradient(180deg,#0f172a,#1e293b);
@@ -1062,7 +1055,7 @@ color:#1f2933;
   box-shadow:3px 0 20px rgba(0,0,0,.25);
 }
 
-/* TÍTULO */
+
 .sidebar-title{
   font-size:11px;
   font-weight:800;
@@ -1085,7 +1078,7 @@ color:#1f2933;
 
   position:relative;
 
-  overflow:visible; /* clave para badge */
+  overflow:visible; 
   border-radius:10px;
 
   background:rgba(255,255,255,.04);
@@ -1110,7 +1103,7 @@ color:#1f2933;
   word-break: break-word;
 }
 
-/* EFECTO HOVER LUZ */
+
 .menu-btn::before{
   content:"";
   position:absolute;
@@ -1138,17 +1131,12 @@ color:#1f2933;
 }
 
 
-/* ICONO OPCIONAL (si luego agregas) */
+
 .menu-btn i{
   width:18px;
   text-align:center;
   opacity:.8;
 }
-
-
-
-/* botón activo opcional */
-
 
 
 .sidebar-title{
@@ -1212,7 +1200,7 @@ color:#1f2933;
   width:100%;
   margin-bottom:15px;
 }
-/* ================= ACTION BAR ================= */
+
 
 .action-bar{
 
@@ -1453,14 +1441,14 @@ color:#1f2933;
     min-width:0;
 }
 
-/* barra superior del contenedor */
+
 .yard-toolbar{
   display:flex;
   justify-content:space-between;
   align-items:center;
   margin-bottom:8px;
 
-  position: sticky; /* o relative */
+  position: sticky; 
   top:0;
   z-index:5;
   background:#fff;
@@ -1469,21 +1457,21 @@ color:#1f2933;
   border-radius:6px;
 }
 
-/* título izquierda */
+
 .yard-title{
   font-size:14px;
   font-weight:700;
   color:#4b5a67;
 }
 
-/* esquina derecha */
+
 .yard-actions{
   display:flex;
   gap:10px;
-  margin-left:auto; /* 🔥 esto lo empuja a la derecha */
+  margin-left:auto; 
 }
 
-/* botón barra superior */
+
 .yard-btn,
 .btn-excel{
 
@@ -1533,29 +1521,29 @@ button:hover{
 }
 
 .operacion-color{
-  background:#00E83E; /* Verde */
+  background:#00E83E; 
 }
 
 .disponible-color{
-  background:#1976d2; /* Azul */
+  background:#1976d2; 
 }
 
 .falla-color{
-  background:#c62828; /* Rojo */
+  background:#c62828; 
 }
 .fseñal-color{
-  background:#969696; /* Rojo */
+  background:#969696; 
 }
 
 .dayli-color{
-  background:#8d6e63; /* Café */
+  background:#8d6e63; 
 }
 .percance-color{
-  background:#8C2CC7; /* Café */
+  background:#8C2CC7; 
 }
 
 .fmenor-color{
-  background:#ED7158; /* Café */
+  background:#ED7158; 
 }
 
 #vistaMensajes.vista.activa {
@@ -1682,9 +1670,7 @@ button:hover{
 
   font-size:14px;
 }
-/* ===================================================
-   MENSAJES OPERATIVOS PRO
-=================================================== */
+
 
 .messages-dashboard{
 
@@ -1979,7 +1965,7 @@ button:hover{
   border-bottom: 3px solid #0a2f4d;
 }
 
-/* HEADER DE TABLA */
+
 .tabla-header{
   display:flex;
   justify-content:space-between;
@@ -2000,13 +1986,13 @@ button:hover{
   opacity:.9;
 }
 
-/* HOVER */
+
 .tabla-reporte tbody tr:hover{
   background:#e8f3ff;
   transition:.15s;
 }
 
-/* COLUMNAS MÁS IMPORTANTES DESTACADAS */
+
 .tabla-reporte td:first-child{
   font-weight:800;
   color:#0f4c81;
@@ -2066,7 +2052,7 @@ button:hover{
   flex-shrink:0;
 }
 
-/* COLORES */
+
 .color-box.operacion{ background:#35A643; }
 .color-box.disponible{ background:#1f6fb2; }
 .color-box.falla{ background:#e53935; }
@@ -2123,7 +2109,7 @@ button:hover{
 }
 
 
-/* TITULO DE SECCIÓN */
+
 .contenido h2{
   margin:10px 0 15px;
   font-size:18px;
@@ -2142,7 +2128,7 @@ button:hover{
   align-items:flex-start;
 }
 
-/* panel izquierdo */
+
 .reporte-sidebar{
   width:220px;
   min-width:220px;
@@ -2163,13 +2149,13 @@ button:hover{
   line-height:1.3;
 }
 
-/* panel derecho */
+
 .reporte-main{
   flex:1;
   min-width:0;
 }
 
-/* header fijo bonito */
+
 .tabla-reporte thead th{
   background:#0f4c81;
   color:white;
@@ -2180,14 +2166,14 @@ button:hover{
   top:0;
 }
 
-/* celdas */
+
 .tabla-reporte td{
   padding:8px;
   border-bottom:1px solid #eee;
   white-space:nowrap;
 }
 
-/* hover */
+
 .tabla-reporte tbody tr:hover{
   background:#e3f2ff;
 }
@@ -2416,7 +2402,7 @@ body{
 
 
 
-    /* ZONA I */
+    
     .grid-tren{
 
         grid-template-columns:repeat(4,85px) !important;
@@ -2480,7 +2466,7 @@ body{
 }
 
 }
-/* ================= AJUSTE TABLET LATERAL ================= */
+
 
 @media (max-width:1400px){
 
@@ -2555,7 +2541,7 @@ body{
 
 
 }
-/* ================= TABLET: PANEL DERECHO ABAJO ================= */
+
 
 @media (max-width:1400px){
 
@@ -2565,13 +2551,13 @@ body{
         gap:16px;
     }
 
-    /* Patio ocupa primero */
+  
     .yard-container{
         width:100%;
         order:1;
     }
 
-    /* Paneles abajo */
+
     .events-panel{
         order:2;
 
@@ -2590,7 +2576,7 @@ body{
     }
 
 }
-/* CORRECCION MENSAJE ACTIVO */
+
 
 .live-message{
     overflow:visible !important;
@@ -2650,7 +2636,7 @@ body{
     font-weight:bold;
     text-align:center;
 }
-/* LIMITAR LISTAS PARA MANTENER MENSAJE ACTIVO VISIBLE */
+
 
 #listaFallas,
 #listaPrioridad {
@@ -2747,7 +2733,7 @@ body{
     display:grid;
     grid-template-columns:420px 1fr;
     gap:24px;
-    align-items:stretch;   /* importante */
+    align-items:stretch;   
 }
 .history-card{
 
@@ -2850,7 +2836,7 @@ body{
     transform:scale(.95);
 
 }
-/* CONTENEDOR */
+
 .tabla-container{
     width:100%;
     overflow-x:auto;
@@ -2860,7 +2846,7 @@ body{
 }
 
 
-/* TABLA */
+
 .tabla-reporte{
 
     width:100%;
@@ -2875,7 +2861,7 @@ body{
 }
 
 
-/* ENCABEZADO */
+
 .tabla-reporte thead th{
 
     background:#155b96;
@@ -2896,21 +2882,14 @@ body{
 
 }
 
-
-/* PRIMERA COLUMNA REDONDEADA */
 .tabla-reporte thead th:first-child{
     border-radius:8px 0 0 0;
 }
 
-
-/* ULTIMA COLUMNA */
 .tabla-reporte thead th:last-child{
     border-radius:0 8px 0 0;
 }
 
-
-
-/* CELDAS */
 .tabla-reporte tbody td{
 
     padding:8px 10px;
@@ -2923,8 +2902,6 @@ body{
 
 }
 
-
-/* FILAS ALTERNADAS */
 .tabla-reporte tbody tr:nth-child(even){
 
     background:#f5f9fc;
@@ -2932,7 +2909,6 @@ body{
 }
 
 
-/* EFECTO AL PASAR MOUSE */
 .tabla-reporte tbody tr:hover{
 
     background:#dceeff;
@@ -2942,7 +2918,7 @@ body{
 }
 
 
-/* AJUSTE AUTOMATICO */
+
 .tabla-reporte th,
 .tabla-reporte td{
 
@@ -2952,7 +2928,6 @@ body{
 }
 
 
-/* COLUMNAS DE TEXTO LARGO */
 .tabla-reporte td:nth-child(8),
 .tabla-reporte td:nth-child(9),
 .tabla-reporte td:nth-child(11),
@@ -2967,7 +2942,7 @@ body{
 }
 
 
-/* TEXTO COMPLETO AL PASAR MOUSE */
+
 .select-responsabilidad-tabla{
     width:100%;
     min-width:150px;
@@ -3015,7 +2990,7 @@ body{
     text-align: center;
 }
 
-/* FILTRO COMPACTO RTG / STS - GRUAS EN FALLA */
+
 .fallas-filtros{
     display:flex;
     gap:4px;
@@ -3043,7 +3018,7 @@ body{
     .fallas-filtro-btn{min-width:42px;height:22px;padding:3px 8px;font-size:9px}
 }
 
-/* PANEL FALLAS */
+
 .events-panel .dashboard-panel{
     height:520px;
     max-height:520px;
@@ -3089,7 +3064,7 @@ body{
 }
 
 
-/* BOTÓN FILTRAR */
+
 .btn-filtrar{
 
     width:100px;
@@ -3113,7 +3088,7 @@ body{
 }
 
 
-/* BOTÓN EXCEL */
+
 .btn-descargar{
 
     width:150px;
@@ -3136,7 +3111,7 @@ body{
     background:#5f8e34;
 }
 
-/* SELECT ORDENAMIENTO */
+
 #ordenReporte{
 
     height:36px;
@@ -3202,12 +3177,12 @@ body{
 
 }
 
-/* BOTONES MÁS COMPACTOS */
+
 .btn-accion{
 
-    width:200px;     /* reduce el largo */
+    width:200px;     
 
-    height:30px;     /* conserva el alto */
+    height:30px;     
 
     padding:0 5px;
 
@@ -3241,10 +3216,7 @@ body{
     opacity:.85;
 
 }
-/*desde aqui se modifico
-/* =====================================
-   MENU LATERAL COMPACTO MOBILE AJUSTADO
-===================================== */
+
 
 @media(max-width:768px){
 
@@ -3322,7 +3294,7 @@ body{
     }
 
 
-    /* MOSTRAR TEXTO */
+
   .menu-btn span{
 
     display:block !important;
@@ -3349,9 +3321,7 @@ body{
 
 }
 
-/* =====================================
-   BADGE NOTIFICACION ULTRA COMPACTO
-===================================== */
+
 
 .msg-badge{
 
@@ -3388,10 +3358,7 @@ body{
 .header-badge{
     display:none !important;
 }
-/* =====================================
-   GRUAS + SIDE LOADER + STS
-   COMPACTO MOBILE DEFINITIVO
-===================================== */
+
 
 @media(max-width:768px){
 
@@ -3401,7 +3368,7 @@ body{
     }
 
 
-    /* TODOS LOS GRIDS */
+    
     .grid,
     .grid-side,
     .grid-sts{
@@ -3410,17 +3377,13 @@ body{
 
     }
 
-
-    /* GRUAS PRINCIPALES */
     .grid{
 
         grid-template-columns:
         repeat(11, 1fr) !important;
 
     }
-
-
-    /* SIDE LOADER / STS */
+    
     .grid-side,
     .grid-sts{
 
@@ -3429,8 +3392,6 @@ body{
 
     }
 
-
-    /* TODAS LAS TARJETAS IGUALES */
     .grid .card,
     .grid-side .card,
     .grid-sts .card{
@@ -3450,7 +3411,6 @@ body{
     }
 
 
-    /* CODIGO DE GRUA */
     .grid .code,
     .grid-side .code,
     .grid-sts .code{
@@ -3464,7 +3424,6 @@ body{
     }
 
 
-    /* TEXTO */
     .grid .small,
     .grid-side .small,
     .grid-sts .small{
@@ -3476,7 +3435,6 @@ body{
     }
 
 
-    /* TIMER */
     .grid .timer-card,
     .grid-side .timer-card,
     .grid-sts .timer-card{
@@ -3490,7 +3448,6 @@ body{
     }
 
 
-    /* ETIQUETAS */
     .estado-label,
     .corner-badge{
 
@@ -3512,9 +3469,6 @@ body{
 }
 
 
-/* =====================================
-   LEYENDA MINI SIN TAPAR
-===================================== */
 
 @media(max-width:768px){
 
@@ -3568,9 +3522,6 @@ body{
 }
 
 
-/* =====================================
-   CELULARES PEQUEÑOS
-===================================== */
 
 @media(max-width:480px){
 
@@ -3613,10 +3564,7 @@ body{
     }
 
 }
-/* =====================================
-   GRUAS + SIDE LOADER + STS
-   TAMAÑO COMPACTO AJUSTADO
-===================================== */
+
 
 @media(max-width:768px){
 
@@ -3693,7 +3641,6 @@ body{
 }
 
 
-/* CELULARES PEQUEÑOS */
 
 @media(max-width:480px){
 
@@ -3732,9 +3679,7 @@ body{
     }
 
 }
-/* =====================================
-   PRIORIDAD BUQUE AJUSTADA A TARJETA GRUA
-===================================== */
+
 
 @media(max-width:768px){
 
@@ -3804,9 +3749,7 @@ body{
     }
 
 }
-/* =====================================================
-   LOGIN - CONTROL DE GRÚAS
-===================================================== */
+
 
 #login {
     min-height: 100vh;
@@ -3828,7 +3771,7 @@ body{
     overflow: hidden;
 }
 
-/* Decoración de fondo */
+
 
 #login::before {
     content: "";
@@ -3861,9 +3804,7 @@ body{
 }
 
 
-/* =====================================================
-   TARJETA
-===================================================== */
+
 
 #login .login-card {
 
@@ -3887,9 +3828,7 @@ body{
 }
 
 
-/* =====================================================
-   ENCABEZADO
-===================================================== */
+
 
 #login .login-header {
     text-align: center;
@@ -3942,9 +3881,7 @@ body{
 }
 
 
-/* =====================================================
-   ETIQUETAS
-===================================================== */
+
 
 #login label {
 
@@ -3959,9 +3896,7 @@ body{
 }
 
 
-/* =====================================================
-   INPUTS
-===================================================== */
+
 
 #login select,
 #login input[type="password"] {
@@ -4004,18 +3939,13 @@ body{
 }
 
 
-/* =====================================================
-   GRUPOS
-===================================================== */
 
 #login .login-field {
     margin-bottom: 18px;
 }
 
 
-/* =====================================================
-   BOTÓN
-===================================================== */
+
 
 #login button {
 
@@ -4069,9 +3999,6 @@ body{
 }
 
 
-/* =====================================================
-   ERROR
-===================================================== */
 
 #loginError {
 
@@ -4088,13 +4015,7 @@ body{
 }
 
 
-/* =====================================================
-   PIE
-===================================================== */
 
-/* ================================
-   FOOTER LOGIN
-================================ */
 
 #login .login-footer {
     margin-top: 25px;
@@ -4106,9 +4027,7 @@ body{
 }
 
 
-/* ================================
-   BARRA SUPERIOR
-================================ */
+
 
 .topbar {
     display: flex;
@@ -4124,14 +4043,12 @@ body{
     font-size: 18px;
     letter-spacing: 0.4px;
 
-    /* IMPORTANTE */
+    
     white-space: nowrap;
     flex-shrink: 0;
 }
 
-/* ================================
-   USUARIO ACTIVO
-================================ */
+
 
 .usuario-topbar {
     margin-left: auto;
@@ -4151,7 +4068,6 @@ body{
 }
 
 
-/* TEXTO "Usuario:" */
 
 .usuario-topbar span {
     display: flex;
@@ -4162,17 +4078,12 @@ body{
 }
 
 
-/* NOMBRE DEL USUARIO */
 
 .usuario-topbar strong {
     color: #ffffff;
     font-weight: 800;
 }
 
-
-/* ================================
-   BOTÓN SALIR
-================================ */
 
 .btn-cerrar-sesion {
     display: flex;
@@ -4207,14 +4118,12 @@ body{
 }
 
 
-/* ICONO */
+
 
 .btn-cerrar-sesion i {
     font-size: 13px;
 }
 
-
-/* AL PASAR EL MOUSE */
 
 .btn-cerrar-sesion:hover {
     background: #dc2626;
@@ -4226,7 +4135,6 @@ body{
 }
 
 
-/* AL PRESIONAR */
 
 .btn-cerrar-sesion:active {
     transform: translateY(0);
@@ -4235,10 +4143,6 @@ body{
         0 2px 4px rgba(0,0,0,0.15);
 }
 
-
-/* ================================
-   RESPONSIVE
-================================ */
 
 @media (max-width: 700px) {
 
@@ -4265,7 +4169,7 @@ body{
     }
 }
 
-/* VISUALIZACION: ocultar completamente la barra lateral de aplicaciones */
+
 body.modo-visualizacion .sidebar{
   display:none !important;
 }
@@ -4277,9 +4181,7 @@ body.modo-visualizacion .main-content{
   flex:1 1 100%;
 }
 
-/* =========================================================
-   RESPONSIVE UNIVERSAL - PC / LAPTOP / TABLET / TELEFONO
-   ========================================================= */
+
 html, body {
   width:100%;
   max-width:100%;
@@ -4307,8 +4209,7 @@ button, input, select, textarea { max-width:100%; font:inherit; }
 .main-content { overflow-x:hidden; }
 .dashboard-main { min-width:0; }
 
-/* El patio puede desplazarse horizontalmente solo si una grilla
-   realmente necesita más espacio; evita romper toda la página. */
+
 .yard {
   overflow-x:auto;
   overflow-y:hidden;
@@ -4320,7 +4221,7 @@ button, input, select, textarea { max-width:100%; font:inherit; }
   max-width:none;
 }
 
-/* Tablets y laptops pequeñas */
+
 @media (max-width:1100px) {
   .layout { flex-direction:column; }
   .sidebar {
@@ -4338,7 +4239,7 @@ button, input, select, textarea { max-width:100%; font:inherit; }
   .dashboard-main { grid-template-columns:1fr; }
 }
 
-/* Tablets verticales */
+
 @media (max-width:768px) {
   .topbar {
     min-height:52px;
@@ -4381,7 +4282,7 @@ button, input, select, textarea { max-width:100%; font:inherit; }
   }
 }
 
-/* Telefonos */
+
 @media (max-width:480px) {
   .topbar { align-items:flex-start; }
   .logo { font-size:12px; max-width:52%; }
@@ -4397,20 +4298,17 @@ button, input, select, textarea { max-width:100%; font:inherit; }
   .leyenda-corner { width:145px; max-height:190px; font-size:10px; }
 }
 
-/* Pantallas muy anchas */
+
 @media (min-width:1600px) {
   .main-content { max-width:none; }
 }
 
-/* Visualización sigue sin barra lateral en todos los tamaños */
+
 body.modo-visualizacion .sidebar { display:none !important; }
 body.modo-visualizacion .layout { display:flex; width:100%; }
 body.modo-visualizacion .main-content { width:100%; flex:1 1 100%; min-width:0; }
 
-/* =========================================================
-   RESPONSIVE REAL - OVERRIDE FINAL
-   La grilla y el menú NUNCA fuerzan el ancho del viewport.
-========================================================= */
+
 html, body { width:100%; max-width:100%; overflow-x:hidden !important; }
 *, *::before, *::after { box-sizing:border-box; }
 .layout, .main-content, .dashboard, .dashboard-main, .yard-container, .yard, .row, .grid, .grid-side, .grid-sts { min-width:0 !important; max-width:100% !important; }
@@ -4418,7 +4316,7 @@ html, body { width:100%; max-width:100%; overflow-x:hidden !important; }
 .dashboard-main { grid-template-columns:minmax(0,1fr) minmax(250px,clamp(250px,22vw,360px)) !important; }
 .yard { width:100% !important; max-width:100% !important; padding:clamp(8px,1.3vw,20px) !important; overflow:hidden !important; }
 
-/* Cada fila usa solamente el ancho que realmente existe. */
+
 .row {
   display:grid !important;
   grid-template-columns:clamp(42px,6vw,82px) minmax(0,1fr) !important;
@@ -4435,7 +4333,7 @@ html, body { width:100%; max-width:100%; overflow-x:hidden !important; }
   white-space:normal !important;
 }
 
-/* TODAS las grúas: auto-fit real. No repeat(11px), no width:max-content. */
+
 .grid, .grid-side, .grid-sts {
   display:grid !important;
   width:100% !important;
@@ -4464,11 +4362,9 @@ html, body { width:100%; max-width:100%; overflow-x:hidden !important; }
 }
 .grid .small, .grid-side .small, .grid-sts .small { font-size:clamp(6px,0.8vw,11px) !important; }
 .grid .timer-card, .grid-side .timer-card, .grid-sts .timer-card { max-width:100% !important; overflow:hidden !important; font-size:clamp(6px,0.75vw,10px) !important; }
-
-/* SIDE LOADER / STS usan exactamente el mismo sistema fluido. */
 .grid-side, .grid-sts { grid-template-columns:repeat(auto-fit,minmax(clamp(58px,6.7vw,88px),1fr)) !important; }
 
-/* Menú: escritorio vertical; pantallas medianas en 2-3 columnas; móvil en filas fluidas. */
+
 .sidebar {
   min-width:0 !important;
   max-width:100% !important;
@@ -4527,7 +4423,7 @@ html, body { width:100%; max-width:100%; overflow-x:hidden !important; }
   .grid, .grid-side, .grid-sts { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
 }
 
-/* Visualización: no muestra absolutamente ningún menú lateral. */
+
 body.modo-visualizacion .sidebar { display:none !important; }
 body.modo-visualizacion .layout { display:block !important; width:100% !important; }
 body.modo-visualizacion .main-content { width:100% !important; max-width:100% !important; }
@@ -4535,10 +4431,7 @@ body.modo-visualizacion .main-content { width:100% !important; max-width:100% !i
 </style>
 <style>
 
-/* =========================================================
-   RESPONSIVE DEFINITIVO - PC / LAPTOP / TABLET / TELEFONO
-   Se coloca al final para ganar a reglas anteriores.
-========================================================= */
+
 *{box-sizing:border-box;}
 html,body{width:100%;min-width:0;max-width:100%;overflow-x:hidden;}
 body{margin:0;padding:0;}
@@ -4555,7 +4448,7 @@ button,input,select,textarea{max-width:100%;}
 .dashboard-main{width:100%;max-width:100%;min-width:0;}
 .dashboard-main>*{min-width:0;max-width:100%;}
 
-/* Escritorio grande */
+
 @media (min-width:1401px){
   .sidebar{flex:0 0 220px;width:220px;}
   .dashboard-main{grid-template-columns:minmax(0,1fr) 340px;}
@@ -4563,7 +4456,7 @@ button,input,select,textarea{max-width:100%;}
   .grid-side,.grid-sts{grid-template-columns:repeat(13,minmax(60px,1fr));}
 }
 
-/* Laptop / PC */
+
 @media (max-width:1400px){
   .sidebar{flex:0 0 190px;width:190px;padding:10px;}
   .dashboard-main{grid-template-columns:minmax(0,1fr) 300px;gap:10px;padding:0 10px 10px;}
@@ -4574,7 +4467,7 @@ button,input,select,textarea{max-width:100%;}
   .action-bar{margin:0 10px 10px;padding:10px 12px;}
 }
 
-/* Tablet horizontal / tablet vertical */
+
 @media (max-width:1100px){
   .layout{flex-direction:column;}
   .sidebar{width:100%;max-width:none;min-width:0;flex:0 0 auto;height:auto;max-height:none;overflow-x:auto;overflow-y:hidden;padding:8px;display:flex;align-items:center;gap:6px;}
@@ -4590,7 +4483,7 @@ button,input,select,textarea{max-width:100%;}
   .grid-side,.grid-sts{grid-template-columns:repeat(13,minmax(58px,1fr));min-width:820px;}
 }
 
-/* Tablet pequeña / teléfonos grandes */
+
 @media (max-width:768px){
   .topbar{height:auto;min-height:44px;padding:6px 8px;gap:6px;}
   .topbar .logo{font-size:14px;}
@@ -4618,8 +4511,7 @@ button,input,select,textarea{max-width:100%;}
   .yard-actions{flex-wrap:wrap;max-width:100%;}
   .leyenda-corner{max-width:120px;}
 
-  /* Mantener las grúas legibles: desplazamiento horizontal dentro del patio,
-     nunca sobre toda la página. */
+
   .grid{grid-template-columns:repeat(11,minmax(64px,64px))!important;min-width:704px!important;gap:4px!important;}
   .grid-side,.grid-sts{grid-template-columns:repeat(13,minmax(58px,58px))!important;min-width:754px!important;gap:4px!important;}
   .grid .card,.grid-side .card,.grid-sts .card{width:100%!important;min-width:0!important;height:auto!important;min-height:54px!important;padding:4px!important;}
@@ -4628,14 +4520,14 @@ button,input,select,textarea{max-width:100%;}
   .grid .timer-card,.grid-side .timer-card,.grid-sts .timer-card{font-size:7px!important;}
   .zona{width:30px!important;min-width:30px!important;font-size:7px!important;}
 
-  /* Tablas e iframes */
+
   .tabla-container,.table-responsive,.messages-container,.history-container{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
   table{max-width:none;}
   iframe{width:100%!important;max-width:100%!important;}
   .modal-content{width:min(94vw,700px)!important;max-width:94vw!important;}
 }
 
-/* Teléfonos */
+
 @media (max-width:480px){
   .topbar{min-height:42px;padding:5px 6px;}
   .topbar .logo{font-size:12px;max-width:48%;}
@@ -4669,7 +4561,7 @@ button,input,select,textarea{max-width:100%;}
   .messages-dashboard{grid-template-columns:1fr!important;}
 }
 
-/* Evitar elementos con ancho fijo que rompan el viewport */
+
 @media (max-width:1100px){
   .main-content [style*="width: 420px"],
   .main-content [style*="width:420px"]{width:100%!important;max-width:100%!important;}
@@ -4679,7 +4571,7 @@ button,input,select,textarea{max-width:100%;}
 </style>
 
 <style id="responsive-real-final">
-/* ===== RESPONSIVE REAL: SIN DESBORDAMIENTO ===== */
+
 html,body{width:100%;max-width:100%;min-width:0;overflow-x:hidden!important}
 *,*::before,*::after{box-sizing:border-box}
 img,iframe,video,canvas{max-width:100%}
@@ -4699,7 +4591,7 @@ img,iframe,video,canvas{max-width:100%}
 .right-panel,.events-panel{width:100%;min-width:0;max-width:100%}
 .leyenda-corner{max-width:min(170px,28vw);overflow:hidden}
 
-/* PCs y laptops: todo cabe en el viewport */
+
 @media (max-width:1400px){
   .sidebar{flex:0 0 190px;width:190px;min-width:190px}
   .dashboard-main{grid-template-columns:minmax(0,1fr) 300px;gap:10px;padding:0 10px 10px}
@@ -4708,7 +4600,7 @@ img,iframe,video,canvas{max-width:100%}
   .grid .card,.grid-side .card,.grid-sts .card{min-height:78px!important}
 }
 
-/* Tablets */
+
 @media (max-width:1100px){
   .layout{display:flex;flex-direction:column}
   .sidebar{width:100%;min-width:0;flex:0 0 auto;display:flex;flex-direction:row;overflow-x:auto;overflow-y:hidden;gap:6px;padding:8px}
@@ -4724,7 +4616,7 @@ img,iframe,video,canvas{max-width:100%}
   .grid .code,.grid-side .code,.grid-sts .code{font-size:clamp(10px,2.2vw,18px)!important}
 }
 
-/* Teléfonos */
+
 @media (max-width:700px){
   .topbar{height:auto;min-height:44px;padding:6px 8px}
   .usuario-topbar{max-width:55%;min-width:0}
@@ -4758,17 +4650,13 @@ img,iframe,video,canvas{max-width:100%}
   .status-panels,.kpis{grid-template-columns:1fr!important}
 }
 
-/* Visualización: sin barra lateral */
+
 body.modo-visualizacion .sidebar{display:none!important}
 body.modo-visualizacion .main-content{width:100%!important;flex:1 1 100%!important}
 </style>
 
 <style id="responsive-100-final">
-/* =========================================================
-   RESPONSIVE 100% REAL - ÚLTIMA CAPA
-   No depende de anchos fijos del patio.
-   Todo se calcula con el espacio REAL disponible.
-========================================================= */
+
 html, body {
   width:100% !important;
   max-width:100% !important;
@@ -4790,7 +4678,7 @@ html, body {
 .dashboard-main { width:100% !important; }
 .dashboard-main > * { min-width:0 !important; max-width:100% !important; }
 
-/* Patio: jamás genera una barra horizontal de toda la página */
+
 .yard-container { width:100% !important; overflow:hidden !important; }
 .yard {
   width:100% !important;
@@ -4801,7 +4689,7 @@ html, body {
   padding:clamp(5px, 1vw, 20px) !important;
 }
 
-/* Cada fila usa exactamente el ancho que tiene disponible */
+
 .row {
   width:100% !important;
   display:grid !important;
@@ -4822,7 +4710,7 @@ html, body {
   padding-top:clamp(5px, .7vw, 10px) !important;
 }
 
-/* GRÚAS: siempre ocupan el ancho disponible */
+
 .grid, .grid-side, .grid-sts {
   width:100% !important;
   min-width:0 !important;
@@ -4893,7 +4781,7 @@ html, body {
   white-space:nowrap !important;
 }
 
-/* El texto de prioridad nunca aumenta el ancho de la tarjeta */
+
 .grid .priority-text, .grid-side .priority-text, .grid-sts .priority-text {
   width:90% !important;
   max-width:90% !important;
@@ -4902,9 +4790,7 @@ html, body {
   line-height:1 !important;
 }
 
-/* =========================================================
-   ESCRITORIO: sidebar + patio + panel derecho
-========================================================= */
+
 @media (min-width:1201px) {
   .layout { display:flex !important; flex-direction:row !important; }
   .sidebar { flex:0 0 clamp(190px, 13vw, 240px) !important; width:clamp(190px, 13vw, 240px) !important; min-width:0 !important; }
@@ -4915,9 +4801,7 @@ html, body {
   }
 }
 
-/* =========================================================
-   TABLET / LAPTOP PEQUEÑA: panel derecho abajo
-========================================================= */
+
 @media (max-width:1200px) {
   .layout { display:flex !important; flex-direction:column !important; }
   .sidebar {
@@ -4944,9 +4828,7 @@ html, body {
   .row { grid-template-columns:45px minmax(0,1fr) !important; }
 }
 
-/* =========================================================
-   TABLET
-========================================================= */
+
 @media (max-width:800px) {
   .topbar { height:auto !important; min-height:44px !important; padding:6px 8px !important; }
   .sidebar { padding:6px !important; gap:5px !important; }
@@ -4963,9 +4845,7 @@ html, body {
   .status-panels, .kpis { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
 }
 
-/* =========================================================
-   TELEFONO
-========================================================= */
+
 @media (max-width:520px) {
   .topbar .logo { font-size:11px !important; max-width:48% !important; }
   .usuario-topbar { font-size:9px !important; max-width:52% !important; }
@@ -4992,33 +4872,31 @@ html, body {
   .grid .card, .grid-side .card, .grid-sts .card { height:52px !important; min-height:52px !important; }
 }
 
-/* Visualización: sin barra lateral */
 body.modo-visualizacion .sidebar { display:none !important; }
 body.modo-visualizacion .layout { display:flex !important; width:100% !important; }
 body.modo-visualizacion .main-content { width:100% !important; flex:1 1 100% !important; }
 
-/* Ningún hijo puede imponer un ancho que rompa el viewport */
+
 .main-content, .main-content * { min-width:0; }
 </style>
 
 
 <style id="RESPONSIVE_ULTIMO_CORRECTIVO">
-/* ====== RESPONSIVE REAL: ÚLTIMA CAPA, SIN ANCHOS FIJOS ====== */
 html,body{width:100%!important;max-width:100%!important;min-width:0!important;overflow-x:hidden!important}
 body{margin:0!important}
 *,*:before,*:after{box-sizing:border-box!important}
 
-/* Estructura */
+
 .layout{width:100%!important;max-width:100%!important;min-width:0!important}
 .main-content{min-width:0!important;width:auto!important;max-width:100%!important;overflow-x:hidden!important}
 .dashboard-main{width:100%!important;min-width:0!important;max-width:100%!important}
 .yard-container,.yard{width:100%!important;min-width:0!important;max-width:100%!important;overflow:hidden!important;transform:none!important}
 
-/* Cada fila: etiqueta + espacio restante */
+
 .row{display:grid!important;width:100%!important;min-width:0!important;max-width:100%!important;grid-template-columns:clamp(34px,5.5vw,82px) minmax(0,1fr)!important;gap:clamp(4px,.7vw,10px)!important}
 .zona{width:100%!important;min-width:0!important;max-width:100%!important;white-space:normal!important;overflow-wrap:anywhere!important;font-size:clamp(7px,.75vw,12px)!important}
 
-/* TODAS LAS GRILLAS: columnas fluidas y ENVUELVEN cuando no caben */
+
 .grid,.grid-side,.grid-sts{
   display:grid!important;
   width:100%!important;
@@ -5031,7 +4909,7 @@ body{margin:0!important}
 .grid{grid-template-columns:repeat(auto-fit,minmax(58px,1fr))!important;gap:clamp(3px,.55vw,9px)!important}
 .grid-side,.grid-sts{grid-template-columns:repeat(auto-fit,minmax(58px,1fr))!important;gap:clamp(3px,.55vw,9px)!important}
 
-/* Las tarjetas nunca fijan el ancho de la grilla */
+
 .grid>* ,.grid-side>* ,.grid-sts>*{min-width:0!important;max-width:100%!important}
 .grid .card,.grid-side .card,.grid-sts .card{
  width:100%!important;min-width:0!important;max-width:100%!important;
@@ -5041,7 +4919,7 @@ body{margin:0!important}
  overflow:hidden!important;
 }
 
-/* Texto siempre cabe dentro de su tarjeta */
+
 .grid .code,.grid-side .code,.grid-sts .code{
  display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;
  font-size:clamp(8px,1vw,16px)!important;
@@ -5053,14 +4931,14 @@ body{margin:0!important}
 .grid .timer-card,.grid-side .timer-card,.grid-sts .timer-card{font-size:clamp(5px,.55vw,9px)!important;max-width:100%!important;overflow:hidden!important}
 .grid .priority-text,.grid-side .priority-text,.grid-sts .priority-text{max-width:90%!important;width:90%!important;font-size:clamp(4px,.45vw,9px)!important;overflow:hidden!important;white-space:nowrap!important}
 
-/* PANEL DERECHO: baja debajo cuando no hay espacio */
+
 @media (min-width:1101px){
  .layout{display:flex!important;flex-direction:row!important}
  .sidebar{flex:0 0 clamp(175px,13vw,225px)!important;width:clamp(175px,13vw,225px)!important;min-width:0!important}
  .dashboard-main{display:grid!important;grid-template-columns:minmax(0,1fr) clamp(250px,22vw,350px)!important;gap:clamp(8px,1vw,16px)!important}
 }
 
-/* TABLET */
+
 @media (max-width:1100px){
  .layout{display:flex!important;flex-direction:column!important}
  .sidebar{width:100%!important;min-width:0!important;max-width:100%!important;flex:0 0 auto!important;
@@ -5074,7 +4952,6 @@ body{margin:0!important}
  .grid-side,.grid-sts{grid-template-columns:repeat(auto-fit,minmax(62px,1fr))!important}
 }
 
-/* TELEFONO */
 @media (max-width:600px){
  .topbar{width:100%!important;min-width:0!important;flex-wrap:wrap!important}
  .sidebar{grid-template-columns:repeat(2,minmax(0,1fr))!important;padding:5px!important}
@@ -5090,7 +4967,7 @@ body{margin:0!important}
  .grid,.grid-side,.grid-sts{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
 
-/* Visualización sin barra */
+
 body.modo-visualizacion .sidebar{display:none!important}
 body.modo-visualizacion .layout{display:block!important;width:100%!important}
 body.modo-visualizacion .main-content{width:100%!important;max-width:100%!important}
@@ -5098,11 +4975,7 @@ body.modo-visualizacion .main-content{width:100%!important;max-width:100%!import
 
 
 <style id="RESPONSIVE_FINAL_RPC_MTTO">
-/* =========================================================
-   RESPONSIVE FINAL - RPC / MANTENIMIENTO / VISUALIZACION
-   La grilla usa TODO el ancho disponible. SIDE LOADER y STS
-   no se desbordan ni dejan una tarjeta sola por falta de 1-2px.
-========================================================= */
+
 html,body{width:100%!important;max-width:100%!important;min-width:0!important;overflow-x:hidden!important}
 body{margin:0!important}
 *,*:before,*:after{box-sizing:border-box!important}
@@ -5112,7 +4985,7 @@ body{margin:0!important}
 .dashboard-main{width:100%!important;max-width:100%!important;min-width:0!important}
 .yard-container,.yard{width:100%!important;max-width:100%!important;min-width:0!important;overflow:hidden!important;transform:none!important}
 
-/* Fila de patio */
+
 .row{
   display:grid!important;
   width:100%!important;
@@ -5131,7 +5004,7 @@ body{margin:0!important}
   font-size:clamp(7px,.75vw,12px)!important;
 }
 
-/* Todas las grillas pueden ocupar únicamente el ancho real */
+
 .grid,.grid-side,.grid-sts{
   display:grid!important;
   width:100%!important;
@@ -5142,8 +5015,7 @@ body{margin:0!important}
   align-items:stretch!important;
 }
 
-/* ESCRITORIO: las 13 de SIDE/STS caben siempre en la fila disponible.
-   Al usar 1fr no hay tarjeta extra que se vaya a la siguiente fila. */
+
 @media (min-width:1101px){
   .layout{display:flex!important;flex-direction:row!important;}
   .sidebar{
@@ -5168,8 +5040,7 @@ body{margin:0!important}
   }
 }
 
-/* LAPTOP / TABLET HORIZONTAL: ya no se obliga a 13 tarjetas con un
-   ancho mínimo fijo; se envuelven sólo cuando realmente no caben. */
+
 @media (min-width:601px) and (max-width:1100px){
   .layout{display:flex!important;flex-direction:column!important}
   .sidebar{
@@ -5191,7 +5062,7 @@ body{margin:0!important}
   }
 }
 
-/* TELEFONO */
+
 @media (max-width:600px){
   .topbar{width:100%!important;min-width:0!important;flex-wrap:wrap!important}
   .sidebar{
@@ -5220,7 +5091,7 @@ body{margin:0!important}
   .grid,.grid-side,.grid-sts{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
 
-/* VISUALIZACION: completamente sin menú lateral */
+
 body.modo-visualizacion .sidebar{display:none!important}
 body.modo-visualizacion .layout{display:block!important;width:100%!important;max-width:100%!important}
 body.modo-visualizacion .main-content{width:100%!important;max-width:100%!important;min-width:0!important}
@@ -5229,18 +5100,14 @@ body.modo-visualizacion .dashboard-main{width:100%!important;max-width:100%!impo
 
 
 <style id="RESPONSIVE_DEFINITIVO_REAL">
-/* =========================================================
-   RESPONSIVE DEFINITIVO
-   Se anulan las reglas responsive anteriores y se controla
-   cada nivel: menu / patio / SIDE LOADER / STS / panel derecho.
-========================================================= */
+
 html,body{width:100%!important;max-width:100%!important;min-width:0!important;margin:0!important;overflow-x:hidden!important}
 *,*:before,*:after{box-sizing:border-box!important}
 #app,.layout,.main-content,.contenido,.dashboard,.dashboard-main,.yard-container,.yard,.row{min-width:0!important;max-width:100%!important}
 .main-content{overflow-x:hidden!important;flex:1 1 auto!important;width:0!important}
 .layout{width:100%!important;display:flex!important;align-items:stretch!important}
 
-/* ================= PC ================= */
+
 @media (min-width:1101px){
   .layout{flex-direction:row!important}
   .sidebar{
@@ -5278,7 +5145,7 @@ html,body{width:100%!important;max-width:100%!important;min-width:0!important;ma
   }
   .zona{width:100%!important;min-width:0!important;white-space:normal!important;font-size:clamp(10px,.9vw,14px)!important}
 
-  /* GRUAS NORMALES: siempre caben las 11 */
+
   .grid{
     display:grid!important;
     grid-template-columns:repeat(11,minmax(0,1fr))!important;
@@ -5286,8 +5153,6 @@ html,body{width:100%!important;max-width:100%!important;min-width:0!important;ma
     gap:5px!important;
   }
 
-  /* SIDE LOADER + STS: UNA SOLA FILA EN PC.
-     Flex con basis 0 evita que una tarjeta se vaya abajo. */
   .grid-side,.grid-sts{
     display:flex!important;
     flex-wrap:nowrap!important;
@@ -5322,7 +5187,7 @@ html,body{width:100%!important;max-width:100%!important;min-width:0!important;ma
   .right-panel,.events-panel{width:100%!important;min-width:0!important;max-width:100%!important;position:static!important}
 }
 
-/* PC MEDIANO: más espacio para el patio */
+
 @media (min-width:1101px) and (max-width:1300px){
   .sidebar{flex-basis:135px!important;width:135px!important;min-width:135px!important;max-width:135px!important}
   .dashboard-main{grid-template-columns:minmax(0,1fr) 230px!important;gap:8px!important;padding-left:8px!important;padding-right:8px!important}
@@ -5332,7 +5197,7 @@ html,body{width:100%!important;max-width:100%!important;min-width:0!important;ma
   .grid .code,.grid-side .code,.grid-sts .code{font-size:clamp(8px,1.15vw,14px)!important}
 }
 
-/* ================= TABLET ================= */
+
 @media (min-width:601px) and (max-width:1100px){
   .layout{flex-direction:column!important}
   .sidebar{
@@ -5353,7 +5218,7 @@ html,body{width:100%!important;max-width:100%!important;min-width:0!important;ma
   .right-panel,.events-panel{width:100%!important;max-width:100%!important;position:static!important;margin-top:10px!important}
 }
 
-/* ================= TELEFONO ================= */
+
 @media (max-width:600px){
   .layout{flex-direction:column!important}
   .sidebar{width:100%!important;min-width:0!important;max-width:100%!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:5px!important;padding:5px!important;overflow:visible!important;height:auto!important}
@@ -5373,18 +5238,14 @@ html,body{width:100%!important;max-width:100%!important;min-width:0!important;ma
   .grid,.grid-side,.grid-sts{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
 
-/* Visualización: no mostrar barra lateral */
+
 body.modo-visualizacion .sidebar{display:none!important}
 body.modo-visualizacion .layout{display:block!important;width:100%!important;max-width:100%!important}
 body.modo-visualizacion .main-content{width:100%!important;max-width:100%!important;min-width:0!important}
 </style>
 
 <style id="MENU_RESPONSIVE_CORREGIDO">
-/* =====================================================
-   MENU FINAL - NO ALTERAR EL PATIO
-   Corrige el tamaño del menú lateral en RPC/Mantenimiento
-   sin afectar SIDE LOADER, STS ni Visualización.
-===================================================== */
+
 .sidebar{
   box-sizing:border-box !important;
   background:linear-gradient(180deg,#0f172a,#1e293b) !important;
@@ -5453,7 +5314,7 @@ body.modo-visualizacion .main-content{width:100%!important;max-width:100%!import
   min-width:14px !important;
 }
 
-/* PC y laptop: menú lateral vertical y estable */
+
 @media (min-width:1101px){
   .sidebar{
     flex:0 0 180px !important;
@@ -5470,7 +5331,7 @@ body.modo-visualizacion .main-content{width:100%!important;max-width:100%!import
   }
 }
 
-/* Tablet: menú horizontal compacto */
+
 @media (min-width:601px) and (max-width:1100px){
   .sidebar{
     width:100% !important;
@@ -5497,7 +5358,7 @@ body.modo-visualizacion .main-content{width:100%!important;max-width:100%!import
   }
 }
 
-/* Teléfono */
+
 @media (max-width:600px){
   .sidebar{
     width:100% !important;
@@ -5547,16 +5408,12 @@ body.modo-visualizacion .main-content{width:100%!important;max-width:100%!import
   }
 }
 
-/* Visualización: ocultar completamente */
+
 body.modo-visualizacion .sidebar{
   display:none !important;
 }
 
-/* =========================================================
-   CORRECCION FINAL: CABECERA + BADGE DE NOTIFICACION
-   ========================================================= */
 
-/* El badge NO debe heredar flex:1 del span general del menu */
 .menu-btn .msg-badge,
 .msg-badge{
   position:absolute !important;
@@ -5595,16 +5452,16 @@ body.modo-visualizacion .sidebar{
   box-sizing:border-box !important;
   z-index:20 !important;
 
-  /* evita que el texto del badge se comporte como contenido del boton */
+
   transform:none !important;
 }
 
-/* El texto del botón deja espacio al badge */
+
 .menu-btn.solo-edicion{
   padding-right:30px !important;
 }
 
-/* CABECERA: usuario y salir nunca se enciman */
+
 .topbar{
   width:100% !important;
   min-width:0 !important;
@@ -5694,7 +5551,7 @@ body.modo-visualizacion .sidebar{
   white-space:nowrap !important;
 }
 
-/* TABLET */
+
 @media (max-width:900px){
   .topbar{
     gap:8px !important;
@@ -5722,7 +5579,7 @@ body.modo-visualizacion .sidebar{
   }
 }
 
-/* TELEFONO */
+
 @media (max-width:600px){
   .topbar{
     height:auto !important;
@@ -5755,7 +5612,7 @@ body.modo-visualizacion .sidebar{
   }
 }
 
-/* TELEFONO MUY PEQUEÑO */
+
 @media (max-width:400px){
   .topbar .logo{
     max-width:38vw !important;
@@ -5779,7 +5636,7 @@ body.modo-visualizacion .sidebar{
 
 
 <style id="fix-boton-salir-final">
-/* ===== CABECERA FINAL: Usuario + Salir ===== */
+
 .usuario-topbar{
   display:flex !important;
   align-items:center !important;
@@ -5860,7 +5717,7 @@ body.modo-visualizacion .sidebar{
 
 <style id="tabla-gruas-ajuste-final">
 
-/* V36: pestañas compactas RTG / STS en Reporte Grúas */
+
 .btn-tipo-reporte{
   border:0;
   border-radius:7px;
@@ -5874,64 +5731,6 @@ body.modo-visualizacion .sidebar{
   background:#1f73bd;
   color:#fff;
 }
-/* ===== REPORTE GRÚAS: mostrar toda la tabla dentro del ancho disponible ===== */
-#tab-gruas .tabla-container {
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  overflow: hidden;
-  padding: 10px;
-}
-
-#tab-gruas .tabla-scroll {
-  width: 100%;
-  max-width: 100%;
-  overflow: hidden;
-}
-
-#tab-gruas .tabla-reporte {
-  width: 100% !important;
-  max-width: 100% !important;
-  min-width: 0 !important;
-  table-layout: fixed !important;
-  border-collapse: collapse !important;
-  font-size: 13px;
-}
-
-#tab-gruas .tabla-reporte th,
-#tab-gruas .tabla-reporte td {
-  box-sizing: border-box;
-  min-width: 0 !important;
-  max-width: none !important;
-  white-space: normal !important;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  text-overflow: clip !important;
-  vertical-align: middle;
-}
-
-#tab-gruas .tabla-reporte thead th {
-  padding: 9px 6px;
-  line-height: 1.15;
-  white-space: normal !important;
-}
-
-#tab-gruas .tabla-reporte tbody td {
-  padding: 8px 7px;
-  line-height: 1.25;
-}
-
-/* 10 columnas = 100% exacto */
-#tab-gruas .tabla-reporte th:nth-child(1), #tab-gruas .tabla-reporte td:nth-child(1) { width: 11%; }
-#tab-gruas .tabla-reporte th:nth-child(2), #tab-gruas .tabla-reporte td:nth-child(2) { width: 5%; }
-#tab-gruas .tabla-reporte th:nth-child(3), #tab-gruas .tabla-reporte td:nth-child(3) { width: 7%; }
-#tab-gruas .tabla-reporte th:nth-child(4), #tab-gruas .tabla-reporte td:nth-child(4) { width: 7%; }
-#tab-gruas .tabla-reporte th:nth-child(5), #tab-gruas .tabla-reporte td:nth-child(5) { width: 6%; }
-#tab-gruas .tabla-reporte th:nth-child(6), #tab-gruas .tabla-reporte td:nth-child(6) { width: 11%; }
-#tab-gruas .tabla-reporte th:nth-child(7), #tab-gruas .tabla-reporte td:nth-child(7) { width: 12%; }
-#tab-gruas .tabla-reporte th:nth-child(8), #tab-gruas .tabla-reporte td:nth-child(8) { width: 20%; }
-#tab-gruas .tabla-reporte th:nth-child(9), #tab-gruas .tabla-reporte td:nth-child(9) { width: 6%; }
-#tab-gruas .tabla-reporte th:nth-child(10), #tab-gruas .tabla-reporte td:nth-child(10) { width: 15%; }
 
 #tab-gruas .tabla-reporte td:first-child {
   font-weight: 700;
@@ -6003,10 +5802,7 @@ body.modo-visualizacion .sidebar{
 
 
 <style id="FIX-MOBILE-MAIN-CONTENT">
-/* =========================================================
-   CORRECCION MOVIL: el contenido no puede quedar con width:0
-   cuando .layout cambia a flex-direction:column.
-========================================================= */
+
 @media (max-width:1100px){
   .layout{
     display:flex !important;
@@ -6064,7 +5860,7 @@ body.modo-visualizacion .sidebar{
   }
 }
 
-/* Visualizacion conserva su comportamiento sin menu */
+
 body.modo-visualizacion .main-content{
   width:100% !important;
   max-width:100% !important;
@@ -6074,8 +5870,7 @@ body.modo-visualizacion .main-content{
 
 
 <style id="ajuste-final-filas-gruas">
-/* ===== AJUSTE FINAL: las filas de grúas usan el ancho REAL disponible =====
-   Evita que .grid tenga 100% + el ancho de ZONA y corte las últimas tarjetas. */
+
 *,
 *::before,
 *::after{
@@ -6106,7 +5901,7 @@ body.modo-visualizacion .main-content{
   max-width:100% !important;
 }
 
-/* En PC: SIDE LOADER y STS siempre caben completos dentro del espacio restante. */
+
 @media (min-width:1101px){
   .row > .grid-side,
   .row > .grid-sts{
@@ -6123,7 +5918,7 @@ body.modo-visualizacion .main-content{
   }
 }
 
-/* Laptop/tablet horizontal */
+
 @media (min-width:601px) and (max-width:1100px){
   .row{
     grid-template-columns:clamp(38px,7vw,70px) minmax(0,1fr) !important;
@@ -6138,7 +5933,7 @@ body.modo-visualizacion .main-content{
   }
 }
 
-/* Teléfono */
+
 @media (max-width:600px){
   .row{
     grid-template-columns:34px minmax(0,1fr) !important;
@@ -6165,15 +5960,10 @@ body.modo-visualizacion .main-content{
 
 
 <style id="responsive-patio-final-2026">
-/* =========================================================
-   AJUSTE FINAL DE PATIO
-   - evita que el patio se monte sobre la barra de botones
-   - reduce la altura de tarjetas para aprovechar la pantalla
-   - mantiene todas las grúas completas
-   ========================================================= */
+
 *{box-sizing:border-box;}
 
-/* Separación limpia entre KPIs, botones y patio */
+
 .main-content{min-width:0;overflow-x:hidden;}
 .kpis{margin:0 0 5px 0!important;}
 .kpi{min-height:42px!important;padding:3px 8px!important;}
@@ -6200,7 +5990,7 @@ body.modo-visualizacion .main-content{
   overflow:visible!important;
 }
 
-/* Filas y grillas: todo el ancho real disponible */
+
 .row{
   display:grid!important;
   grid-template-columns:clamp(55px,5.2vw,80px) minmax(0,1fr)!important;
@@ -6224,7 +6014,7 @@ body.modo-visualizacion .main-content{
   gap:5px!important;
 }
 
-/* Tarjetas más compactas para que A-F + SIDE LOADER + STS entren mejor */
+
 .card,
 .grid .card,
 .grid-side .card,
@@ -6246,7 +6036,7 @@ body.modo-visualizacion .main-content{
   max-width:100%!important;
 }
 
-/* Prioridad/tiempo dentro de la tarjeta */
+
 .prioridad,
 .card .prioridad,
 .card .tiempo,
@@ -6257,13 +6047,13 @@ body.modo-visualizacion .main-content{
   text-overflow:ellipsis!important;
 }
 
-/* SIDE LOADER y STS: también compactos */
+
 .grid-side .card,.grid-sts .card{height:72px!important;}
 
-/* El panel/leyenda no debe empujar ni montar el patio */
+
 .leyenda-corner{z-index:30!important;}
 
-/* Pantallas medianas */
+
 @media (max-width:1400px){
   .sidebar{flex-basis:190px!important;width:190px!important;}
   .dashboard-main{padding:0 8px 8px!important;gap:8px!important;}
@@ -6273,7 +6063,7 @@ body.modo-visualizacion .main-content{
   .row{margin-bottom:5px!important;}
 }
 
-/* Si el panel derecho baja, el patio mantiene todo su ancho */
+
 @media (max-width:1100px){
   .dashboard-main{display:block!important;padding:0 6px 8px!important;}
   .yard-container{width:100%!important;max-width:100%!important;}
@@ -6281,7 +6071,7 @@ body.modo-visualizacion .main-content{
   .card,.grid .card,.grid-side .card,.grid-sts .card{height:66px!important;}
 }
 
-/* Teléfonos: no forzar altura grande; 4 columnas */
+
 @media (max-width:600px){
   .barra-acciones,.action-bar{margin:0 4px 5px!important;padding:6px!important;}
   .dashboard-main{padding:0 4px 6px!important;}
@@ -6300,11 +6090,7 @@ body.modo-visualizacion .main-content{
 
 
 <style id="ajuste-altura-patio-final">
-/* =========================================================
-   AJUSTE FINAL DE ALTURA DEL PATIO
-   Las 8 filas (A-F + SIDE LOADER + STS) aprovechan mejor
-   la altura visible de la pantalla en PC.
-========================================================= */
+
 @media (min-width:1101px){
   .dashboard-main{
     padding-top:0 !important;
@@ -6347,7 +6133,7 @@ body.modo-visualizacion .main-content{
   }
 }
 
-/* En pantallas bajas, priorizar que todo el patio siga visible. */
+
 @media (min-width:1101px) and (max-height:760px){
   .grid .card,
   .grid-side .card,
@@ -6358,7 +6144,7 @@ body.modo-visualizacion .main-content{
   .row{margin-bottom:4px !important;}
 }
 
-/* Nunca permitir que el patio se monte sobre la barra de acciones. */
+
 .action-bar{
   position:relative !important;
   z-index:5 !important;
@@ -6371,7 +6157,7 @@ body.modo-visualizacion .main-content{
 </style>
 
 <style id="ajuste-botones-importar-capturar">
-/* ===== BOTONES IMPORTAR / CAPTURAR: SIN SOLAPARSE CON EL PATIO ===== */
+
 .barra-acciones{
   position:relative !important;
   z-index:50 !important;
@@ -6406,7 +6192,7 @@ body.modo-visualizacion .main-content{
   white-space:nowrap !important;
   box-sizing:border-box !important;
 }
-/* El contenido del patio siempre empieza debajo de la barra */
+
 .barra-acciones + .dashboard-main{
   position:relative !important;
   z-index:1 !important;
@@ -6442,7 +6228,7 @@ body.modo-visualizacion .main-content{
 </style>
 
 <style id="ajuste-botones-final-20260815">
-/* ===== AJUSTE DEFINITIVO BOTONES IMPORTAR / CAPTURAR ===== */
+
 .barra-acciones{
   width:100% !important;
   display:flex !important;
@@ -6514,8 +6300,7 @@ body.modo-visualizacion .main-content{
 
 
 <style>
-/* ===== SBY SOBRE LA GRÚA EN FALLA ===== */
-/* Botón pequeño: nunca tapa el código ni cambia el tamaño de la grúa. */
+
 .btn-sby-falla{
   position:absolute;
   top:1px;
@@ -6550,7 +6335,7 @@ body.modo-visualizacion .main-content{
 .btn-sby-falla.activo{
   background:#1565c0;
 }
-/* Al activar SBY se conserva FALLA EN TURNO como estado visual. */
+
 .card.falla:has(.btn-sby-falla.activo) .estado-label{
   font-size:clamp(6px,.55vw,8px);
   font-weight:700;
@@ -6577,7 +6362,7 @@ body.modo-visualizacion .main-content{
 </style>
 
 <style>
-/* ===== KPIs RTG + STS: organizados por bloques ===== */
+
 .kpis.kpis-rtg-sts{
   display:grid !important;
   grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) !important;
@@ -6659,8 +6444,7 @@ body.modo-visualizacion .main-content{
 
 
 <style id="ajuste-v31-mensaje-alineado-k05">
-/* V31: Mensaje Activo alineado con la zona de tarjetas del Yard (aprox. K-05).
-   No modifica la lógica de fallas ni los filtros RTG/STS. */
+
 @media (min-width: 1001px){
   .events-panel{
     position:sticky !important;
@@ -6671,7 +6455,7 @@ body.modo-visualizacion .main-content{
     margin-top:0 !important;
   }
 }
-/* Mantener el comportamiento natural en tablet/teléfono. */
+
 @media (max-width:1000px){
   .events-panel{
     position:static !important;
@@ -6681,7 +6465,7 @@ body.modo-visualizacion .main-content{
 </style>
 
 <style id="dt-operaciones-rtg-sts-v37">
-/* V37: separar DT OPERACIONES en RTG / STS sin tocar la lógica existente */
+
 .dt-tipo-reporte-wrap{
   display:flex;
   gap:8px;
@@ -6713,10 +6497,10 @@ body.modo-visualizacion .main-content{
 </style>
 
 <style id="fix-contadores-rtg-sts-sd">
-/* SOLO: reinicio de contador al entrar a FALLA y exclusion de SIDE LOADER */
+
 </style>
 <script>
-/* PATCH CONTADORES: no modifica otras funciones */
+
 (function(){
   const _guardarEstadoRapido = window.guardarEstadoRapido;
   if (typeof _guardarEstadoRapido !== 'function') return;
@@ -6726,8 +6510,7 @@ body.modo-visualizacion .main-content{
     const g = typeof getEquipo === 'function' ? getEquipo(window.actual) : null;
     const estadoNuevo = document.getElementById('estado')?.value;
     if (g && esSD) {
-      // SIDE LOADER: conservar su comportamiento de solo cambio de estado;
-      // sus contadores no deben correr.
+
       const r = await _guardarEstadoRapido.apply(this, arguments);
       try {
         if (typeof db !== 'undefined') {
@@ -6750,12 +6533,7 @@ body.modo-visualizacion .main-content{
 </script>
 
 <style id="responsive-mobile-tablet-final">
-/* ==========================================================
-   AJUSTE FINAL MOVIL + TABLET
-   SOLO PRESENTACION / TACTIL. NO CAMBIA LOGICA.
-   ========================================================== */
 
-/* Evita que los controles tactiles sufran doble accion o zoom */
 @media (max-width: 1100px){
   button, select, input, textarea, .menu-btn, .card{
     touch-action: manipulation;
@@ -6766,7 +6544,7 @@ body.modo-visualizacion .main-content{
   }
 }
 
-/* TABLET: 769-1100 px */
+
 @media (min-width:769px) and (max-width:1100px){
   .layout{
     flex-direction:column !important;
@@ -6821,7 +6599,7 @@ body.modo-visualizacion .main-content{
   }
 }
 
-/* CELULAR: 0-768 px */
+
 @media (max-width:768px){
   .layout{
     flex-direction:column !important;
@@ -6873,12 +6651,12 @@ body.modo-visualizacion .main-content{
     -webkit-overflow-scrolling:touch !important;
   }
 
-  /* Mantiene todas las tarjetas visibles sin deformar el contenido */
+
   .grid, .grid-side, .grid-sts{
     max-width:none !important;
   }
 
-  /* Area tactil comoda sin cambiar el comportamiento */
+
   .menu-btn, .btn-sby-falla, .topbar button, button{
     min-height:44px;
   }
@@ -6888,7 +6666,7 @@ body.modo-visualizacion .main-content{
   }
 }
 
-/* SIDE LOADER: SBY nunca visible aunque hubiera datos antiguos */
+
 .card[data-grua-id^="SD"] .btn-sby-falla,
 .card[data-grua-id^="sd"] .btn-sby-falla{
   display:none !important;
@@ -6896,10 +6674,27 @@ body.modo-visualizacion .main-content{
 </style>
 
 <style id="fix-no-time-side-loader">
-/* SIDE LOADER: nunca mostrar contadores de tiempo en sus tarjetas. */
+
 .card[data-grua-id^="SD"] .timer-card,
 .card[id^="card-SD"] .timer-card,
 .grid-side .timer-card { display:none !important; }
+</style>
+
+<style id="solo-ocultar-bloque-actividad-dt-operaciones">
+/* SOLO OCULTAR BLOQUE Y ACTIVIDAD EN DT OPERACIONES. NO ELIMINA NI MODIFICA DATOS. */
+#contenedorReporteDT .tabla-reporte th:nth-child(5),
+#contenedorReporteDT .tabla-reporte td:nth-child(5),
+#contenedorReporteDT .tabla-reporte th:nth-child(7),
+#contenedorReporteDT .tabla-reporte td:nth-child(7){
+  display:none !important;
+}
+</style>
+<style id="ajuste-solo-descripcion">
+#tab-gruas .campo-descripcion-tabla {
+  min-height: 68px;
+  line-height: 1.35;
+  padding: 8px 9px;
+}
 </style>
 </head>
 <body>
@@ -7125,10 +6920,10 @@ style="display:none;">
 
         </div>
 
-        <!-- LAS DOS COLUMNAS -->
+       
         <div class="messages-dashboard">
 
-            <!-- IZQUIERDA -->
+           
             <div class="compose-card">
 
                 <div class="card-title">
@@ -7164,7 +6959,7 @@ style="display:none;">
 
             </div>
 
-            <!-- DERECHA -->
+           
             <div class="history-card">
 
                 <div class="history-header">
@@ -7255,7 +7050,7 @@ style="display:none;">
 
 <div class="dashboard-main">
 
-    <!-- IZQUIERDA -->
+    
     <div class="yard-container">
 
 
@@ -7323,7 +7118,7 @@ style="display:none;">
 
     </div>
 
-    <!-- DERECHA -->
+    
     <div class="events-panel">
 
         <div class="panel dashboard-panel">
@@ -7365,7 +7160,7 @@ style="display:none;">
   
 </div>
 
-<!-- ================= MODAL ================= -->
+
 
 <div class="modal" id="modal">
 
@@ -7559,7 +7354,6 @@ style="display:none;">
     <option value="Falla Control">Falla Control</option>
     <option value="Falla en Trolley">Falla en Trolley</option>
     <option value="Falla Neumática (Llanta)">Falla Neumática (Llanta)</option>
-    <option value="Percance">Percance</option>
     <option value="Preventivo">Preventivo</option>
     <option value="Falla Eléctrica">Falla Eléctrica</option>
     <option value="Falla Sistema">Falla Sistema</option>
@@ -7666,8 +7460,7 @@ Seleccione supervisor
         onchange="cargarCodigos()">
 </select>
 
-<!-- CÓDIGO Y DESCRIPCIÓN DE FALLA: OCULTOS POR AHORA.
-     Se conservan en el formulario y en la base de datos para poder habilitarlos después. -->
+
 <div style="display:none;">
   <label>Código Falla</label>
   <select id="codigoFalla">
@@ -7707,7 +7500,7 @@ CERRAR
 
 
 <script>
-// ================= USUARIOS =================
+
 
 const USUARIOS = {
     "RPC": {
@@ -7724,7 +7517,7 @@ const USUARIOS = {
 };
 
 let usuarioSesion = null;
-/* ================= SUPABASE ================= */
+
 
 const SUPABASE_URL =
 'https://gogalvnmpntvjtiunowz.supabase.co';
@@ -7737,7 +7530,7 @@ window.supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
 );
-/* ================= PERSONAL ================= */
+
 
 const personalPorSupervisor = {
 
@@ -7788,12 +7581,11 @@ const personalPorSupervisor = {
   ]
 
 };
-/* ================= VARIABLES ================= */
+
 
 let equipos=[];
 
-// ================= ALERTA DE FALLA =================
-// Se usa un tono generado por el navegador, sin archivos externos.
+
 let audioContextAlerta = null;
 let alertaFallaInicializada = false;
 
@@ -7815,7 +7607,7 @@ function reproducirAlertaFalla() {
     prepararAudioAlerta();
     if (!audioContextAlerta || audioContextAlerta.state !== "running") return;
 
-    // Aviso discreto pero un poco más largo: dos tonos suaves consecutivos.
+   
     const ahora = audioContextAlerta.currentTime;
     const duracion = 0.32;
     const pausa = 0.08;
@@ -7861,13 +7653,12 @@ function detectarNuevasFallas(nuevosEquipos) {
   });
 
   if (nuevasFallas.length > 0) {
-    // Un solo aviso aunque fallen varias grúas al mismo tiempo.
+  
     reproducirAlertaFalla();
   }
 }
 
-// El primer clic/tecla del usuario habilita el audio para que las alertas
-// posteriores puedan sonar incluso cuando la sesión se recupera automáticamente.
+
 window.addEventListener("pointerdown", prepararAudioAlerta, { passive: true });
 window.addEventListener("keydown", prepararAudioAlerta, { passive: true });
 
@@ -7882,7 +7673,7 @@ let estadoAnterior = '';
 let reloadTimeout = null;
 let nuevoEstadoTemporal = null;
 
-/* ================= CLOCK ================= */
+
 
 function reloj(){
 
@@ -7892,9 +7683,6 @@ new Date().toLocaleString();
 
 }
 
-
-
-/* ================= LAYOUT COMPLETO ================= */
 
 const layout=[
 
@@ -7969,7 +7757,7 @@ function limpiarTexto(d) {
 
   return d;
 }
-//Especificacion de cada color 
+
 function abrirIFS() {
   
   const url = "https://carrix.ifs.cloud/main/ifsapplications/web/page/WorkTasks/List;path=0.644174039.1121334549.1222308653.1131468548";
@@ -7981,11 +7769,11 @@ function abrirIFS() {
     return;
   }
 
-  // 🔎 intento de detección de sesión
+  
   const checkSession = setInterval(() => {
     try {
 
-      // si la pestaña fue redirigida a login
+      
       if (win.location.href.includes("login") ||
           win.location.href.includes("signin")) {
 
@@ -7997,15 +7785,14 @@ function abrirIFS() {
       }
 
     } catch (e) {
-      // ❗ Cross-origin bloquea acceso (normal)
-      // esto significa que el navegador NO deja leer la página
+
     }
   }, 2000);
 
-  // stop después de 10 segundos
+  
   setTimeout(() => clearInterval(checkSession), 10000);
 }
-/* ================= GET ================= */
+
 
 function getEquipo(id){
 
@@ -8014,7 +7801,7 @@ function getEquipo(id){
   );
 
 }
-/* ================= TIEMPO FALLA ================= */
+
 
 function formatearTiempo(segundos){
 
@@ -8044,7 +7831,7 @@ function procesarEstadoFalla(equipo, estadoNuevo){
   let falla_inicio = equipo.falla_inicio;
   let tiempo_falla = equipo.tiempo_falla || null;
 
-  // Entró a falla
+
   if(
     equipo.estado !== 'falla' &&
     estadoNuevo === 'falla'
@@ -8058,7 +7845,7 @@ function procesarEstadoFalla(equipo, estadoNuevo){
     );
   }
 
-  // Salió de falla
+
   if(
     equipo.estado === 'falla' &&
     estadoNuevo !== 'falla'
@@ -8091,7 +7878,7 @@ function procesarEstadoFalla(equipo, estadoNuevo){
     tiempo_falla
   };
 }
-/* ================= CARGAR ================= */
+
 async function cargar(){
 
   const {data,error} =
@@ -8115,15 +7902,11 @@ equipos = datosNuevos.map(g => ({
   estado: (g.estado || '').toLowerCase().trim(),
   prioridad: Number(g.prioridad || 0),
 
-  // FIX DETALLE
+
   detalle: (typeof g.detalle === 'object') ? '' : (g.detalle || '')
 }));
 
-  // Recuperar desde Supabase qué grúas están en SBY atendiendo falla.
-  // Se mantiene separado de "estado" para conservar FALLA EN TURNO.
-  // SBY solo puede estar activo visualmente mientras la grúa siga en FALLA.
-  // Si Supabase trae un SBY antiguo para una grúa que ya no está en falla,
-  // no lo consideramos activo y lo limpiamos también en memoria.
+
   fallasAtendiendo = equipos
     .filter(g => g.estado === 'falla' && g.sby_atendiendo_falla === true)
     .map(g => g.id);
@@ -8151,7 +7934,7 @@ equipos = datosNuevos.map(g => ({
   }
 }
 
-/* ================= BUSCAR ================= */
+
 
 function buscar(v){
 
@@ -8162,7 +7945,7 @@ render();
 
 }
 
-/* ================= FILTRAR ================= */
+
 
 function filtrar(v){
 
@@ -8194,7 +7977,7 @@ function render(){
 
     row.gruas.forEach(id => {
 
-      // espacio vacío del layout
+      
       if(!id){
 
         html += `
@@ -8217,7 +8000,7 @@ if(!g){
 
 estadoAnterior = g.estado;
 
-      // filtro estado
+      
       if(
         filtroEstado !== 'todos' &&
         g.estado !== filtroEstado
@@ -8230,7 +8013,7 @@ estadoAnterior = g.estado;
         return;
       }
 
-      // filtro texto
+      
       if(
         filtroTexto &&
         !g.id.toLowerCase().includes(filtroTexto)
@@ -8247,8 +8030,7 @@ estadoAnterior = g.estado;
         g.observacion_extra ===
         'GRÚA PRIORIDAD PARA OPERACIÓN';
 
-      // La sesión persistida es la fuente de respaldo para el permiso SBY.
-      // Así los refresh/render de Supabase no hacen desaparecer el botón.
+
       const usuarioActual =
         usuarioSesion?.nombre || localStorage.getItem('usuarioSistema') || '';
       const puedeUsarSBY =
@@ -8334,11 +8116,11 @@ document.getElementById('yard').innerHTML = html;
   
 }
 
-/* ================= KPIS ================= */
+
 
 function renderKPIs(){
 
-    // RTG = K, N y Z
+
     const rtg = equipos.filter(g => {
         const id = (g.id || "").toUpperCase();
         return id.startsWith("K") ||
@@ -8346,13 +8128,13 @@ function renderKPIs(){
                id.startsWith("Z");
     });
 
-    // STS = únicamente equipos STS
+
     const sts = equipos.filter(g => {
         const id = (g.id || "").toUpperCase();
         return id.startsWith("STS");
     });
 
-    // KPIs RTG
+
     document.getElementById('k1').innerText =
         rtg.filter(g => g.estado === 'operacion').length;
 
@@ -8365,7 +8147,7 @@ function renderKPIs(){
     document.getElementById('k4').innerText =
         rtg.filter(g => parseInt(g.prioridad || 0) > 0).length;
 
-    // KPIs STS: no se muestra prioridad para STS
+
     document.getElementById('k5').innerText =
         sts.filter(g => g.estado === 'operacion').length;
 
@@ -8397,8 +8179,7 @@ function obtenerTiempoContador(g){
     g.falla_inicio
   ) {
 
-    // Respaldo: si la grúa sigue en FALLA pero el contador
-    // guardado no está disponible, calcular desde el inicio de falla.
+
     const inicioFalla = new Date(g.falla_inicio);
     const ahora = new Date();
 
@@ -8439,9 +8220,7 @@ function renderFallas(){
   const cont = document.getElementById('listaFallas');
   if(!cont) return;
 
-  // Las SD quedan completamente fuera de este panel.
-  // RTG = todo equipo que no sea SD ni STS.
-  // STS = equipos cuyo código comienza con STS.
+
   const fallas = equipos.filter(g => {
     const estado = (g.estado || '').toLowerCase().trim();
     if(estado !== 'falla') return false;
@@ -8487,22 +8266,13 @@ function renderFallas(){
   cont.innerHTML = html;
 }
 
-/* ================= TIMER VISUAL ================= */
-
-/*
-  Cada contador se actualiza de forma independiente.
-  El tiempo sigue tomando como origen la fecha de inicio propia
-  de cada grúa, pero cada grúa tiene su propio ciclo de actualización.
-*/
 const timersIndependientes = new Map();
 
 function actualizarTimerIndependiente(g) {
 
   if (!haySesionActiva()) return;
 
-  // Siempre usar la versión más reciente de la grúa.
-  // Esto evita que un render/recarga de datos deje un timer
-  // trabajando con una copia anterior y provoque saltos visuales.
+
   const gActual = getEquipo(g.id) || g;
   g = gActual;
 
@@ -8536,8 +8306,7 @@ function actualizarTimerIndependiente(g) {
     g.falla_inicio
   ) {
 
-    // Respaldo para mantener visible el tiempo de FALLA
-    // aunque temporalmente falte el contador persistido.
+
     const inicioFalla = new Date(g.falla_inicio);
 
     if (!isNaN(inicioFalla.getTime())) {
@@ -8562,8 +8331,7 @@ function actualizarTimerIndependiente(g) {
     }
   });
 
-  // El siguiente tick se programa según el propio inicio del contador,
-  // evitando que todos los relojes queden ligados al mismo segundo global.
+
   const key = String(g.id);
   const ahora = Date.now();
   const proximoSegundo = estadoContador === 'running' && inicio
@@ -8593,7 +8361,7 @@ function sincronizarTimersIndependientes() {
       const key = String(g.id);
       activos.add(key);
 
-      // Reanclar el timer a la grúa actual después de cada recarga/render.
+      
       if (timersIndependientes.has(key)) {
         clearTimeout(timersIndependientes.get(key));
         timersIndependientes.delete(key);
@@ -8601,7 +8369,7 @@ function sincronizarTimersIndependientes() {
       actualizarTimerIndependiente(g);
     });
 
-  // Elimina ciclos de equipos que ya no tienen contador visible.
+  
   for (const [key, timerId] of timersIndependientes.entries()) {
     if (!activos.has(key)) {
       clearTimeout(timerId);
@@ -8610,15 +8378,11 @@ function sincronizarTimersIndependientes() {
   }
 }
 
-// Revisa únicamente si aparecen/desaparecen contadores.
-// El avance de cada reloj lo maneja su propio ciclo.
-setInterval(sincronizarTimersIndependientes, 1000);
+
+setInterval(sincronizarTimersIndependientes, 5000);
 sincronizarTimersIndependientes();
 
-/* ================= PRIORIDAD ================= */
 
-
-/* ================= PRIORIDAD OPERATIVA ================= */
 
 function renderPrioridad(){
 
@@ -8651,7 +8415,7 @@ cont.innerHTML = list.map(g => `
     </div>
 `).join('');
 }
-/* ================= MODAL ================= */
+
 
 function abrir(id){
       const rol = localStorage.getItem("rolSistema");
@@ -8662,11 +8426,7 @@ function abrir(id){
     }
   actual = id;
 
-  /* ================================================================
-     CATALOGO DEFINITIVO DEL FORMULARIO DOWNTIME
-     Se carga directamente al abrir la grúa, antes de cualquier otra
-     rutina del formulario. Solo modifica Supervisor y StandBy.
-     ================================================================ */
+
   (function cargarCatalogoInicialDowntime(codigoGrua){
     const sup = document.getElementById('supervisor');
     const sb  = document.getElementById('standby');
@@ -8687,7 +8447,7 @@ function abrir(id){
           'Manzano':['Arturo','Denilson']
         }
       : {
-          'Leon':['Azahel','Felipe','Axel','Mateo','Leon'],
+          'Leon':['Azahel','Veronica','Felipe','Axel','Mateo','Leon'],
           'Alain':['Vega','Veronica','Oscar L.','Armando','Alain','Yair'],
           'Larios':['Veronica','Felipe','Larios','Vega','Magallon','Cynthia','Azahel','Victor','Yutaka','Peregrina','Valderrama','Yair','Fabian','Brayan','Oscar L','Denilson','David'],
           'German':['Cynthia','Magallon','Banton','German','Fabian']
@@ -8712,7 +8472,7 @@ function abrir(id){
       sb.value = '';
     };
   })(id);
-  // Limpiar formulario anterior
+
 document.getElementById("estado").value = "disponible";
 document.getElementById("registro_falla").value = "";
 document.getElementById("quienReporto").value = "";
@@ -8726,7 +8486,7 @@ document.getElementById("actividad").value = "";
   if (select) {
     select.value = area;
 
-    // 🔥 fuerza actualización visual en algunos browsers
+
     select.dispatchEvent(new Event('change'));
   }
 
@@ -8750,7 +8510,7 @@ g.nombre_operador || "";
 document.getElementById('modalTitle').innerText = id;
   document.getElementById('modal').style.display = 'flex';
 
-  // Siempre poner la fecha y hora actual
+
 ponerFechaGruaReportada();
 ponerFechaFallaActual();
 
@@ -8770,7 +8530,7 @@ if (bloque) {
   document.getElementById('quienReporto').value = g.quien_reporto || '';
   document.getElementById('actividad').value = g.actividad || '';
 
-  // ================= OPERACIONES =================
+
   cambiarFormulario();
 
   document.getElementById('estado').value = g.estado || 'disponible';
@@ -8778,7 +8538,7 @@ if (bloque) {
 
   document.getElementById('areaMantto').value = detectarArea(g.id);
 
-  // Restaurar el supervisor/standby guardado SIN cambiar el catálogo de la grúa.
+
   (function restaurarCatalogoGuardado(){
     const sup = document.getElementById('supervisor');
     const sb = document.getElementById('standby');
@@ -8827,8 +8587,7 @@ if (bloque) {
   document.getElementById('opMonitorCierre').value = g.monitor_cierre || '';
   document.getElementById('gruaGeneral').value = id;
 
-  // Reafirmar el catálogo una vez terminada toda la carga del formulario.
-  // Esto evita que otra rutina de cambio de formulario lo deje en blanco.
+
   if (typeof supervisorSelect !== 'undefined' && supervisorSelect) {
     const supervisorFinal = supervisorSelect.value || '';
     const listaFinal = esSTSFormulario
@@ -8842,7 +8601,7 @@ if (bloque) {
     }
   }
   
-  // ================= INDICADOR =================
+
   const indicador = document.getElementById('estadoIndicador');
 
   if (indicador) {
@@ -8854,10 +8613,10 @@ document.getElementById("fechaOpRepo").value = "";
 ponerFechaGruaReportada();
 
 
-  // ================= UI STATE (IMPORTANTE ORDEN) =================
-  actualizarUIEstado();        // 👈 primero campos dinámicos (quién reportó)
-  controlarPrioridad();        // 👈 luego prioridad
-  actualizarIndicadorEstado(); // 👈 indicador final
+
+  actualizarUIEstado();        
+  controlarPrioridad();        
+  actualizarIndicadorEstado(); 
   estadoAnterior = g.estado;
 }
 function nombreEquipoModal(id){
@@ -8876,7 +8635,7 @@ function abrirFormularioTransicion(){
 
   if(!el) return;
 
-  el.style.display = 'flex'; // mejor que block en botones
+  el.style.display = 'flex'; 
 }
 
 function controlarPrioridad() {
@@ -8995,7 +8754,7 @@ function cambiarFormulario(){
       ? 'block'
       : 'none';
 }
-/* ================= GUARDAR ================= */
+
 function validarCamposDisponibilidad() {
 
   const campos = [
@@ -9098,10 +8857,6 @@ estadoNuevo !== 'falla';
       : null;
 
 
-
-  /* ================= CAMPOS CIERRE ================= */
-
-
   const grua = equipoActual.id;
 
 
@@ -9114,7 +8869,7 @@ estadoNuevo !== 'falla';
 
 
 const turno =
-    obtenerNumeroTurno(fecha_hora_falla);
+    obtenerNumeroTurno();
 
  const fecha_op_repo =
 equipoActual.fecha_op_repo || null;
@@ -9127,7 +8882,7 @@ equipoActual.fecha_op_repo || null;
 const tmi =
 document.getElementById("TMI").value;
 
-  // DATOS DEL PRIMER FORMULARIO
+
   const quien_reporto =
     equipoActual.quien_reporto || '';
 
@@ -9140,8 +8895,6 @@ document.getElementById("TMI").value;
     equipoActual.registro_falla || '';
 
 
-
-  // DATOS DEL CIERRE
 
   const area_mantto =
     document.getElementById("areaMantto").value;
@@ -9168,9 +8921,6 @@ document.getElementById("TMI").value;
 
 
 
-  /* ================= CONTROL FALLA ================= */
-
-
 let falla_inicio =
 equipoActual.falla_inicio ||
 equipoActual.contador_inicio ||
@@ -9181,7 +8931,6 @@ console.log("FECHA ACTUAL:", new Date().toISOString());
 
 
 
-  // ENTRÓ A FALLA
   if (entroAFalla) {
 
     falla_inicio = new Date().toISOString();
@@ -9189,27 +8938,24 @@ console.log("FECHA ACTUAL:", new Date().toISOString());
   }
 
 
-
-// SALIÓ DE FALLA
-
 if (salioDeFalla) {
 
 
 const fechaInicio =
-  falla_inicio ||
   equipoActual.contador_inicio ||
+  falla_inicio ||
   equipoActual.fecha_hora_falla;
 
 const inicioTexto = String(fechaInicio || '').trim();
 
-// Evita fechas inválidas cuando el valor ya trae Z o zona horaria.
-const fechaInicioNormalizada =
-  /(?:Z|[+-]\d{2}:?\d{2})$/i.test(inicioTexto)
-    ? inicioTexto
-    : `${inicioTexto}Z`;
+let inicio =
+  new Date(inicioTexto).getTime();
 
-const inicio =
-  new Date(fechaInicioNormalizada).getTime();
+// Si la fecha guardada no trae zona horaria, conservarla como fecha local
+// sin alterar el resto del funcionamiento.
+if (isNaN(inicio) && equipoActual.fecha_hora_falla) {
+  inicio = new Date(String(equipoActual.fecha_hora_falla).trim()).getTime();
+}
 
 
     const fin =
@@ -9221,7 +8967,7 @@ new Date().getTime();
 
 
         const segundos =
-        Math.floor((fin - inicio) / 1000);
+        Math.max(0, Math.floor((fin - inicio) / 1000));
 
 
         tiempo_muerto_real =
@@ -9330,15 +9076,12 @@ return;
 
 
 
-  /* ================= UPDATE GRÚA ================= */
-
-
 const { error } =
 await db
 .from("gruas")
 .update({
 
-    // SOLO ESTADO ACTUAL
+
 
     estado: estadoNuevo,
 
@@ -9369,8 +9112,6 @@ await db
     : "00:00:00",
 
 
-
-    // LIMPIAR INFORMACION TEMPORAL
 
     quien_reporto:
     estadoNuevo === "disponible"
@@ -9430,8 +9171,6 @@ estadoNuevo === "falla"
 : null;
 
 
-/* ================= UI ================= */
-
 
 if (entroAFalla) {
 
@@ -9479,7 +9218,6 @@ if (estado === 'falla') {
   actualizarCardGrua(actual);
 }
 
-/* ================= STANDBY ================= */
 
 function cargarStandby(valorActual = '', idGrua = ''){
 
@@ -9487,7 +9225,7 @@ function cargarStandby(valorActual = '', idGrua = ''){
   const standby = document.getElementById('standby');
   if(!standby) return;
 
-  // Prioridad: código enviado por el formulario -> campo gruaGeneral -> actual.
+
   const codigo = String(
     idGrua ||
     document.getElementById('gruaGeneral')?.value ||
@@ -9498,7 +9236,7 @@ function cargarStandby(valorActual = '', idGrua = ''){
   const normalId = codigo.toUpperCase().replace(/[-\s]/g,'');
   const esSTS = normalId.startsWith('STS');
 
-  // ================= STS =================
+
   const mapaSTS = {
     'Nieves': ['Bonilla','Saul'],
     'Jose Chiquito': ['Claudio','Torres'],
@@ -9506,8 +9244,7 @@ function cargarStandby(valorActual = '', idGrua = ''){
     'Manzano': ['Arturo','Denilson']
   };
 
-  // ================= RTG =================
-  // Se conserva el mapa RTG existente del sistema.
+
   const mapaRTG = (typeof personalPorSupervisor !== 'undefined' && personalPorSupervisor)
     ? personalPorSupervisor
     : {};
@@ -9536,9 +9273,6 @@ function cargarStandby(valorActual = '', idGrua = ''){
   }
 }
 
-
-
-/* ================= MENSAJES ================= */
 
 async function guardarMensaje(){
 
@@ -9594,7 +9328,7 @@ cargarHistorial();
 
 }
 
-/* ================= MENSAJE ACTUAL ================= */
+
 
 async function cargarMensajeActual() {
   const ultimoIdGuardado = localStorage.getItem('ultimoMensajeId');
@@ -9613,8 +9347,6 @@ async function cargarMensajeActual() {
   }).join('');
 }
 
-
-/* ================= HISTORIAL ================= */
 
 async function cargarHistorial(){
 
@@ -9635,8 +9367,6 @@ async function cargarHistorial(){
 
   data.forEach(m=>{
 
-    // Fecha/hora consistente: evita conversiones UTC que puedan
-    // cambiar el día cuando created_at viene sin zona horaria.
     const fechaFormateada = formatearFechaHoraMX(m.created_at);
 
 html += `
@@ -9675,7 +9405,6 @@ if(contenedor){
 }
 
 
-/* ================= ACTUALIZACION ROBUSTA ================= */
 let refreshEnCurso = false;
 let refreshPendiente = false;
 let refreshTimer = null;
@@ -9684,7 +9413,7 @@ let realtimeMensajes = null;
 let realtimeReconnectTimer = null;
 
 async function actualizarTodo(origen = 'manual') {
-  // Evita que varias actualizaciones simultáneas congelen la interfaz.
+
   if (refreshEnCurso) {
     refreshPendiente = true;
     return;
@@ -9717,14 +9446,11 @@ function programarActualizacion(origen = 'evento') {
 function iniciarRealtime() {
   clearTimeout(realtimeReconnectTimer);
 
-  // Si ya existen ambas suscripciones, no las destruyas y reconstruyas.
-  // En teléfonos, focus/pageshow/visibilitychange pueden dispararse varias veces
-  // y recrear los canales continuamente provoca trabajo y pausas innecesarias.
   if (realtimeGruas && realtimeMensajes) {
     return;
   }
 
-  // Elimina canales anteriores para evitar suscripciones duplicadas.
+
   if (realtimeGruas) {
     db.removeChannel(realtimeGruas).catch(() => {});
     realtimeGruas = null;
@@ -9761,16 +9487,14 @@ function iniciarRealtime() {
     });
 }
 
-// Al volver de segundo plano, minimizar/restaurar, cambiar de pestaña,
-// recuperar internet o volver a enfocar la ventana, se fuerza una lectura real.
+
 let ultimaActualizacionAlVolver = 0;
 function refrescarAlVolver(origen) {
   if (!haySesionActiva()) return;
 
   const ahora = Date.now();
 
-  // Agrupa eventos muy cercanos (focus + pageshow + visibilitychange).
-  // Así el teléfono no dispara varias lecturas consecutivas al regresar.
+
   if (ahora - ultimaActualizacionAlVolver < 1200) {
     return;
   }
@@ -9778,7 +9502,7 @@ function refrescarAlVolver(origen) {
   ultimaActualizacionAlVolver = ahora;
   programarActualizacion(origen);
 
-  // Solo intenta reconstruir realtime si realmente falta alguna suscripción.
+
   if (!realtimeGruas || !realtimeMensajes) {
     iniciarRealtime();
   }
@@ -9793,10 +9517,7 @@ window.addEventListener('pageshow', () => refrescarAlVolver('pageshow'));
 window.addEventListener('focus', () => refrescarAlVolver('focus'));
 window.addEventListener('online', () => refrescarAlVolver('online'));
 
-// Refresco de respaldo. Realtime es el mecanismo principal.
-// También detecta cuando la computadora estuvo dormida/pantalla apagada
-// y fuerza una actualización al regresar, aunque el navegador no dispare
-// visibilitychange/focus.
+
 let ultimaRevisionPantalla = Date.now();
 setInterval(() => {
   const ahora = Date.now();
@@ -9805,8 +9526,7 @@ setInterval(() => {
 
   if (haySesionActiva() && document.visibilityState === 'visible' && navigator.onLine !== false) {
     if (tiempoAusente > 45000) {
-      // La computadora estuvo suspendida o el navegador dejó de ejecutar timers.
-      // Actualiza datos y restablece Realtime sin recargar la página.
+
       actualizarTodo('regreso de suspensión');
       if (!realtimeGruas || !realtimeMensajes) {
         iniciarRealtime();
@@ -9817,9 +9537,7 @@ setInterval(() => {
   }
 }, 30000);
 
-/* ================= REALTIME ================= */
-// El login debe quedar completamente libre de consultas/render pesado.
-// El sistema de datos y Realtime se activan solo después de una sesión válida.
+
 let sistemaDatosIniciado = false;
 
 function haySesionActiva(){
@@ -9830,7 +9548,7 @@ function iniciarDatosDespuesLogin(){
   if (sistemaDatosIniciado) return;
   sistemaDatosIniciado = true;
 
-  // Ejecutar después de que el navegador haya podido pintar el login/app.
+
   setTimeout(() => {
     try {
       actualizarTodo('login correcto');
@@ -9842,11 +9560,6 @@ function iniciarDatosDespuesLogin(){
   }, 0);
 }
 
-// No iniciar Realtime mientras la pantalla de login está activa.
-// Se inicia desde iniciarSesion() cuando las credenciales son válidas.
-
-
-/* ================= CERRAR CLICK AFUERA ================= */
 
 window.onclick = function(e){
 
@@ -9862,7 +9575,7 @@ if(e.target === modalTipo){
 
 }
 
-/* ================= INIT ================= */
+
 async function mostrarVista(vista) {
 
   document.querySelectorAll('.vista').forEach(v => {
@@ -9882,11 +9595,11 @@ async function mostrarVista(vista) {
 
       vistaSeleccionada.style.display = 'flex';
 
-      // Actualizar mensajes al entrar
+   
       await cargarMensajeActual();
       await cargarHistorial();
 
-      // Quitar aviso de mensaje nuevo
+
       const badge = document.getElementById('msgBadge');
 
       if (badge) {
@@ -9901,7 +9614,7 @@ async function mostrarVista(vista) {
   }
 
 
-  // marcar botón activo
+
   document.querySelectorAll('.menu-btn').forEach(btn => {
     btn.classList.remove('active');
   });
@@ -9998,14 +9711,14 @@ function iniciarFallaPendienteExcel(){
   abrir(id);
 
 
-// Seleccionar automáticamente FALLA EN TURNO
+
 const estado = document.getElementById('estado');
 
 if(estado){
 
   estado.value = "falla";
 
-  // disparar eventos para que actualice todo
+  
   estado.dispatchEvent(new Event('change'));
 
 }
@@ -10019,7 +9732,7 @@ if(estado){
     abrir(id);
 
 
-    // FORZAR FORMULARIO FALLA EN TURNO
+    
     const selectEstado = document.getElementById('estado');
 
     if(selectEstado){
@@ -10059,7 +9772,7 @@ const id = normalizarGrua(String(celdaEquipo.v));
 console.log("EXCEL LEIDO:", celdaEquipo.v, "ID GENERADO:", id);
 if (!id) continue;
 
-// ================= DATOS EXCEL =================
+
 
 const empleado = String(
   sheet['C' + (fila + 1)]?.v || ''
@@ -10070,7 +9783,7 @@ const operador = String(
 ).trim();
 
 console.log("GRÚA:", id, "OPERADOR EXCEL:", operador);
-    // ================= GRÚA ACTUAL EN SISTEMA =================
+   
 
     const g = getEquipo(id);
 
@@ -10079,9 +9792,6 @@ console.log("GRÚA:", id, "OPERADOR EXCEL:", operador);
       continue;
     }
 
-
-
-    // ================= OBSERVACIÓN EXCEL =================
 
     const observacion =
       sheet['F' + (fila + 1)]?.v || '';
@@ -10094,9 +9804,6 @@ console.log("GRÚA:", id, "OPERADOR EXCEL:", operador);
       .toUpperCase()
       .trim();
 
-
-
-    // ================= OPERACION =================
 
     const marca =
       sheet['B' + (fila + 1)]?.v;
@@ -10113,10 +9820,8 @@ console.log("GRÚA:", id, "OPERADOR EXCEL:", operador);
 
 
 
-    // ================= DETECCION ESTADOS EXCEL =================
 
 
-    // FALLA DE SEÑAL
     if(
       texto.includes("FALLA DE SENAL") ||
       texto.includes("SIN SENAL") ||
@@ -10128,17 +9833,7 @@ console.log("GRÚA:", id, "OPERADOR EXCEL:", operador);
     }
 
 
-    // FALLA
-   // else if(
-   //   texto.includes("FALLA")
-   // ){
 
-    //  estadoExcel = "falla";
-
-  //  }
-
-
-    // BAÑO
     else if(
       texto.includes("BANO") ||
       texto.includes("OPERADOR EN BANO")
@@ -10149,7 +9844,7 @@ console.log("GRÚA:", id, "OPERADOR EXCEL:", operador);
     }
 
 
-    // DAYLI
+
     else if(
       texto.includes("DAYLI") ||
       texto.includes("DAILY") ||
@@ -10166,7 +9861,7 @@ console.log("GRÚA:", id, "OPERADOR EXCEL:", operador);
     }
 
 
-    // FUERA
+
     else if(
       texto.includes("FUERA")
     ){
@@ -10176,7 +9871,7 @@ console.log("GRÚA:", id, "OPERADOR EXCEL:", operador);
     }
 
 
-    // DISPONIBLE
+
     else if(
       texto.includes("DISPONI") ||
       texto.includes("OPERADOR")
@@ -10187,7 +9882,7 @@ console.log("GRÚA:", id, "OPERADOR EXCEL:", operador);
     }
 
 
-    // OPERACION
+
    else if (esOperacion) {
 
      estadoExcel = "disponible";
@@ -10195,11 +9890,6 @@ console.log("GRÚA:", id, "OPERADOR EXCEL:", operador);
     }
 
 
-
-
-    // ==================================================
-    // CONSERVAR ESTADOS ACTIVOS DEL SISTEMA
-    // ==================================================
 
     let estado = estadoExcel;
 
@@ -10221,10 +9911,6 @@ if(
   );
 
 }
-
-
-
-    // ================= PRIORIDAD =================
 
 
     if(
@@ -10294,8 +9980,7 @@ if(
 
 }
 document.addEventListener('DOMContentLoaded', () => {
-  // Mantener el arranque del login ligero. Todo lo que reconstruye
-  // el tablero se ejecuta solamente si ya existe una sesión.
+
   if (typeof haySesionActiva === 'function' && haySesionActiva()) {
     ponerFechasFallaAutomaticas();
     controlarBotonStandby();
@@ -10403,7 +10088,7 @@ function cambiarTab(){
   cargarReporteGruas();
 }
 
-//Tiempo muerto
+
 async function cargarReporteGruas() {
 
   const { data, error } = await db
@@ -10484,11 +10169,12 @@ async function cargarReporteGruas() {
         <table class="tabla-reporte">
           <thead>
             <tr>
-              <th>FECHA/HORA DE REPORTE</th>
+              <th>FECHA</th>
               <th>TURNO</th>
               <th>SUPERVISOR</th>
               <th>STANDBY</th>
               <th>EQUIPO</th>
+              <th style="display:none;">BLOQUE/TRAMO</th>
               <th>RESPONSABILIDAD</th>
               <th>CÓDIGO DE FALLA</th>
               <th>DESCRIPCIÓN</th>
@@ -10507,11 +10193,12 @@ async function cargarReporteGruas() {
         <table class="tabla-reporte">
           <thead>
             <tr>
-              <th>FECHA/HORA DE REPORTE</th>
+              <th>FECHA</th>
               <th>TURNO</th>
               <th>SUPERVISOR</th>
               <th>STANDBY</th>
               <th>EQUIPO</th>
+              <th style="display:none;">BLOQUE/TRAMO</th>
               <th>RESPONSABILIDAD</th>
               <th>CÓDIGO DE FALLA</th>
               <th>DESCRIPCIÓN</th>
@@ -10663,8 +10350,7 @@ function filtrarReporteGruas(){
    );
  }
 
- // FILTRO DE FECHA: comparar solo YYYY-MM-DD para evitar desfases
- // por zona horaria. Desde y Hasta son inclusivos.
+
  if(inicio){
    datos = datos.filter(r => {
      const fechaRegistro = String(r.fecha_hora_falla || '').slice(0,10);
@@ -10872,6 +10558,7 @@ function pintarTablaReporteGruas(data){
         <td>${r.supervisor ?? ''}</td>
         <td>${r.standby ?? ''}</td>
         <td>${r.grua ?? ''}</td>
+        <td style="display:none;">${r.bloque_tramo ?? ''}</td>
         <td class="celda-editable-falla responsabilidad-editable">
           <select
             class="campo-edicion-tabla select-responsabilidad-tabla"
@@ -10915,7 +10602,7 @@ function pintarTablaReporteGruas(data){
     if(!tbody) return;
     tbody.innerHTML = lista.length
       ? lista.map(fila).join('')
-      : `<tr><td colspan="10" style="text-align:center;padding:20px;">Sin registros</td></tr>`;
+      : `<tr><td colspan="11" style="text-align:center;padding:20px;">Sin registros</td></tr>`;
   };
 
   pintar(registrosTM, 'tbodyReporteGruasTM');
@@ -11021,13 +10708,13 @@ pintarReporteDT(reporteDTData);
 }
 function abrirDowntimeMTTO(){
 
-  // ocultar vistas
+
   document.querySelectorAll('.vista').forEach(v=>{
     v.classList.remove('activa');
     v.style.display='none';
   });
 
-  // mostrar reporte operaciones (tu dashboard)
+
   const vista = document.getElementById('vistaReportesOperaciones');
 
   if(vista){
@@ -11035,10 +10722,10 @@ function abrirDowntimeMTTO(){
     vista.style.display='block';
   }
 
-  // activar tab de operaciones automáticamente
+ 
   cambiarTab('operaciones');
 
-  // marcar botón activo
+
   document.querySelectorAll('.menu-btn').forEach(btn=>{
     btn.classList.remove('active');
   });
@@ -11120,8 +10807,7 @@ const esSD =
 console.log("ENTRÉ A GUARDAR ESTADO RÁPIDO");
 try {
 
-  // SIDE LOADER (SD): modo simple.
-  // Las STS conservan el flujo completo de abrir/cerrar falla.
+
   if (esSD) {
     const estadoSimple = document.getElementById('estado').value;
     const { error: errorSDSTS } = await db
@@ -11159,7 +10845,7 @@ try {
   console.log("DEBUG estado:", estado);
   console.log("DEBUG actual:", actual);
 
-  // ================= VALIDACIÓN FALLA =================
+  
   if (estado === 'falla') {
 
     const quien = document.getElementById('quienReporto').value.trim();
@@ -11175,8 +10861,7 @@ if (!esSD) {
       document.getElementById('quienReporto').style.border = "2px solid red";
     }
 
-    // STS: "Actividad que realizaba" NO se solicita ni es obligatoria.
-    // RTG: sí continúa siendo obligatoria.
+ 
     const esSTSActual = String(actual || '').toUpperCase().startsWith('STS');
     if (!esSTSActual && !actividad) {
       errores.push("Actividad que realizaba");
@@ -11215,7 +10900,7 @@ if(!fechaRepo){
     console.error("No se encontró la grúa:", actual);
     return;
   }
-// DATOS DEL PRIMER FORMULARIO DE FALLA
+
 const quien_reporto =
   document.getElementById('quienReporto').value.trim();
 
@@ -11231,8 +10916,7 @@ const fecha_op_repo =
   const estadoAnterior = g.estado;
   const estadoNuevo = estado;
 
-//const fecha_op_repo =
- // document.getElementById('fechaOpRepo').value;
+
 
 const entroAFalla =
   estadoAnterior !== 'falla' &&
@@ -11245,7 +10929,7 @@ const entroAFalla =
 
   let falla_inicio = g.falla_inicio;
 
-// ================= FALLA =================
+
 if (estado === 'falla') {
 const esSD = actual.startsWith("SD");
   if (estadoAnterior !== 'falla') {
@@ -11253,13 +10937,12 @@ const esSD = actual.startsWith("SD");
     ponerFechaFallaActual();
     ponerFechaGruaReportada();
 
-    // ================= UI =================
+
 actualizarUIEstado();
 controlarPrioridad();
 actualizarIndicadorEstado();
 
-    // Cada grúa que entra en falla inicia su propio contador desde este instante.
-    // No reutilizar la fecha del campo oculto para evitar heredar el contador de otra grúa.
+
     const inicioFalla = new Date().toISOString();
 
     contador_estado = 'running';
@@ -11306,7 +10989,7 @@ actualizarIndicadorEstado();
     contador_bano_inicio = null;
   }
 
-  // ================= SEÑAL CIERRE =================
+ 
   if (
     estadoAnterior === 'fseñal' &&
     estadoNuevo !== 'fseñal' &&
@@ -11334,7 +11017,7 @@ actualizarIndicadorEstado();
     if (error) console.log("ERROR SEÑAL:", error);
   }
 
-  // ================= SEÑAL CONTADOR =================
+
   let contador_senal_estado = g.contador_senal_estado || 'stopped';
   let contador_senal_inicio = g.contador_senal_inicio || null;
   let contador_senal_segundos = g.contador_senal_segundos || 0;
@@ -11361,7 +11044,7 @@ actualizarIndicadorEstado();
     contador_senal_inicio = null;
   }
 
-  // ================= BAÑO REPORTE =================
+
   let tiempo_bano_real = "00:00:00";
 
   if (
@@ -11377,7 +11060,7 @@ actualizarIndicadorEstado();
     );
   }
 
-  // ================= REPORTE FALLA (SOLO 1 VEZ) =================
+
   if (
     g.estado === 'falla' &&
     estado !== 'falla' &&
@@ -11396,7 +11079,7 @@ actualizarIndicadorEstado();
   
   }
 
-  // ================= BAÑO REPORTE =================
+
   if (
     g.estado === 'baño' &&
     estado !== 'baño' &&
@@ -11410,7 +11093,7 @@ const { error: errorBano } = await db
   .insert([{
     grua: g.id,
 
-    // operador que viene del Excel
+
     operador: g.nombre_operador || 'SIN ASIGNAR',
 
     fecha_inicio: g.contador_bano_inicio,
@@ -11431,16 +11114,16 @@ const { error: errorBano } = await db
     mostrarFormularioCierre();
     return;
   }
-  //modificacion ///////////////////////
+
 const { error } = await db
 .from("gruas")
 .update({
 
-    // ESTADO ACTUAL DE LA GRÚA
+    
     estado: estado,
     prioridad: prioridad,
 
-    // SBY atendiendo falla se guarda aparte para no reemplazar FALLA EN TURNO.
+    
     sby_atendiendo_falla:
       estado === 'falla'
         ? Boolean(g.sby_atendiendo_falla)
@@ -11455,7 +11138,7 @@ fecha_hora_falla:
   ? fecha_op_repo
   : g.fecha_op_repo,
 
-    // DATOS TEMPORALES DE LA FALLA
+    
     quien_reporto:
       estado === "falla"
       ? quien_reporto
@@ -11474,19 +11157,18 @@ fecha_hora_falla:
       : g.registro_falla,
 
 
-    // CONTADOR FALLA
+    
     contador_estado,
     contador_inicio,
     contador_segundos,
 
 
-    // CONTADOR BAÑO
     contador_bano_estado,
     contador_bano_inicio,
     contador_bano_segundos,
 
 
-    // CONTADOR SEÑAL
+
     contador_senal_estado,
     contador_senal_inicio,
     contador_senal_segundos,
@@ -11513,7 +11195,7 @@ if (error) {
   g.estado = estado;
   g.prioridad = prioridad;
 
-  // Si la grúa deja FALLA, quitar también el SBY en memoria.
+
   if (estado !== 'falla') {
     fallasAtendiendo = fallasAtendiendo.filter(id => id !== actual);
     g.sby_atendiendo_falla = false;
@@ -11627,7 +11309,7 @@ function abrirModalCierreFalla(g){
 
   document.getElementById('c_grua').value = g.id || '';
 
-  // 🔥 ZONA AUTOMÁTICA
+
   const zona = obtenerZonaGrua(g.id);
 
   console.log("GRÚA:", g.id, "ZONA:", zona);
@@ -11645,7 +11327,7 @@ async function guardarCierreFalla(){
   
   const grua = document.getElementById('c_grua').value;
 
-  // 1. GUARDAR HISTORIAL
+
   const { error } = await db
     .from('reportes_operacion')
     .insert([{
@@ -11667,7 +11349,7 @@ async function guardarCierreFalla(){
     return;
   }
 
-  // 2. ACTUALIZAR GRÚA (ESTO ES LO QUE TE FALTABA)
+
   const { error: errorUpdate } = await db
     .from('gruas')
 .update({
@@ -11691,13 +11373,13 @@ async function guardarCierreFalla(){
     return;
   }
 
-  // 3. CERRAR MODAL
+
   document.getElementById('modalCierreFalla')
     .style.display = 'none';
 
   alert("Cierre guardado correctamente");
 
-  // 4. RECARGAR SISTEMA
+
   cargar();
   document.getElementById(
   'formularioCierreFalla'
@@ -11724,8 +11406,7 @@ function manejarCambioEstado() {
 
   if (!equipo) return;
 
-  // SIDE LOADER (SD): por ahora SOLO cambia el estado.
-  // STS conserva el flujo completo de abrir/cerrar falla.
+
   const idEquipo = String(equipo.id || actual || '').toUpperCase().replace(/[-\s]/g,'');
   const esSD = idEquipo.startsWith('SD');
   if (esSD) {
@@ -11736,7 +11417,7 @@ function manejarCambioEstado() {
   const veniaDeFalla = equipo.estado === 'falla';
   const ahoraNoEsFalla = nuevoEstado !== 'falla';
 
-  // 🚨 SOLO AQUÍ SE ABRE EL FORMULARIO
+ 
   if (veniaDeFalla && ahoraNoEsFalla) {
 
     const confirmar = confirm(
@@ -11769,7 +11450,7 @@ function abrirFormularioCierreFalla(equipo) {
     equipo.id || '';
 
 
-  // ZONA AUTOMÁTICA
+
   const zona = obtenerZonaGrua(equipo.id);
 
   console.log("GRÚA:", equipo.id);
@@ -11788,15 +11469,14 @@ function iniciarContadorNuevo(g) {
 
   if (g.contador_estado === 'running') return;
 
-  // Cada vez que una grúa entra en FALLA, el contador comienza
-  // nuevamente desde cero, sin conservar el contador anterior.
+
   g.contador_segundos = 0;
   g.contador_estado = 'running';
 
   const ahora = new Date().toISOString();
   g.contador_inicio = ahora;
 
-  // El inicio de la falla también corresponde a esta nueva captura.
+
   g.falla_inicio = ahora;
 }
 function detenerContadorNuevo(g) {
@@ -11855,9 +11535,7 @@ function formatearFechaHoraMX(fechaBD) {
 
   const valor = String(fechaBD).trim();
 
-  // Los mensajes de Supabase se almacenan en UTC.
-  // Si el timestamp viene sin indicador de zona, se interpreta como UTC
-  // antes de convertirlo a la hora local de México.
+
   const valorConZona = /(?:Z|[+-]\d{2}:?\d{2})$/i.test(valor)
     ? valor
     : `${valor}Z`;
@@ -11894,179 +11572,210 @@ function mostrarControlesEstado() {
 }
 function descargarExcel() {
 
-  const tabla = document.querySelector("table");
+  const tabla = document.querySelector('#tab-gruas .tabla-tiempo:not([style*="display: none"]) table') ||
+                document.querySelector('#tab-gruas table');
 
   if(!tabla){
     alert("No hay tabla para exportar");
     return;
   }
 
-
   const wb = XLSX.utils.book_new();
+  const filas = [];
 
-
-  // Convertir tabla HTML a datos
-  const datos = XLSX.utils
-    .table_to_sheet(tabla);
-
-
-  const filas = XLSX.utils.sheet_to_json(
-    datos,
-    {
-      header:1
-    }
+  // Mantener exactamente los datos de la tabla y agregar AREA en la tercera columna.
+  const encabezadosOriginales = Array.from(tabla.querySelectorAll('thead th')).map(th =>
+    String(th.textContent || '').trim()
   );
+  const indiceBloque = encabezadosOriginales.findIndex(h =>
+    String(h || '').trim().toUpperCase() === 'BLOQUE/TRAMO'
+  );
+  const indicesExcluirExcel = new Set();
+  if(indiceBloque >= 0) indicesExcluirExcel.add(indiceBloque);
 
-
-  // Crear nueva hoja limpia
-  const ws = XLSX.utils.aoa_to_sheet([]);
-
-
-
-  // TÍTULO
-  XLSX.utils.sheet_add_aoa(ws,[
-
-    ["REPORTE DE GRÚAS"],
-
-    [
-      "Fecha generación: " +
-      new Date().toLocaleString('es-MX')
-    ],
-
-    []
-
-
-  ],{
-    origin:"A1"
+  // Grúa inactiva se conserva en la tabla de la página, pero NO se exporta a Excel.
+  encabezadosOriginales.forEach((h, i) => {
+    const nombre = String(h || '').trim().toUpperCase();
+    if(nombre === 'GRUA INACTIVA' || nombre === 'GRÚA INACTIVA') {
+      indicesExcluirExcel.add(i);
+    }
   });
 
-
-
-  // INSERTAR TABLA ORIGINAL DESDE FILA 4
-  XLSX.utils.sheet_add_aoa(
-    ws,
-    filas,
-    {
-      origin:"A4"
-    }
-  );
-
-
-
-  // Combinar título
-  const totalColumnas =
-    filas[0].length;
-
-
-  ws["!merges"] = [
-
-    {
-      s:{
-        r:0,
-        c:0
-      },
-
-      e:{
-        r:0,
-        c:totalColumnas-1
-      }
-    }
-
+  const encabezadosSinBloque = encabezadosOriginales.filter((_, i) => !indicesExcluirExcel.has(i));
+  const encabezados = [
+    'FECHA',
+    encabezadosSinBloque[1] || 'TURNO',
+    'AREA',
+    ...encabezadosSinBloque.slice(2),
+    'BLOQUE'
   ];
+  filas.push(encabezados);
 
+  // Orden solicitado para el AREA en Excel: RTG, TREN, OFF DOCK.
+  // Se conserva el orden actual de los registros; solo se agrega la columna AREA.
+  const filasDatos = Array.from(tabla.querySelectorAll('tbody tr')).map(tr => {
+    const celdas = Array.from(tr.children).map(td => {
+      const select = td.querySelector('select');
+      if(select) return String(select.value || '').trim();
 
+      const textarea = td.querySelector('textarea');
+      if(textarea) return String(textarea.value || '').trim();
 
-  // Ajustar ancho columnas
-  const anchos=[];
+      return String(td.textContent || '').trim();
+    });
 
+    if(!celdas.length) return null;
 
-  for(let c=0;c<totalColumnas;c++){
+    // AREA toma el valor guardado en el registro cuando está disponible.
+    // Si no existe, se conserva la detección actual de RTG/TREN.
+    const id = tr.querySelector('[data-id]')?.getAttribute('data-id') || '';
+    const registro = (typeof reporteGruasData !== 'undefined')
+      ? reporteGruasData.find(r => String(r.id) === String(id))
+      : null;
+    const equipo = String(celdas[4] || '').trim();
+    let area = String(registro?.area_mantto || '').trim().toUpperCase();
+    if(!['RTG','TREN','OFF DOCK'].includes(area)) {
+      const equipoNormal = equipo.toUpperCase().replace(/\s+/g,'');
+      area = ['K-08','K-07','K-06','K-05'].includes(equipoNormal) ? 'TREN' : 'RTG';
+    }
 
-    let max=10;
+    const bloqueTramo = indiceBloque >= 0 ? (celdas[indiceBloque] || '') : '';
+    const celdasSinBloqueNiInactiva = celdas.filter((_, i) => !indicesExcluirExcel.has(i));
 
+    // En Excel se conserva únicamente la FECHA, sin hora.
+    let fechaSolo = String(celdasSinBloqueNiInactiva[0] || '').trim();
+    if(/^\d{2}\/\d{2}\/\d{4}/.test(fechaSolo)){
+      fechaSolo = fechaSolo.slice(0,10);
+    } else if(/^\d{4}-\d{2}-\d{2}/.test(fechaSolo)){
+      const partesFecha = fechaSolo.slice(0,10).split('-');
+      fechaSolo = `${partesFecha[2]}/${partesFecha[1]}/${partesFecha[0]}`;
+    }
 
-    filas.forEach(f=>{
+    return [
+      fechaSolo,
+      celdasSinBloqueNiInactiva[1] || '',
+      area,
+      ...celdasSinBloqueNiInactiva.slice(2),
+      bloqueTramo
+    ];
+  }).filter(Boolean);
 
-      if(f[c]){
+  filas.push(...filasDatos);
 
-        max=Math.max(
-          max,
-          String(f[c]).length
-        );
+  const ws = XLSX.utils.aoa_to_sheet([]);
 
+  XLSX.utils.sheet_add_aoa(ws,[
+    ["REPORTE DE GRÚAS"],
+    ["Fecha generación: " + new Date().toLocaleString('es-MX')],
+    []
+  ],{origin:"A1"});
+
+  XLSX.utils.sheet_add_aoa(ws, filas, {origin:"A4"});
+
+  const totalColumnas = filas[0] ? filas[0].length : 0;
+  const ultimaFila = filas.length + 3;
+
+  if(totalColumnas){
+    ws["!merges"] = [{
+      s:{r:0,c:0},
+      e:{r:0,c:totalColumnas-1}
+    }];
+
+    const titulo = ws.A1;
+    if(titulo) titulo.s = {
+      font:{bold:true,sz:16,color:{rgb:"FFFFFF"}},
+      fill:{fgColor:{rgb:"155B96"}},
+      alignment:{horizontal:"center",vertical:"center"}
+    };
+
+    const fecha = ws.A2;
+    if(fecha) fecha.s = {
+      font:{bold:true,sz:11,color:{rgb:"243447"}},
+      alignment:{horizontal:"left",vertical:"center"}
+    };
+
+    for(let c=0;c<totalColumnas;c++){
+      const celda = XLSX.utils.encode_cell({r:3,c});
+      if(ws[celda]) ws[celda].s = {
+        font:{bold:true,sz:11,color:{rgb:"FFFFFF"}},
+        fill:{fgColor:{rgb:"155B96"}},
+        alignment:{horizontal:"center",vertical:"center",wrapText:true},
+        border:{
+          top:{style:"thin",color:{rgb:"FFFFFF"}},
+          bottom:{style:"thin",color:{rgb:"FFFFFF"}},
+          left:{style:"thin",color:{rgb:"FFFFFF"}},
+          right:{style:"thin",color:{rgb:"FFFFFF"}}
+        }
+      };
+    }
+
+    for(let r=4;r<ultimaFila;r++){
+      for(let c=0;c<totalColumnas;c++){
+        const celda = XLSX.utils.encode_cell({r,c});
+        if(ws[celda]) ws[celda].s = {
+          font:{sz:10,color:{rgb:"243447"}},
+          alignment:{vertical:"top",wrapText:true},
+          border:{
+            bottom:{style:"thin",color:{rgb:"D9E2EC"}}
+          }
+        };
       }
-
-    });
-
-
-    anchos.push({
-
-      wch:
-      Math.min(max+3,40)
-
-    });
-
+    }
   }
 
+  // TM/TI: convertir HH:MM:SS a minutos enteros, sin decimales.
+  const indiceTM = encabezados.findIndex(h => h === 'TM' || h === 'TI');
+  if(indiceTM >= 0){
+    for(let r=4;r<ultimaFila;r++){
+      const celda = XLSX.utils.encode_cell({r,c:indiceTM});
+      const valor = ws[celda]?.v;
+      const texto = String(valor ?? '').trim();
+      const m = texto.match(/^(\d+):([0-5]\d):([0-5]\d)$/);
+      if(m){
+        const minutos = Math.round(Number(m[1]) * 60 + Number(m[2]) + Number(m[3]) / 60);
+        if(ws[celda]){
+          ws[celda].v = minutos;
+          ws[celda].t = 'n';
+          ws[celda].z = '0';
+          ws[celda].s = Object.assign({}, ws[celda].s || {}, {
+            alignment:{horizontal:"center",vertical:"top"}
+          });
+        }
+      }
+    }
+  }
 
+  // Formato visual del Excel sin modificar el tamaño de la tabla del sistema.
+  const anchos=[];
+  for(let c=0;c<totalColumnas;c++){
+    let max=10;
+    filas.forEach(f=>{
+      if(f[c]) max=Math.max(max,String(f[c]).length);
+    });
+    const encabezado = String(filas[0]?.[c] || '').toUpperCase();
+    if(encabezado === 'DESCRIPCIÓN') max = Math.max(max, 28);
+    if(encabezado === 'RESPONSABILIDAD') max = Math.max(max, 20);
+    if(encabezado === 'CÓDIGO DE FALLA') max = Math.max(max, 22);
+    if(encabezado === 'BLOQUE') max = Math.max(max, 16);
+    if(encabezado === 'AREA') max = Math.max(max, 12);
+    anchos.push({wch:Math.min(max+2,38)});
+  }
   ws["!cols"]=anchos;
 
+  if(totalColumnas){
+    ws["!autofilter"]={
+      ref:XLSX.utils.encode_range({
+        s:{r:3,c:0},
+        e:{r:ultimaFila-1,c:totalColumnas-1}
+      })
+    };
+  }
 
-
-  // Filtro solo en encabezados reales
-  ws["!autofilter"]={
-
-    ref:
-    XLSX.utils.encode_range({
-
-      s:{
-        r:3,
-        c:0
-      },
-
-      e:{
-        r:filas.length+3,
-        c:totalColumnas-1
-      }
-
-    })
-
-  };
-
-
-
-  // Congelar encabezados
-  ws["!freeze"]={
-
-    xSplit:0,
-    ySplit:4
-
-  };
-
-
-
-  XLSX.utils.book_append_sheet(
-
-    wb,
-
-    ws,
-
-    "REPORTE GRÚAS"
-
-  );
-
-
-
-  XLSX.writeFile(
-
-    wb,
-
-    "Reporte_Gruas.xlsx"
-
-  );
-
-
+  ws["!freeze"]={xSplit:0,ySplit:4};
+  XLSX.utils.book_append_sheet(wb,ws,"REPORTE GRÚAS");
+  XLSX.writeFile(wb,"Reporte_Gruas.xlsx");
 }
+
 function mostrarFormularioCierre(){
 
     document.getElementById("panelEstado").style.display="none";
@@ -12122,8 +11831,7 @@ document.getElementById("grupoFechaOpRepo");
 if (grupoFechaOpRepo) {
     grupoFechaOpRepo.style.display = "none";
 }
-// CONTROL SD / STS
-// SD = cambio de estado simple. STS = flujo completo de falla.
+
 const esSD = String(actual || '').toUpperCase().startsWith("SD");
 const esSTS = String(actual || '').toUpperCase().startsWith("STS");
 
@@ -12132,14 +11840,13 @@ const btnStandby = document.getElementById("btnAtenderFalla");
 
 if (esSD) {
 
-    // SD: solo cambio de estado.
+    
     if (fechaRepo) fechaRepo.style.display = "none";
     if (btnStandby) btnStandby.style.display = "none";
 
 } else if (esSTS) {
 
-    // STS: conserva el flujo de falla. Solo se oculta
-    // "Actividad que realizaba"; supervisor/standby y cierre siguen activos.
+
     if (fechaRepo) fechaRepo.style.display = "none";
 
 }
@@ -12161,17 +11868,17 @@ function actualizarGruaPorArea(area) {
 
   if (area === 'TREN') {
 
-    // aquí puedes auto-seleccionar una grúa o asignar lógica
+    
     console.log('Área TREN seleccionada:', grupoTREN);
 
-    // EJEMPLO: si tienes un input de grúa
+    
      document.getElementById('gruaGeneral').value = grupoTREN[0];
 
   } else if (area === 'RTG') {
 
     console.log('Área RTG seleccionada');
 
-    // aquí tu lógica de RTG si aplica
+    
   }
 }
 function obtenerPrioridad(){
@@ -12350,7 +12057,7 @@ if(dt){
     .forEach(btn => btn.classList.remove('activo'));
 
 
-  // poner activo al botón presionado
+  
   if(boton){
     boton.classList.add('activo');
   }
@@ -12457,9 +12164,7 @@ async function cargarReporteSenal(){
 }
 let sbyGuardando = false;
 
-// Actualiza SOLO la grúa tocada. No reconstruimos todo el patio al pulsar SBY,
-// porque en teléfonos esa reconstrucción completa puede provocar una pausa visible
-// y hacer que el siguiente toque no responda.
+
 function actualizarVisualSBY(id, activar){
   const cards = document.querySelectorAll('.card[data-grua-id]');
   let card = null;
@@ -12475,9 +12180,7 @@ function actualizarVisualSBY(id, activar){
 
 async function activarAtencionFalla(idGrua = actual){
 
-  // El botón SBY y su acción son exclusivos de Mantenimiento gruas.
-  // La comparación es insensible a mayúsculas para evitar que el botón
-  // se muestre pero no responda por diferencias como "Mantenimiento Gruas".
+
   const nombreUsuario = String(
     usuarioSesion?.nombre || localStorage.getItem('usuarioSistema') || ''
   ).trim().toLowerCase();
@@ -12497,7 +12200,7 @@ async function activarAtencionFalla(idGrua = actual){
 
   const g = getEquipo(id);
 
-  // SIDE LOADER (SD) nunca usa SBY.
+
   const esSD = String(g?.id || id || '').toUpperCase().replace(/[-\s]/g,'').startsWith('SD');
   if (esSD) {
     return;
@@ -12508,19 +12211,17 @@ async function activarAtencionFalla(idGrua = actual){
     return;
   }
 
-  // SOLO FALLA PUEDE SER ATENDIDA
+
   if(g.estado !== 'falla'){
     alert("La grúa debe estar en estado FALLA para iniciar atención");
     return;
   }
 
-  // Al presionar SBY se activa/desactiva la atención.
-  // El estado se guarda en Supabase, pero "estado" sigue siendo FALLA.
+
   const activar = !(g.estado === 'falla' && g.sby_atendiendo_falla === true);
   const estadoAnteriorSBY = Boolean(g.sby_atendiendo_falla);
 
-  // Cambio visual INMEDIATO: no esperamos la respuesta de Supabase para iniciar
-  // el parpadeo. Así el operador ve el efecto al instante en móvil y PC.
+
   sbyGuardando = true;
   g.sby_atendiendo_falla = activar;
   if (activar) {
@@ -12540,7 +12241,7 @@ async function activarAtencionFalla(idGrua = actual){
 
   if (error) {
     console.error('ERROR GUARDANDO SBY:', error);
-    // Si Supabase falla, revertimos el cambio visual local.
+
     g.sby_atendiendo_falla = estadoAnteriorSBY;
     if (estadoAnteriorSBY) {
       if (!fallasAtendiendo.includes(id)) fallasAtendiendo.push(id);
@@ -12559,7 +12260,7 @@ async function activarAtencionFalla(idGrua = actual){
     fallasAtendiendo = fallasAtendiendo.filter(x => x !== id);
   }
 
-  // Nunca conservar SBY/parpadeo para una grúa que ya no esté en FALLA.
+
   fallasAtendiendo = fallasAtendiendo.filter(x => {
     const equipo = getEquipo(x);
     return equipo && equipo.estado === 'falla' && equipo.sby_atendiendo_falla === true;
@@ -12578,10 +12279,10 @@ function cargarOpcionesTiempoMuerto() {
 
     if (!select) return;
 
-    // Limpiar
+    
     select.innerHTML = '<option value="">Seleccione...</option>';
 
-    // Cada 5 minutos hasta 10 horas
+    
     for (let minutos = 5; minutos <= 600; minutos += 5) {
 
         const horas = String(Math.floor(minutos / 60)).padStart(2, "0");
@@ -12673,10 +12374,10 @@ async function cargarResponsabilidades(){
 
     const option = document.createElement("option");
 
-    // Valor real para consultar Supabase
+    
     option.value = col;
 
-    // Texto mostrado al usuario
+    
     option.textContent = col
       .replace(/_/g, ' ')
       .toUpperCase();
@@ -12685,7 +12386,7 @@ async function cargarResponsabilidades(){
 
   });
 
-  // Activar búsqueda UNA SOLA VEZ
+  
   if (!select.tomselect) {
     new TomSelect("#responsabilidad", {
       create: false,
@@ -12754,16 +12455,38 @@ async function cargarCodigos(){
 function obtenerTurnoActual(fechaHora = null){
 
   const fecha = fechaHora ? new Date(fechaHora) : new Date();
-  const hora = fecha.getHours();
+  let hora = fecha.getHours();
 
+  // Acepta tanto hora de 24 horas (14:00) como formato de 12 horas (2:00 PM).
+  if(fechaHora){
+    const textoHora = String(fechaHora).trim();
+    const coincidencia = textoHora.match(/(?:^|T|\\s)(\\d{1,2})(?::\\d{2})?(?::\\d{2})?\\s*(AM|PM)\\b/i);
+
+    if(coincidencia){
+      let h = parseInt(coincidencia[1], 10);
+      const periodo = coincidencia[2].toUpperCase();
+
+      if(periodo === "AM"){
+        if(h === 12) h = 0;
+      }else{
+        if(h !== 12) h += 12;
+      }
+
+      hora = h;
+    }
+  }
+
+  
   if(hora >= 6 && hora < 14){
     return "1er Turno";
   }
 
+  
   if(hora >= 14 && hora < 22){
     return "2do Turno";
   }
 
+  
   return "3er Turno";
 
 }
@@ -12771,16 +12494,35 @@ function obtenerTurnoActual(fechaHora = null){
 function obtenerNumeroTurno(fechaHora = null){
 
   const fecha = fechaHora ? new Date(fechaHora) : new Date();
-  const hora = fecha.getHours();
+  let hora = fecha.getHours();
+
+  
+  if(fechaHora){
+    const textoHora = String(fechaHora).trim();
+    const coincidencia = textoHora.match(/(?:^|T|\\s)(\\d{1,2})(?::\\d{2})?(?::\\d{2})?\\s*(AM|PM)\\b/i);
+
+    if(coincidencia){
+      let h = parseInt(coincidencia[1], 10);
+      const periodo = coincidencia[2].toUpperCase();
+
+      if(periodo === "AM"){
+        if(h === 12) h = 0;
+      }else{
+        if(h !== 12) h += 12;
+      }
+
+      hora = h;
+    }
+  }
 
   if(hora >= 6 && hora < 14) return 1;
   if(hora >= 14 && hora < 22) return 2;
   return 3;
 
 }
+
 function controlarBotonStandby(){
-  // El botón SBY ahora se muestra directamente sobre cada grúa en FALLA.
-  // Se conserva esta función por compatibilidad con el flujo existente.
+  
 }
 function mostrarEditorOperador() {
     document.getElementById("editorOperador").style.display = "flex";
@@ -12858,7 +12600,7 @@ function notificarFallaExcel(id){
 }
 function generarReporteDT(){
 
-    // OCULTAR TODOS LOS REPORTES
+    
     const vistas = [
         'tab-gruas',
         'tab-operadores',
@@ -12876,7 +12618,7 @@ function generarReporteDT(){
     });
 
 
-    // ACTIVAR DT
+    
     const contenedorDT =
         document.getElementById("contenedorReporteDT");
 
@@ -12885,14 +12627,14 @@ function generarReporteDT(){
     }
 
 
-    // QUITAR ACTIVO DE BOTONES
+    
     document.querySelectorAll('.btn-reporte')
     .forEach(btn=>{
         btn.classList.remove('activo');
     });
 
 
-    // ACTIVAR BOTON DT
+    
     const botones =
         document.querySelectorAll('.btn-reporte');
 
@@ -13065,10 +12807,10 @@ function filtrarReporteDT(){
 
 }
 function limpiarModoVisualizacion() {
-    // Restaurar también la barra lateral al salir de Visualización.
+
     document.body.classList.remove("modo-visualizacion");
 
-    // Restaurar restricciones que pudo dejar el usuario Visualizacion.
+
     document.querySelectorAll(".card").forEach(card => {
         card.style.cursor = "";
         card.style.pointerEvents = "";
@@ -13090,8 +12832,7 @@ function limpiarModoVisualizacion() {
         boton.style.display = "";
     });
 
-    // Las opciones exclusivas de edición vuelven a aparecer
-    // cuando inicia sesión RPC o Mantenimiento de grúas.
+
     document.querySelectorAll(".solo-edicion").forEach(boton => {
         boton.style.display = "";
     });
@@ -13110,7 +12851,7 @@ function limpiarModoVisualizacion() {
 }
 
 function aplicarPermisos() {
-    // Nunca arrastrar restricciones del usuario anterior.
+
     limpiarModoVisualizacion();
 
     if (localStorage.getItem("rolSistema") === "visualizar") {
@@ -13126,12 +12867,10 @@ function activarSoloVisualizacion() {
         return;
     }
 
-    // En Visualización no se muestra la barra lateral completa.
+
     document.body.classList.add("modo-visualizacion");
 
-    // ==============================
-    // CONGELAR CONTROLES DE EDICIÓN
-    // ==============================
+
 
     document.querySelectorAll(
         "#panelEstado input, " +
@@ -13155,17 +12894,11 @@ function activarSoloVisualizacion() {
     });
 
 
-    // ==============================
-    // OCULTAR OPCIONES DE EDICIÓN
-    // ==============================
-    // Visualización NO debe verlas en el menú.
     document.querySelectorAll(".solo-edicion").forEach(boton => {
         boton.style.display = "none";
     });
 
-    // ==============================
-    // CONGELAR BOTONES DEL MENÚ
-    // ==============================
+
 
     const botonesBloqueados = document.querySelectorAll(
         '.menu-btn[onclick="mostrarVista(\'mensajes\')"], ' +
@@ -13183,9 +12916,7 @@ function activarSoloVisualizacion() {
         boton.style.cursor = "not-allowed";
 
     });
-// ==============================
-// CONGELAR IMPORTAR EXCEL
-// ==============================
+
 
 const btnImportarExcel =
     document.getElementById("btnImportarExcel");
@@ -13194,7 +12925,7 @@ if (btnImportarExcel) {
 
     btnImportarExcel.disabled = true;
 
-    // Evita que se pueda ejecutar el onclick
+    
     btnImportarExcel.onclick = null;
 
     btnImportarExcel.style.pointerEvents = "none";
@@ -13228,7 +12959,7 @@ async function iniciarSesion() {
   const esVisualizacion =
     datos.rol === "visualizar";
 
-  // Visualización entra sin contraseña.
+ 
   if (!esVisualizacion && !password) {
     error.innerText = "Ingrese la contraseña";
     return;
@@ -13242,7 +12973,7 @@ async function iniciarSesion() {
 
     if (esVisualizacion) {
 
-      // Acceso de solo lectura.
+      
       resultado = {
         ok: true,
         usuario: "Visualizacion",
@@ -13252,7 +12983,7 @@ async function iniciarSesion() {
 
     } else {
 
-      // RPC y Mantenimiento Gruas se validan en Supabase.
+      
       const response = await fetch(
         `${SUPABASE_URL}/functions/v1/login-usuario`,
         {
@@ -13316,19 +13047,23 @@ async function iniciarSesion() {
       rolSistema
     );
 
-    // Por seguridad, nunca guardar la contraseña en localStorage.
-    // Se recuerda el usuario para que no tenga que volver a seleccionarlo.
+
+    localStorage.setItem(
+      "sesionExpira",
+      String(Date.now() + (8 * 60 * 60 * 1000))
+    );
+
+
     localStorage.removeItem("passwordRecordada");
 
-    // No guardar ni recordar credenciales en este dispositivo.
+
     localStorage.removeItem("recordarCredenciales");
     localStorage.removeItem("usuarioRecordado");
 
     document.getElementById("login").style.display = "none";
     document.getElementById("app").style.display = "block";
 
-    // Cargar el tablero después de mostrar la aplicación,
-    // sin modificar el resto de su funcionamiento.
+
     setTimeout(() => {
       try {
         mostrarVista("operativo");
@@ -13344,7 +13079,7 @@ async function iniciarSesion() {
           renderPrioridad();
         }
 
-        // Ahora que el login terminó, iniciar las consultas y Realtime.
+
         iniciarDatosDespuesLogin();
       } catch (e) {
         console.error(
@@ -13366,8 +13101,7 @@ async function iniciarSesion() {
   }
 }
 function cargarCredencialesRecordadas() {
-  // La opción "Recordar mi usuario" fue eliminada.
-  // Limpiamos cualquier dato antiguo que pudiera haber quedado guardado.
+
   localStorage.removeItem("recordarCredenciales");
   localStorage.removeItem("usuarioRecordado");
   localStorage.removeItem("passwordRecordada");
@@ -13381,7 +13115,14 @@ function mostrarSistema() {
   const rol =
     localStorage.getItem("rolSistema");
 
-  if (!usuario || !rol) {
+  const sesionExpira =
+    Number(localStorage.getItem("sesionExpira") || 0);
+
+
+  if (!usuario || !rol || !sesionExpira || Date.now() >= sesionExpira) {
+    localStorage.removeItem("usuarioSistema");
+    localStorage.removeItem("rolSistema");
+    localStorage.removeItem("sesionExpira");
     return;
   }
 
@@ -13389,7 +13130,7 @@ function mostrarSistema() {
 
   document.getElementById("app").style.display = "block";
 
-  // Reconstruir la sesión en memoria al restaurar una sesión guardada.
+
   usuarioSesion = {
     nombre: usuario,
     rol: rol,
@@ -13399,7 +13140,7 @@ function mostrarSistema() {
   const usuarioActivo = document.getElementById('usuarioActivo');
   if (usuarioActivo) usuarioActivo.innerText = '👤 ' + usuario;
 
-  // CASO SOLO VISUALIZACIÓN
+
   aplicarPermisos();
   render();
   iniciarDatosDespuesLogin();
@@ -13413,7 +13154,7 @@ function congelarModoVisualizacion() {
         return;
     }
 
-    // Bloquear selección de grúas
+
     document.querySelectorAll(".card").forEach(card => {
 
         card.style.cursor = "default";
@@ -13421,7 +13162,7 @@ function congelarModoVisualizacion() {
 
     });
 
-    // Mantener habilitada únicamente la visualización
+
     document.querySelectorAll(
         "#panelEstado input, " +
         "#panelEstado select, " +
@@ -13444,8 +13185,7 @@ function congelarModoVisualizacion() {
 }
 function controlarPasswordLogin() {
 
-    // Optimización LOGIN:
-    // evita recalcular el DOM varias veces al cambiar usuario.
+
     const selectUsuario = document.getElementById("loginUsuario");
     const contenedor = document.getElementById("contenedorPassword");
     const password = document.getElementById("loginPassword");
@@ -13454,7 +13194,7 @@ function controlarPasswordLogin() {
 
     const usuario = selectUsuario.value;
 
-    // Ejecutar solo el cambio visual necesario en el siguiente frame.
+    
     requestAnimationFrame(() => {
 
         if (usuario === "Visualizacion") {
@@ -13472,8 +13212,7 @@ function controlarPasswordLogin() {
 }
 function cerrarSesion() {
 
-    // Confirmar antes de cerrar la sesión para evitar salidas accidentales,
-    // especialmente en teléfono donde el botón puede tocarse por error.
+
     const confirmarSalida = window.confirm(
         "¿Seguro que quieres salir de la aplicación?\n\nSi eliges Aceptar, volverás a la pantalla de acceso."
     );
@@ -13482,48 +13221,45 @@ function cerrarSesion() {
         return;
     }
 
-    // IMPORTANTE: quitar primero los bloqueos del usuario Visualizacion.
-    // Así RPC/Mantenimiento gruas no heredan disabled/pointer-events.
-    limpiarModoVisualizacion();
 
-    // Reiniciar la vista para que la siguiente sesión NO herede
-    // "Mensajes Operativos", Downtime, etc.
+    limpiarModoVisualizacion();
     mostrarVista("operativo");
 
-    // Limpiar solamente la sesión actual.
-    // Las credenciales recordadas permanecen para no tener que escribir
-    // nuevamente la contraseña al volver a entrar.
+
     localStorage.removeItem("usuarioSistema");
     localStorage.removeItem("rolSistema");
+    localStorage.removeItem("sesionExpira");
 
-    // Ocultar aplicación
+
     document.getElementById("app").style.display = "none";
 
-    // Mostrar login
+
     document.getElementById("login").style.display = "flex";
 
-    // Limpiar contraseña
+
     const password = document.getElementById("loginPassword");
 
     if (password) {
         password.value = "";
     }
 
-    // Limpiar error
+
     const error = document.getElementById("loginError");
 
     if (error) {
         error.innerText = "";
     }
 
-    // Asegurar que no queden credenciales recordadas.
+
     cargarCredencialesRecordadas();
 
 }
 
-// Restaurar credenciales al abrir o recargar la página.
+
 document.addEventListener("DOMContentLoaded", () => {
     cargarCredencialesRecordadas();
+    
+    mostrarSistema();
 });
 </script>
 
@@ -13535,7 +13271,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 
 <style id="ajuste-final-espacio-y-grillas">
-/* ===== AJUSTE FINAL: MENOS ESPACIO ARRIBA + GRILLAS COMPLETAS ===== */
+
 .kpis{
   margin:0 4px 4px !important;
   gap:5px !important;
@@ -13566,20 +13302,20 @@ document.addEventListener("DOMContentLoaded", () => {
 .yard{
   padding:10px !important;
 }
-/* Cada fila: etiqueta pequeña + todo el espacio restante */
+
 .row{
   grid-template-columns:58px minmax(0,1fr) !important;
   column-gap:6px !important;
   width:100% !important;
 }
-/* Las 11 grúas principales siempre comparten el ancho disponible */
+
 .grid{
   width:100% !important;
   min-width:0 !important;
   grid-template-columns:repeat(11,minmax(0,1fr)) !important;
   gap:5px !important;
 }
-/* SIDE LOADER y STS: las 13 tarjetas comparten exactamente el ancho disponible */
+
 .grid-side,.grid-sts{
   width:100% !important;
   min-width:0 !important;
@@ -13605,13 +13341,13 @@ document.addEventListener("DOMContentLoaded", () => {
   white-space:normal !important;
   overflow:hidden !important;
 }
-/* PC/laptop: quitar espacio vertical extra */
+
 @media (min-width:769px){
   .topbar{height:40px !important;min-height:40px !important}
   .kpis{margin-top:0 !important}
   .dashboard-main{padding-top:0 !important}
 }
-/* Tablet: también aprovechar todo el ancho */
+
 @media (max-width:1100px){
   .dashboard-main{padding:0 5px 7px !important}
   .row{grid-template-columns:45px minmax(0,1fr) !important}
@@ -13619,7 +13355,7 @@ document.addEventListener("DOMContentLoaded", () => {
   .grid-side,.grid-sts{grid-template-columns:repeat(8,minmax(0,1fr)) !important}
   .grid .card,.grid-side .card,.grid-sts .card{height:68px !important;min-height:68px !important}
 }
-/* Teléfono: 4 columnas y sin desbordamiento */
+
 @media (max-width:700px){
   .kpis{margin:0 3px 3px !important}
   .kpi{height:34px !important;min-height:34px !important;padding:2px 5px !important}
@@ -13641,7 +13377,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 <style id="ajuste-v30-login-fallas-mensajes">
-/* V30: conservar siempre los filtros RTG/STS visibles en GRÚAS EN FALLA */
+
 .events-panel .fallas-filtros{
   display:flex !important;
   visibility:visible !important;
@@ -13670,7 +13406,7 @@ document.addEventListener("DOMContentLoaded", () => {
 .events-panel .fallas-filtro-btn.activo{background:#1976d2 !important;color:#fff !important;}
 .events-panel .fallas-filtro-btn:not(.activo){background:#d9e2ea !important;color:#17324d !important;}
 
-/* V30: subir un poco MENSAJE ACTIVO sin pegarlo al panel de fallas */
+
 .events-panel{gap:8px !important;}
 .events-panel > .dashboard-panel:nth-child(2){margin-top:-2px !important;}
 
@@ -13695,9 +13431,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 <style id="fix-prioridad-sin-tapar-codigo">
-/* ==========================================================
-   PRIORIDAD BUQUE: NUNCA TAPAR EL CODIGO DE LA GRUA
-   ========================================================== */
+
 .grid .card,
 .grid-side .card,
 .grid-sts .card{
@@ -13705,7 +13439,7 @@ document.addEventListener("DOMContentLoaded", () => {
   overflow:hidden !important;
 }
 
-/* El nombre/codigo de la grua siempre queda arriba y visible */
+
 .grid .card .code,
 .grid-side .card .code,
 .grid-sts .card .code{
@@ -13717,7 +13451,7 @@ document.addEventListener("DOMContentLoaded", () => {
   line-height:1 !important;
 }
 
-/* Prioridad abajo, fuera del area del nombre */
+
 .grid .card .priority-text,
 .grid-side .card .priority-text,
 .grid-sts .card .priority-text{
@@ -13745,7 +13479,7 @@ document.addEventListener("DOMContentLoaded", () => {
   border-radius:5px !important;
 }
 
-/* Cuando hay cronometro, la prioridad queda arriba del cronometro */
+
 .grid .card:has(.timer-card) .priority-text,
 .grid-side .card:has(.timer-card) .priority-text,
 .grid-sts .card:has(.timer-card) .priority-text{
@@ -13766,7 +13500,7 @@ document.addEventListener("DOMContentLoaded", () => {
   white-space:nowrap !important;
 }
 
-/* En pantallas pequeñas el codigo sigue teniendo prioridad visual */
+
 @media (max-width:768px){
   .grid .card .code,
   .grid-side .card .code,
@@ -13795,7 +13529,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 }
 
-/* Mensajes Operativos: 2 mensajes visibles + scroll */
+
 #mensajeActivo{max-height:230px !important;overflow-y:auto !important;overflow-x:hidden !important;padding-right:6px;box-sizing:border-box;overscroll-behavior:contain;scrollbar-width:thin;}
 #mensajeActivo .item{box-sizing:border-box;margin-bottom:10px;}
 #mensajeActivo .item:last-child{margin-bottom:0;}
@@ -13803,7 +13537,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </style>
 
 <style id="ajuste-panel-fallas-sin-espacio-v29">
-/* ===== PANEL GRÚAS EN FALLA: SUBIR AL MÁXIMO Y ELIMINAR ESPACIO EN BLANCO ===== */
+
 .events-panel{
   margin-top:0 !important;
   padding-top:0 !important;
@@ -13813,7 +13547,7 @@ document.addEventListener("DOMContentLoaded", () => {
   margin-top:0 !important;
 }
 
-/* En PC: el panel derecho empieza exactamente al inicio del dashboard */
+
 @media (min-width:1401px){
   .dashboard-main{
     align-items:start !important;
@@ -13826,7 +13560,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 }
 
-/* Tablet/teléfono: sin separación artificial antes de GRÚAS EN FALLA */
+
 @media (max-width:1400px){
   .events-panel{
     margin-top:0 !important;
@@ -13849,8 +13583,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </style>
 
 <style id="ajuste-v34-mensaje-k05-sin-salto">
-/* V34: Mensaje Activo alineado con K-05 SIN movimiento visible al refrescar.
-   El panel permanece invisible hasta que su posición real fue calculada. */
+
 @media (min-width:1001px){
   .events-panel{
     position:relative !important;
@@ -13885,7 +13618,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 }
 
-/* ===== CAPA RESPONSIVE ADICIONAL ===== */
+
 html, body {
   width: 100%;
   min-width: 0 !important;
@@ -14026,12 +13759,12 @@ main, .dashboard, .dashboard-container {
   }
 }
 
-/* ===== FIN CAPA RESPONSIVE ===== */
+
 
 </style>
 
 <script>
-/* V35: alinear MENSAJE ACTIVO con K-05 sin parpadeo ni bucle de MutationObserver. */
+
 (function(){
   let rafId = 0;
   let resizeObserver = null;
@@ -14058,7 +13791,7 @@ main, .dashboard, .dashboard-container {
     const eventsRect = eventsPanel.getBoundingClientRect();
     const top = Math.max(0, Math.round(k05Rect.top - eventsRect.top));
 
-    /* Se escribe la posición antes de hacerlo visible. */
+    
     mensajePanel.style.top = top + 'px';
     mensajePanel.style.visibility = 'visible';
     mensajePanel.style.opacity = '1';
@@ -14075,7 +13808,7 @@ main, .dashboard, .dashboard-container {
   }
 
   function iniciar(){
-    /* Primer cálculo después de que el layout exista. */
+    
     programarAlineacion();
     setTimeout(programarAlineacion, 80);
     setTimeout(programarAlineacion, 200);
@@ -14087,7 +13820,7 @@ main, .dashboard, .dashboard-container {
       window.addEventListener('scroll', programarAlineacion, {passive:true});
     }
 
-    /* Si cambia el tamaño real del panel/grilla, recalcular sin observar mutaciones del DOM. */
+    
     const {k05, eventsPanel} = obtenerElementos();
     if (typeof ResizeObserver !== 'undefined') {
       if (resizeObserver) resizeObserver.disconnect();
@@ -14107,13 +13840,9 @@ main, .dashboard, .dashboard-container {
 </script>
 
 
-<!-- FIX FINAL MENU MOVIL -->
+
 <style>
-/* =========================================================
-   CORRECCION FINAL MENU TELEFONO
-   En movil el menu ocupa TODO el ancho y el contenido queda
-   debajo. Se elimina el comportamiento de sidebar lateral.
-========================================================= */
+
 @media (max-width: 768px) {
   html, body {
     width: 100% !important;
@@ -14229,8 +13958,6 @@ main, .dashboard, .dashboard-container {
   }
 }
 
-/* CORRECCION PUNTUAL: evitar que MENSAJE ACTIVO se encime con GRUAS EN FALLA en pantallas pequeñas.
-   No cambia la logica ni elimina ningun elemento. */
 @media (max-width:600px){
   .events-panel{
     display:flex !important;
@@ -14262,7 +13989,7 @@ main, .dashboard, .dashboard-container {
 </style>
 
 <style id="correccion-final-no-encimar-mensaje-movil">
-/* Corrección puntual: MENSAJE ACTIVO siempre debajo de GRÚAS EN FALLA en móvil. */
+
 @media (max-width:600px){
   .events-panel{
     height:auto !important;
@@ -14296,7 +14023,7 @@ main, .dashboard, .dashboard-container {
 </style>
 
 <style id="correccion-final-encimado-movil-v2">
-/* SOLO CORRECCION DEL ENCIMADO EN MOVIL: MENSAJE ACTIVO DEBAJO DE GRUAS EN FALLA */
+
 @media (max-width:600px){
   .events-panel > .dashboard-panel:first-child{
     height:auto !important;
@@ -14324,7 +14051,7 @@ main, .dashboard, .dashboard-container {
 </style>
 
 <style id="fix-unico-encimado-movil-final">
-/* SOLO CORRECCION DEL ENCIMADO: el panel MENSAJE ACTIVO queda DESPUES del panel GRUAS EN FALLA. */
+
 @media (max-width:600px){
   .events-panel{
     display:block !important;
@@ -14368,7 +14095,7 @@ main, .dashboard, .dashboard-container {
 </style>
 
 <style id="fix-encimado-fallas-movil-definitivo">
-/* SOLO CORRECCION SOLICITADA: en movil GRUAS EN FALLA tiene su propio scroll y MENSAJE ACTIVO queda debajo. */
+
 @media (max-width:600px){
   .events-panel{
     display:block !important;
@@ -14416,10 +14143,7 @@ main, .dashboard, .dashboard-container {
 </style>
 
 <style id="independizar-tarjetas-fallas-mensajes">
-/* SOLO CAMBIO SOLICITADO:
-   GRUAS EN FALLA y MENSAJE ACTIVO quedan como tarjetas independientes.
-   Cada una conserva su propio contenido y, cuando hay muchos elementos,
-   el scroll pertenece únicamente a su lista. */
+
 @media (max-width:600px){
   .events-panel{
     display:flex !important;
@@ -14431,7 +14155,7 @@ main, .dashboard, .dashboard-container {
     overflow:visible !important;
   }
 
-  /* TARJETA 1: GRUAS EN FALLA */
+
   .events-panel > .dashboard-panel:first-child{
     display:block !important;
     position:relative !important;
@@ -14443,7 +14167,7 @@ main, .dashboard, .dashboard-container {
     margin:0 !important;
   }
 
-  /* Solo la lista de fallas tiene scroll y se adapta al contenido. */
+
   .events-panel > .dashboard-panel:first-child #listaFallas{
     height:auto !important;
     min-height:0 !important;
@@ -14452,7 +14176,7 @@ main, .dashboard, .dashboard-container {
     overflow-x:hidden !important;
   }
 
-  /* TARJETA 2: MENSAJE ACTIVO */
+
   .events-panel > .dashboard-panel:nth-child(2){
     display:block !important;
     position:relative !important;
@@ -14472,7 +14196,7 @@ main, .dashboard, .dashboard-container {
     z-index:1 !important;
   }
 
-  /* Solo los mensajes tienen su propio scroll. */
+
   .events-panel > .dashboard-panel:nth-child(2) #mensajeActivo{
     height:auto !important;
     min-height:0 !important;
@@ -14482,7 +14206,7 @@ main, .dashboard, .dashboard-container {
   }
 }
 
-/* Separación visual de las tablas TM / TI / ST */
+
 .titulo-tabla-tipo{
   margin:0;
   padding:10px 14px;
@@ -14493,7 +14217,7 @@ main, .dashboard, .dashboard-container {
   border-bottom:1px solid #cbd5e1;
 }
 
-/* TM / TI: selector de la tabla visible */
+
 #tab-gruas .btn-ti-reporte{
   border:1px solid #9fb3c5;
   padding:6px 14px;
@@ -14513,8 +14237,7 @@ main, .dashboard, .dashboard-container {
   color:#fff;
 }
 
-/* SOLO OCULTAR EL FILTRO DE RESPONSABILIDAD EN REPORTE GRUAS.
-   Se conserva todo el codigo y su funcionamiento. */
+
 .filtros-reporte .campo-filtro:has(#filtroResponsabilidad){
   display:none !important;
 }
