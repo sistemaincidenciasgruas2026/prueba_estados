@@ -381,6 +381,10 @@ margin-bottom:8px;
   background:#141212;
   color:white;
 }
+.dayli-falla{
+  background:#0F20A8;
+  color:white;
+}
 .percance{
   background:#8C2CC7;
   color:white;
@@ -2057,6 +2061,7 @@ button:hover{
 .color-box.disponible{ background:#1f6fb2; }
 .color-box.falla{ background:#e53935; }
 .color-box.dayli{ background:#141212; }
+.color-box.dayli-falla{ background:#0F20A8; }
 .color-box.anclada{ background:#806237; }
 .color-box.baño{ background:#F5B427; }
 .color-box.fmenor{ background:#ED7158; }
@@ -2087,6 +2092,9 @@ button:hover{
 
 .estado-indicador.dayli{
   background:#141212;
+}
+.estado-indicador.dayli-falla{
+  background:#0F20A8;
 }
 .estado-indicador.fseñal{
   background:#969696;
@@ -7081,6 +7089,11 @@ style="display:none;">
     </div>
 
     <div class="legend-row">
+      <span class="color-box dayli-falla"></span>
+      <span>Dayli-Falla</span>
+    </div>
+
+    <div class="legend-row">
       <span class="color-box baño"></span>
       <span>Baño</span>
     </div>
@@ -7259,6 +7272,7 @@ style="display:none;">
   <option value="disponible">DISPONIBLE</option>
   <option value="falla">FALLA EN TURNO</option>
   <option value="dayli">DAYLI</option>
+  <option value="dayli-falla">DAYLI-FALLA</option>
   <option value="baño">BAÑO</option>
   <option value="anclada">ANCLADA</option>
   <option value="fmenor">FALLA MENOR</option>
@@ -7538,6 +7552,7 @@ const personalPorSupervisor = {
   Leon:[
     'Azahel',
     'Felipe',
+    'Veronica',
     'Axel',
     'Mateo',
     'Leon'
@@ -10752,6 +10767,7 @@ function actualizarIndicadorEstado(){
   if(estado === 'disponible') texto = 'Estado actual: DISPONIBLE';
   if(estado === 'falla') texto = 'Estado actual: FALLA EN TURNO';
   if(estado === 'dayli') texto = 'Estado actual: DAYLI';
+  if(estado === 'dayli-falla') texto = 'Estado actual: DAYLI-FALLA';
   if(estado === 'baño') texto = 'Estado actual: BAÑO';
   if(estado === 'anclada') texto = 'Estado actual: ANCLADA';
   if(estado === 'fmenor') texto = 'Estado actual: FALLA MENOR';
@@ -11414,6 +11430,10 @@ function manejarCambioEstado() {
     return;
   }
 
+  if (nuevoEstado === 'dayli-falla') {
+    return;
+  }
+
   const veniaDeFalla = equipo.estado === 'falla';
   const ahoraNoEsFalla = nuevoEstado !== 'falla';
 
@@ -11505,6 +11525,7 @@ function formatearFechaMX(fechaBD) {
   if (!fechaBD) return '';
 
   const valor = String(fechaBD).trim();
+  const meses = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
   const tieneZonaHoraria = /(?:Z|[+-]\d{2}:?\d{2})$/i.test(valor);
 
@@ -11515,19 +11536,14 @@ function formatearFechaMX(fechaBD) {
 
     if (partes) {
       const [, y, mo, d] = partes;
-      return `${String(d).padStart(2,'0')}/${String(mo).padStart(2,'0')}/${y}`;
+      return `${String(d).padStart(2,'0')}-${meses[Number(mo)-1]}-${String(y).slice(-2)}`;
     }
   }
 
   const fecha = new Date(valor);
   if (Number.isNaN(fecha.getTime())) return valor;
 
-  return fecha.toLocaleDateString('es-MX', {
-    timeZone: 'America/Mexico_City',
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric'
-  });
+  return `${String(fecha.getDate()).padStart(2,'0')}-${meses[fecha.getMonth()]}-${String(fecha.getFullYear()).slice(-2)}`;
 }
 
 function formatearFechaHoraMX(fechaBD) {
@@ -11638,6 +11654,7 @@ function descargarExcel() {
       const equipoNormal = equipo.toUpperCase().replace(/\s+/g,'');
       area = ['K-08','K-07','K-06','K-05'].includes(equipoNormal) ? 'TREN' : 'RTG';
     }
+    if(area === 'TREN') area = 'RMG';
 
     const bloqueTramo = indiceBloque >= 0 ? (celdas[indiceBloque] || '') : '';
     const celdasSinBloqueNiInactiva = celdas.filter((_, i) => !indicesExcluirExcel.has(i));
