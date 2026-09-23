@@ -7607,6 +7607,11 @@ let alertaFallaInicializada = false;
 
 function prepararAudioAlerta() {
   try {
+    // No inicializar AudioContext mientras la pantalla de login está activa.
+    // Esto evita que el primer teclado de la contraseña provoque un bloqueo.
+    const login = document.getElementById("login");
+    if (login && login.style.display !== "none") return;
+
     const AC = window.AudioContext || window.webkitAudioContext;
     if (!AC) return;
     if (!audioContextAlerta) audioContextAlerta = new AC();
@@ -7726,7 +7731,7 @@ gruas:[
 {
 zona:'D',
 gruas:[
-'K-09','K-10','K-20','Z-52','Z-51','Z-48','K-36','N-56','','',''
+'K-09','K-10','K-20','Z-52','Z-51','Z-48','N-56','K-36','','',''
 ]
 },
 
@@ -8378,12 +8383,10 @@ function actualizarTimerIndependiente(g) {
     el.textContent = textoTiempo;
   }
 
-  const fallaTimers = document.querySelectorAll('[data-falla-timer]');
-  fallaTimers.forEach(timer => {
-    if (timer.dataset.fallaTimer === String(g.id)) {
-      timer.textContent = textoTiempo;
-    }
-  });
+  const fallaTimer = document.querySelector(`.falla-timer[data-falla-timer=\"${String(g.id).replace(/\"/g, '\\"')}\"]`);
+  if (fallaTimer && fallaTimer.textContent !== textoTiempo) {
+    fallaTimer.textContent = textoTiempo;
+  }
 
 
   const key = String(g.id);
@@ -8866,6 +8869,46 @@ async function guardar() {
 
   const estadoNuevo = document.getElementById('estado').value;
   const estado = estadoNuevo;
+
+  const equipoValidacionDayli = getEquipo(actual);
+
+  if (
+    (estado === 'dayli-falla' || estado === 'dayli') &&
+    equipoValidacionDayli &&
+    (
+      equipoValidacionDayli.estado === 'disponible' ||
+      equipoValidacionDayli.estado === 'falla'
+    )
+  ) {
+    const camposDowntime = [
+      'tiempoMuerto',
+      'supervisor',
+      'standby',
+      'responsabilidad',
+      'TMI'
+    ];
+
+    const nombresDowntime = {
+      tiempoMuerto: 'Tiempo Muerto',
+      supervisor: 'Supervisor',
+      standby: 'StandBy',
+      responsabilidad: 'Responsabilidad',
+      TMI: 'Tipo de falla (TM/TI/ST)'
+    };
+
+    const faltantesDowntime = camposDowntime.filter(id => {
+      const el = document.getElementById(id);
+      return !el || !String(el.value || '').trim();
+    });
+
+    if (faltantesDowntime.length > 0) {
+      alert(
+        "Para cambiar a DAYLI-FALLA debes completar el Formulario para Downtime:\n\n- " +
+        faltantesDowntime.map(id => nombresDowntime[id] || id).join("\n- ")
+      );
+      return;
+    }
+  }
   
 if (estado === 'disponible') {
 
@@ -9484,11 +9527,23 @@ async function actualizarTodo(origen = 'manual') {
 
   refreshEnCurso = true;
   try {
-    await Promise.allSettled([
-      cargar(),
-      cargarMensajeActual(),
-      cargarHistorial()
-    ]);
+    const origenTexto = String(origen || '').toLowerCase();
+
+    if (origenTexto.includes('realtime grúas')) {
+      await cargar();
+    } else if (origenTexto.includes('realtime mensajes')) {
+      await Promise.allSettled([
+        cargarMensajeActual(),
+        cargarHistorial()
+      ]);
+    } else {
+      await Promise.allSettled([
+        cargar(),
+        cargarMensajeActual(),
+        cargarHistorial()
+      ]);
+    }
+
     console.log('Datos actualizados:', origen, new Date().toLocaleTimeString());
   } catch (e) {
     console.warn('Actualización:', e);
@@ -11460,6 +11515,15 @@ function manejarCambioEstado() {
 
 
   const idEquipo = String(equipo.id || actual || '').toUpperCase().replace(/[-\s]/g,'');
+
+  if (
+    (nuevoEstado === 'dayli-falla' || nuevoEstado === 'dayli') &&
+    (equipo.estado === 'disponible' || equipo.estado === 'falla')
+  ) {
+    mostrarFormularioCierre();
+    return;
+  }
+
   const esSD = idEquipo.startsWith('SD');
   if (esSD) {
     guardarEstadoRapido();
@@ -14353,5 +14417,25 @@ main, .dashboard, .dashboard-container {
 
 .filtros-reporte .campo-filtro:has(#filtroResponsabilidad){
   display:none !important;
+}
+</style>
+
+<style id="solo-scroll-gruas-en-falla">
+/* Solo agrega desplazamiento interno a GRÚAS EN FALLA. No modifica su contenido. */
+#listaFallas{
+  max-height:400px !important;
+  overflow-y:scroll !important;
+  overflow-x:hidden !important;
+  scrollbar-width:thin;
+  overscroll-behavior:contain;
+}
+
+@media (max-width:600px){
+  .events-panel > .dashboard-panel:first-child #listaFallas{
+    height:400px !important;
+    max-height:400px !important;
+    overflow-y:scroll !important;
+    overflow-x:hidden !important;
+  }
 }
 </style>
