@@ -7680,8 +7680,14 @@ function detectarNuevasFallas(nuevosEquipos) {
 }
 
 
-window.addEventListener("pointerdown", prepararAudioAlerta, { passive: true });
-window.addEventListener("keydown", prepararAudioAlerta, { passive: true });
+function prepararAudioAlertaSoloAppActiva() {
+  const app = document.getElementById("app");
+  if (!app || app.style.display === "none") return;
+  prepararAudioAlerta();
+}
+
+window.addEventListener("pointerdown", prepararAudioAlertaSoloAppActiva, { passive: true });
+window.addEventListener("keydown", prepararAudioAlertaSoloAppActiva, { passive: true });
 
 let actual=null;
 
