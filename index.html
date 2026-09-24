@@ -9672,14 +9672,31 @@ setInterval(() => {
 
 
 let sistemaDatosIniciado = false;
+let sincronizacionHoraIniciada = false;
 
 function haySesionActiva(){
   return !!(usuarioSesion || localStorage.getItem('usuarioSistema'));
 }
 
+function iniciarSincronizacionHoraDespuesLogin(){
+  if (sincronizacionHoraIniciada) return;
+  if (!haySesionActiva()) return;
+  sincronizacionHoraIniciada = true;
+
+  // La sincronización de hora se inicia solamente después del login.
+  sincronizarHoraInternet().then(() => {
+    if (typeof haySesionActiva === 'function' && haySesionActiva()) {
+      ponerFechasFallaAutomaticas();
+    }
+  });
+  setInterval(sincronizarHoraInternet, 60000);
+}
+
 async function iniciarDatosDespuesLogin(){
   if (sistemaDatosIniciado) return;
   sistemaDatosIniciado = true;
+
+  iniciarSincronizacionHoraDespuesLogin();
 
   const cargando = document.getElementById('cargandoDatos');
   if (cargando) cargando.style.display = 'flex';
@@ -10123,13 +10140,8 @@ if(
 }
 document.addEventListener('DOMContentLoaded', () => {
 
-  sincronizarHoraInternet().then(() => {
-    if (typeof haySesionActiva === 'function' && haySesionActiva()) {
-      ponerFechasFallaAutomaticas();
-    }
-  });
-  setInterval(sincronizarHoraInternet, 60000);
-
+  // Durante el login no se realizan consultas de hora ni inicializaciones de datos.
+  // Todo se inicia en iniciarDatosDespuesLogin(), después de autenticar al usuario.
   if (typeof haySesionActiva === 'function' && haySesionActiva()) {
     ponerFechasFallaAutomaticas();
     controlarBotonStandby();
