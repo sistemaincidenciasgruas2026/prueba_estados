@@ -6785,6 +6785,15 @@ body.modo-visualizacion .main-content{
 
 </div>
 <div id="app" style="display:none;">
+
+<div id="cargandoDatos" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(255,255,255,.96);align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:20px;">
+  <div style="width:42px;height:42px;border:4px solid #d9d9d9;border-top-color:#333;border-radius:50%;animation:giroCargaDatos .8s linear infinite;margin-bottom:16px;"></div>
+  <div style="font-size:18px;font-weight:700;color:#222;">Cargando datos...</div>
+  <div style="font-size:13px;color:#666;margin-top:6px;">Espere un momento mientras se prepara el sistema.</div>
+</div>
+<style>
+@keyframes giroCargaDatos{to{transform:rotate(360deg)}}
+</style>
 <div class="topbar">
 
     <div class="logo">
@@ -7901,6 +7910,12 @@ function procesarEstadoFalla(equipo, estadoNuevo){
 }
 
 async function cargar(){
+
+  // No consultar datos antes de que exista una sesión activa.
+  // La llamada original se conserva; simplemente se difiere hasta después del login.
+  if (typeof haySesionActiva === 'function' && !haySesionActiva()) {
+    return;
+  }
 
   const {data,error} =
     await db.from('gruas')
@@ -9662,20 +9677,29 @@ function haySesionActiva(){
   return !!(usuarioSesion || localStorage.getItem('usuarioSistema'));
 }
 
-function iniciarDatosDespuesLogin(){
+async function iniciarDatosDespuesLogin(){
   if (sistemaDatosIniciado) return;
   sistemaDatosIniciado = true;
 
+  const cargando = document.getElementById('cargandoDatos');
+  if (cargando) cargando.style.display = 'flex';
 
-  setTimeout(() => {
-    try {
-      actualizarTodo('login correcto');
-      cargarResponsabilidades();
-      iniciarRealtime();
-    } catch(e) {
-      console.warn('Inicialización posterior al login:', e);
-    }
-  }, 0);
+  try {
+    // Los datos de Supabase se cargan solamente despues de tener una sesion activa.
+    await Promise.allSettled([
+      cargar(),
+      cargarMensajeActual(),
+      cargarHistorial(),
+      cargarResponsabilidades(),
+      Promise.resolve(cargarOpcionesTiempoMuerto())
+    ]);
+
+    iniciarRealtime();
+  } catch(e) {
+    console.warn('Inicialización posterior al login:', e);
+  } finally {
+    if (cargando) cargando.style.display = 'none';
+  }
 }
 
 
