@@ -6846,7 +6846,7 @@ body.modo-visualizacion .main-content{
 </button>
 <div id="vistaReportes" class="vista">
     <iframe
-        src="https://carrix.ifs.cloud/main/ifsapplications/web/page/WorkTasks/List;path=0.644174039.1121334549.1222308653.1131468548"
+        data-src="https://carrix.ifs.cloud/main/ifsapplications/web/page/WorkTasks/List;path=0.644174039.1121334549.1222308653.1131468548"
         style="
             width:100%;
             height:calc(100vh - 70px);
@@ -6915,7 +6915,7 @@ style="display:none;">
 </div>
     <div id="vistaIncidentes" class="vista">
   <iframe
-    src="https://sistemaincidenciasgruas2026.github.io/Reporte-Gruas2.0/"
+    data-src="https://sistemaincidenciasgruas2026.github.io/Reporte-Gruas2.0/"
     style="
       width:100%;
       height:calc(100vh - 70px);
@@ -9692,6 +9692,15 @@ function iniciarSincronizacionHoraDespuesLogin(){
   setInterval(sincronizarHoraInternet, 60000);
 }
 
+function cargarIframesDespuesLogin(){
+  const iframes = document.querySelectorAll('iframe[data-src]');
+  iframes.forEach((iframe) => {
+    if (!iframe.getAttribute('src')) {
+      iframe.setAttribute('src', iframe.getAttribute('data-src'));
+    }
+  });
+}
+
 async function iniciarDatosDespuesLogin(){
   if (sistemaDatosIniciado) return;
   sistemaDatosIniciado = true;
@@ -10147,6 +10156,7 @@ document.addEventListener('DOMContentLoaded', () => {
     controlarBotonStandby();
     mostrarVista('operativo');
     cargarOpcionesTiempoMuerto();
+    cargarIframesDespuesLogin();
     iniciarDatosDespuesLogin();
   }
 
@@ -13293,6 +13303,7 @@ async function iniciarSesion() {
         }
 
 
+        cargarIframesDespuesLogin();
         iniciarDatosDespuesLogin();
       } catch (e) {
         console.error(
