@@ -9693,12 +9693,37 @@ function iniciarSincronizacionHoraDespuesLogin(){
 }
 
 function cargarIframesDespuesLogin(){
+  // Los iframe se conservan, pero NO se cargan automáticamente al iniciar sesión.
+  // Se activan únicamente cuando el usuario abre la vista correspondiente,
+  // evitando que la carga de sitios externos congele el tablero.
   const iframes = document.querySelectorAll('iframe[data-src]');
   iframes.forEach((iframe) => {
     if (!iframe.getAttribute('src')) {
-      iframe.setAttribute('src', iframe.getAttribute('data-src'));
+      iframe.setAttribute('data-pendiente-login', 'true');
     }
   });
+}
+
+function activarIframeDeVista(vistaSeleccionada){
+  if (!vistaSeleccionada) return;
+
+  const iframe = vistaSeleccionada.querySelector('iframe[data-src]');
+  if (!iframe || iframe.getAttribute('src')) return;
+
+  // Dar prioridad al tablero y permitir que el navegador termine de pintar
+  // antes de iniciar la carga externa.
+  const activar = () => {
+    if (!iframe.getAttribute('src')) {
+      iframe.setAttribute('src', iframe.getAttribute('data-src'));
+      iframe.removeAttribute('data-pendiente-login');
+    }
+  };
+
+  if (typeof requestIdleCallback === 'function') {
+    requestIdleCallback(activar, { timeout: 2500 });
+  } else {
+    setTimeout(activar, 800);
+  }
 }
 
 async function iniciarDatosDespuesLogin(){
@@ -9758,6 +9783,8 @@ async function mostrarVista(vista) {
   if (vistaSeleccionada) {
 
     vistaSeleccionada.classList.add('activa');
+
+    activarIframeDeVista(vistaSeleccionada);
 
     if (vista === 'mensajes') {
 
